@@ -1,0 +1,89 @@
+.common-box {
+  max-width: 1140px;
+  margin: 40px auto !important;
+  background: #fff;
+  border: 1px solid #d3d3d3;
+  /*padding-left: 20px !important;*/
+}
+.common-box .common-hd {
+  background-color: #f5f5f5;
+  padding: 18px 15px;
+  /*margin: 0 15px;*/
+}
+.common-box .common-hd .title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  line-height: 1em;
+  text-align: left;
+}
+
+.common-box .common-bd {}
+.common-box .common-lists {
+  padding: 15px;
+}
+.common-box .common-list {
+  position: relative;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  margin-bottom: 30px;
+  text-align: left;
+}
+/*.common-box .common-list:hover {
+    margin-bottom: 30px;
+    text-align: left;
+    -webkit-transform: translateY(-3px);
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(0,0,0,.1) !important;
+}*/
+.common-box .common-list h3 {
+  font-size: 20px;
+  font-weight: normal;
+  margin-bottom: .5em;
+  color: #111;
+}
+.common-box .common-list h4 {
+  font-size: 18px;
+  line-height: 1.4em;
+  font-weight: normal;
+  color: #333;
+  margin-bottom: .5em;
+}
+.common-box .common-list h5 {
+  font-size: 15px;
+  color: #333;
+  font-weight: normal;
+  line-height: 1.4em;
+  margin-bottom: .5em;
+}
+.common-box .common-list p {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8em;
+  color: #666;
+  margin-bottom: 10px;
+}
+.common-box .common-list p.note {
+  color: #888;
+}
+.common-box .common-list p a {
+  font-weight: bold;
+  color: #022f87;
+  text-decoration: underline;
+}
+
+.common-box .common-list ul {
+  padding-left: 20px;
+}
+.common-box .common-list ul li {
+  list-style: disc;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8em;
+  color: #666;
+}
+@media screen and (max-width:800px) and (min-width:350px){
+  .common-box{
+    margin: 0 !important;
+  }
+}

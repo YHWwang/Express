@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="wrapper subscribe-wrapper">
+  <form id="subscribeForm" class="subscribe-form">
+    <h4>LET'S STAY IN TOUCH</h4>
+    <p>Subscribe to be notified for Blackview news!</p>
+    <input type="hidden" name="_token" value="">
+    <input type="email" name="email" placeholder="Your email address">
+    <input type="hidden" name="source" value="www">
+    <input name="submit" type="button" value="Subscribe" id="subscribeBtn">
+    <div class="common-floor" id="subscribeSuccess" style="display: none;">
+      <div class="box">
+					<span class="floor-close fancybox-close-small" data-fancybox-close="" title="Close">
+						x
+					</span>
+
+        <div class="box-hd">
+          <h4 class="title">
+            <div id="subscribeMsg">Thanks for Your Subscription!</div>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script>
+    $(function() {
+
+      $("#subscribeBtn").click(function(){
+        var email = $('#subscribeForm input[name="email"]').val();
+        var Regex = /^(?:\w+\.?)*\w+@(?:\w+\.)*\w+$/;
+
+        if(localStorage.newslettersubscribed && localStorage.newslettersubscribed == email){
+          $("#subscribeMsg").html("You have subscribed, Thank you!");
+
+          $('#subscribeSuccess').slideDown();
+          $(".floor-close").click(function () {
+            $(this).parents('.common-floor').css('display','none');
+          });
+
+        }else{
+          if (Regex.test(email)){
+            $("#subscribeMsg").html("Waiting...");
+            $('#subscribeSuccess').slideDown();
+            $(".floor-close").click(function () {
+              $(this).parents('.common-floor').css('display','none');
+            });
+
+            $.ajax({
+              type:'post',
+              url : 'https://store.blackview.hk/en/subscriber/collect',
+              dataType : 'json',
+              data : {email:email, source:'www', _token:'uRuW8Ejxj4KTZ3Hwptw4seAZGl9myMJOgZWsJshe'},
+              success  : function(response) {
+                $("#subscribeMsg").html(response.message);
+                localStorage.newslettersubscribed = email;
+              },
+              error : function() {
+                alert("network error");
+              }
+            });
+
+          }else{
+            if (email == "") {
+              $("#subscribeMsg").text("Please enter your email address!");
+              $('#subscribeSuccess').slideDown();
+              $(".floor-close").click(function () {
+                $(this).parents('.common-floor').css('display','none');
+              });
+              return false;
+            }else{
+              $("#subscribeMsg").text("The email you entered is incorrect.");
+              $('#subscribeSuccess').slideDown();
+              $(".floor-close").click(function () {
+                $(this).parents('.common-floor').css('display','none');
+              });
+              return false;
+            }
+          }
+        }
+      })
+    })
+  </script>
+</div>
+
+
+</body>
+</html>

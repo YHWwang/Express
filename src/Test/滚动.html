@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚轮事件</title>
+  <style>
+    .box,.box1{
+      width: 100%;
+      height:300vh;
+      border: 1px solid #000;
+      /*display: flex;*/
+      /*justify-content: center;*/
+      /*align-items: center;*/
+    }
+    .box p{
+      opacity: 1;
+    }
+    .img{
+      width: 458px;
+      height: 494px;
+      background-size: 458px 494px;
+      background-repeat: no-repeat;
+      /*background-image: url("https://www.apple.com.cn//v/iphone-11-pro/c/images/overview/camera/camera_three_lens_system_housing__dnjd5epvdgae_large.jpg");*/
+      /*background-image: url("https://www.apple.com.cn/v/iphone-11-pro/c/images/overview/camera/camera_three_lens_system_lens_top_static__gjpacq2k4k6e_large.jpg");*/
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      /*-webkit-mask-image: url("https://www.apple.com.cn//v/iphone-11-pro/c/images/overview/camera/camera_three_lens_system_lens_bottom_mask__teea7bjld4q6_large.svg");*/
+      /*mask-image: url("https://www.apple.com.cn//v/iphone-11-pro/c/images/overview/camera/camera_three_lens_system_lens_bottom_mask__teea7bjld4q6_large.svg")*/
+    }
+
+
+    .image-fov-gallery{
+      width: 980px;
+      height: 738px;
+      background-size: 980px 738px;
+      background-repeat: no-repeat;
+      background-image: url("https://www.apple.com.cn/v/iphone-11-pro/c/images/overview/camera/camera_fov_telephoto__eziiujf5d682_large.jpg");
+      position: relative;
+      left: 50%;
+      margin-left: -490px
+    }
+    /*https://www.apple.com.cn/v/iphone-11-pro/c/images/overview/camera/camera_fov_ultrawide__e4xq1jl1q76u_large.jpg*/
+    .img-position{
+      height: 300vh;
+
+    }
+    .item{
+      position: -webkit-sticky;
+      position: sticky;
+      top: 50px;
+      /*bottom: 20px;*/
+    }
+  </style>
+</head>
+<body>
+ <div class="box">
+
+
+   <div class="img">
+
+   </div>
+   <p >超越自我</p>
+
+ </div>
+ <div class="box1 img-position">
+   <div class="item">
+     <figure role="img" class="image-fov-gallery">
+       <figcaption class="visuallyhidden">图片显示使用长焦摄像头拍摄一个景物时的视野。</figcaption>
+     </figure>
+   </div>
+
+
+ </div>
+ <div class="box1">
+
+ </div>
+ <div class="box1">
+
+ </div>
+ <div class="box1">
+
+ </div>
+ <div class="box1">
+
+ </div>
+ <div class="box1">
+
+ </div> <div class="box1">
+
+ </div>
+
+</body>
+
+</html>
+
+<script src="./jquery-3.3.1.min.js"></script>
+<script src="./jquery.mousewheel.js"></script>
+<script>
+  // console.log(11);
+  $(function () {
+    $(window).scroll(function () {
+      var t = 500,
+             m = Math.min(document.documentElement.scrollTop || document.body.scrollTop, t) / t;
+           console.log(m);
+           $(".box p").css('opacity',m)
+           // console.log(222);
+    })
+     // window.mousewheel(function () {
+     //
+     //    var t = 500,
+     //      m = Math.min(document.documentElement.scrollTop || document.body.scrollTop, t) / t;
+     //    console.log(m);
+     //    $(".box p").css('opacity',m)
+     //    console.log(222);
+     //  })
+
+  // $(".box").scroll(function () {
+  //         console.log(111);
+  // })
+
+})
+
+</script>

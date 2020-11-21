@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button type="button" οnclick="date_count(7);">7天后的时间</button>
+</body>
+</html>
+<script>
+  date_count(7 )
+  function date_count(date) {
+    var date1 = new Date();
+    var date2 = new Date(date1);
+    date2.setDate(date1.getDate() - parseInt(date));
+    var times = date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate();
+    var Year = 0;
+    var Month = 0;
+    var Day = 0;
+    var CurrentDate = "";
+    Year = date2.getFullYear();
+    Month = date2.getMonth() + 1;
+    Day = date2.getDate();
+    CurrentDate += Year + "-";
+    if(Month >= 10) {
+      CurrentDate += Month + "-";
+    } else {
+      CurrentDate += "0" + Month + "-";
+    }
+    if(Day >= 10) {
+      CurrentDate += Day;
+    } else {
+      CurrentDate += "0" + Day;
+    }
+    alert(CurrentDate) ;
+  }
+
+</script>

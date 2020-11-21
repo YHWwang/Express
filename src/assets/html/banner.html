@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    .banner-item{
+      position: relative;
+      overflow: hidden;
+      background: 50% no-repeat;
+      height:679px;
+      font-family: MyriadPro Regular ;
+      /*background: #4E6682;*/
+
+    }
+    .banner-item .banner-item-img{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+    }
+    .banner-item .banner-word{
+      position: absolute;
+      left:13%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .banner-item-1 .banner-word{
+      left:60%;
+    }
+    .banner-item-2 .banner-word{
+      left:50%;
+    }
+    .active .delay-1{
+      transition-delay: .2s
+    }
+    .active .delay-2{
+      transition-delay: .25s
+    }
+    .active .delay-3{
+      transition-delay: .3s
+    }
+    .active .delay-4{
+      transition-delay: .35s
+    }
+    .banner-opacity-0 {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all .5s ease;
+    }
+    .active .banner-opacity-1{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .margin-empty-line{
+      height: 20px;
+    }
+    .margin-empty-line-1{
+      height: 25px;
+    }
+
+    .h3{
+      font-size: 48px;
+      line-height: 1.2;
+    }
+    .banner-word-box1 p{
+      font-size: 26px;
+      color: rgba(0,0,0,.8);
+    }
+
+    .buy-now{
+      color: #000;
+      border: 2px solid #000;
+      padding: 5px 20px;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .buy-now:hover{
+      border-width: 3px;
+      /*padding: 0 19px;*/
+      background-color: hsla(0,0%,100%,.2)
+    }
+    .banner-link-1{
+      margin-top:20px;
+    }
+    .learn-more span{
+      transition: all ease .3s;
+    }
+    .learn-more span:hover{
+      text-decoration: underline;
+      margin-right: 5px;
+    }
+    .banner-item-1{
+      height: 680px;
+    }
+    .banner-item-2{
+      height: 680px;
+    }
+  </style>
+</head>
+<style>
+
+</style>
+<body>
+<div class="main">
+  <div class="banner-item banner-item-1">
+    <img class="banner-item-img banner-opacity-0 banner-opacity-1 delay-1" src="@/assets/img/banner/tab8.png" alt="">
+    <div class="banner-word">
+      <h3 class="h3  banner-opacity-0 banner-opacity-1 delay-1">The most powerful outdoor <br> Ruggde phone</h3>
+      <div class="margin-empty-line"></div>
+      <div class="banner-word-box1  banner-opacity-0 banner-opacity-1 delay-2">
+        <p>Get $10 Accessory OFF with BV5100
+          <br>interstellar Glow Version purchase
+        </p>
+      </div>
+      <div class="margin-empty-line-1"></div>
+      <div class="banner-word-link banner-link  banner-opacity-0 banner-opacity-1 delay-3">
+        <a href="" class="buy-now">Buy now</a>
+
+
+      </div>
+      <div class="banner-word-link banner-link-1  banner-opacity-0 banner-opacity-1 delay-4">
+        <a href="" class="learn-more">
+          <span >Lear more</span> >
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="banner-item">
+    <img class="banner-item-img banner-opacity-0 banner-opacity-1 delay-1" src="@/assets/img/banner/BV5100.png" alt="">
+    <div class="banner-word">
+      <h3 class="h3  banner-opacity-0 banner-opacity-1 delay-1">The most powerful outdoor <br> Ruggde phone</h3>
+      <div class="margin-empty-line"></div>
+      <div class="banner-word-box1  banner-opacity-0 banner-opacity-1 delay-2">
+        <p>Get $10 Accessory OFF with BV5100
+          <br>interstellar Glow Version purchase
+        </p>
+      </div>
+      <div class="margin-empty-line-1"></div>
+      <div class="banner-word-link banner-link  banner-opacity-0 banner-opacity-1 delay-3">
+        <a href="" class="buy-now">Buy now</a>
+
+
+      </div>
+      <div class="banner-word-link banner-link-1  banner-opacity-0 banner-opacity-1 delay-4">
+        <a href="" class="learn-more">
+          <span >Lear more</span> >
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner-item banner-item-2">
+    <img class="banner-item-img banner-opacity-0 banner-opacity-1 delay-1" src="@/assets/img/banner/A80.png" alt="">
+    <div class="banner-word">
+      <h3 class="h3  banner-opacity-0 banner-opacity-1 delay-1">The most powerful outdoor <br> Ruggde phone</h3>
+      <div class="margin-empty-line"></div>
+      <div class="banner-word-box1  banner-opacity-0 banner-opacity-1 delay-2">
+        <p>Get $10 Accessory OFF with BV5100
+          <br>interstellar Glow Version purchase
+        </p>
+      </div>
+      <div class="margin-empty-line-1"></div>
+      <div class="banner-word-link banner-link  banner-opacity-0 banner-opacity-1 delay-3">
+        <a href="" class="buy-now">Buy now</a>
+
+
+      </div>
+      <div class="banner-word-link banner-link-1  banner-opacity-0 banner-opacity-1 delay-4">
+        <a href="" class="learn-more">
+          <span >Lear more</span> >
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $(function () {
+
+    window.onload = function(){
+      let data  = {
+        height:document.documentElement.scrollHeight
+      }
+      window.p
+    }
+    $(".main").addClass("active")
+  })
+
+</script>

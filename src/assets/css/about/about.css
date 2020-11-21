@@ -1,0 +1,224 @@
+@charset "utf-8";
+#about {
+  text-align: center;
+}
+#about .part1 {
+  padding: 334px 0;
+  /*background: url("../../src/img-es/about/part1_bg.jpg") no-repeat center 0;*/
+  background: url("http://img.blackview.hk/page/about/part1_bg.jpg") no-repeat center 0;
+  background-size: 100% 100%;
+}
+#about .part1 h2 {
+  font-size: 92px;
+  font-weight: normal;
+  line-height: 1em;
+  color: #5b75a1;
+  text-shadow: 0 0 10px rgba(255,255,255,.8);
+}
+#about .part {}
+#about .part .part-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+#about .part h3 {
+  font-size: 54px;
+  font-weight: normal;
+  line-height: 1em;
+  color: #000;
+}
+#about .part h6 {
+  font-size: 32px;
+  font-weight: 100;
+  line-height: 1em;
+  color: #000;
+}
+#about .part p {
+  font-size: 18px;
+  font-weight: 100;
+  line-height: 1.4em;
+  color: #a4a4a4;
+}
+#about .part h4 {
+  font-size: 36px;
+  font-weight: normal;
+  line-height: 1.4em;
+  color: #333;
+}
+#about .part .text {
+  margin: 30px 0;
+  text-align: left;
+}
+
+#about .part2 {}
+#about .part2 .content {}
+#about .part2 .content .title {
+  padding: 30px 0;
+}
+#about .part2 .text {}
+#about .part2 .content .text p {
+  margin-bottom: 30px;
+}
+
+#about .part3,
+#about .part5 {
+  background: #f6f6f6;
+}
+#about .part4 .item {
+  margin-bottom: 20px;
+}
+
+#about .part5 .title {
+  margin:  20px 0;
+}
+#about .part5 .item-wrap {
+  margin:  26px 0;
+  position: relative;
+}
+#about .part5 .item-wrap:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: #fff;
+  z-index: 0;
+  box-shadow: 0 0 4px rgba(0,0,0,.15);
+}
+#about .part5 .item {
+  margin: 0 -30px;
+  position: relative;
+}
+#about .part5 .item:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  bottom: auto;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: #00a7ff;
+  z-index: 0;
+}
+#about .part5 .item > div {
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+}
+#about .part5 .item .content {
+  position: relative;
+  width: 100%;
+}
+#about .part5 .item .content:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+}
+#about .part5 p {
+  position: relative;
+  z-index: 1;
+  color: #222;
+  padding: 20px 10px;
+  background: #fff;
+  text-align: left;
+}
+#about .part5 .do-more p {
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+}
+@media screen and (max-width: 1199.98px) {
+  #about .part .part-wrap {
+    padding: 60px 10px;
+  }
+  #about .part1 h2 {
+    font-size: 52px;
+  }
+  #about .part h3 {
+    font-size: 44px;
+  }
+  #about .part h6 {
+    font-size: 26px;
+  }
+  #about .part h4 {
+    font-size: 28px;
+  }
+  #about .part1 {
+    padding: 200px 0;
+  }
+}
+@media screen and (max-width: 991.98px) {
+  #about .part1 {
+    padding: 150px 0;
+  }
+}
+@media screen and (max-width: 575.98px) {
+  #about .part .part-wrap {
+    padding: 30px 10px;
+  }
+  #about .part1 h2 {
+    font-size: 32px;
+  }
+  #about .part h3 {
+    font-size: 24px;
+  }
+  #about .part h6 {
+    font-size: 16px;
+  }
+  #about .part h4 {
+    font-size: 22px;
+  }
+  #about .part p {
+    font-size: 16px;
+  }
+
+  #about .part1 {
+    padding: 100px 0;
+  }
+  #about .part5 .item {
+    margin-bottom: 20px;
+  }
+}
+@media screen and (min-width: 576px) {
+  #about .part5 .item .content:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    left: -10px;
+    right: auto;
+    -webkit-transform: translateY(-50%) rotate(45deg);
+    transform: translateY(-50%) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0,0,0,.15);
+    background: #fff;
+  }
+  #about .part5 .item:nth-child(even) .content:before {
+    right: -10px;
+    left: auto;
+  }
+  #about .part5 .item:nth-child(even) p {
+    text-align: right;
+  }
+}

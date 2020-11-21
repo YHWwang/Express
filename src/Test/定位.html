@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      background: #000;
+    }
+
+    .fov-sticky-container{
+      position: relative;
+      height: 300vh
+    }
+
+    .fov-sticky-content{
+      position: sticky;
+      top: 59px
+    }
+    .fov-gallery-container{
+      /*display: -webkit-box;*/
+      /*display: -ms-flexbox;*/
+      display: flex;
+      /*-webkit-box-orient: vertical;*/
+      /*-webkit-box-direction: normal;*/
+      /*-ms-flex-direction: column;*/
+      flex-direction: column;
+      position: relative;
+      width: 100%
+    }
+
+
+
+    .tabnav{
+      display: block;
+      position: relative;
+      padding-top: 14px;
+      margin-left: auto;
+      margin-right: auto;
+      -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+      order: 2;
+    }
+
+
+    .tabnav-keyline-overall{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #aaa;
+      transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+
+    /*will-change*/
+    .tabnav-keyline-selected{
+      transform: matrix(33.7413, 0, 0, 1, 8.79609, 0);
+      transform-origin: left;
+      width: 1px;
+      height: 100%;
+      background-color: #fff;
+    }
+.will-change{
+
+}
+
+
+  </style>
+</head>
+<body>
+<div class="fov-sticky-container">
+  <div class="fov-sticky-content">
+    <div class="fov-gallery-container">
+        <div class="tabnav">
+          <div class="tabnav-keyline-overall">
+            <div class="tabnav-keyline-selected will-change">
+
+            </div>
+
+          </div>
+
+
+        </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

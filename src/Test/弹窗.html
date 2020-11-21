@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button class="btn">点我</button>
+</body>
+</html>
+<script src="./jquery-3.3.1.min.js"></script>
+<script>
+  $(".btn").click(function () {
+    console.log(111);
+
+    $.ajax({url:"http://192.168.0.196:8083/api/save/subscribe/197653770@qq.com/bl6000",
+      success:function(result){
+        console.log(222);
+      }});
+  })
+</script>
