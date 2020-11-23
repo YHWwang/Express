@@ -131,6 +131,7 @@ if (config.build.productionGzip) {
         ')$'
       ),
       threshold: 10240,
+      deleteOriginalAssets: false,//删除源文件
       minRatio: 0.8
     })
   )

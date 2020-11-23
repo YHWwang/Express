@@ -31,19 +31,19 @@ ElementUI.Dialog.props.closeOnClickModal.default = true;
 import store from  "@/store/index"
 import App from './App'
 import router from './router/lazy1'
-import VueGtag from "vue-gtag"
-Vue.use(VueGtag, {
-  config: { id: "UA-120723805-2" },
-  includes:[
-    {
-      id:'  UA-138297813-1'
-    },
-    {
-      id:'AW-797702063'
-    }
-  ]
+// import VueGtag from "vue-gtag"
+// Vue.use(VueGtag, {
+//   config: { id: "UA-120723805-2" },
+//   includes:[
+//     {
+//       id:'  UA-138297813-1'
+//     },
+//     {
+//       id:'AW-797702063'
+//     }
+//   ]
 
-}, router);
+// }, router);
 Vue.config.productionTip = false
 // new Vue({
 //   el:"#app",

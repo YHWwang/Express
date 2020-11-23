@@ -764,7 +764,7 @@
   .btn-box .btn{
     cursor: pointer;
     display: inline-block;
-    width: 129px;
+    // width: 129px;
     height: 53px;
     /*line-height: 53px;*/
     font-size: 18px;
@@ -789,7 +789,8 @@
   }
 
   .tips li{
-    display: flex;
+    display: block;
+    width: 50%;
     margin-right: 20px;
   }
   .tips .p-txt{
