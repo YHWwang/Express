@@ -907,8 +907,8 @@ export default{
             },
             ContactUs:{
                 tit: 'Contattaci',
-                 p1: "Chatta con Skype",
-                 tit_1: "Prevendita all'ingrosso",
+                p1: "Chatta con Skype",
+                tit_1: "Prevendita all'ingrosso",
                 Melinda:'Melinda',
                 Lily:'Lily',
                 Nancy:'Nancy',
