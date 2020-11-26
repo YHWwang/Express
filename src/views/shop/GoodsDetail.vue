@@ -789,8 +789,9 @@
   }
 
   .tips li{
-    display: block;
+    // display: inherit;
     width: 50%;
+    text-align: center;
     margin-right: 20px;
   }
   .tips .p-txt{
@@ -798,7 +799,7 @@
     height: 70px;
     display: flex;
     flex-direction:column;
-    /*align-items:center;*/
+    align-items:center;
     justify-content: center;
     line-height: 24px;
   }
