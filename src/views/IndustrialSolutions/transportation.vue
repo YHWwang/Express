@@ -33,12 +33,12 @@
       <h3>{{$t('views.indust.transportation.tit4')}} <router-link to="/products/all" class="more">{{$t('views.indust.transportation.more')}} >></router-link></h3>
       <div>
         <ul class="products-box">
-          <li  v-for="item in productsList">
+          <li v-for="(item,index) in productsList" :key="index">
             <img  style="width: 100%" :src="item.image" alt="">
             <h4 class="product-name">
              {{item.storeName}}
             </h4>
-            <p v-for="(z,index) in item.addtxt" v-if="index<3">
+            <p v-for="(z,index) in item.addtxt" v-if="index<3" :key="index">
                   {{z}}
             </p>
             <router-link :to="'/shop/buy/'+item.unitName" class="construction-link" target="_blank"></router-link>

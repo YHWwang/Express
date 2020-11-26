@@ -6,12 +6,12 @@
       <ul >
         <li v-for="(item,index) in product" :key="index">
           <div class="card-item">
-            <img :src="  JSON.parse(item.image)[0]"alt="">
+            <img :src=" JSON.parse(item.image)[0]" alt="">
           </div>
           <div class="card-item">
             <p v-if="IsLogin">{{item.productName}}</p>
             <p V-else>{{item.storeName}}</p>
-            <p v-for="phone in item.productAttr">{{phone}}</p>
+            <p v-for="(phone,index) in item.productAttr" :key="index">{{phone}}</p>
           </div>
           <div class="card-item">
             {{item.price}} X {{item.cartNum}}

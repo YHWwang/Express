@@ -22,7 +22,7 @@
         <div class="query-t-box">
           <h3 class="red-color">{{querySupport.cellPhone}}</h3>
           <ul>
-            <li v-for="item in querySupport.frequencySupports"><strong>{{item.type}}:</strong><span class="li-content">{{item.bands}}</span></li>
+            <li v-for="(item,index) in querySupport.frequencySupports" :key="index"><strong>{{item.type}}:</strong><span class="li-content">{{item.bands}}</span></li>
           </ul>
         </div>
         <div class="support-box" :style="show">
@@ -40,8 +40,8 @@
             <th>{{$t('views.Support.Network.th_5')}}</th>
             </thead>
             <tbody>
-            <tr v-for="item in tableData" class="red-color">
-              <td v-for="z in item">{{z}}</td>
+            <tr v-for="(item,index) in tableData" class="red-color" :key="index">
+              <td v-for="(z,i) in item" :key="i">{{z}}</td>
             </tr>
             </tbody>
           </table>

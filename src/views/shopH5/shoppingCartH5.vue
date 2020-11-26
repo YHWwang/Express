@@ -84,7 +84,7 @@
           {{$t('views.shop.shoppingCart.tit4')}}
         </p>
         <ul class="also-like">
-          <li v-for="item in recommendList">
+          <li v-for="(item,index) in recommendList" :key="index">
               <img :src="item.image" :alt="item.storeName">
             <p class="name">{{item.storeName}}</p>
             <p>US$ {{item.price}}</p>

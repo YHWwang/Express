@@ -7,7 +7,7 @@
       <h2>{{$t('views.news.msg2')}}</h2>
       <div class="news-content">
         <ul>
-          <li v-for="item in newsList" @click="handleC(item.id)">
+          <li v-for="(item,index) in newsList" @click="handleC(item.id)" :key="index">
             <div class="left">
               <img :src="item.imageInput" alt="">
             </div>

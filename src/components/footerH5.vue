@@ -4,7 +4,7 @@
       <li @click="handleClick(1)">
         <div class="nav-title">{{$t('myfooter.txt1')}}<i :class="[activeClass==1?'icon-h icon-active':'icon-h']"></i></div>
         <div class="nav-list" :style="activeClass==1?'display:block':'display:none'">
-          <p v-for="item in productsList"><router-link :to="{path:'/products/item/'+item.unitName}" class="new-shop-link">{{item.storeName}}</router-link></p>
+          <p v-for="(item,index) in productsList" :key="index"><router-link :to="{path:'/products/item/'+item.unitName}" class="new-shop-link">{{item.storeName}}</router-link></p>
           <P><router-link to="/products/all" class="new-shop-link" >{{$t('myfooter.msg1')}}</router-link></P>
         </div>
       </li>
@@ -13,7 +13,7 @@
         <div class="nav-title">{{$t('myfooter.txt2')}}<i :class="[activeClass==2?'icon-h icon-active':'icon-h']"></i></div>
         <div class="nav-list" :style="activeClass==2?'display:block':'display:none'">
           <P><router-link to="/paymentmethods" class="new-shop-link">{{$t('myfooter.msg2_1')}}</router-link></P>
-          <P><router-link to="/shipping-guide"class="new-shop-link">{{$t('myfooter.msg2_2')}}</router-link></P>
+          <P><router-link to="/shipping-guide" class="new-shop-link">{{$t('myfooter.msg2_2')}}</router-link></P>
           <P><router-link to="/return" class="new-shop-link">{{$t('myfooter.msg2_3')}}</router-link></P>
           <P><router-link to="/warranty" class="new-shop-link">{{$t('myfooter.msg2_4')}}</router-link></P>
         </div>

@@ -27,7 +27,7 @@
             <img :src="phone.image" alt=""  v-if="!zoomShow">
           </div>
           <ul class="small-img">
-            <li  v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
+            <li v-for="(item,index) in imgarr" :key="index"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
           </ul>
         </div>
         <div class="part-top-right">
@@ -50,9 +50,9 @@
             </div>
             <div>
 
-              <div class="top-item " v-for="(item,index) in phoneList">
+              <div class="top-item " v-for="(item,index) in phoneList" :key="index">
                 <span class="text-name">{{item.name}} :</span>
-                <span  v-for="(k,inx) in item.fl1" :class="' text-value '+ (k.check == true?'bg':'')" @click="mySuk(item,inx)">{{k.name}}</span>
+                <span  v-for="(k,inx) in item.fl1" :key="inx" :class="' text-value '+ (k.check == true?'bg':'')" @click="mySuk(item,inx)">{{k.name}}</span>
               </div>
               <div class="top-item">
 <!--                <span class="text-name">Price :</span><span class="price1 price">US${{phone.price}}</span><del v-show="show1" class="price2 price">US${{phone.otPrice}}</del><span v-show="show1"  class="price3 price">{{discount}}% OFF</span>-->
@@ -98,7 +98,7 @@
       <div class="recom sect">
         <p class="recom-title">{{$t('views.shop.GoodsDetail.p7')}}</p>
         <ul class="shop-width">
-          <li  v-for="item in recommond">
+          <li  v-for="(item,index) in recommond" :key="index">
             <img :src="item.image" alt="">
             <p class="name"> {{item.storeName}}</p>
             <p class="price5">${{item.price}} <del v-show="item.price != item.otPrice">${{item.otPrice}}</del></p>
@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="reviews-box">
-              <div class="reviews-box-item" v-for="item in reviews">
+              <div class="reviews-box-item" v-for="(item,index) in reviews" :key="index">
                 <div class="reviews-box-item-box">
                   <div class="txt-star">
                     <p>{{handleUserName(item.username)}}</p>

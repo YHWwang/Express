@@ -44,7 +44,7 @@
                  <p>{{$t('shoppingCart.suk')}}: {{item.suk}}</p>
                </div>
                <div class="goods-r-item2" >
-                   <span v-for="k in item.productAttr">{{k}}</span>
+                   <span v-for="(k,index) in item.productAttr" :key="index">{{k}}</span>
                </div>
                <div class="goods-r-item3">
                  US${{item.price}}
@@ -87,7 +87,7 @@
          {{$t('shoppingCart.title2')}}
         </p>
         <ul class="also-like">
-          <li v-for="item in recommendList">
+          <li v-for="(item,index) in recommendList" :key="index">
             <div class="img-box">
               <img :src="item.image" :alt="item.storeName">
             </div>

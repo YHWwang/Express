@@ -3,7 +3,7 @@
       <div class="goods-img-box">
         <img class="big-img" :src="phone.image" alt="">
         <ul class="small-img">
-          <li  v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
+          <li v-for="(item,index) in imgarr" :key="index"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
         </ul>
       </div>
       <div class="describe-box">
@@ -20,9 +20,9 @@
                  score-template="{value}">
         </el-rate>
         <span class="orders">{{phone.ficti +  phone.sales}} {{$t('views.shopH5.orders')}} </span>
-        <div class="top-item" v-for="(item,index) in phoneList">
+        <div class="top-item" v-for="(item,index) in phoneList" :key="index">
           <span class="text-name">{{item.name}} :</span>
-          <span  v-for="(k,inx) in item.fl1" :class="' text-value '+ (k.check == true?'bg':'')" @click="mySuk(item,inx)">{{k.name}}</span>
+          <span  v-for="(k,inx) in item.fl1" :key="inx" :class="' text-value '+ (k.check == true?'bg':'')" @click="mySuk(item,inx)">{{k.name}}</span>
         </div>
 
         <div class="top-item quantity" >
@@ -60,7 +60,7 @@
       <div class="recom sect">
         <p class="recom-title">{{$t('views.shopH5.tit')}}</p>
         <ul>
-          <li  v-for="item in recommond">
+          <li  v-for="(item,index) in recommond" :key="index">
             <img :src="item.image" alt="">
             <p class="name"> {{item.storeName}}</p>
             <p class="price5">${{item.price}} <del v-show="item.price != item.otPrice">${{item.otPrice}}</del></p>
@@ -100,7 +100,7 @@
               </div>
             </div>
             <div class="reviews-box">
-              <div class="reviews-box-item" v-for="item in reviews">
+              <div class="reviews-box-item" v-for="(item,index) in reviews" :key="index">
                 <div class="txt-star">
                   <p>{{handleUserName(item.username)}}</p>
                   <el-rate

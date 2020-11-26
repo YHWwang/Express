@@ -28,7 +28,7 @@
           </router-link>
         </div>
         <ul :class="'video-box  ' +videoFadeIn">
-          <li @mouseover="DoMouse(true,item)" @mouseout="DoMouse(false,item)" :class="item.status?'video-item-pc':'hover video-item-pc'" v-for=" (item,index) in videoList" @click="videoOpan(item)">
+          <li @mouseover="DoMouse(true,item)" @mouseout="DoMouse(false,item)" :class="item.status?'video-item-pc':'hover video-item-pc'" v-for=" (item,index) in videoList" :key="index" @click="videoOpan(item)">
             <div class="video-bg">
               <img :src="item.pic" alt="">
             </div>
@@ -38,7 +38,7 @@
               <img :src="playIcon" alt="">
             </div>
           </li>
-          <li v-for=" item in videoList" class="video-item-app">
+          <li v-for=" (item,index) in videoList" :key="index" class="video-item-app">
           <iframe  :height="iframeHeight" :width="iframeWidth" :src="item.ipStatus ? item.url:item.youKu" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </li>
         </ul>
