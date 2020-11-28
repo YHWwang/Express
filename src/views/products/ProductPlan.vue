@@ -4,11 +4,11 @@
     <div class="main_newprod_2">{{ $t("views.products.ProductPlan.tit") }}</div>
     <div class="clear" style="height:70px;margin:20px auto;text-align:center;font-size:18px;">{{ $t("views.products.ProductPlan.msg") }}</div>
     <div class="main_newprod_1">
-       <dl v-for="(item,index) in productsList">
+      <dl  v-for="(item,index) in productsList">
         <dd >
           <div class="main_newprod_1_d_1" v-bind:class="{main_newprod_1_d_11:index==0}">{{item.time}}</div>
           <div class="main_newprod_1_d_7" style="margin-bottom:30px"><span style="color:#033085;">{{item.name}}</span>
-            <span v-for="res in item.config"><br>{{res}}</span></div>
+            <span  v-for="res in item.config"><br>{{res}}</span></div>
           <div class="main_newprod_1_d_4  main_newprod_1_d_6 clear" style="height:250px;"></div>
         </dd>
         <dt >

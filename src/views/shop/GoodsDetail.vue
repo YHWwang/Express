@@ -27,7 +27,7 @@
             <img :src="phone.image" alt=""  v-if="!zoomShow">
           </div>
           <ul class="small-img">
-            <li v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
+            <li  v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
           </ul>
         </div>
         <div class="part-top-right">
@@ -98,7 +98,7 @@
       <div class="recom sect">
         <p class="recom-title">{{$t('views.shop.GoodsDetail.p7')}}</p>
         <ul class="shop-width">
-          <li v-for="item in recommond">
+          <li  v-for="item in recommond">
             <img :src="item.image" alt="">
             <p class="name"> {{item.storeName}}</p>
             <p class="price5">${{item.price}} <del v-show="item.price != item.otPrice">${{item.otPrice}}</del></p>

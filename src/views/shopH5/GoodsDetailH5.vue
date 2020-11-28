@@ -3,7 +3,7 @@
       <div class="goods-img-box">
         <img class="big-img" :src="phone.image" alt="">
         <ul class="small-img">
-          <li v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
+          <li  v-for="(item,index) in imgarr"><img :class='{bg1:isBg == index}'  :src="item" alt="" @click="imgClick(item,index)" :key="index"></li>
         </ul>
       </div>
       <div class="describe-box">

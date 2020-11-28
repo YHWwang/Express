@@ -3,7 +3,7 @@
     <h3>{{$t('views.User.order.tit')}}</h3>
     <div class="order-box">
       <p v-if="show">{{$t('views.User.order.show')}}</p>
-       <div class="order-item" v-for="item in productsList">
+      <div class="order-item" v-for="item in productsList">
         <ul class="order-title order-nav">
           <li><span>{{$t('views.User.order.li_1')}} :</span><span class="span-item">{{item.orderId}}</span></li>
           <li><span>{{$t('views.User.order.li_2')}}:</span><span class="span-item"> {{item.addTime}}</span></li>

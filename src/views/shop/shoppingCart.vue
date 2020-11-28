@@ -91,7 +91,7 @@
           {{$t('views.shop.shoppingCart.tit4')}}
         </p>
         <ul class="also-like">
-         <li v-for="item in recommendList">
+          <li v-for="item in recommendList">
             <div class="img-box">
               <img :src="item.image" :alt="item.storeName">
             </div>

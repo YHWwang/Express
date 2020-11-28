@@ -3,7 +3,7 @@
      <div class="video-box">
 <!--       <p>Video</p>-->
       <ul class="">
-         <li v-for="item in vList">
+        <li v-for="item in vList">
           <iframe :height="iframeHeight" :width="iframeWidth" :src="item.ipStatus?item.map.url:item.map.youKu" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           <h3 :style="nameWidth">&nbsp;{{item.map.name}}</h3>
 <!--          <div style="padding-left: 10px;margin-top: 10px">-->

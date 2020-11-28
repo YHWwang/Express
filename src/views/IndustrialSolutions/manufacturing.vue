@@ -37,7 +37,7 @@
             <h4 class="product-name">
               {{item.storeName}}
             </h4>
-            <p v-for="(z,index) in item.addtxt" v-if="index<3" >
+            <p v-for="(z,index) in item.addtxt" v-if="index<3">
               {{z}}
             </p>
             <router-link :to="'/shop/buy/'+item.unitName" class="construction-link"></router-link>

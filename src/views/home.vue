@@ -36,7 +36,7 @@
                    <p>{{$t('views.home_vue.msg_1')}}</p>
                    </router-link>
                   </li> -->
-                  <li v-for="item in products" >
+                  <li v-for="(item,index) in products"  :key="index">
                     <router-link :to="{path:'/products/'+item.id}">
                       <div  v-html="item.pic"></div>
                       <p>{{item.cateName}}</p>
@@ -52,7 +52,7 @@
               <router-link to="/shop/all"><span class="nav-text">{{$t('views.home_vue.router2')}}</span></router-link>
               <div class="nav-drop-down">
                 <ul class="drop-list nav-shop">
-                  <li v-for="item in shopCatalog" @click="GoodList(item.keyword)">
+                  <li v-for="(item,index) in shopCatalog" @click="GoodList(item.keyword)"  :key="index">
                        <div v-html="item.pic"></div>
                         <p>{{item.keyword}}</p>
                   </li>

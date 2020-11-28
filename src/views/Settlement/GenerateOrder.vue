@@ -118,7 +118,7 @@
     <div class="clear"></div>
     <div>
       <form id="submitForm" :action="requestUrl" method="post" style="display:none;">
-         <input type="text" v-for="(value,key,index) in myForm" :name="key" :value="value">	
+        <input type="text" v-for="(value,key,index) in myForm" :name="key" :value="value">
         <!--    <input type="submit" name="submit" v-model="Submit" id="submitBtn" v-trigger>-->
         <input style="display: block" type="button" :value="$t('views.set.generate.btn3')" @click="handleC">
       </form>
