@@ -4,7 +4,7 @@
       <li @click="handleClick(1)">
         <div class="nav-title">{{$t('myfooter.txt1')}}<i :class="[activeClass==1?'icon-h icon-active':'icon-h']"></i></div>
         <div class="nav-list" :style="activeClass==1?'display:block':'display:none'">
-          <p v-for="(item,index) in productsList" :key="index"><router-link :to="{path:'/products/item/'+item.unitName}" class="new-shop-link">{{item.storeName}}</router-link></p>
+          <p v-for="item in productsList"><router-link :to="{path:'/products/item/'+item.unitName}" class="new-shop-link">{{item.storeName}}</router-link></p>
           <P><router-link to="/products/all" class="new-shop-link" >{{$t('myfooter.msg1')}}</router-link></P>
         </div>
       </li>

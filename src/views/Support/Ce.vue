@@ -3,7 +3,7 @@
     <div class="ce-box">
       <h3>{{$t('views.Support.Ce.tit')}}</h3>
       <ul>
-        <li v-for="(item,index) in CeList" :key="index">
+        <li v-for="(item,index) in CeList">
           <a  :href="baseApi + '/file/' + item.type + '/' + item.realName" target="_blank">{{item.name}}</a>
         </li>
       </ul>

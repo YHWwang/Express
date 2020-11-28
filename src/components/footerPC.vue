@@ -2,7 +2,7 @@
   <ul class="foot-list">
     <li>
       <P class="first-txt">{{$t('myfooter.txt1')}}</P>
-      <p v-for="(item,index) in productsList" :key="index">
+      <p v-for="item in productsList">
         <router-link :to="{path:'/products/item/'+item.unitName}" class="new-shop-link">{{item.storeName}}</router-link>
       </p>
       <P><router-link to="/products/all" class="new-shop-link" >{{$t('myfooter.msg1')}}</router-link></P>

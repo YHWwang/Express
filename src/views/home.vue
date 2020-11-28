@@ -36,7 +36,7 @@
                    <p>{{$t('views.home_vue.msg_1')}}</p>
                    </router-link>
                   </li> -->
-                  <li v-for="(item,index) in products"  :key="index">
+                  <li v-for="item in products" >
                     <router-link :to="{path:'/products/'+item.id}">
                       <div  v-html="item.pic"></div>
                       <p>{{item.cateName}}</p>
@@ -52,7 +52,7 @@
               <router-link to="/shop/all"><span class="nav-text">{{$t('views.home_vue.router2')}}</span></router-link>
               <div class="nav-drop-down">
                 <ul class="drop-list nav-shop">
-                  <li v-for="(item,index) in shopCatalog" @click="GoodList(item.keyword)"  :key="index">
+                  <li v-for="item in shopCatalog" @click="GoodList(item.keyword)">
                        <div v-html="item.pic"></div>
                         <p>{{item.keyword}}</p>
                   </li>
@@ -168,6 +168,7 @@
   import  footerH5 from "@/components/footerH5"
   import  MobilePhone from "@/components/MobilePhone"
   import { GetPcategories,shopCatalog,TopBanner} from "@/api/home"
+  import { Loading } from 'element-ui';
   import { UserInfo} from "@/api/user"
   import { GetCardData } from '@/api/shop'//获取购物车数据
   import MyCard from '@/views/home/Card'
@@ -337,7 +338,15 @@
       }
     },
     created(){
-
+      // const loading = this.$loading({
+      //         lock: true,
+      //         text: 'Loading',
+      //         spinner: 'el-icon-loading',
+      //         background: 'rgba(0, 0, 0, 0.7)'
+      //       });
+      //   setTimeout(() => {
+      //     loading.close();
+      //   }, 2000);
       if(this.$route.path == '/'){
         this.skyShow = false
       }else{

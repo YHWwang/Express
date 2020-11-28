@@ -11,7 +11,7 @@
           <div class="card-item">
             <p v-if="IsLogin">{{item.productName}}</p>
             <p V-else>{{item.storeName}}</p>
-            <p v-for="(phone,index) in item.productAttr" :key="index">{{phone}}</p>
+            <p v-for="phone in item.productAttr">{{phone}}</p>
           </div>
           <div class="card-item">
             {{item.price}} X {{item.cartNum}}

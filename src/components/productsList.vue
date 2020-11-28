@@ -1,7 +1,7 @@
 <template>
   <div style="margin-top: 60px;">
     <router-link to="/"><span>{{$t('productList.tit')}}</span></router-link>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{$t('productList.msg')}}</span>
-    <div class="goodsList" v-for="(item,index) in  productsList" :key="index">
+     <div class="goodsList" v-for="(item,index) in  productsList" >
       <p class="list-title"><span><i :class="'fa '+(check?' fa-chevron-down':'fa-chevron-right')" aria-hidden="true" @click="listUp(index)"></i></span>{{item.name}}</p>
       <ul >
 <!--        <li v-for="(item,index) in tillistin.goodsList" :key="index">-->

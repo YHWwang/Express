@@ -6,9 +6,9 @@
         <h4>{{$t('views.Support.faq.h1')}}</h4>
         <a href="#">{{$t('views.Support.faq.a_word')}}</a>
       </div>
-      <div class="faq-item" v-for="(item,index) in FaqData" :key="index">
+      <div class="faq-item" v-for="item in FaqData">
         <h4>{{item.title}}</h4>
-        <p v-for="(key,index) in item.content" :key="index">{{key}}</p>
+        <p v-for="key in item.content">{{key}}</p>
       </div>
     </div>
 
