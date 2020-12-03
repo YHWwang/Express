@@ -199,6 +199,7 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
   import { GetGoods,Getrecommond,Getreplay,addCarData} from '@/api/shop'
   import { DateTime } from '@/utils/auth'
   import { UserInfo} from "@/api/user" //登陆与否
@@ -529,6 +530,11 @@
     mounted() {
     },
     created() {
+      if(this.$i18n.locale == 'IT'){
+      Vue.nextTick(function () {
+        $('.part-top-right .tips').css('display','block')
+      })
+      }
       UserInfo().then(res=>{//登陆与否
         this.WriteIsShow = true
       }).catch(error=>{
@@ -789,9 +795,7 @@
   }
 
   .tips li{
-    // display: inherit;
-    width: 50%;
-    text-align: center;
+    display: flex;
     margin-right: 20px;
   }
   .tips .p-txt{
@@ -799,7 +803,7 @@
     height: 70px;
     display: flex;
     flex-direction:column;
-    align-items:center;
+    /*align-items:center;*/
     justify-content: center;
     line-height: 24px;
   }

@@ -168,7 +168,6 @@
   import  footerH5 from "@/components/footerH5"
   import  MobilePhone from "@/components/MobilePhone"
   import { GetPcategories,shopCatalog,TopBanner} from "@/api/home"
-  import { Loading } from 'element-ui';
   import { UserInfo} from "@/api/user"
   import { GetCardData } from '@/api/shop'//获取购物车数据
   import MyCard from '@/views/home/Card'
@@ -213,9 +212,7 @@
         // console.log(this.$cookie.get('lang'))
         that.$cookie.set("lang",that.lang,'7d');  // 存入cookie
         that.$i18n.locale = that.lang
-        setTimeout(() => {
-          loading.close();
-        }, 2000);
+        location.reload();
         // console.log(that.$cookie.get('test'))
       },
       goToCart(){
@@ -338,15 +335,7 @@
       }
     },
     created(){
-      // const loading = this.$loading({
-      //         lock: true,
-      //         text: 'Loading',
-      //         spinner: 'el-icon-loading',
-      //         background: 'rgba(0, 0, 0, 0.7)'
-      //       });
-      //   setTimeout(() => {
-      //     loading.close();
-      //   }, 2000);
+
       if(this.$route.path == '/'){
         this.skyShow = false
       }else{

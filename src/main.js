@@ -12,6 +12,11 @@ import 'element-ui/lib/theme-chalk/index.css' //新添加，避免后期打包�
 import './assets/css/common.css'
 import 'font-awesome/css/font-awesome.min.css'
 import { VueReCaptcha } from 'vue-recaptcha-v3' //谷歌机器人验证
+import GSignInButton from 'vue-google-signin-button'
+import FBSignInButton from 'vue-facebook-signin-button'
+
+Vue.use(FBSignInButton)
+Vue.use(GSignInButton)
 Vue.use(VueReCaptcha, { siteKey: '6Ld-YrUZAAAAAAetx6uQ-2tYjxg5-369Sp1jBzWh' })
 Vue.use(ElementUI,{locale})
 Vue.use(VueI18n)
