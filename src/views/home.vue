@@ -126,15 +126,6 @@
               <router-link to="/register"  v-if="!IsLogin"><el-dropdown-item class="pro-item">{{$t('views.home_vue.router9')}}</el-dropdown-item></router-link>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-dropdown>
-          <span class="el-dropdown-link sel_lang">
-           <span> {{lang}}</span><i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item class="lang-item" @click.native="language('EN')">EN</el-dropdown-item>
-            <el-dropdown-item class="lang-item" @click.native="language('IT')">IT</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
         </div>
       </div>
     </div>
@@ -200,21 +191,6 @@
 
     },
     methods:{
-      language(lang){
-        var that =this
-        const loading = that.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        that.lang = lang
-        // console.log(this.$cookie.get('lang'))
-        that.$cookie.set("lang",that.lang,'7d');  // 存入cookie
-        that.$i18n.locale = that.lang
-        location.reload();
-        // console.log(that.$cookie.get('test'))
-      },
       goToCart(){
         this.$router.push("/shopping-cart")
       },
