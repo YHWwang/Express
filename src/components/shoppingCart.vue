@@ -41,7 +41,8 @@
             <div class="goods-r">
                <div class="goods-r-item1">
                  <p>{{item.productName}}</p>
-                 <p>{{$t('shoppingCart.suk')}}: {{item.suk}}</p>
+                 <p>SUK:{{item.suk}}</p>
+		 <p>{{$t('shoppingCart.suk')}}: {{item.suk}}</p>
                </div>
                <div class="goods-r-item2" >
                    <span v-for="k in item.productAttr">{{k}}</span>
@@ -154,7 +155,7 @@
       },
       goodsReduce(index,item){
         if(this.goodsList[index].cartNum == 1){
-          alert("Больше не могу это уменьшить")
+          alert(this.$t('shoppingCart.alert'))
         }else{
           if(this.isLogin){
             item.cartNum -=1

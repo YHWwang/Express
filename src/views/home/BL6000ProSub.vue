@@ -22,7 +22,7 @@
      </el-form-item>
    </el-form>
    <p class="sub-p3"> {{$t('views.home.p5')}}</p>
-   <img class="sub-phone" src="https://www.blackview.hk//uploads/page/shop/sub_phone.jpg" alt="">
+   <img class="sub-phone" src="https://www.blackview.hk/uploads/page/shop/sub_phone.jpg" alt="">
  </div>
 
 

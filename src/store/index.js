@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import de from "element-ui/src/locale/lang/de";
+// import de from "element-ui/src/locale/lang/de";
 Vue.use(Vuex)
 //
 // var key,myCarCount,myTotalPrice = ""

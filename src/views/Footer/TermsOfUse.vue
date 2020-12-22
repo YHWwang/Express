@@ -1,6 +1,6 @@
 <template>
   <div class="big-box-bg">
-    <div class="common-box container" style="background: white">
+    <div class="common-box container" style="background:white;">
       <div class="common-hd">
         <h2 class="title">{{ $t("views.Footer.TermsOfUse.title") }}</h2>
       </div>
@@ -230,12 +230,8 @@
           </div>
 
           <div class="common-list">
-            <p>
-              <strong
-                >DOKE COMMUNICATION (HK) LIMITED<br />
-                RM 1902 EASEY COMM BLDG 253-261 HENNESSY RD WANCHAI HK
-              </strong>
-            </p>
+            <p><strong>DOKE COMMUNICATION (HK) LIMITED<br>
+              RM 1902 EASEY COMM BLDG 253-261 HENNESSY RD WANCHAI HK </strong></p>
           </div>
         </div>
       </div>
@@ -244,16 +240,16 @@
 </template>
 
 <script>
-export default {
-  name: "TermsOfUse",
-};
+    export default {
+        name: "TermsOfUse"
+    }
 </script>
 
 <style scoped>
-.common-box {
+.common-box{
   padding: 20px;
 }
-h3 {
-  line-height: 40px;
-}
+  h3{
+    line-height: 40px;
+  }
 </style>

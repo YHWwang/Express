@@ -13,10 +13,6 @@
           </el-input>
         </el-form-item>
         <el-form-item :label="$t('views.shop.review.pics')" prop="pics">
-<!--          action="http://192.168.0.196:8083/api/product/replay/upload" 本地-->
-<!--          action="http://192.168.0.219:8083/api/product/replay/upload" 測試-->
-<!--          action="http://18.158.111.234:8083/api/product/replay/upload" 线上測試-->
-<!--          action="http://18.159.77.152:8083/api/product/replay/upload" 正式线上-->
           <el-upload
             action="https://www.blackview.hk/api/product/replay/upload"
             accept="image/png,image/jpg,image/jpeg"

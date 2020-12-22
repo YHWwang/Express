@@ -8,12 +8,12 @@
       <ul>
         <li >
           <el-form-item :label="$t('views.indust.ContactUs.lastName')" prop="lastName" class="form-item input-box">
-          <el-input type="text" v-model="ruleForm.lastName" ></el-input>
+          <el-input type="text" v-model="ruleForm.lastName"  autocomplete="family-name"></el-input>
         </el-form-item>
         </li>
         <li  class="pad-20">
           <el-form-item :label="$t('views.indust.ContactUs.firstName')" prop="firstName" class="input-box">
-            <el-input v-model="ruleForm.firstName"></el-input>
+            <el-input v-model="ruleForm.firstName"  autocomplete="given-name"></el-input>
           </el-form-item>
         </li>
       </ul>
@@ -52,10 +52,10 @@
     </div>
     <div  class="pad-20 input-box">
       <el-form-item :label="$t('views.indust.ContactUs.emailAddress')" prop="emailAddress">
-        <el-input v-model="ruleForm.emailAddress" class="input-item"></el-input >
+        <el-input v-model="ruleForm.emailAddress" class="input-item" type="email" autocomplete="email" ></el-input >
       </el-form-item>
       <el-form-item :label="$t('views.indust.ContactUs.telephoneNum')" prop="telephoneNum">
-        <el-input v-model="ruleForm.telephoneNum" class="input-item"></el-input>
+        <el-input v-model="ruleForm.telephoneNum" class="input-item" type="number" autocomplete="tel"></el-input>
       </el-form-item>
       <el-form-item label="" prop="content" class="textarea-box">
         <p> {{$t('views.indust.ContactUs.msg')}}</p>

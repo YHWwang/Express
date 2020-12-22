@@ -11,7 +11,8 @@
         <div class="txt-box">
           <span class="describe">{{phone.storeInfo}}</span> <router-link class="more" style="text-decoration: underline" :to="{path:'/products/item/'+ phone.id }">{{$t('views.shopH5.more')}}>> </router-link>
         </div>
-        <span  class="word-red" v-if="phone.isBenefit == 1 ">{{$t('views.shopH5.msg_1')}}</span>
+<!--        <span  class="word-red" v-if="phone.isBenefit == 1 ">{{$t('views.shopH5.msg_1')}}</span>-->
+        <span  class="word-red" v-if="phone.isBenefit">{{phone.isBenefit}}</span>
         <el-rate class="star"
                  v-model="value"
                  disabled
@@ -71,7 +72,7 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" class="tabs-box">
         <el-tab-pane :label="$t('views.shopH5.first')" name="first" class="tabs-item">
           <div>
-            <tab-item :shopData="phone.description"></tab-item>
+            <tab-item :shopData="phone.productDescription"></tab-item>
           </div>
         </el-tab-pane>
         <el-tab-pane :label="$t('views.shopH5.second')" name="second" class="tabs-item">
@@ -193,6 +194,7 @@
           suk:"",
           productUrl:'',//产品详情页跳转
           specification:"",//产品规格
+          productDescription:"",//20201216新增商品详情页描述
           description:""//产品描述
         },
         attrvalue:[],//对应的suk数组
@@ -358,7 +360,7 @@
           this.phone.id = res.data.data.id//id
           this.phone.ficti = res.data.data.ficti//虚拟orders
           this.phone.sales = res.data.data.sales//真实orders
-          this.phone.isBenefit = res.data.data.isBenefit//预售
+          this.phone.isBenefit = res.data.data.isBenefit == 0 ? false : res.data.data.isBenefit //预售
           this.phone.unitName = res.data.data.unitName//unitName7-16开会改路由加的查询字段
           this.phone.productUrl = res.data.data.productUrl//跳转的url
           this.phone.isPostage = res.data.data.isPostage//商品在官网是否上架
@@ -374,7 +376,7 @@
           this.phone.storeName = res.data.data.storeName
           this.phone.image = res.data.data.image
           this.phone.storeInfo = res.data.data.storeInfo//产品简
-          this.phone.description = res.data.data.description//产品描述
+          this.phone.productDescription = res.data.data.productDescription//产品描述
           this.phone.specification = res.data.data.specification//产品规格
           this.phone.repalyScore = res.data.data.repalyScore//评分
           this.value = res.data.data.repalyScore//评分
@@ -399,6 +401,18 @@
           })
           this.phoneList = arr
           this.GetRed();
+          var url = res.data.data.hotImg//详情页的js
+          if(url){
+            var jsArr = url.split(",")
+            jsArr.forEach(jsItem => {
+              const s = document.createElement('script');
+              s.type = 'text/javascript';
+              s.src = jsItem
+              s.className = 'bv-yang'
+              document.body.appendChild(s);
+            })
+
+          }
         }).catch(error=>{
           console.log(error);
         })
@@ -465,6 +479,15 @@
         console.log(error);
       })
       this.Getlist();
+    },
+    destroyed(){
+      var target = document.getElementsByClassName('bv-yang')
+      if(target != null){
+        var len  = target.length
+        for(var i = 0 ;i<len ; i++){
+          document.body.removeChild(target[0])
+        }
+      }
     }
   }
 </script>

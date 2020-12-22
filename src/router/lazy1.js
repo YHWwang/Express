@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import Router from 'vue-router'
 var mobile =_isMobile()//判断是pc端还是移动端
 function _isMobile(){
@@ -17,7 +17,7 @@ const GoodsDetailH5  = () => import('@/views/shopH5/GoodsDetailH5')//pc具体到
 //产品列表
 const Products = () => import('@/views/products/products')
 const ProductsItem = () => import('@/views/products/ProductsItem')
-const ProductPlan = () => import('@/views/products/ProductPlan')
+// const ProductPlan = () => import('@/views/products/ProductPlan')
 //商品列表
 const Shop = () => import('@/views/shop/index')
 const shoppingCart = () => import('@/views/shop/shoppingCart')//购物车
@@ -65,7 +65,8 @@ const Ce = () => import( '@/views/Support/Ce')//ce
 const FeedBack = () => import('@/views/Support/FeedBack')//feedback
 const Faq = () => import('@/views/Support/faq')//faq
 const ContactUs = () => import('@/views/Support/ContactUs')//ContactUs
-import error404 from "../views/error404";
+const Vantaggi = () => import('@/views/Footer/Vantaggi')
+// import error404 from "../views/error404";
 
 //Find a Store FindAstore
 const FindAstore = () => import('@/views/FindAstore/index')//FindAstore
@@ -81,7 +82,8 @@ import {UserInfo} from "@/api/user" //判断有没登录
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
+  // return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location)
 }
 
 Vue.use(Router)
@@ -234,11 +236,11 @@ export default new Router({
           name: 'ProductsItem',
           component: ProductsItem
         },
-        {
-          path: '/new-products',
-          name: 'ProductPlan',
-          component: ProductPlan
-        },
+        // {
+        //   path: '/new-products',
+        //   name: 'ProductPlan',
+        //   component: ProductPlan
+        // },
         /*商品*/
         {
           path: '/shop/:word',
@@ -295,6 +297,11 @@ export default new Router({
           path: '/terms-of-use',
           name: 'terms-of-use',
           component: TermsOfUse//TermsOfUse
+        },
+        {
+          path: '/vantaggi',
+          name: 'vantaggi',
+          component: Vantaggi//vantaggi
         },
         {
           path: '/intellectual-property-rights',

@@ -51,14 +51,6 @@
       openParam(){
         this.dialogVisible = true
       },
-      // escape2Html(str) {//对数据转译
-      //       var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
-      //       return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
-      // },
-      // replaceHtml(str,key){
-      //   var reg = new RegExp( key , "g" )
-      //   return  str.replace( reg , '' );
-      // },
       GetData(){
         this.id = this.$route.params.id;
         productsItem(this.$route.params.id).then(res=>{
@@ -66,15 +58,17 @@
           this.specification = res.data.data.specification
           this.isShow = res.data.data.isShow
           this.description = res.data.data.description
-          var url =res.data.data.hotImg
-         if(url==false){
+          var url =res.data.data.hotImg //js文件
+         if(url){
+           var jsArr = url.split(",")
+           jsArr.forEach(jsItem => {
+             const s = document.createElement('script');
+             s.type = 'text/javascript';
+             s.src = jsItem
+             s.className = 'bv-yang'
+             document.body.appendChild(s);
+           })
 
-         }else{
-           const s = document.createElement('script');
-           s.type = 'text/javascript';
-           s.src = url
-           s.async = 'true';
-           document.body.appendChild(s);
          }
 
 
@@ -88,6 +82,15 @@
     },
     created() {
     this.GetData()
+    },
+    destroyed(){
+      var target = document.getElementsByClassName('bv-yang')
+      if(target != null){
+        var len  = target.length
+        for(var i = 0 ;i<len ; i++){
+          document.body.removeChild(target[0])
+        }
+      }
     }
   }
 </script>

@@ -3,7 +3,7 @@
   <div id="mainView">
 <!--    <div class="header-top"></div>-->
     <div  class="header">
-      <div  class="banner-top">
+      <div  class="banner-top" style="min-height: 50px">
         <div class="banner-wrap">
           <a class="head-pc" :href="tBanner.url" target="_blank">
             <img  ref="header" class="head-5g-img" :src="tBanner.pic" alt="">
@@ -19,10 +19,16 @@
           <mobile-phone :products="products" :shopCatalog="shopCatalog" :style="mobileDisplay"></mobile-phone>
         </div>
         <!--移动端nav-->
-        <span class="phone phone-bar" @click="mobileShow"><i class="fa fa-bars fa-3x" aria-hidden="true" ></i></span><!--移动端-->
+<!--        <span class="phone phone-bar" @click="mobileShow"><i class="fa fa-bars fa-3x" aria-hidden="true" ></i></span>&lt;!&ndash;移动端&ndash;&gt;-->
+
+
+        <span class="phone phone-bar" @click="mobileShow"><svg t="1606359661999" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1810" width="48" height="48"><path d="M81.28 222.016h861.44c27.264 0 49.28-21.504 49.28-48s-22.016-48-49.28-48H81.28c-27.2 0-49.28 21.504-49.28 48s22.08 48 49.28 48z m861.44 240H81.28c-27.264 0-49.28 21.504-49.28 48s22.016 48 49.28 48h861.44c27.264 0 49.28-21.504 49.28-48s-22.144-48-49.28-48z m0 339.968H81.28c-27.2 0-49.28 21.504-49.28 48s22.08 48 49.28 48h861.44c27.264 0 49.28-21.504 49.28-48s-22.016-48-49.28-48z" p-id="1811" fill="#133285"></path></svg></span><!--移动端-->
         <router-link class="home-logo" to="/"><img class="logo" src="@/assets/img/logo.png" alt=""></router-link>
         <router-link class="phone phone-cart" to="/shopping-cart">
-          <span ref="shopCart" class="header-icon fa fa-shopping-cart" aria-hidden="true"><i class="phone-count" >{{count == 0?'':count}}</i></span><!--移动端-->
+<!--          <span ref="shopCart" class="header-icon fa fa-shopping-cart" aria-hidden="true"><i class="phone-count" >{{count == 0?'':count}}</i></span>&lt;!&ndash;移动端&ndash;&gt;-->
+          <span ref="shopCart" class="header-icon" aria-hidden="true">
+            <svg t="1606360987031" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1782" width="24" height="24"><path d="M941.056 861.184L866.816 325.632c-6.144-41.472-41.472-72.704-83.456-72.704h-61.44c-12.8-115.2-116.736-197.632-231.936-184.832-97.28 10.752-173.568 87.552-184.832 184.832H247.808c-41.984 0-77.312 30.208-83.456 71.68L82.944 860.16c-7.168 46.08 24.576 89.088 70.656 96.256 4.096 0.512 8.192 1.024 12.8 1.024h691.2c46.592 0 84.48-37.888 84.48-84.48 0-4.096-0.512-7.68-1.024-11.776zM513.536 145.92c62.976 0 116.736 45.056 128.512 107.008H385.536c11.264-61.952 65.024-107.008 128-107.008z m348.16 730.624c-1.024 1.024-2.56 2.048-4.096 2.048h-691.2c-3.072 0-5.12-2.56-5.12-5.12v-1.024L242.176 336.384c0.512-2.56 2.56-4.608 5.12-4.608h56.32v51.712c0 22.016 17.92 39.424 39.424 39.424s39.424-17.92 39.424-39.424V331.776h261.12v51.712c0 22.016 17.92 39.424 39.424 39.424 22.016 0 39.424-17.92 39.424-39.424V331.776H783.36c2.56 0 5.12 2.048 5.12 4.608l74.752 535.552c0 2.048-0.512 3.584-1.536 4.608z" p-id="1783" fill="#8b8b8b"></path><path d="M674.816 535.04c-15.36 0-29.184 9.216-35.84 23.552-21.504 44.544-66.56 74.24-117.248 74.24-51.2 0-96.256-29.696-117.76-74.24-6.656-13.824-20.48-23.552-35.84-23.552-29.184 0-48.128 30.208-35.84 56.832 37.376 78.848 121.344 129.024 212.992 118.272 73.728-8.192 136.192-54.784 166.4-119.296 11.776-26.112-7.68-55.808-36.864-55.808z" p-id="1784" fill="#8b8b8b"></path></svg>
+          </span><i class="phone-count" >{{count == 0?'':count}}</i><!--移动端-->
         </router-link>
         <ul class="nav">
           <li class="nav-list">
@@ -30,12 +36,12 @@
               <router-link to="/products/all" ><span class="nav-text">{{$t('views.home_vue.router1')}}</span></router-link>
               <div class="nav-drop-down">
                 <ul class="drop-list nav-product" >
-                  <!-- <li>
-                   <router-link to="/new-products">
-                     <svg t="1597981013853" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2549" width="64" height="64"><path d="M786.9 286.7h-77.4v-16.1c0-32.6-26.5-59.1-59.1-59.1s-59.1 26.5-59.1 59.1v16.1H416.4v-16.1c0-32.6-26.5-59.1-59.1-59.1s-59.1 26.5-59.1 59.1v16.1h-77.4c-6.6 0-13 2.6-17.7 7.3-4.7 4.7-7.3 11.1-7.3 17.7v475.6c0 13.9 11.2 25 25 25h567.4c13.9 0 25-11.2 25-25V311.8c0-6.8-2.9-13.4-7.8-18.2-4.9-4.8-11.7-7.3-18.5-6.9z m-162.3-16c0-9.2 4.9-17.7 12.9-22.2 8-4.6 17.8-4.6 25.7 0 8 4.6 12.9 13 12.9 22.2v79.1c0 14.2-11.5 25.7-25.7 25.7s-25.7-11.5-25.7-25.7l-0.1-79.1z m-293 0c0-14.2 11.5-25.7 25.7-25.7s25.7 11.5 25.7 25.7v79.1c0 14.2-11.5 25.7-25.7 25.7s-25.7-11.5-25.7-25.7v-79.1z m430.3 491.6h-516V336.8h52.4v13.4c0 32.6 26.5 59.1 59.1 59.1s59.1-26.5 59.1-59.1v-13.4h174.9v13.4c0 32.6 26.5 59.1 59.1 59.1s59.1-26.5 59.1-59.1v-13.4H762l-0.1 425.5z" p-id="2550"></path><path d="M602 464.9L473.8 598.4 407.1 529c-5.5-8-15.2-12.1-24.9-10.4-9.6 1.6-17.4 8.7-20 18.1-2.5 9.4 0.6 19.5 8.1 25.7l86.1 87.8c4.7 4.7 11.1 7.3 17.7 7.3 6.8 0 13.3-2.8 18-7.7l145.2-150.2c7.4-10 6.3-24-2.6-32.7-8.8-8.7-22.8-9.5-32.7-2z" p-id="2551"></path></svg>
-                   <p>{{$t('views.home_vue.msg_1')}}</p>
-                   </router-link>
-                  </li> -->
+<!--                  <li>-->
+<!--                   <router-link to="/new-products">-->
+<!--                     <svg t="1597981013853" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2549" width="64" height="64"><path d="M786.9 286.7h-77.4v-16.1c0-32.6-26.5-59.1-59.1-59.1s-59.1 26.5-59.1 59.1v16.1H416.4v-16.1c0-32.6-26.5-59.1-59.1-59.1s-59.1 26.5-59.1 59.1v16.1h-77.4c-6.6 0-13 2.6-17.7 7.3-4.7 4.7-7.3 11.1-7.3 17.7v475.6c0 13.9 11.2 25 25 25h567.4c13.9 0 25-11.2 25-25V311.8c0-6.8-2.9-13.4-7.8-18.2-4.9-4.8-11.7-7.3-18.5-6.9z m-162.3-16c0-9.2 4.9-17.7 12.9-22.2 8-4.6 17.8-4.6 25.7 0 8 4.6 12.9 13 12.9 22.2v79.1c0 14.2-11.5 25.7-25.7 25.7s-25.7-11.5-25.7-25.7l-0.1-79.1z m-293 0c0-14.2 11.5-25.7 25.7-25.7s25.7 11.5 25.7 25.7v79.1c0 14.2-11.5 25.7-25.7 25.7s-25.7-11.5-25.7-25.7v-79.1z m430.3 491.6h-516V336.8h52.4v13.4c0 32.6 26.5 59.1 59.1 59.1s59.1-26.5 59.1-59.1v-13.4h174.9v13.4c0 32.6 26.5 59.1 59.1 59.1s59.1-26.5 59.1-59.1v-13.4H762l-0.1 425.5z" p-id="2550"></path><path d="M602 464.9L473.8 598.4 407.1 529c-5.5-8-15.2-12.1-24.9-10.4-9.6 1.6-17.4 8.7-20 18.1-2.5 9.4 0.6 19.5 8.1 25.7l86.1 87.8c4.7 4.7 11.1 7.3 17.7 7.3 6.8 0 13.3-2.8 18-7.7l145.2-150.2c7.4-10 6.3-24-2.6-32.7-8.8-8.7-22.8-9.5-32.7-2z" p-id="2551"></path></svg>-->
+<!--                   <p>{{$t('views.home_vue.msg_1')}}</p>-->
+<!--                   </router-link>-->
+<!--                  </li>-->
                   <li v-for="(item,index) in products"  :key="index">
                     <router-link :to="{path:'/products/'+item.id}">
                       <div  v-html="item.pic"></div>
@@ -101,17 +107,23 @@
           </li>
           <li class="nav-list"><div class="header-nav"><a href="http://bbs.blackview.hk/" target="_blank"><span class="nav-text">{{$t('views.home_vue.router5')}}</span></a></div></li>
           <li class="nav-list"><div class="header-nav"><router-link to="/find-a-store"><span class="nav-text" data-path="find-a-store">{{$t('views.home_vue.router6')}}</span></router-link></div></li>
+          <li class="nav-list"><div class="header-nav"><router-link to="/vantaggi"><span class="nav-text" data-path="find-a-store">Vantaggi dello Store Italiano</span></router-link></div></li>
         </ul>
         <!--头部右侧小图标-->
         <div class="header-right">
           <input type="text" class="search" v-model.trim="searchContent" @keyup.enter="search">
-          <i class="fa fa-search header-icon" aria-hidden="true" @click="search" ></i>
+          <i class="header-icon">
+                <svg   @click="search" t="1606360926097" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504" width="24" height="24"><path d="M921.3 874L738.1 690.8c51.3-62.6 82.1-142.5 82.1-229.6 0-200.1-162.8-363-363-363-200.1 0-363 162.8-363 363s162.8 363 363 363c87 0 167-30.8 229.6-82.1L870 925.3c7.1 7.1 16.4 10.6 25.7 10.6s18.6-3.5 25.7-10.6c14.1-14.2 14.1-37.2-0.1-51.3zM166.8 461.2c0-160.1 130.3-290.4 290.4-290.4s290.4 130.3 290.4 290.4-130.3 290.4-290.4 290.4-290.4-130.3-290.4-290.4z" p-id="1505" fill="#8b8b8b"></path></svg>
+          </i>
+<!--          <i class="fa fa-search header-icon" aria-hidden="true" @click="search" ></i>-->
           <!--购物车部分-->
           <el-dropdown>
             <div  class="a-car" @click="goToCart()">
               <span class="span-car">{{count}}</span>
-              <i class="header-icon fa fa-shopping-cart" aria-hidden="true"></i>
-            </div>
+              <i class="header-icon">
+                <svg t="1606360987031" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1782" width="24" height="24"><path d="M941.056 861.184L866.816 325.632c-6.144-41.472-41.472-72.704-83.456-72.704h-61.44c-12.8-115.2-116.736-197.632-231.936-184.832-97.28 10.752-173.568 87.552-184.832 184.832H247.808c-41.984 0-77.312 30.208-83.456 71.68L82.944 860.16c-7.168 46.08 24.576 89.088 70.656 96.256 4.096 0.512 8.192 1.024 12.8 1.024h691.2c46.592 0 84.48-37.888 84.48-84.48 0-4.096-0.512-7.68-1.024-11.776zM513.536 145.92c62.976 0 116.736 45.056 128.512 107.008H385.536c11.264-61.952 65.024-107.008 128-107.008z m348.16 730.624c-1.024 1.024-2.56 2.048-4.096 2.048h-691.2c-3.072 0-5.12-2.56-5.12-5.12v-1.024L242.176 336.384c0.512-2.56 2.56-4.608 5.12-4.608h56.32v51.712c0 22.016 17.92 39.424 39.424 39.424s39.424-17.92 39.424-39.424V331.776h261.12v51.712c0 22.016 17.92 39.424 39.424 39.424 22.016 0 39.424-17.92 39.424-39.424V331.776H783.36c2.56 0 5.12 2.048 5.12 4.608l74.752 535.552c0 2.048-0.512 3.584-1.536 4.608z" p-id="1783" fill="#8b8b8b"></path><path d="M674.816 535.04c-15.36 0-29.184 9.216-35.84 23.552-21.504 44.544-66.56 74.24-117.248 74.24-51.2 0-96.256-29.696-117.76-74.24-6.656-13.824-20.48-23.552-35.84-23.552-29.184 0-48.128 30.208-35.84 56.832 37.376 78.848 121.344 129.024 212.992 118.272 73.728-8.192 136.192-54.784 166.4-119.296 11.776-26.112-7.68-55.808-36.864-55.808z" p-id="1784" fill="#8b8b8b"></path></svg>
+              </i>
+     </div>
             <el-dropdown-menu slot="dropdown">
               <div>
                 <my-card :IsLogin="IsLogin"></my-card>
@@ -119,7 +131,9 @@
             </el-dropdown-menu>
           </el-dropdown>
           <el-dropdown >
-            <i class="header-icon fa fa-user-circle-o"  aria-hidden="true"></i>
+            <i class="header-icon">
+              <svg t="1606360770736" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="949" width="24" height="24"><path d="M512 196.923a196.923 196.923 0 0 1 131.269 343.71 314.998 314.998 0 0 1 177.94 347.293 39.385 39.385 0 1 1-77.312-15.163 236.308 236.308 0 0 0-231.03-281.994h-1.733 0.866a236.308 236.308 0 0 0-231.897 281.994 39.385 39.385 0 1 1-77.312 15.163 315.116 315.116 0 0 1 177.94-347.372A196.923 196.923 0 0 1 512 196.924zM512.788 512a118.154 118.154 0 1 0-0.788 0h-0.788z" p-id="950" fill="#8b8b8b"></path><path d="M512 0C229.218 0 0 229.218 0 512s229.218 512 512 512 512-229.218 512-512S794.782 0 512 0z m0 78.77c239.262 0 433.23 193.968 433.23 433.23S751.263 945.23 512 945.23 78.77 751.263 78.77 512 272.737 78.77 512 78.77z" p-id="951" fill="#8b8b8b"></path></svg>
+            </i>
             <el-dropdown-menu slot="dropdown">
               <router-link to="/user/orders" v-if="IsLogin"><el-dropdown-item class="pro-item">{{$t('views.home_vue.router7')}}</el-dropdown-item></router-link>
               <router-link to="/login" v-if="!IsLogin"><el-dropdown-item class="pro-item">{{$t('views.home_vue.router8')}}</el-dropdown-item></router-link>
@@ -132,31 +146,26 @@
     <div class="main">
       <router-view class="view" :carCount="carCount"></router-view>
     </div>
-<!--    <div class="scroll-arow" :style="arrowDisplay"><a href="#mainView"><img src="@/assets/img/arrow.jpg" alt=""></a></div>-->
-    <div class="scroll-arrow" :style="arrowDisplay"><a href="#mainView"><svg t="1599016005432" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="782" width="32" height="32"><path d="M66.56 105.805a38.927 38.927 0 0 1 38.922-38.928h813.036c21.504 0 38.927 17.429 38.927 38.928a38.927 38.927 0 0 1-38.927 38.932H105.482a38.927 38.927 0 0 1-38.922-38.932z m445.527 109.767a38.938 38.938 0 0 1 38.933 38.933v663.69a38.932 38.932 0 0 1-77.86 0V254.5a38.932 38.932 0 0 1 38.927-38.928z" p-id="783"></path><path d="M484.572 227.22a38.932 38.932 0 0 1 55.04 0L831.74 519.357a38.922 38.922 0 0 1 0 55.046 38.912 38.912 0 0 1-55.04 0L484.572 282.27a38.912 38.912 0 0 1 0-55.05z" p-id="784"></path><path d="M539.612 227.22a38.932 38.932 0 0 1 0 55.056L247.475 574.403a38.902 38.902 0 0 1-55.045 0 38.912 38.912 0 0 1 0-55.046L484.572 227.22a38.932 38.932 0 0 1 55.04 0z" p-id="785"></path></svg></a></div>
-
-
+    <div class="scroll-arrow" :style="arrowDisplay"><a href="#mainView">
+      <i class="header-icon">
+           <svg t="1599016005432" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="782" width="32" height="32"><path d="M66.56 105.805a38.927 38.927 0 0 1 38.922-38.928h813.036c21.504 0 38.927 17.429 38.927 38.928a38.927 38.927 0 0 1-38.927 38.932H105.482a38.927 38.927 0 0 1-38.922-38.932z m445.527 109.767a38.938 38.938 0 0 1 38.933 38.933v663.69a38.932 38.932 0 0 1-77.86 0V254.5a38.932 38.932 0 0 1 38.927-38.928z" p-id="783"></path><path d="M484.572 227.22a38.932 38.932 0 0 1 55.04 0L831.74 519.357a38.922 38.922 0 0 1 0 55.046 38.912 38.912 0 0 1-55.04 0L484.572 282.27a38.912 38.912 0 0 1 0-55.05z" p-id="784"></path><path d="M539.612 227.22a38.932 38.932 0 0 1 0 55.056L247.475 574.403a38.902 38.902 0 0 1-55.045 0 38.912 38.912 0 0 1 0-55.046L484.572 227.22a38.932 38.932 0 0 1 55.04 0z" p-id="785"></path></svg>
+      </i>
+    </a></div>
   <!--客服-->
     <div id="skype" v-if="skyShow">
       <table>
         <tbody><tr>
-<!--          <td align="center" height="65"><img :src="skyUrl" width="50"></td></tr>-->
           <td align="center" height="65">
             <a data-v-ba54a298="" href="skype:live:.cid.2b4611d3ae4a8339?chat" title="Donna" target="_blank" class="sale"><img src="../assets/img/footer/skype.png" width="50"></a></td></tr>
-<!--        <tr><td align="center"><a data-v-ba54a298="" href="skype:live:.cid.2b4611d3ae4a8339?chat" title="Donna" target="_blank" class="sale">EN</a></td></tr>-->
-        </tbody></table>
+  </tbody></table>
     </div>
-
-
-    <!--    <el-footer>-->
       <my-footer></my-footer>
-<!--    </el-footer>-->
   </div>
 <!--  </el-container>-->
 </template>
 <script>
   import  MyFooter from "@/components/Myfooter"
-  import  footerH5 from "@/components/footerH5"
+  // import  footerH5 from "@/components/footerH5"
   import  MobilePhone from "@/components/MobilePhone"
   import { GetPcategories,shopCatalog,TopBanner} from "@/api/home"
   import { UserInfo} from "@/api/user"
@@ -167,7 +176,7 @@
     components:{
       MyFooter,
       MyCard,
-  MobilePhone
+      MobilePhone
     },
     data(){
       return {
@@ -181,9 +190,9 @@
         mobileDisplay:"display:none",
         show1:false,//控制移动端的nav显示与否
         tBanner:[],
+        tBanner_home:[],
+        tBanner_other:[],
         topClass:"",//顶部class
-        lang:this.$i18n.locale,
-        fullscreenLoading: false
       }
     },
     mounted: function () {
@@ -210,45 +219,37 @@
       },
       handleScroll: function () {
        var scroll = document.documentElement.scrollTop || document.body.scrollTop;
-        if(scroll>300){
-          this.arrowDisplay = {display:"block"}
-        }else{
-          this.arrowDisplay = {display:"none"}
-        }
+        this.arrowDisplay = scroll > 300 ?  {display:"block"} : {display:"none"}
       },
         /*获取产品下拉列表*/
-      GetProdutsList(){
+      async GetProdutsList(){
         var _this = this
         this.GetTopBanner()
-        GetPcategories().then(res=>{//产品目录
-          var list  =  res.data.data.content
+
+      var CategoriesData = await GetPcategories()
+
+        if(CategoriesData.status == 200){
+          var list  =  CategoriesData.data.data.content
           this.products =list
           this.$nextTick()
-        }).catch(error=>{
-          console.log(error);
-        })
-        shopCatalog().then(res=>{//商品目录
-          var sliderList =  res.data.data.content
+        }else{
+          console.log(CategoriesData)
+        }
+        var shopCatalogData =  await shopCatalog()
+        if(shopCatalogData.status ==200){
+          var sliderList =  shopCatalogData.data.data.content
           this.shopCatalog =  sliderList
-        }).catch(error=>{
-          console.log(error);
-        })
-
+        }else{
+          console.log(shopCatalogData);
+        }
       },
       /*获取topbanner数据*/
-      GetTopBanner(){
-        TopBanner().then(res=>{
-
-       if(res.data.content.length == 1){
-         this.tBanner = res.data.content[0].map
-       }else{
-
-         if(this.$route.path == '/'){
-           this.tBanner = res.data.content[0].map
-         }else{
-           this.tBanner = res.data.content[1].map
-         }
-       }
+       GetTopBanner(){
+          TopBanner().then(res=>{
+          var home_banner =  res.data.content[0].map
+          this.tBanner_home = home_banner
+          this.tBanner_other  = res.data.content.length == 1 ? home_banner : res.data.content[1].map
+          this.tBanner =  this.$route.path == '/' ?  this.tBanner_home :  this.tBanner_other
         })
       },
       //产品跳转
@@ -290,12 +291,10 @@
         this.mobileDisplay =  this.show1?"display:block":"display:none"
       },
       '$route.path':function () {
-        if(this.$route.path == '/'){
-          this.skyShow = false
-        }else{
-          this.skyShow = true
-        }
-        this.GetTopBanner()
+
+
+        this.skyShow  = this.$route.path == '/' ? false : true
+        this.tBanner  = this.$route.path == '/' ? this.tBanner_home : this.tBanner_other
         this.show1 = false
         this.mobileDisplay = "display:none"
       }
@@ -311,16 +310,14 @@
       }
     },
     created(){
-
-      if(this.$route.path == '/'){
-        this.skyShow = false
-      }else{
-        this.skyShow = true
-      }
+      this.skyShow  = this.$route.path == '/' ? false : true
       this.GetProdutsList()
       this.info()//判断有没有登录
     },
     destroyed: function () {
+
+
+
       window.removeEventListener('scroll', this.handleScroll);   //  离开页面清除（移除）滚轮滚动事件
     }
   }
@@ -328,7 +325,7 @@
 
 <style scoped lang="scss">
 
-  @import '../assets/css/common.css';
+  /*@import '../assets/css/common.css';*/
 
 .head-5g-img{
     width: 100%;
@@ -426,7 +423,7 @@
            display: none;
          }
     .header-right{
-      display: none;
+      display: none !important;
     }
     .home-logo{
       left: 50%;
@@ -459,6 +456,9 @@
       font-style: normal;
       position: absolute;
       color: red;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
     }
 
     /*移动端nav部分*/
@@ -479,8 +479,8 @@
   .header-icon{
     margin-left: 10px;
     margin-right: 10px;
-    font-size: 22px;
-    color: #8b8b8b;
+    /*font-size: 22px;*/
+    /*color: #8b8b8b;*/
     cursor: pointer;
   }
 .a-car{
@@ -493,9 +493,12 @@
   line-height: 10px;
   color: red;
   position: absolute;
-  top: 20px;
-  left:28px;
+  /*top: 20px;*/
+  left:30px;
   font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
 }
   .nav{
     width:100%;
@@ -585,11 +588,15 @@
   top: 18px;
 }
   .header-right{
-    height: 60px;
-    line-height: 60px;
+    /*height: 60px;*/
+    /*line-height: 60px;*/
     position: absolute;
     right:30px;
     top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .search{
       width: 120px;
       height: 25px;
@@ -625,13 +632,6 @@
   }
   .scroll-arrow svg:hover{
     fill: #133285;
-  }
-  .sel_lang span{
-    font-size: 24px;
-  }
-  .lang-item{
-    width: 50px;
-    text-align: center;
   }
   .pro-item{
     width: 250px;

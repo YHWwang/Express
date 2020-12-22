@@ -1,5 +1,5 @@
 <template>
-  <div v-html="bannerData" style="min-height:300px">
+  <div  v-html="bannerData" style="min-height:300px">
   </div>
 </template>
 
@@ -15,12 +15,26 @@
       created() {
         banner().then(res=>{
         this.bannerData = JSON.parse(res.data[0].value).name
-          const s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.src = JSON.parse(res.data[0].value).url+'?v='+ Math.random();
-          s.async = 'true';
-          document.body.appendChild(s);
+          var url = JSON.parse(res.data[0].value).url
+
+            var jsArr = url.split(",")
+            jsArr.forEach(jsItem => {
+              const s = document.createElement('script');
+              s.type = 'text/javascript';
+              s.src = jsItem
+              s.className = 'bv-yang'
+              document.body.appendChild(s);
+            })
         })
+      },
+      destroyed(){
+        var target = document.getElementsByClassName('bv-yang')
+        if(target != null){
+          var len  = target.length
+          for(var i = 0 ;i<len ; i++){
+            document.body.removeChild(target[0])
+          }
+        }
       }
     }
 </script>

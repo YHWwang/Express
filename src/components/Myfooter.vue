@@ -52,12 +52,13 @@
         show:true
       }
     },
-    created() {
-      footerRecommend().then(res=>{
-        this.$refs.productsList.productsList = res.data
-      }).catch(error=>{
-        console.log(error);
-      })
+    async created() {
+      const footerData = await  footerRecommend()
+      if(footerData.status == 200) {
+        this.$refs.productsList.productsList = footerData.data
+      }else{
+        console.log(footerData);
+      }
     },
     beforeMount() {
 

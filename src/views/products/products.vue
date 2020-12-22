@@ -4,8 +4,11 @@
       <router-link to="/"><span>{{$t('views.products.tit3')}}</span></router-link>  &nbsp;&nbsp;<span> > </span>&nbsp;&nbsp;&nbsp;<router-link to="all"><span>{{$t('views.products.msg2')}}</span></router-link><span v-show="isShow"> > {{name}}</span>
     </div>
     <div class="goodsList" v-for="(item,index) in  productsList"  :key="index">
-      <p :key="item.index" class="list-title"><span><i :class="'fa '+(item.check?' fa-chevron-down':'fa-chevron-right')" aria-hidden="true" @click="listUp(index)"></i></span>{{item.cateName}}({{item.productSum}})</p>
-<!--        <PItem :id="item.id" :inx="index" :key="item.index" v-show="item.check" @GetSum="GetSum"></PItem>-->
+      <p :key="item.index" class="list-title">
+        <svg :class="item.check?' ':'rotate-svg'" @click="listUp(index)" t="1606364919017" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2015" width="24" height="24"><path d="M512 0C230.4 0 0 230.4 0 512s230.4 512 512 512 512-230.4 512-512S793.6 0 512 0z m0 938.667c-234.667 0-426.667-192-426.667-426.667S277.333 85.333 512 85.333s426.667 192 426.667 426.667-192 426.667-426.667 426.667z" p-id="2016" fill="#8b8b8b"></path><path d="M793.6 396.8c-17.067-17.067-42.667-17.067-59.733 0L512 618.667 290.133 396.8c-17.066-17.067-42.666-17.067-59.733 0s-17.067 42.667 0 59.733l251.733 251.734c17.067 17.066 42.667 17.066 59.734 0L793.6 456.533c17.067-12.8 17.067-42.666 0-59.733z" p-id="2017" fill="#8b8b8b"></path></svg>
+       <span>
+         {{item.cateName}}({{item.productSum}})
+       </span> </p>
         <PItem :id="item.id" :inx="index" :key="item.index" v-show="item.check"></PItem>
     </div>
     <div>
@@ -13,9 +16,7 @@
   </div>
 </template>
 <script>
-  // import Cookies from 'js-cookie'
   import { GetPcategories } from "@/api/home"//获取所有产品的id
-  import { products } from "@/api/products"//获取id对应下的商品
   import PItem from "@/views/products/PItem"
   export default {
     name: "index",
@@ -29,7 +30,6 @@
         isShow:false,
         name:"",
         totalPrice:this.$store.state.totalPrice,
-        iconclass:"fa fa-chevron-down"
       }
     },
     methods:{
@@ -73,7 +73,6 @@
       totalP(val){
         this.totalPrice = val
       },
-
     },
     created() {
       this.GetList();//获取产品id
@@ -85,6 +84,12 @@
 <style scoped>
   .product-box{
     background: #f1f1f1;
+  }
+  svg{
+    margin-right: 5px;
+  }
+  .rotate-svg{
+    transform: rotate(-90deg);
   }
   @media screen and (min-width: 1700px) {
     .product-box{
@@ -128,6 +133,10 @@
   margin-bottom: 25px;
   font-size: 18px;
   color:  rgba(0,0,0,0.8);
+display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 5px;
 }
   .goodsList i{
     display: inline-block;
@@ -135,9 +144,6 @@
     height: 25px;
     line-height: 25px;
     text-align: center;
-    /*color:  rgba(0,0,0,0.8);*/
-    /*background: red;*/
-    /*color: rgba(0,0,0,0.8);*/
     color:#a4a4a4;
     border: 1px solid #a4a4a4;
     border-radius:25px ;

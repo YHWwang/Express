@@ -158,7 +158,8 @@
       left: calc(100% + 10px);
       top: 0;
       width: 100%;
-      height: 100%;
+      /*height: 100%;*/
+      height: calc(100% + -72px);
       overflow: hidden;
       box-shadow: 0 0 10px #dfdfdf;
       .zoom {

@@ -25,7 +25,9 @@
                {{$t('views.Footer.ShippingGuide.msg_3')}}
             </p>
             <p>
-	          	{{$t('views.Footer.ShippingGuide.msg_3_2')}}<br>  {{$t('views.Footer.ShippingGuide.msg_3_3')}} <br>{{$t('views.Footer.ShippingGuide.msg_3_4')}}
+	          	{{$t('views.Footer.ShippingGuide.msg_3_2')}}<br>  
+			{{$t('views.Footer.ShippingGuide.msg_3_3')}} <br>
+			{{$t('views.Footer.ShippingGuide.msg_3_4')}}
             </p>
             <p class="note">
                {{$t('views.Footer.ShippingGuide.note')}}

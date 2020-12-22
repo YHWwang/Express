@@ -84,6 +84,7 @@ export default{
         p5:'Checkout',
         title2:'You May Also Like',
         add:'Add to cart',
+        alert:"Can't reduce it anymore",
     },
     views:{
         home_vue:{
@@ -646,8 +647,10 @@ export default{
                 phone:'Phone Number',
                 detail:'Address',
                 city:'City',
-                country:'Destination Country',
+                country:'Country',
+                de_country:'Destination Country',
                 country_placeholder:'--Country--',
+                province1:'province',
                 province:'State / Province / Region',
                 province_placeholder:'--Place Select--',
                 postCode:'"ZIP / Postal Code',

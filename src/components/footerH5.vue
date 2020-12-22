@@ -12,6 +12,7 @@
       <li @click="handleClick(2)">
         <div class="nav-title">{{$t('myfooter.txt2')}}<i :class="[activeClass==2?'icon-h icon-active':'icon-h']"></i></div>
         <div class="nav-list" :style="activeClass==2?'display:block':'display:none'">
+          <P><router-link to="/vantaggi" class="new-shop-link">Vantaggi dello Store Italiano</router-link></P>
           <P><router-link to="/paymentmethods" class="new-shop-link">{{$t('myfooter.msg2_1')}}</router-link></P>
           <P><router-link to="/shipping-guide"class="new-shop-link">{{$t('myfooter.msg2_2')}}</router-link></P>
           <P><router-link to="/return" class="new-shop-link">{{$t('myfooter.msg2_3')}}</router-link></P>

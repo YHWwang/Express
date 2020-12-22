@@ -50,515 +50,563 @@
        show:-1,
        // https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/5G-20200922115107394.jpg
        productsList:[
-         {time: "Fine 2020", name: "BL6000 Pro 5G", config:[
-            "Il primo 5G al mondo",
-             "Telefono outdoor robusto",
-             "IP68 e IP69K e MIL-STD-810G"
+         {
+           time:"Mid Dec 2020",
+           name:"Tab 9",
+           config:[
+             'Rugged Tablet',
            ],
-           img:"https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/5G-20200922115107394.jpg",
-           href: "https://promo.blackview.hk/bl6000pro-5g/"
+           img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/Tab-10-20201116101109647.jpg',
+           href:''
          },
          {
-           time:"Metà ottobre",
+           time:"Early Dec 2020",
+           name:"Airbuds1",
+           config:[
+             'True Wireless Earbuds',
+             'Charging Case',
+             'Long Battery Life'
+           ],
+           img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/TWS-1-20201116101109643.jpg',
+           href:''
+         },
+         {
+           time:"Early Nov 2020",
+           name:"R3 Pro",
+           config:[
+             'Smartwatch',
+             '5ATM Waterproof',
+             'Heart Rate',
+             'Sleep Monitor',
+             'Ultra-Long Battrey',
+             'Men Women Sports',
+             'For IOS Android Phone'
+           ],
+           img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/R3-Pro-20201116101109647.jpg',
+           href:'https://www.blackview.hk/shop/buy/r3pro'
+         },
+         {
+           time:"Mid Nov 2020",
+           name:"BL6000 Pro 5G",
+           config:[
+             'IP68&IP69K&MIL-STD-810G',
+             '-30° Survival Mode',
+              '5G/4G Global Bands',
+              'HDR&Ultra Wide&Night Mode',
+              '4K 30fps&HDR Video',
+              '5280mAh Battery',
+              'Liquid Cooling system',
+              'Android 10&NFC',
+              'Air Pressure Sensor',
+              'GPS&GLONASS&Beidou&',
+              'Galileo&QZSS'
+           ],
+           img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/BL6000-Pro-20201116101109655.jpg',
+           href:'https://promo.blackview.hk/bl6000pro-5g/'
+         },
+         {
+           time:"Middle Oct 2020",
            name:"BV5100",
            config:[
-              'IP68 e IP69K e MIL-STD-810G',
-              'Schermo intero da 5,7 "18: 9',
-              'Processore octa-core',
-              '4 GB + 128 GB',
-              'Sony® IMX214 13M anteriore',
-              'Sony® IMX134 16M triplo posteriore',
-              '5580 mAh ， Ricarica wireless',
-              'GPS e GLONASS e Beidou e Galileo',
-              'Sblocco ad impronta digitale, NFC',
-              'Bande globali ，Android10',
+              'IP68&IP69K&MIL-STD-810G',
+              '5.7" 18:9 Full Screen',
+              'Octa-core processor',
+              '4GB+128GB',
+              'Sony® IMX214 13M front',
+              'Sony® IMX134 16M triple rear',
+              '5580mAh，Wireless Charging',
+              'GPS&GLONASS&Beidou&Galileo',
+              'Fingerprint unlock, NFC',
+              'Global bands，Android10',
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/5100-20200922115034232.jpg',
            href:'https://promo.blackview.hk/bv5100/'
          },
          {
-           time:"Fine settembre",
+           time:"End Sep 2020",
            name:"BV5100 Pro",
            config:[
-             'Scansione Honeywell® N6603',
-              'Imager 2D con ottica standard ed estesa',
+             'Honeywell® N6603 Scanning',
+              '2D Imager with Standard and Extended Range Optic',
               'NFC，PTT',
-              'IP68 e IP69K e MIL-STD-810G',
-              '5580 mAh ， ricarica wireless',
-              'GPS e GLONASS e Beidou e Galileo',
-              'Bande globali ， Android10',
-              'Schermo intero da 5,7 "18: 9',
-              'Sblocco delle impronte digitali',
+              'IP68&IP69K&MIL-STD-810G',
+              '5580mAh，wireless charging',
+              'GPS&GLONASS&Beidou&Galileo',
+              'Global bands，Android10',
+              '5.7" 18:9 Full Screen',
+              'Fingerprint unlock',
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/5100pro-20200922115034232.jpg',
            href:''
          },
          {
-           time:"Metà Settembre",
+           time:"Middle Sep 2020",
            name:"BV6300",
            config:[
-             'Telefono robusto da 11,6 mm',
-             'IP68 e IP69K e MIL-STD-810G',
-             'Sony® IMX258 13MP Posteriore',
-              'Fotocamera posteriore quadrupla',
-              'Campo visivo di 120 °',
-              'HDR e modalità Super Night',
-              'Bellezza del viso',
-              'Batteria grande da 4380 mAh',
+             '11.6mm Thinnest RuggedPhone',
+             'IP68&IP69K&MIL-STD-810G',
+             'Sony® IMX258 13MP Rear',
+              'Quad Rear Camera',
+              '120° Field of View',
+              'HDR & Super Night Mode',
+              'Face Beauty',
+              '4380mAh big battery',
               'MediaTek Helio A25，12nm',
-              '3 GB + 32 GB ， Android 10',
-              'Schermo intero da 5,7 "18: 9',
-              'Bande globali e Dual 4G VoLTE',
+              '3GB+32GB，Android 10',
+              '5.7" 18:9 Full Screen',
+              'Global Bands & Dual 4G VoLTE',
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/6300-20200922115034224.jpg',
            href:'https://promo.blackview.hk/bv6300/'
          },
          {
-           time:"Inizio settembre",
+           time:"Early Sep 2020",
            name:"BV9900E",
            config:[
-             'IP68 e IP69K e MIL-STD-810G',
-             'Funzioni disponibili a -30 ° C',
-             'Vetro Corning® Gorilla® 5',
+             'IP68&IP69K&MIL-STD-810G',
+             'Functions available at -30°C',
+             'Corning® Gorilla® Glass 5',
              'MediaTek Helio P90',
-             'Fotocamera Sony® 48MP',
-             'Riprese video 4K',
-             'Batteria da 6 GB + 128 GB ， 4380 mAh',
-             'Bande globali e Dual 4G VoLTE',
-             'GPS e GLONASS e BeiDou e Galileo',
-             'Schermo Waterdrop da 5,84 pollici FHD +',
-             'NFC, Android 10'
+             'Sony® 48MP Camera',
+             '4K video shooting',
+             '6GB+128GB，4380mAh Battery',
+             'Global Bands & Dual 4G VoLTE',
+             'GPS&GLONASS&BeiDou&Galileo',
+             'FHD+ 5.84" Waterdrop Screen',
+             'NFC,Android 10'
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/9900e-20200923093341659.jpg',
            href:'https://www.blackview.hk/shop/buy/bv9900e'
          },
          {
-           time:"All'inizio di agosto",
+           time:"Early Aug 2020",
            name:"BV4900",
            config:[
-             'Rugged Phone "Space Capsule"',
-             'IP68 e IP69K e MIL-STD-810G',
-             'Fotocamera quadrupla Sony® da 8 MP',
-              'Batteria da 5580 mAh',
-              'NFC e 4G VoLTE',
-              'GPS e Glonass e Beidou e Galileo',
+             '"Space Capsule" RuggedPhone',
+             'IP68&IP69K&MIL-STD-810G',
+             'Sony® 8MP Quad Camera',
+              '5580mAh big battery',
+              'NFC & 4G VoLTE',
+              'GPS&Glonass&Beidou&Galileo',
               'MTK Helio A22',
-              '3 GB + 32 GB ， Android 10',
-              'Schermo intero da 5,7 "18: 9'
+              '3GB+32GB，Android 10',
+              '5.7" 18:9 Full Screen'
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/4900-2020092211511573.jpg',
            href:'https://www.blackview.hk/shop/buy/bv4900'
          },
          {
-           time:"Inizio di giugno",
+           time:"Early June 2020",
            name:"BV6300 Pro",
            config:[
-             'Telefono robusto da 11,6 mm',
-             'IP68 e IP69K e MIL-STD-810G',
-             'Fotocamera quadrupla Samsung® da 16 MP',
-              'Campo visivo di 120 °',
-              'HDR e modalità Super Night',
-              'Schermo intero da 5,7 "18: 9',
-              'Batteria grande da 4380 mAh',
-              '6 GB + 128 GB ， Android 10',
-              'Bande globali e Dual 4G VoLTE'
+             '11.6mm Thinnest RuggedPhone',
+             'IP68&IP69K&MIL-STD-810G',
+             'Samsung® 16MP Quad Camera',
+              '120° Field of View',
+              'HDR & Super Night Mode',
+              '5.7” 18:9 Full Screen',
+              '4380mAh big battery',
+              '6GB+128GB，Android 10',
+              'Global Bands & Dual 4G VoLTE'
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/6300pro-20200923093131500.jpg',
            href:'https://www.blackview.hk/shop/buy/bv6300pro'
          },
          {
-           time:"Fine maggio",
+           time:"End May 2020",
            name:"A80",
            config:[
              '8.8mm',
-             'Schermo Waterdrop da 6,21 pollici',
-             'Fotocamera Sony® IMX258 da 13 MP',
-             'Fotocamera posteriore quadrupla',
-             'Batteria grande da 4200 mAh',
+             '6.21" Waterdrop Screen',
+             'Sony® IMX258 13MP Camera',
+             'Quad Rear Camera',
+             '4200mAh Big Battery',
              'Android 10 Go',
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/a80-20200923093131705.jpg',
            href:'https://www.blackview.hk/shop/buy/a80'
          },
-         {time: " aprile", name: "BV6900", config:[
-             'Schermo da 5,84 pollici FHD + waterdrop',
-             "IP68 e IP69K e MIL-STD-810G",
-             "Samsung® 16MP quad posteriore",
-             "Samsung® 16MP anteriore",
+         {time: "April 2020",
+           name: "BV6900",
+           config:[
+             '5.84" FHD+ waterdrop screen',
+             "IP68&IP69K&MIL-STD-810G",
+             "Samsung® 16MP quad rear",
+             "Samsung® 16MP front",
              "MediaTek MT6757",
-             "4 GB + 64 GB ， Bande globali",
-             "Batteria grande da 5580 mAh",
-             "Ricarica wireless da 10 W.",
+             "4GB + 64GB，Global bands",
+             "5580mAh big battery",
+             "10W Wireless Charging",
              "Corning Gorilla Glass 5",
-             "NFC e Google Pay"
+             "NFC & Google Pay"
            ],
            img:'https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/6900-20200923093131668.jpg',
            href: ""
          },
-         {time: "Marzo 2020", name: "BV9900 Pro", config:[
-           "Thermal di FLIR® Lepton®",
-             "IP68 e IP69K e MIL-STD-810G",
+         {time: "Mar 2020", name: "BV9900 Pro", config:[
+           "Thermal by FLIR® Lepton®",
+             "IP68&IP69K&MIL-STD-810G",
              "MediaTek Helio P90",
-             "Fotocamera Sony® 48MP",
-             "Batteria da 8 GB + 128 GB ， 4380 mAh",
+             "Sony® 48MP Camera",
+             "8GB+128GB，4380mAh Battery",
              "NFC, Face & Fingerprint Unlock",
-             "Bande LTE globali",
+             "Global LTE Bands",
              "Dual 4G VoLTE",
-             "GPS e GLONASS e BeiDou e Galileo",
-             'Schermo Waterdrop da 5,84 pollici FHD +',
-             "Vetro Corning® Gorilla® 5"],
+             "GPS&GLONASS&BeiDou&Galileo",
+             'FHD+ 5.84" Waterdrop Screen',
+             "Corning® Gorilla® Glass 5"],
            img: require("../../assets/img/productPlan/bv9900pro.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9900pro"
          },
-         {time: "Febbraio 2020", name: "BV9600E", config:[
-             "IP68 e IP69K e MIL-STD-810G",
-             "MTK Helio P70 ， Netcom completo",
-             "Processore AI ， Fotocamera notturna",
-             "Schermo intero AMOLED da 6,21 “19: 9",
-             "Doppio Samsung 16MP + 8MP posteriore",
-             "Batteria da 5580 mAh",
-             "4 GB + 128 GB ， Android 9.0",
-             "Sblocco viso e impronta digitale ， NFC"
+         {time: "Feb 2020", name: "BV9600E", config:[
+             "IP68&IP69K&MIL-STD-810G",
+             "MTK Helio P70，Full Netcom",
+             "AI Processor，Night Camera",
+             "6.21” AMOLED 19:9 Full Screen",
+             "Dual Samsung 16MP+8MP rear",
+             "5580mAh battery",
+             "4GB+128GB，Android 9.0",
+             "Face&Fingerprint Unlock，NFC"
            ], img:require("../../assets/img/productPlan/bv9600e.jpg") , href: "https://www.blackview.hk/shop/buy/bv9600e"},
-         {time: "Dicembre 2019", name: "BV9900", config: [
-           "IP68 e IP69K e MIL-STD-810G",
+         {time: "Dec 2019", name: "BV9900", config: [
+           "IP68&IP69K&MIL-STD-810G",
            "MediaTek Helio P90",
              "Sony® IMX582 48MP",
-            "Fotocamera ultra grandangolare da 16 MP",
-            "8 GB di RAM + 256 GB di ROM",
-            "Batteria da 4380 mAh",
-            "Ricarica senza fili",
-            "NFC, bande LTE globali",
-            "GPS e GLONASS e BeiDou e Galileo",
-            'Schermo Waterdrop da 5,84 pollici FHD +',
-            "Vetro Corning® Gorilla® 5"
+            "16MP Ultra-Wide Angle Camera",
+            "8GB RAM + 256GB ROM",
+            "4380mAh Battery",
+            "Wireless Charging",
+            "NFC,Global LTE Bands",
+            "GPS&GLONASS&BeiDou&Galileo",
+            'FHD+ 5.84" Waterdrop Screen',
+            "Corning® Gorilla® Glass 5"
            ],
            img: require("../../assets/img/productPlan/bv9900.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9900"
          },
-         {time: "Novembre 2019", name: "A80 Pro", config:[
-             "HD + 6,49 '' In-cell",
-              "Schermo Waterdrop",
-              "Fotocamera Sony IMX258 13MP",
-              "Fotocamera posteriore quadrupla",
-              "Processore MediaTek Helio P25",
-              "4 GB di RAM + 64 GB di ROM",
-              "Batteria grande da 4680 mAh",
-              "Ricarica rapida 5V / 2A, tipo C.",
-              "Sblocco viso e impronta digitale",
-              "Bande LTE globali"
+         {time: "Nov 2019", name: "A80 Pro", config:[
+             "HD+ 6.49'' In-cell",
+              "Waterdrop Screen",
+              "Sony IMX258 13MP Camera",
+              "Quad Rear Camera",
+              "MediaTek Helio P25 Processor",
+              "4GB RAM + 64GB ROM",
+              "4680mAh Big Battery",
+              "5V/2A Fast Charging, Type-C",
+              "Face & Fingerprint Unlock",
+              "Global LTE Bands"
            ]
            , img: require("../../assets/img/productPlan/a80pro.jpg"), href: "https://www.blackview.hk/shop/buy/a80pro"
          },
 
-         {time: "OOttobre 2019", name: "BV9800 Pro", config: [
-             "Thermal di FLIR® Lepton®",
-              "Tripla fotocamera Sony® da 48MP",
-              "Modalità ripresa notturna",
-              "IP68 e IP69K e MIL-STD-810G",
-              "Vetro Corning® Gorilla® 5",
-              "Batteria da 6580 mAh",
-              "6 GB + 128 GB ， MTK P70",
-              "Schermo FHD + Waterdrop da 6,3 ”",
-              "GPS, GLONASS E BEIDOU",
-              "NFC ， Android 9.0"
+         {time: "Oct 2019", name: "BV9800 Pro", config: [
+             "Thermal by FLIR® Lepton®",
+              "Sony® 48MP triple Camera",
+              "Night shot mode",
+              "IP68&IP69K&MIL-STD-810G",
+              "Corning® Gorilla® Glass 5",
+              "6580mAh Battery",
+              "6GB+128GB，MTK P70",
+              "6.3” FHD+ Waterdrop Screen",
+              "GPS & GLONASS & BEIDOU",
+              "NFC，Android 9.0"
            ],
            img: require("../../assets/img/productPlan/bv9800pro.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9800pro"
          },
-         {time: "Ottobre 2019", name: "BV9800", config: [
-             "Tripla fotocamera Sony® da 48MP",
-             "120 ° ultra grandangolare",
-             "Modalità ripresa notturna",
-             "IP68 e IP69K e MIL-STD-810G",
-             "Batteria da 6580 mAh",
-             "6 GB + 128 GB ， MTK P70",
-             "Schermo FHD + Waterdrop da 6,3” ",
-             "GPS, GLONASS E BEIDOU",
-             "NFC ， Android 9.0"
+         {time: "Oct 2019", name: "BV9800", config: [
+             "Sony® 48MP triple Camera",
+             "120° Ultra-Wide Angle",
+             "Night shot mode",
+             "IP68&IP69K&MIL-STD-810G",
+             "6580mAh Battery",
+             "6GB+128GB，MTK P70",
+             "6.3” FHD+ Waterdrop Screen",
+             "GPS & GLONASS & BEIDOU",
+             "NFC，Android 9.0"
            ], img: require("../../assets/img/productPlan/bv9800.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9800"
          },
-         {time: "Metà agosto", name: "BV9100",
+         {time: "Middle Aug", name: "BV9100",
            config:[
-                "La batteria più grande al mondo",
+                "World's biggest battery",
                 "13000 mAh",
-                "Ricarica super veloce da 30 W.",
-                'Schermo FHD + Waterdrop da 6,3 "',
+                "30W Super-Fast Charging",
+                "IP68&IP69K&MIL-STD-810G",
                 "6.3” FHD+ Waterdrop Screen",
-                "Frontale Samsung 16MP",
-                "Doppio Sony IMX298 16MP posteriore",
-                "4 GB + 64 GB ， MTK P35",
-                "NFC ， Android 9.0"
+                "Samsung 16MP front",
+                "Dual Sony IMX298 16MP rear",
+                "4GB+64GB，MTK P35",
+                "NFC，Android 9.0"
            ],
            img: require("../../assets/img/productPlan/bv9100.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9100"
          },
-         {time: "Inizio di agosto", name: "BV9500 Plus", config:[
-              "IP68 e IP69K e MIL-STD-810G",
-              "MTK P70 ， Netcom completo",
-              "Batteria BAK da 10000 mAh",
-              "Ricarica rapida 12V / 2A",
-              "Ricarica wireless da 10 W.",
-              'Schermo intero 18: 9 ， 5,7 "FHD +',
-              "Samsung 3L8 13MP anteriore",
-              "Doppio Sony IMX298 16MP posteriore",
-              "4 GB + 64 GB ， Android 9.0"
+         {time: "Early Aug ", name: "BV9500 Plus", config:[
+              "IP68&IP69K&MIL-STD-810G",
+              "MTK P70，Full Netcom",
+              "10000mAh BAK battery",
+              "12V/2A Fast Charging",
+              "10W Wireless Charging",
+              "18:9 Full Screen，5.7” FHD+",
+              "Samsung 3L8 13MP front",
+              "Dual Sony IMX298 16MP rear",
+              "4GB+64GB，Android 9.0"
            ],
            img: require("../../assets/img/productPlan/bv9500plus.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv9500plus"
          },
-         {time: "Inizio di agosto", name: "BV5900", config: [
-            "Il telefono robusto più potente del mondo",
-            "IP68 e IP69K e MIL-STD-810G",
-            "SoC Helio A22 (MT6761)",
-            "CPU da 12 nm",
-            'Schermo intero da 5,7 "Waterdrop',
-            "Doppia fotocamera Sony 13MP AI",
+         {time: "Early Aug", name: "BV5900", config: [
+            "World's strongest rugged phone",
+            "IP68&IP69K&MIL-STD-810G",
+            "Helio A22 (MT6761) SoC",
+            "12nm CPU",
+            '5.7" Waterdrop Full Screen',
+            "Sony 13MP AI Dual Cameras",
             "3GB+32GB，NFC",
             "Android 9.0"
            ],
            img: require("../../assets/img/productPlan/bv5900.jpg"),
            href: "https://www.blackview.hk/shop/buy/bv5900"
          },
-         {time: "Inizio di luglio", name: "BV9600", config:[
-            "IP68 e IP69K e MIL-STD-810G",
-            "MTK Helio P70 ， Netcom completo",
-            "Processore AI ， Fotocamera notturna",
-            'Schermo intero AMOLED da 6,21 "19: 9',
-            "Doppio Samsung 16MP + 8MP posteriore",
-            "Batteria da 5580 mAh",
-            "4 GB + 64 GB ， Android 9.0",
-            "Sblocco viso e impronta digitale ， NFC"
+         {time: "Early July", name: "BV9600", config:[
+            "IP68&IP69K&MIL-STD-810G",
+            "MTK Helio P70，Full Netcom",
+            "AI Processor，Night Camera",
+            "6.21” AMOLED 19:9 Full Screen",
+            "Dual Samsung 16MP+8MP rear",
+            "5580mAh battery",
+            "4GB+64GB，Android 9.0",
+            "Face&Fingerprint Unlock，NFC"
            ], img: require("../../assets/img/productPlan/bv9600.jpg"), href: ""},
-         {time: "Inizio luglio", name: "BV6100", config:[
-              "Il telefono robusto più grande del mondo",
-              'Schermo FullView da 6,88 "19: 9',
-              "IP68 e IP69K e MIL-STD-810G",
-              "Batteria grande da 5580 mAh",
-              "Fotocamera subacquea",
-              "Vetro davanti e dietro",
-              "GPS e Glonass e Beidou e Galileo",
-              "NFC ， Android 9.0 Pie"
+         {time: "Early July", name: "BV6100", config:[
+              "World's largest rugged phone",
+              "6.88” 19:9 FullView Screen",
+              "IP68&IP69K&MIL-STD-810G",
+              "5580mAh large battery",
+              "Underwater camera",
+              "Glass on the front&back",
+              "GPS&Glonass&Beidou&Galileo",
+              "NFC，Android 9.0 Pie"
            ], img:require("../../assets/img/productPlan/bv6100.jpg"), href: "https://www.blackview.hk/shop/buy/bv9600"},
-         {time: "Fine maggio", name: "A60 Pro(4G)", config:[
-             "SoC Helio A22 (MT6761)",
-             "CPU da 12 nm",
-             'Schermo intero Waterdrop da 6.088 "',
-             "Batteria agli ioni di litio da 4080 mAh",
-             "Doppia fotocamera da 5MP + 8MP",
-             "3 GB + 16 GB ， Android 9.0 Pie",
-             "Sblocco viso e impronta digitale",
-             "Due Nano Card, una TF Card",
-             "Colore sfumato"
+         {time: "End May", name: "A60 Pro(4G)", config:[
+             "Helio A22 (MT6761) SoC",
+             "12nm CPU",
+             '6.088" Waterdrop Full Screen',
+             "4080mAh Li-ion battery",
+             "5MP+8MP Dual camera",
+             "3GB+16GB，Android 9.0 Pie",
+             "Face&Fingerprint Unlock",
+             "Two Nano Cards, One TF Card",
+             "Gradient color"
            ], img: require("../../assets/img/productPlan/a69pro.jpg"), href: "https://www.blackview.hk/shop/buy/a60pro"},
-         {time: "Maggio 2019", name: "BV9700 Pro", config: [
-             "IP68 e IP69K e MIL-STD-810G",
-             "MTK Helio P70 ， Netcom completo",
-             "Fotocamera per visione notturna",
-             "Rilevamento della qualità dell'aria e della pressione dell'aria",
-             "Rilevamento della frequenza cardiaca",
-             "Schermo da 5,84 pollici FHD + 18: 9",
-             "Fotocamera frontale Samsung da 16MP",
-             "Doppio Samsung 16MP + 8MP posteriore",
-             "6 GB + 128 GB ， Android 9.0 Pie",
-             "4380 mAh ， Ricarica wireless",
-             "Sblocco viso e impronta digitale ， NFC"
+         {time: "May.2019", name: "BV9700 Pro", config: [
+             "IP68&IP69K&MIL-STD-810G",
+             "MTK Helio P70，Full Netcom",
+             "Night Vision Camera",
+             "Air quality&Air pressure detect",
+             "Heart rate detect",
+             "5.84” FHD+ 18:9 Screen",
+             "Samsung 16MP front camera",
+             "Dual Samsung 16MP+8MP rear",
+             "6GB+128GB，Android 9.0 Pie",
+             "4380mAh，Wireless charging",
+             "Face&Fingerprint Unlock，NFC"
            ], img:require("../../assets/img/productPlan/bv9700pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv9700pro"},
-         {time: "Fine Aprile", name: "BV5500 Pro(4G)", config:[
-             'IP68 e IP69K e MIL-STD-810G',
-             'Schermo intero da 5,5 "18: 9',
-             'Doppio Sony da 8MP sul retro',
-             'Batteria grande da 4400 mAh',
+         {time: "End Apr", name: "BV5500 Pro(4G)", config:[
+             'IP68&IP69K&MIL-STD-810G',
+             '5.5" 18:9 Full Screen',
+             'Dual Sony 8MP rear',
+             '4400mAh big battery',
              '3GB+16GB，NFC',
              'Android 9.0'
            ], img: require("../../assets/img/productPlan/bv5500pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv5500pro"},
-         {time: "Fine Marzo", name: "A60", config:[
-             'Schermo intero Waterdrop da 6.088 "',
-             'Batteria agli ioni di litio ATL da 4080 mAh',
-             'Doppia fotocamera da 5MP + 13MP',
-             'ROM da 16 GB',
-             'Colore sfumato',
+         {time: "End Mar", name: "A60", config:[
+             '6.088" Waterdrop Full Screen',
+             '4080mAh ATL Li-ion battery',
+             '5MP+13MP Dual camera',
+             '16GB ROM',
+             'Gradient color',
              'Android 8.1 Oreo (Go Edition)'
            ], img:require("../../assets/img/productPlan/a60.jpg"), href: ""},
-         {time: "Febbraio 2019", name: "MAX 1", config:[
-             'Telefono con proiettore laser',
-             'Scansione punti laser MEMS',
-             'Messa a fuoco completamente automatica',
-             '5 ore di videoproiezione',
-             '150 ore di riproduzione di musica',
-             'Schermo AMOLED da 6 "18: 9',
-             'Risoluzione 2160 * 1080',
+         {time: "Feb.2019", name: "MAX 1", config:[
+             'Laser projector phone',
+             'MEMS laser point scanning',
+             'Full-automatic focusing',
+             '5 hours video projection',
+             '150 hours play music',
+             '6" 18:9 AMOLED Screen',
+             '2160*1080 resolution',
              '6GB+64GB',
              'Android 8.1'
            ], img: require("../../assets/img/productPlan/max.jpg"), href: ""},
-         {time: "Fine dicembre", name: "BV5500", config:[
-             'IP68 e IP69K e MIL-STD-810G',
-             'Schermo intero da 5,5 "18: 9',
-             'Doppio Sony da 8MP sul retro',
-             'Batteria BAK da 4400 mAh',
+         {time: "End Dec", name: "BV5500", config:[
+             'IP68&IP69K&MIL-STD-810G',
+             '5.5" 18:9 Full Screen',
+             'Dual Sony 8MP rear',
+             '4400mAh BAK battery',
              'Android 8.1'
            ], img:require("../../assets/img/productPlan/bv5500.jpg"), href: "https://www.blackview.hk/shop/buy/bv5500"},
-         {time: "Inizio nov", name: "BV9600 Pro", config:[
+         {time: "Early Nov", name: "BV9600 Pro", config:[
             'MediaTek Helio P60',
-            'Processore AI ， Netcom completo',
-            'IP68 e IP69K e MIL-STD-810G',
-            'Schermo intero AMOLED 19: 9 da 6,21 pollici',
-            'Doppio Samsung 16MP + 8MP posteriore',
-            'Batteria BAK da 5580 mAh',
-            '9V / 2A ， Ricarica wireless',
-            '6 GB + 128 GB ， Android 8.1',
-            'Sblocco viso e impronta digitale ， NFC'
+            'AI Processor，Full Netcom',
+            'IP68&IP69K&MIL-STD-810G',
+            '6.21" AMOLED 19:9 Full Screen',
+            'Dual Samsung 16MP+8MP rear',
+            '5580mAh BAK battery',
+            '9V/2A， Wireless Charging',
+            '6GB+128GB，Android 8.1',
+            'Face&Fingerprint Unlock，NFC'
            ], img: require("../../assets/img/productPlan/bv9600pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv9600pro"},
-         {time: "Inizio Ottobre", name: "BV1000", config: [
-             'Schermo da 2,4 "， IP68',
-             'Batteria BAK 3000mAh',
-             '30 ore di conversazione',
-             '25 giorni di stand-by',
+         {time: "Early Oct", name: "BV1000", config: [
+             '2.4" Screen，IP68',
+             '3000mAh BAK battery',
+             '30 hours talk-time',
+             '25 days stand-by-time',
              'Dual sim dual standby',
-             'Distanza PhoneTorch 50M',
-             'Prezzi bassissimi'
+             '50M PhoneTorch distance',
+             'Ultra-low prices'
            ], img: require("../../assets/img/productPlan/bv1000.jpg"), href: ""},
-         {time: "Fine agosto", name: "BV6800 Pro", config:[
-             'IP68 e IP69K e MIL-STD-810G',
-             'Super batteria da 6580 mAh',
-             'Ricarica wireless da 10 W.',
-             'Display 18: 9 FHD + IPS da 5,7 "',
-             'Doppio Sony IMX298 16MP posteriore',
-             'Fotocamera frontale da 8 MP',
-             '4 GB + 64 GB ， NFC',
-             'Facile da portare ovunque',
+         {time: "End Aug", name: "BV6800 Pro", config:[
+             'IP68&IP69K&MIL-STD-810G',
+             '6580mAh super battery',
+             '10W Wireless Charging',
+             '18:9 5.7" FHD+ IPS Display',
+             'Dual Sony IMX298 16MP rear',
+             '8MP front camera',
+             '4GB+64GB，NFC',
+             'Easy to take it everywhere',
              'Android 8.0'
            ], img: require("../../assets/img/productPlan/bv6800pro.jpg"), href: ""},
-         {time: "Inizio di agosto", name: "BV9500 Pro", config: [
-              'IP68 e IP69K e MIL-STD-810G',
-              'Interfono LAN',
-              '12V / 2A ， Ricarica wireless',
-              'Batteria BAK da 10000 mAh',
-              'MT6763T ， Netcom completo',
-              'Schermo intero 18: 9 ， 5,7 "FHD +',
-              'Samsung 3L8 13MP anteriore',
-              'Doppio Sony IMX298 16MP posteriore',
-              '6 GB + 128 GB ， Android 8.1'
+         {time: "Early Aug", name: "BV9500 Pro", config: [
+              'IP68&IP69K&MIL-STD-810G',
+              'LAN Intercom',
+              '12V/2A， Wireless Charging',
+              '10000mAh BAK battery',
+              'MT6763T，Full Netcom',
+              '18:9 Full Screen，5.7" FHD+',
+              'Samsung 3L8 13MP front',
+              'Dual Sony IMX298 16MP rear',
+              '6GB+128GB，Android 8.1'
                    ], img: require("../../assets/img/productPlan/bv9500pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv9500pro"},
-         {time: "Metà luglio", name: "A30", config:[
-              'Schermo da 5,5 "19: 9 FullView',
-              'Doppia fotocamera da 5MP + 8MP',
-              'Batteria da 2500 mAh',
+         {time: "Middle July", name: "A30", config:[
+              '5.5" 19:9 FullView Screen',
+              '5MP+8MP Dual cameras',
+              '2500mAh battery',
               'Face ID',
               'Android 8.1 Oreo'
            ], img:require("../../assets/img/productPlan/a30.jpg"), href: ""},
-         {time: "Inizio luglio", name: "BV9500", config:[
-             'IP68 e IP69K e MIL-STD-810G',
-             'Ricarica wireless da 10 W.',
-             'Batteria BAK da 10000 mAh',
-             'MT6763T ， Netcom completo',
-             'Schermo intero 18: 9 ， 5,7 "FHD +',
-             'Samsung 3L8 13MP anteriore',
-             'Doppio Sony IMX298 16MP posteriore',
+         {time: "Early July", name: "BV9500", config:[
+             'IP68&IP69K&MIL-STD-810G',
+             '10W Wireless Charging',
+             '10000mAh BAK battery',
+             'MT6763T，Full Netcom',
+             '18:9 Full Screen，5.7" FHD+',
+             'Samsung 3L8 13MP front',
+             'Dual Sony IMX298 16MP rear',
              '4GB+64GB，Android 8.1'
            ], img: require("../../assets/img/productPlan/bv9500.jpg"), href: ""},
-         {time: "Fine giugno", name: "A20 Pro", config:[
+         {time: "End June", name: "A20 Pro", config:[
              'Android 8.1 Oreo',
-             'Schermo intero da 5,5 "18: 9',
-             'Batteria BAK 3000mAh',
-             'Doppia fotocamera da 5MP + 8MP',
-             'MT6739 2 GB + 16 GB'
+             '5.5" 18:9 Full Screen',
+             '3000mAh BAK battery',
+             '5MP+8MP Dual cameras',
+             'MT6739 2GB+16GB'
            ], img: require("../../assets/img/productPlan/a20pro.jpg"), href: ""},
-         {time: "All'inizio di giugno", name: "BV5800", config:[
-              'IP68 e MIL-STD-810G',
-              'Batteria BAK da 5580 mAh ， 5 V / 2 A.',
-              'MT6739 ， Doppia rete 4G',
-              'Schermo intero 18: 9 ， 5,5 "HD +',
-              'Doppio Sony IMX134 8MP + 13MP',
+         {time: "Early June", name: "BV5800", config:[
+              'IP68&MIL-STD-810G',
+              '5580mAh BAK battery，5V/2A',
+              'MT6739，Dual 4G Network',
+              '18:9 Full Screen，5.5" HD+',
+              'Dual Sony IMX134 8MP+13MP',
               '2GB+16GB，NFC',
               'Android 8.1'
            ], img: require("../../assets/img/productPlan/bv5800.jpg"), href: ""},
-         {time: "Metà maggio", name: "BV5800 Pro", config:[
-             'IP68 e MIL-STD-810G',
-             '5V / 2A ， Ricarica wireless',
-             'Batteria BAK da 5580 mAh',
-             'MT6739 ， Doppia rete 4G',
-             'Schermo intero 18: 9 ， 5,5 "HD +',
-             'Doppio Sony IMX134 8MP + 13MP',
+         {time: "Middle May", name: "BV5800 Pro", config:[
+             'IP68&MIL-STD-810G',
+             '5V/2A，Wireless Charging',
+             '5580mAh BAK battery',
+             'MT6739，Dual 4G Network',
+             '18:9 Full Screen，5.5" HD+',
+             'Dual Sony IMX134 8MP+13MP',
              '2GB+16GB，NFC',
              'Android 8.1'
            ], img: require("../../assets/img/productPlan/bv5800pro.jpg"), href: ""},
-         {time: "Inizio aprile", name: "A20", config:[
+         {time: "Early April", name: "A20", config:[
              'Android GO',
-             'Schermo intero da 5,5 "18: 9',
-             'Batteria BAK 3000mAh',
-             'Doppia fotocamera da 2MP + 5MP',
-             'MT6580M 1 GB + 8 GB'
+             '5.5" 18:9 Full Screen',
+             '3000mAh BAK battery',
+             '2MP+5MP Dual cameras',
+             'MT6580M 1GB+8GB'
            ], img:require("../../assets/img/productPlan/a20.jpg"), href: ""},
-         {time: "Fine Marzo", name: "P10000 Pro", config: [
-             'Batteria BAK da 11000 mAh',
+         {time: "End Mar", name: "P10000 Pro", config: [
+             '11000mAh BAK battery',
              '5V/5A Type-C',
-             'Quattro Sony IMX298 13MP + 16MP',
-             'Schermo FHD + 18: 9 integrato da 6 pollici',
-             'Helio P23 2.0 GHZ',
-             '4 GB + 64 GB ， Android 8.1',
-             'Occhiali o pelle di vitello italiano'
+             'Four Sony IMX298 13MP+16MP',
+             '6.0" In-cell 18:9 FHD+ Screen',
+             'Helio P23 2.0GHZ',
+             '4GB+64GB，Android 8.1',
+             'Glasses or Italian calf leather'
            ], img: require("../../assets/img/productPlan/p10000pro.jpg"), href: ""},
-         {time: "Novembre 2017", name: "BV9000 Pro", config:[
-              'Schermo 18: 9 ， 5.7 "FHD ， IP68',
-              'MT6757cd ， 2,6 GHZ',
+         {time: "Nov.2017", name: "BV9000 Pro", config:[
+              '18:9 screen，5.7" FHD，IP68',
+              'MT6757cd，2.6GHZ',
               '6GB+128GB',
-              'Fotocamera frontale da 8 MP',
-              '13MP + 5MP Doppio posteriore',
+              '8MP front camera',
+              '13MP+5MP Dual rear',
               '4180mAh，12V/2A',
               'Android 7.1'
            ], img: require("../../assets/img/productPlan/bv9000pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv9000pro"},
-         {time: "Fine ottobre", name: "A10", config:[
-              'MT6580A, 2800 mAh',
-              'Unibody HD da 5,0 "',
-              'Fotocamera da 5MP + 8MP',
+         {time: "End Oct", name: "A10", config:[
+              'MT6580A, 2800mAh',
+              '5.0" HD Unibody',
+              '5MP + 8MP camera',
               '2GB+16GB',
               'Android 7.0'
            ], img: require("../../assets/img/productPlan/a10.jpg"), href: ""},
          {time: "Oct.2017", name: "S8", config:[
-              'Schermo intero HD + 18: 9 da 5,7 "',
-              '90% da schermo a corpo',
-              'Quattro fotocamere, 13MP + 13MP',
+              '5.7" HD+ 18:9 Full Screen',
+              '90% Screen-to-body',
+              'Four cameras, 13MP+13MP',
               'MT6750T, 3180 mAh',
               '4GB+64GB',
               'Android 7.0'
            ], img:require("../../assets/img/productPlan/s8.jpg"), href: ""},
-         {time: "Agosto 2017", name: "BV4000 Pro", config:[
+         {time: "Aug.2017", name: "BV4000 Pro", config:[
               'MT6580A, IP68, 3680mAh',
-              'Fotocamera da 2MP + 8MP',
+              '2MP + 8MP camera',
               '4.7" HD 2GB+16GB',
-              'Touch Screen: 5 punti',
+              'Touch Screen: 5 Points',
               'Android 7.0'
            ], img: require("../../assets/img/productPlan/bv4000pro.jpg"), href: ""},
-         {time: "Maggio 2017", name: "BV8000 Pro", config:[
-            'MT6757 （P25） ， 2,6 GHZ',
-            'Netcom completo ， 4180 mAh ， 9V2A',
-            'Fotocamera da 8 MP + 16 MP, IP68',
-            'FHD da 5,0 "6 GB + 64 GB',
+         {time: "May.2017", name: "BV8000 Pro", config:[
+            'MT6757（P25），2.6GHZ',
+            'Full Netcom，4180mAh，9V2A',
+            '8MP +16MP camera, IP68',
+            '5.0" FHD 6GB+64GB',
             'Android 8.0'
            ], img: require("../../assets/img/productPlan/bv8000pro.jpg"), href: "https://www.blackview.hk/shop/buy/bv8000pro"},
-         {time: "Fine aprile", name: "BV7000", config:[
-             'MT6737T, IP68, 3500 mAh',
-             'Fotocamera da 5MP + 8MP',
-             'FHD da 5,0 "2 GB + 16 GB',
+         {time: "End April", name: "BV7000", config:[
+             'MT6737T, IP68, 3500mAh',
+             '5MP + 8MP camera',
+             '5.0" FHD 2GB+16GB',
              'Android 7.0'
            ], img: require("../../assets/img/productPlan/bv7000.jpg"), href: ""},
          {time: "Feb.2017", name: "BV7000 Pro", config: [
              'MT6750T, 28nm, IP68',
-             'Fotocamera da 8MP + 13MP',
-             'FHD da 5,0 "4 GB + 64 GB',
+             '8MP +13MP camera',
+             '5.0" FHD 4GB+64GB',
              'Android 7.0'
            ], img: require("../../assets/img/productPlan/bv7000pro.jpg"), href: ""},
-         {time: "25 luglio 2016", name: "BV6000s", config:[
-             "MT6737T Quad-core 1.5 GHZ",
-             "4,7 pollici HD 2 GB + 16 GB",
+         {time: "July.25th.2016", name: "BV6000s", config:[
+             "MT6737T Quad-core 1.5GHZ",
+             "4.7 Inch HD 2GB+16GB",
              "IP68",
              "Android 7.0"
            ], img: require("../../assets/img/productPlan/bv6000s.png"), href: ""},
-         {time: "Maggio. 31st. 2016", name: "BV6000", config:[
-             'MT6755 Octa-core 2.0 GHZ',
-             '4,7 pollici HD 3 GB + 32 GB',
+         {time: "May. 31st. 2016", name: "BV6000", config:[
+             'MT6755 Octa-core 2.0GHZ',
+             '4.7 Inch HD 3GB+32GB',
              'IP68',
              'Android 7.0'
            ], img:require("../../assets/img/productPlan/bv6000.jpg"), href: ""}

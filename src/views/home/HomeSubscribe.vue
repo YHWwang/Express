@@ -15,7 +15,7 @@
                         { type: 'email', message:  this.$t('views.home.sub.message2'), trigger: ['blur'] }
                         ]">
                 <div   class="sub-input">
-                  <el-input class="input" v-model="Form.email" :placeholder="$t('views.home.sub.placeholder')"></el-input>
+                  <el-input class="input" v-model="Form.email" :placeholder="$t('views.home.sub.placeholder')" type="email" autocomplete="email"></el-input>
                   <el-button class="btn-sub" type="primary" @click="submitForm('Form')">{{$t('views.home.sub.btn')}}</el-button>
                 </div>
               </el-form-item>

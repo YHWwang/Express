@@ -81,13 +81,13 @@
           },
           rules: {
             username: [
-              {required: true, trigger: 'blur', message: 'Не может быть пустым' }
+              {required: true, trigger: 'blur', message: this.$t('notUser.rules') }
             ],
             firstname: [
-              {required: true, trigger: 'blur', message: 'Не может быть пустым' }
+              {required: true, trigger: 'blur', message: this.$t('notUser.rules') }
             ],
             lastname: [
-              {required: true, trigger: 'blur', message: 'Не может быть пустым' }
+              {required: true, trigger: 'blur', message: this.$t('notUser.rules') }
             ],
             email: [
               {required: true, validator:validateEmail,trigger: 'blur' }

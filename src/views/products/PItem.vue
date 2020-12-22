@@ -2,7 +2,8 @@
 <ul class="goodsList" >
   <li v-for="(item,index) in productsList" :key="index">
     <div class="imgBox">
-        <img :src="item.image" alt=""  @click="jump(item)">
+<!--        <img :data-src="item.image"  class="lazyload" :alt="item.storeName"  @click="jump(item)">-->
+        <img  :src="item.image"  :alt="item.storeName"  @click="jump(item)">
     </div>
     <p class="price">{{item.storeName}}</p>
     <p class="price">US${{item.price}}</p>

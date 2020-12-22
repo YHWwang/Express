@@ -6,7 +6,8 @@
     <ul class="goodsList" >
       <li v-for="(item,index) in shopList" :key="index" >
         <div class="imgBox">
-          <img :src="item.image" alt="">
+<!--          <img :data-src="item.image" class="lazyload" :alt="item.storeName">-->
+          <img :src="item.image"  :alt="item.storeName">
         </div>
         <h3 class="til">{{item.storeName}}</h3>
         <p class="p1" v-for="(z,inx) in item.addtxt" :key="inx"  v-if="inx<3">{{z}}</p>
@@ -211,6 +212,7 @@
       justify-content: center;
     }
     .title{
+      padding-top: 10px;
       font-size: 24px;
       margin: 0;
       padding-left: 5px;

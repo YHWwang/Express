@@ -5,6 +5,7 @@ const service = axios.create({
   // baseURL: 'http://192.168.11.27:8082',//本地环境
   // baseURL: 'http://18.158.111.234:8083',//德国线上测试
   baseURL: 'https://www.blackview.hk',//正式测试线上
+  // baseURL: 'http://russia.blackview.hk/',//ru 测试
   timeout: 1200000 // 请求超时时间
 })
 
@@ -41,15 +42,3 @@ service.interceptors.response.use(function (response) {
 
 export default service
 
-
-
-/*
-
-
-
-
-
-
-
-
-* */

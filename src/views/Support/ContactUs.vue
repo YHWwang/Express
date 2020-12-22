@@ -84,10 +84,10 @@
         <p> {{$t('views.Support.ContactUs.msg1')}}</p>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm"  label-position="top" >
           <el-form-item :label="$t('views.Support.ContactUs.email')" prop="email" class="form-item">
-            <el-input type="text" v-model="ruleForm.email" ></el-input>
+            <el-input type="email" v-model="ruleForm.email" autocomplete="email" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('views.Support.ContactUs.contractName')" prop="contractName">
-            <el-input v-model="ruleForm.contractName"></el-input>
+            <el-input v-model="ruleForm.contractName" autocomplete="name"></el-input>
           </el-form-item>
           <el-form-item :label="$t('views.Support.ContactUs.category')" prop="category">
             <el-select v-model="ruleForm.category" :placeholder="$t('views.Support.ContactUs.placeholder')">
@@ -99,13 +99,13 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="$t('views.Support.ContactUs.orderId')" >
-            <el-input v-model="ruleForm.orderId"></el-input>
+            <el-input v-model="ruleForm.orderId" type="number" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('views.Support.ContactUs.subject')" prop="subject">
             <el-input v-model="ruleForm.subject"></el-input>
           </el-form-item>
           <el-form-item :label="$t('views.Support.ContactUs.content')" prop="content">
-            <el-input v-model="ruleForm.content" type="textarea"></el-input>
+            <el-input v-model="ruleForm.content" type="textarea" ></el-input>
           </el-form-item>
           <el-form-item class="btn-submit">
             <el-button type="primary" @click="submitForm('ruleForm')" :loading="loading" > {{$t('views.Support.ContactUs.btn')}}</el-button>

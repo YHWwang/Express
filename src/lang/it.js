@@ -84,6 +84,7 @@ export default{
         p5:'Checkout',
         title2:'Potrebbe piacerti anche',
         add:'Aggiungi al carrello',
+        alert:'Non posso più ridurlo',
     },
     views:{
         home_vue:{
@@ -646,8 +647,10 @@ export default{
                 phone:'Numero di telefono',
                 detail:'Indirizzo',
                 city:'Città',
-                country:'Paese di destinazione',
+                country:'Nazione',
+                de_country:'Paese di destinazione',
                 country_placeholder:'--Nazione--',
+                province1:'Provincia',
                 province:'Stato / Provincia / Regione',
                 province_placeholder:'--Seleziona luogo--',
                 postCode:'Zip / Codice postale',

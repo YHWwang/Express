@@ -1,25 +1,20 @@
 <template>
   <div id="Home">
     <!-- 订阅   -->
-
-
     <el-dialog class="sub-dialog"
       :visible.sync="dialogVisible1"
           :width="subW"
       :before-close="handleClose">
     <img class="sub-close" @click="dialogVisible1=false" src="https://www.blackview.hk/uploads/page/shop/close.jpg" alt="">
 <!--      <Subscribe v-if="subShow" class="subscribe"></Subscribe>-->
-
-
       <BL6000ProSub  class="subscribe"></BL6000ProSub>
-
     </el-dialog>
 
 <!--    <Subscribe v-if="subShow" class="subscribe"></Subscribe>-->
       <!--写死的数据-->
 <!--    <HomeBanner></HomeBanner>-->
    <!--前后端交互数据-->
-    <BanerData></BanerData>
+    <BanerData style="min-height: 900px"></BanerData>
     <div class="explore">
       <div id="video" ref="video">
         <div  class="more">
@@ -30,7 +25,7 @@
         <ul :class="'video-box  ' +videoFadeIn">
           <li @mouseover="DoMouse(true,item)" @mouseout="DoMouse(false,item)" :class="item.status?'video-item-pc':'hover video-item-pc'" v-for=" (item,index) in videoList" @click="videoOpan(item)">
             <div class="video-bg">
-              <img :src="item.pic" alt="">
+              <img class="lazyload" :data-src="item.pic" alt="">
             </div>
             <div class="video-word">
               <p class="video-p1">{{item.name}}</p>
@@ -39,7 +34,7 @@
             </div>
           </li>
           <li v-for=" item in videoList" class="video-item-app">
-          <iframe  :height="iframeHeight" :width="iframeWidth" :src="item.ipStatus ? item.url:item.youKu" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="lazyload"  :height="iframeHeight" :width="iframeWidth" :data-src="item.ipStatus ? item.url:item.youKu" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </li>
         </ul>
       </div>
@@ -51,7 +46,7 @@
           <li v-for="(item,index) in newsList" @mouseover="DoNewsMouse(true,item)" :key="index" @mouseout="DoNewsMouse(false,item)"  :class="item.hide?'':'hover'">
             <router-link :to="{path:'/newsdetail/'+item.id}">
               <div class="news-bg">
-                <img :src="item.imageInput" alt="">
+                <img :data-src="item.imageInput" class="lazyload" alt="">
               </div>
               <div class="news-word">
                 <p class="p1">{{item.synopsis}}</p>
@@ -69,8 +64,7 @@
       :visible.sync="dialogVisible"
       width="850px"
       :before-close="handleClose">
-
-      <iframe class="video-iframe" width="800" height="400" :src="videoBigUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="video-iframe lazyload" width="800" height="400" :data-src="videoBigUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <span slot="footer" class="dialog-footer">
   </span>
     </el-dialog>
@@ -83,7 +77,7 @@
   // import HomeBanner from  "./HomeBanner"
   import BanerData from "./BanerData"
   import HomeSubscribe from  "./HomeSubscribe"
-  import {banner,GetVideo,GetNews} from "@/api/home"
+  import {GetVideo,GetNews} from "@/api/home"
   // import Cookies from "js-cookie";
   export default {
     name: "Home",
@@ -176,45 +170,27 @@
         this.dialogVisible = false
         this.dialogVisible1 = false
       },
-      DoBanner(){
-        banner().then(res=>{
-          var val = res.data[0].value
-          var width = document.body.clientWidth
-          this.bannerH = width>800?JSON.parse(val).name:JSON.parse(val).url
-        }).catch(error=>{
-          console.log(error);
-        })
-      },
-      DoVideo(){
-        /*获取video*/
-        GetVideo().then(res=>{
-          var _this = this
-          var item = "";
-          res.data.data.forEach(function(val,index){
-            item =JSON.parse(val.value)
-            item.ipStatus =res.data.data[index].ipStatus
-            _this.videoList.push(item)
-          })
-          this.$nextTick()
-
-        }).catch(error=>{
-          console.log(error);
-        })
-      },
-      DoNews(){
-        /*获取新闻*/
-        GetNews().then(res=>{
-          this.newsList = res.data.data
-        }).catch(error=>{
-          console.log(error);
-        })
-      },
     },
-    created() {
-
-      this.cookie()
-      this.DoVideo()//视频
-      this.DoNews()//新闻
+     async created() {
+       this.cookie()
+      var videoData = await GetVideo()//视频
+         if(videoData.status == 200) {
+           var _this = this
+           var item = "";
+           videoData.data.data.forEach(function(val,index) {
+             item = JSON.parse(val.value)
+             item.ipStatus = videoData.data.data[index].ipStatus
+             _this.videoList.push(item)
+           })
+         }else{
+           console.log(videoData);
+         }
+       var GetNewsData = await GetNews()//新闻
+       if(GetNewsData.status == 200) {
+         this.newsList = GetNewsData.data.data
+       }else {
+         console.log(GetNewsData);
+       }
     },
     destroyed: function () {
       window.removeEventListener('scroll', this.handleScroll,true);   // 离开页面清除（移除）滚轮滚动事件

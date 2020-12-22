@@ -9,6 +9,7 @@
     </li>
     <li>
       <P class="first-txt">{{$t('myfooter.txt2')}}</P>
+      <P><router-link to="/vantaggi" class="new-shop-link">Vantaggi dello Store Italiano</router-link></P>
       <P><router-link to="/paymentmethods" class="new-shop-link">{{$t('myfooter.msg2_1')}}</router-link></P>
       <P><router-link to="/shipping-guide" class="new-shop-link">{{$t('myfooter.msg2_2')}}</router-link></P>
       <P><router-link to="/return" class="new-shop-link">{{$t('myfooter.msg2_3')}}</router-link></P>

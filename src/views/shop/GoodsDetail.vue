@@ -36,8 +36,7 @@
             <div class="txt-item">
               <div class="txt-box">
                 <span class="describe">{{phone.storeInfo}}</span> <span v-if="phone.isPostage" class="more" @click="jump(phone)">{{$t('views.shop.GoodsDetail.msg_3')}}</span><br>
-                <span class="word-red" v-if="phone.isBenefit == 1">{{$t('views.shop.GoodsDetail.msg_4')}}</span>
-                <!--              <router-link class="more" style="text-decoration: underline" :to="{path:'/products/item/'+ phone.id }">learn more</router-link>-->
+                <span class="word-red describe" v-if="phone.isBenefit">{{phone.isBenefit}}</span>
               </div>
               <el-rate class="star"
                        v-model="value"
@@ -99,7 +98,7 @@
         <p class="recom-title">{{$t('views.shop.GoodsDetail.p7')}}</p>
         <ul class="shop-width">
           <li  v-for="item in recommond">
-            <img :src="item.image" alt="">
+            <img class="lazyload" :data-src="item.image" :alt="item.storeName">
             <p class="name"> {{item.storeName}}</p>
             <p class="price5">${{item.price}} <del v-show="item.price != item.otPrice">${{item.otPrice}}</del></p>
             <router-link :to="{path:'/shop/buy/' + item.unitName }" class="link-recom" target="_blank"></router-link>
@@ -108,7 +107,7 @@
       </div>
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" class="tabs-box shop-width">
         <el-tab-pane :label="$t('views.shop.GoodsDetail.first')" name="first" class="tabs-item">
-       <div v-html="phone.description">
+       <div v-html="phone.productDescription">
 <!--         <tab-item :shopData="phone.description"></tab-item>-->
        </div>
         </el-tab-pane>
@@ -199,7 +198,6 @@
   </div>
 </template>
 <script>
-  import Vue from 'vue'
   import { GetGoods,Getrecommond,Getreplay,addCarData} from '@/api/shop'
   import { DateTime } from '@/utils/auth'
   import { UserInfo} from "@/api/user" //登陆与否
@@ -216,6 +214,7 @@
     },
     data(){
       return {
+
         size:10,
         number:0,
         loading: false,
@@ -241,6 +240,7 @@
           productUrl:'',//产品详情页跳转
           specification:"",//产品规格
           description:"",//产品描述
+          productDescription:"",//新加商品描述
           ficti:"",//产品虚拟销量
           sales:"",//产品真实销量
           isBenefit:"",//预售
@@ -421,7 +421,8 @@
           this.phone.id = res.data.data.id//id
           this.phone.ficti = res.data.data.ficti//产品虚拟销量
           this.phone.sales = res.data.data.sales//产品真实销量
-          this.phone.isBenefit = res.data.data.isBenefit//预售
+          // this.phone.isBenefit = res.data.data.isBenefit//预售
+          this.phone.isBenefit = res.data.data.isBenefit == 0 ? false : res.data.data.isBenefit //预售
           this.phone.unitName = res.data.data.unitName//unitName7-16开会改路由加的查询字段
           this.phone.productUrl = res.data.data.productUrl//跳转的url
           this.phone.isPostage = res.data.data.isPostage//商品在官网是否上架
@@ -437,17 +438,7 @@
           this.phone.storeName = res.data.data.storeName
           this.phone.image = res.data.data.image
           this.phone.storeInfo = res.data.data.storeInfo//产品简
-          var url =res.data.data.hotImg//详情页的js
-          if(url == true){
-            const s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.src = url
-            s.async = 'true';
-            document.body.appendChild(s);
-          }else{
-
-          }
-          this.phone.description = res.data.data.description//产品描述
+          this.phone.productDescription = res.data.data.productDescription//产品描述
           this.phone.specification = res.data.data.specification//产品规格
           this.phone.repalyScore = res.data.data.repalyScore//评分
           this.value = res.data.data.repalyScore//评分
@@ -469,6 +460,18 @@
           })
           this.phoneList = arr
           this.GetRed();
+          var url = res.data.data.hotImg//详情页的js
+          if(url){
+            var jsArr = url.split(",")
+            jsArr.forEach(jsItem => {
+              const s = document.createElement('script');
+              s.type = 'text/javascript';
+              s.src = jsItem
+              s.className = 'bv-yang'
+              document.body.appendChild(s);
+            })
+
+          }
         }).catch(error=>{
           console.log(error);
         })
@@ -542,6 +545,15 @@
         console.log(error);
       })
       this.Getlist();
+    },
+    destroyed(){
+      var target = document.getElementsByClassName('bv-yang')
+      if(target != null){
+        var len  = target.length
+        for(var i = 0 ;i<len ; i++){
+          document.body.removeChild(target[0])
+        }
+      }
     }
   }
 </script>
@@ -717,6 +729,9 @@
     font-size: 18px;
     margin-left: 30px;
     padding:0px  20px;
+  }
+  .part-top-right .tips{
+    display: block;
   }
   .price{
     font-size: 33px;
@@ -1003,13 +1018,26 @@
   }
 /deep/ .el-tabs--card>.el-tabs__header .el-tabs__nav{
   margin-left: 20px;
-  border:1px solid #E4E7ED;
+  border:1px solid #409EFF;
 }
   /deep/ .el-tabs__item{
     font-size: 24px;
   }
+
+  /deep/ .el-tabs__item.is-active{
+    background: #409EFF;
+    color: white;
+  }
+
+  /deep/ .el-tabs--card>.el-tabs__header .el-tabs__item{
+    border-left: 1px solid #409EFF;
+    border-bottom: none;
+  }
+/deep/ .el-tabs--card>.el-tabs__header .el-tabs__item:first-child{
+border-left: none;
+}
   .tr-item{
-    font-weight: bold;
+    font-width: bold;
     color: red;
   }
   .reviews-box-item-r .content{
@@ -1063,9 +1091,6 @@
     .top-nav-box .right{
       padding-right: 10px;
     }
-
-
-
   }
 
 

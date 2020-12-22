@@ -21,7 +21,7 @@
             </div>
             <div class="item-content-box" v-if="show">
               <p class="p1">  {{$t('views.set.Success.tit_1_p1')}}</p>
-              <p>{{$t('views.set.Success.tit_1_p5')}} <span class="order">{{username}}</span></p>
+	      <p>{{$t('views.set.Success.tit_1_p5')}} <span class="order">{{username}}</span></p>
               <p>{{$t('views.set.Success.tit_1_p2')}} <span class="price">{{price}}</span> {{$t('views.set.Success.tit_1_p3')}}{{order}}</p>
             </div>	
             <div class="item-content-box" v-else>
@@ -35,7 +35,7 @@
             <router-link to="/shop/all"><el-button type="info" class="btn-complete" v-show="!show" >{{$t('views.set.Success.router1')}}</el-button></router-link>
             <router-link to="/user/orders"><el-button type="info" class="btn-complete" v-show="!show" >{{$t('views.set.Success.router2')}}</el-button></router-link>
           </div>
-
+          <img id='_SHRSL_img_1' :src='shareasaleSrc' width='1' height='1'>
 
         </div>
       </div>
@@ -43,7 +43,6 @@
         <div class="clear"></div>
         <Footer></Footer>
       </div>
-
     </div>
 </template>
 
@@ -61,7 +60,8 @@
       order:'',
       price:'',
       username:'',
-      show:false
+      show:false,
+      shareasaleSrc:''
       }
       },
       methods:{
@@ -90,26 +90,28 @@
            items.push(obj)
            obj = {}
           })
-          var key = 'orderId'
-          var orderId =this.$route.params.code
-      if(window.location.host == 'www.blackview.hk'){
-        if(localStorage.getItem(key) == null ||localStorage.getItem(key)!= orderId){
-          localStorage.setItem(key,orderId)
+          if(res.isSystemDel==0){
           this.$gtag.purchase({
             "transaction_id":res.orderId,//交易的唯一 ID。
             "value":res.payPrice,//	与事件相关的价值（即收入）
-            "checkout_option":res.payType,//	结帐选项（即选定的付款方式）
+            "checkout_option":res.payType,//结帐选项（即选定的付款方式）
             "items": items
           })
           this.$gtag.event( 'conversion',{
-            'send_to':'AW-797702063/8yHrCPeFiKcBEK_vr_wC',
+            'send_to':[
+              'AW-797702063/8yHrCPeFiKcBEK_vr_wC',
+              'AW-797966521/l2TICND79MkBELmBwPwC'
+            ],
             'currency':'USD',
             'value':res.payPrice,
             'transaction_id':res.orderId,
           })
 
+            /**
+             *  shareasale img的src
+             * */
+            this.shareasaleSrc = `https://www.shareasale.com/sale.cfm?tracking=${res.orderId}&amount=${res.payPrice}&merchantID=80218&transtype=sale`
         }
-      }
         }
       },
       created() {

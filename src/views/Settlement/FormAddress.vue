@@ -1,31 +1,38 @@
 <template>
   <div class="address-box-box">
-    <el-form  :model="ruleForm" :rules="rules" ref="ruleForm" :label-position="labelPosition" label-width="190px"  class="address">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" :label-position="labelPosition" label-width="190px"
+             class="address" autocomplete="on">
       <el-form-item :label="$t('views.set.form.email')" prop='email'  v-show="signIn">
-        <el-input v-model="ruleForm.email" v-show="signIn" :disabled="disabled" ></el-input>
-        <p> {{$t('views.set.form.p1')}}</p>
+        <el-input name="email" v-model="ruleForm.email" v-show="signIn" :disabled="disabled" type="email"
+                  autocomplete="email"></el-input>
+	<p> {{$t('views.set.form.p1')}}</p>
         <p>{{$t('views.set.form.p2')}} <router-link to="/login">{{$t('views.set.form.router')}}</router-link> </p>
       </el-form-item>
       <el-form-item :label="$t('views.set.form.firstname')" prop="firstname" >
-        <el-input v-model="ruleForm.firstname"></el-input>
+        <el-input name="firstname" v-model="ruleForm.firstname" autocomplete="given-name"></el-input>
       </el-form-item>
       <el-form-item :label="$t('views.set.form.lastname')" prop="lastname">
-        <el-input v-model="ruleForm.lastname"></el-input>
+        <el-input name="lastname" v-model="ruleForm.lastname" autocomplete="family-name"></el-input>
       </el-form-item>
       <el-form-item :label="$t('views.set.form.phone')" prop="phone">
-        <el-input v-model="ruleForm.phone"></el-input>
+        <el-input type="tel" name="tel" v-model="ruleForm.phone" autocomplete="tel"></el-input>
       </el-form-item>
       <el-form-item :label="$t('views.set.form.detail')" prop="detail" >
-        <el-input v-model="ruleForm.detail"></el-input>
+        <el-input ref="detail" name="street" v-model="ruleForm.detail" autocomplete="address-line1"></el-input>
       </el-form-item>
 
       <el-form-item :label="$t('views.set.form.city')" prop="city">
-        <el-input v-model="ruleForm.city"></el-input>
+        <el-input name="city" v-model="ruleForm.city" autocomplete="on"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('views.set.form.country')" prop="country" >
-        <el-select v-model="ruleForm.country"  filterable :placeholder="$t('views.set.form.country_placeholder')" ref="selectCount" class="bv-select">
+
+      <el-form-item :label="$t('views.set.form.country')" prop="country"  style="position:fixed;top:1000px;z-index: -9999" >
+        <el-input name="shop country" v-model="ruleForm.country" autocomplete="shop country"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('views.set.form.de_country')" prop="country" >
+        <el-select ref="selectCount"  class="bv-select"   v-model="ruleForm.country" name="shop country"   filterable :placeholder="$t('views.set.form.country_placeholder')"   autocomplete="shop country"
+                  >
           <el-option
-             style="width:98%"
+            style="width:98%"
             v-for="item in countryList"
             :key="item.id"
             :label="item.name"
@@ -33,8 +40,12 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item :label="$t('views.set.form.province1')" prop="province"  style="position:fixed;top:1000px;z-index: -9999"  >
+        <el-input name="shop state" v-model="ruleForm.province" autocomplete="shop state"></el-input>
+      </el-form-item>
       <el-form-item :label="$t('views.set.form.province')" prop="province" :style="display">
-        <el-select v-model="ruleForm.province"  filterable :placeholder="$t('views.set.form.province_placeholder')"  class="bv-select">
+        <el-select name="shop state" v-model="ruleForm.province"  filterable :placeholder="$t('views.set.form.province_placeholder')"  class="bv-select"
+	 autocomplete="shop state">
           <el-option
             v-for="item in ProvinceList"
             :key="item.id"
@@ -45,10 +56,10 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('views.set.form.postCode')" prop="postCode" >
-        <el-input v-model="ruleForm.postCode"></el-input>
+        <el-input name="post-code" v-model="ruleForm.postCode" autocomplete="postal-code"></el-input>
       </el-form-item>
       <el-form-item class="address-btn-save-box">
-        <el-button class="address-btn-save"  @click="submitForm('ruleForm')"  :loading="loading">
+        <el-button class="address-btn-save" @click="submitForm('ruleForm')" :loading="loading">
              <span v-if="!loading">{{$t('views.set.form.btn1')}}</span>
               <span v-else>{{$t('views.set.form.btn2')}}</span>
         </el-button>
@@ -59,43 +70,60 @@
 
 <script>
   import {UserInfo} from '@/api/user' //和 个人信息
-  import {Addaddress,ChangeAddress,Country,Province} from "@/api/user"
+  import {Addaddress, ChangeAddress, Country, Province} from "@/api/user"
   // import {GetReCAPTCHA} from '@/api/home'
-  import { Message } from 'element-ui'
+  import {Message} from 'element-ui'
+
   export default {
     name: "FormAddress",
     // props:["closeDialog","change","id","email"],
-    props:["closeDialog","change","id","email","signIn"],
-    data(){
+    props: ["closeDialog", "change", "id", "email", "signIn"],
+    data() {
       return {
         // signIn:true,
         loading: false,
-        display:"display:none",
-        labelPosition:"left",
-        disabled:false,
+        display: "display:none",
+        labelPosition: "left",
+        disabled: false,
         countryList: [],
-        countryId:'',
+        countryId: '',
         ProvinceList: [],
-        ProvinceId:'',
-        ruleForm:{
-          email:"",
-          id:"",
-          firstname:"",
-          lastname:"",
-          phone:"",
-          realName:"",
-          detail:"",
-          city:"",
-          province:"",
-          country:"",
-          postCode:"",
-          district:"",
-          uid:localStorage.getItem("uid"),
+        ProvinceId: '',
+        ruleForm: {
+          email: "",//
+          id: "",//
+          firstname: "",//
+          lastname: "",//
+          phone: "",//
+          realName: "",//
+          detail: "",  //detail  street_number 和 route
+          detail1: '',
+          city: "",//city /locality
+          province: "",//province  /administrative_area_level_1
+          country: "",//country / country
+          postCode: "",//postCode / postal_code
+          district: "",//
+          uid: localStorage.getItem("uid"),
         },
-        rules:{
-          email:[
-          //   { required: true, message: 'email is required', trigger: 'blur' },
-          //   { required: true, message: 'email is required', type:'email', trigger: 'blur'}
+        ruleForm_google: {
+          email: "",//
+          id: "",//
+          firstname: "",//
+          lastname: "",//
+          phone: "",//
+          realName: "",//
+          street_number: "",  //detail  street_number 和 route
+          locality: "",//city /locality
+          administrative_area_level_1: "",//province  /administrative_area_level_1
+          country: "",//country / country
+          postal_code: "",//postCode / postal_code
+          district: "",//
+          uid: localStorage.getItem("uid"),
+        },
+        rules: {
+          email: [
+            //   { required: true, message: 'email is required', trigger: 'blur' },
+            //   { required: true, message: 'email is required', type:'email', trigger: 'blur'}
           ],
           type: [
             { type: 'email' , message: this.$t('views.set.form.rules.email'), trigger: 'blur'},
@@ -134,7 +162,72 @@
        this.labelPosition = 'top'
      }
     },
+    mounted() {
+      this.googleAuto()
+    },
     methods:{
+      googleAuto() {
+        let _this = this
+        const componentForm = {
+          street_number: "short_name",
+          route: "long_name",
+          locality: "long_name",
+          administrative_area_level_1: "long_name",
+          country: "long_name",
+          postal_code: "short_name",
+        };
+
+        var componentForm1 = {
+          street_number: "short_name",
+          route: "long_name",
+          locality: "long_name",
+          administrative_area_level_1: "long_name",
+          country: "long_name",
+          postal_code: "short_name",
+        };
+        for (var key in componentForm1) {
+          componentForm1[key] = ''
+        }
+        const domInput = _this.$refs.detail.$el.children[0]
+        var autocomplete = new google.maps.places.Autocomplete(domInput, {});
+        autocomplete.setFields(["address_component"]);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+
+          var place = autocomplete.getPlace();
+          for (const component of place.address_components) {
+            const addressType = component.types[0];
+
+            if (componentForm[addressType]) {
+              const val = component[componentForm[addressType]];
+              componentForm1[addressType] = val
+            }
+          }
+
+          for (var key in componentForm1) {
+            _this.ruleForm_google[key] = componentForm1[key]
+          }
+
+
+          var IsCountry = false
+          _this.countryList.forEach(function (v) {
+
+            if (v.name == _this.ruleForm_google.country.toUpperCase()) {
+              IsCountry = true
+            }
+          })
+
+          if (IsCountry) _this.ruleForm.country = _this.ruleForm_google.country
+
+          _this.ruleForm.detail = _this.ruleForm_google.street_number + '' + _this.ruleForm_google.route
+          _this.ruleForm.city = _this.ruleForm_google.locality
+          _this.ruleForm.province = _this.ruleForm_google.administrative_area_level_1
+          _this.ruleForm.postCode = _this.ruleForm_google.postal_code
+
+        });
+
+
+      },
       // async recaptcha() {
       //   const token = await this.$recaptcha()
       //   var result = await GetReCAPTCHA(token)
@@ -142,13 +235,12 @@
       // },
       submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
-          // debugger
           if (valid) {
             this.loading = true
             // var IsCaptcha  = await this.recaptcha()
             // if(IsCaptcha){
-                this.ruleForm.realName = this.ruleForm.firstname +"  "+ this.ruleForm.lastname
-                var addressmethod="";
+            this.ruleForm.realName = this.ruleForm.firstname + "  " + this.ruleForm.lastname
+            var addressmethod = "";
 
               if(  this.ruleForm.province=="-"){
                 this.ruleForm.province=""//有些国家下面没城市
@@ -196,9 +288,9 @@
           var len= res.data.data.length
           if(len>0){
             this.ProvinceList = res.data.data
-            this.ruleForm.province=""
             this.display = "display:block";
-          }else{
+            // this.ruleForm.province = this.ruleForm_google.province
+          } else {
             this.display = "display:none";
             this.ruleForm.province="-"
             this.$nextTick(()=>{
@@ -207,13 +299,22 @@
 
         }).catch(error=>{
           console.log(error);
+          if(error.status ==500){
+            this.ruleForm.country = ''
+          }
+
         })
       },
-      'ruleForm.province':function () {
+      'ruleForm.province': function (val) {
+        if (this.ruleForm.province == false) {
+          this.ruleForm.province = this.ruleForm_google.administrative_area_level_1
+          return
+        }
         let ele = document.createElement('span')
         ele.innerHTML = this.ruleForm.province
         this.ruleForm.province = ele.textContent
-      }
+      },
+      'ruleForm.detail': 'googleAuto'
     },
     created() {
       this.$nextTick()

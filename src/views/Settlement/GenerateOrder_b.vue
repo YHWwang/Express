@@ -2,30 +2,30 @@
   <div id="Settlement">
     <div class="title">
       <router-link class="link-home"  to="/"><img class="logo" src="@/assets/img/logo.png" alt=""></router-link>
-         <span>{{$t('views.set.generate.tit')}}</span>
-      <button v-if="signIn" class="sign-in"> <router-link to="/login">{{$t('views.set.generate.btn1')}}</router-link>   </button>
+         <span>SECURE CHECKOUT</span>
+      <button v-if="signIn" class="sign-in"> <router-link to="/login">SIGN IN</router-link>   </button>
     </div>
     <div class="settlement-box">
       <div class="settlement-nav">
         <ul>
-          <li><span  :class="{'add-bg1':paymentShow == false}">{{$t('views.set.generate.msg1')}}</span></li>
-          <li><span  :class="{'add-bg2':paymentShow == true}">{{$t('views.set.generate.msg2')}}</span></li>
-          <li> <span>{{$t('views.set.generate.msg3')}}</span></li>
+          <li><span  :class="{'add-bg1':paymentShow == false}">1.shipping & Address</span></li>
+          <li><span  :class="{'add-bg2':paymentShow == true}">2.Payment Method</span></li>
+          <li> <span>3.Complete Order</span></li>
         </ul>
       </div>
       <div class="set-item set-item1">
         <div class="set-item-head">
-          {{$t('views.set.generate.tit2')}}
+          Cart Summary
         </div>
         <table class="table set-item-content">
           <thead>
-          <th>{{$t('views.set.generate.th1')}}</th>
-          <th>{{$t('views.set.generate.th2')}}</th>
-          <th>{{$t('views.set.generate.th3')}}</th>
+          <th>ITEM</th>
+          <th>TOTAL QUANTITY</th>
+          <th>TOTAL PRICE</th>
           </thead>
           <tbody>
           <tr>
-            <td ><a href="#" v-for="item in imgarr"><img  :src="JSON.parse(item)[0]" alt=""></a> <br> <router-link class="link" to="/shopping-cart">{{$t('views.set.generate.a')}}</router-link></td>
+            <td ><a href="#" v-for="item in imgarr"><img  :src="JSON.parse(item)[0]" alt=""></a> <br> <router-link class="link" to="/shopping-cart">Edit Shopping Cart</router-link></td>
             <td>{{goodsCount}}</td>
             <td>{{sumTotalMoney}}</td>
           </tr>
@@ -34,11 +34,11 @@
       </div>
       <div class="set-item set-item2">
         <div class="set-item-head">
-          {{$t('views.set.generate.tit3')}}
+          Shipping address
         </div>
         <div class="set-item-content">
           <div  v-if="isShow == true" class="address-box">
-            <span>{{address.realName}}</span>({{address.detail+',&nbsp;&nbsp;'+address.city+',&nbsp;&nbsp;'+address.province+',&nbsp;&nbsp;'+address.postCode+'&nbsp;&nbsp;'+address.country}} &nbsp;&nbsp;{{$t('views.set.generate.phone')}}:{{address.phone}} ) <span class="btn-change" @click="addAddress('shipping address')">{{$t('views.set.generate.change')}}</span>
+            <span>{{address.realName}}</span>({{address.detail+',&nbsp;&nbsp;'+address.city+',&nbsp;&nbsp;'+address.province+',&nbsp;&nbsp;'+address.postCode+'&nbsp;&nbsp;'+address.country}} &nbsp;&nbsp;Phone:{{address.phone}} ) <span class="btn-change" @click="addAddress('shipping address')">change</span>
           </div>
           <div v-else-if="isShow == false">
             <FormAddress ref="ruleForm" @closeDialog="closeDialog" :change="change" :key="change" :email="email" :signIn="signIn"></FormAddress>
@@ -46,44 +46,44 @@
         </div>
       </div>
       <div class="set-item set-item3">
-        <div class="set-item-head">{{$t('views.set.generate.tit4')}}</div>
+        <div class="set-item-head">Billing address</div>
         <div class="set-item-content address-box"  v-show="bilingShow && bilingShow1">
-          <span>{{baddress.realName}}</span>({{baddress.detail+',&nbsp;&nbsp;'+baddress.city+',&nbsp;&nbsp;'+baddress.province+',&nbsp;&nbsp;'+ baddress.postCode +'&nbsp;&nbsp;'+baddress.country}} &nbsp; {{$t('views.set.generate.phone')}}:{{baddress.phone}}) <span @click="addAddress('billing address')" class="btn-change">{{$t('views.set.generate.change')}}</span>
+          <span>{{baddress.realName}}</span>({{baddress.detail+',&nbsp;&nbsp;'+baddress.city+',&nbsp;&nbsp;'+baddress.province+',&nbsp;&nbsp;'+ baddress.postCode +'&nbsp;&nbsp;'+baddress.country}} &nbsp; Phone:{{baddress.phone}}) <span @click="addAddress('billing address')" class="btn-change">change</span>
         </div>
         <div class="set-item-content address-box"  v-show="bilingShow && !bilingShow1">
-         <span>{{baddress}}</span> <span @click="addAddress('billing address')" class="btn-change">{{$t('views.set.generate.change')}}</span>
+         <span>{{baddress}}</span> <span @click="addAddress('billing address')" class="btn-change">change</span>
         </div>
       </div>
       <div class="set-item set-item4">
-        <div class="set-item-head">{{$t('views.set.generate.tit5')}}</div>
+        <div class="set-item-head">Shipping Method</div>
         <div class="set-item-content shop-method" v-show="shippingShow">
           <shop-method :shopmethodArr="shopmethodArr" :postPrice="postPrice" @shopMethod="shopMethod" v-if="isShow2"></shop-method>
-          <div class="" v-else> <span class="span1">{{ShippingMethod == 'standard'?$t('views.set.generate.standard_2'):'DHL US$'+freight}} <i style="color: red;"> {{ ShippingMethod == 'standard'?"":$t('views.set.generate.standard_3') }}</i></span><span class="btn-change" @click="shopChange">{{$t('views.set.generate.change')}}</span></div>
+          <div class="" v-else> <span class="span1">{{ShippingMethod == 'standard'?'Standard Shipping via Airmail  Free Shipping ':'DHL US$'+freight}} <i style="color: red;"> {{ ShippingMethod == 'standard'?"":"Please Note: the DHL doesn't support PO BOX address"}}</i></span><span class="btn-change" @click="shopChange">change</span></div>
         </div>
       </div>
       <div class="set-item set-item5">
         <div class="set-item-head">
-          {{$t('views.set.generate.tit6')}}
+          Payment Method
         </div>
         <div class="set-item-content" v-show="paymentShow" >
           <div>
-            <el-radio v-model="PaymentMethod" label="oceanPayment"  class="pay-box"> <span class="pay-txt">{{$t('views.set.generate.msg4')}}</span> <img class="pay-img" src="@/assets/img/visa_icon.png" alt=""><span class="span-txt">{{$t('views.set.generate.msg5')}} <br>{{$t('views.set.generate.msg6')}}</span>
+            <el-radio v-model="PaymentMethod" label="oceanPayment"  class="pay-box"> <span class="pay-txt">Credit card</span> <img class="pay-img" src="@/assets/img/visa_icon.png" alt=""><span class="span-txt">Pay with your credit card <br>(VISA or Master Card) Directly</span>
               </el-radio><!--Pay with your credit card (VISA or Master Card) Directly.-->
           </div>
           <div class="paypal">
-            <el-radio class="pay-box" v-model="PaymentMethod" label="paypal" ><span class="pay-txt">{{$t('views.set.generate.msg7')}}</span> <img class="pay-img" src="@/assets/img/paypal-logo.png" alt="">&nbsp;&nbsp;&nbsp;{{$t('views.set.generate.msg8')}}</el-radio>
+            <el-radio class="pay-box" v-model="PaymentMethod" label="paypal" ><span class="pay-txt">PayPal</span> <img class="pay-img" src="@/assets/img/paypal-logo.png" alt="">&nbsp;&nbsp;&nbsp;Secure Payments</el-radio>
           </div>
         </div>
       </div>
       <div class="set-total">
-        <p>{{$t('views.set.generate.p1')}}({{goodsCount}}items ):   US${{sumTotalMoney}}</p><!--finalMoney-->
-        <p v-show="coupon">{{$t('views.set.generate.p2')}}:  - US$ {{discount}}</p>
-        <p>{{$t('views.set.generate.p3')}} :    US${{freight}}</p>
+        <p>Subtotal({{goodsCount}}items ):   US${{sumTotalMoney}}</p><!--finalMoney-->
+        <p v-show="coupon">Coupon Discount:  - US$ {{discount}}</p>
+        <p>Shipping :    US${{freight}}</p>
       </div>
       <div class="total-mark">
-        <p>{{$t('views.set.generate.p4')}}: US$ {{GrandTotal}}</p>
+        <p>GRAND TOTAL: US$ {{GrandTotal}}</p>
         <div class="mark-box">
-          <div><span>{{$t('views.set.generate.p5')}}</span>&nbsp;&nbsp;<span class="check-me" @click="markShow=true">{{$t('views.set.generate.p6')}}</span></div>
+          <div><span>Need an additional message?</span>&nbsp;&nbsp;<span class="check-me" @click="markShow=true">Check Here</span></div>
           <div v-show="markShow">
             <el-input
               type="textarea"
@@ -94,7 +94,7 @@
           </div>
         </div>
         <!--提交按钮-->
-        <el-button type="info" :class="[{'btn-order':btnBol!=1},'btn-button']" @click="PayOrder" :disabled="btnBol==1?true:false" >{{$t('views.set.generate.btn2')}}</el-button>
+        <el-button type="info" :class="[{'btn-order':btnBol!=1},'btn-button']" @click="PayOrder" :disabled="btnBol==1?true:false" >Place Order & Proceed to Pay</el-button>
       </div>
       <div>
         <!--地址栏的弹框-->
@@ -120,10 +120,10 @@
       <form id="submitForm" :action="requestUrl" method="post" style="display:none;">
         <input type="text" v-for="(value,key,index) in myForm" :name="key" :value="value">
         <!--    <input type="submit" name="submit" v-model="Submit" id="submitBtn" v-trigger>-->
-        <input style="display: block" type="button" :value="$t('views.set.generate.btn3')" @click="handleC">
+        <input style="display: block" type="button" value="按钮" @click="handleC">
       </form>
       <form id="submitForm2" :action="requestUrl" method="post" style="display:none;">
-        <input style="display: block" type="button" :value="$t('views.set.generate.btn3')" @click="handleC">
+        <input style="display: block" type="button" value="按钮" @click="handleC">
       </form>
     </div>
 
@@ -215,7 +215,7 @@
           this.address = value
         }else{
           this.address = value
-          this.baddress = this.$t('views.set.generate.baddress')
+          this.baddress = 'Billing address same as shipping address'
 
         }
 
@@ -240,7 +240,7 @@
           background: 'rgba(0, 0, 0, 0.7)'
         });
         var address="";
-        if(this.baddress ==this.$t('views.set.generate.baddress')){
+        if(this.baddress =="Billing address same as shipping address"){
           address = this.address
         }else{
           address = this.baddress
@@ -289,7 +289,7 @@
           if( res.data.data.cart.items.length ==0){
             this.$router.push("/")
           }
-          this.baddress = this.$t('views.set.generate.baddress')
+          this.baddress = "Billing address same as shipping address"
           if(res.data.data.address == null){
             this.isShow = false
           }else{
@@ -348,29 +348,36 @@
         return  this.ShippingMethod == 'standard' ? 0 : this.postPrice
       },
       GrandTotal:function () {//总价
-        var sum =  Math.ceil((this.finalMoney + this.freight) * 100)
-        return  sum / 100
+        var sum =  Math.ceil((this.finalMoney + this.freight) *100)
+        return  sum/100
       }
     },
     watch:{
       'address.country':function () {
+
         GetFreight(this.address.country,this.goodsCount).then(res=>{
+
           this.shopmethodArr = res.data.data
           this.postPrice = res.data.data.price
-          this.ShippingMethod = res.data.data.standardSmall == 1 ? 'standard' :'expedited'
+          if(this.ShippingMethod == 'expedited' && res.data.data.dhl!=1){
+            this.ShippingMethod = 'standard'
+          }else{
+            this.ShippingMethod = 'expedited'
+          }
+
         }).catch(error=>{
           console.log(error);
         })
       }
     },
     created() {
-      if(document.body.clientWidth >= 800){
+      if(document.body.clientWidth>=800){
         this.dialogWidth = '30%'
       }else{
         this.dialogWidth = '98%'
       }
       //获取个人信息
-      UserInfo().then( res => {
+      UserInfo().then(res=>{
       this.$refs.ruleForm.rules.email = [
 
         ]
@@ -378,9 +385,10 @@
         this.email = res.data.data.email
         this.GetGoodsData()
       }).catch(error=>{
+
         this.$refs.ruleForm.rules.email = [
-            { required: true, message: this.$t('views.set.generate.message1'), trigger: ['blur','change'] },
-            { required: true, type:'email', message: this.$t('views.set.generate.message2'), trigger: ['blur','change']}
+            { required: true, message: 'email is required', trigger: ['blur','change'] },
+            { required: true, type:'email', message: 'Email Format error', trigger: ['blur','change']}
           ]
         this.signIn = true
         this.GetNotSigin()//未登录的购物车数据

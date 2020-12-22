@@ -12,12 +12,12 @@
         </p>
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left"  class="login-form">
           <el-form-item prop="username" >
-              <el-input v-model="loginForm.username" type="text" auto-complete="off" :placeholder="$t('login.placeholder')" @focus="errorTips=false" size="medium">
+              <el-input name="email" v-model="loginForm.username" type="email" auto-complete="email" :placeholder="$t('login.placeholder')" @focus="errorTips=false" size="medium">
               <i slot="prefix" class="el-input__icon el-icon-user-solid"></i>
             </el-input>
           </el-form-item>
           <el-form-item prop="password" class="pass-box" >
-            <el-input class="login-item" v-model="loginForm.password" type="password" auto-complete="off" :placeholder="$t('login.placeholder2')" @keyup.enter.native="handleLogin" @focus="errorTips=false">
+            <el-input class="login-item" name="Password" v-model="loginForm.password" type="password" auto-complete="password" :placeholder="$t('login.placeholder2')" @keyup.enter.native="handleLogin" @focus="errorTips=false">
               <i slot="prefix" class="el-input__icon el-icon-key"></i>
             </el-input>
             <router-link to="/forgotpassword" class="forgot">{{$t('login.forgot')}}</router-link>
@@ -44,15 +44,14 @@
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="position:relative; top:7px;" width="24px" height="24px" viewBox="0 0 48 48" class="abcRioButtonSvg"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>                  
                     &nbsp;&nbsp;Google
                 </g-signin-button>
-                 <fb-signin-button
+                 <!-- <fb-signin-button
                  class="facebook-signin-button"
                   :params="fbSignInParams"
                   @success="fb_onSignInSuccess"
                   @error="fb_onSignInError">
                     <img class="img" src="https://www.facebook.com/rsrc.php/v3/yN/r/szGrb_tkxMW.png" alt="" width="24" height="24">
                     &nbsp;&nbsp;Facebook
-                </fb-signin-button>
-                <a href="#" @click="signOut()">Sign out</a>
+                </fb-signin-button> -->
           </div>
         <!--      <a href="javascript:;" @click="activeEmail">激活邮箱</a>-->
         <!--      <p><router-link to='/resetpass'>重置密码</router-link></p>-->
@@ -69,6 +68,8 @@
   import { setToken } from '@/utils/auth'
   // import { encrypt } from '@/utils/rsaEncrypt'
   import { login } from '@/api/login' //登录的请求
+    import { google_login } from '@/api/login' //登录的请求
+
   // import {GetReCAPTCHA} from '@/api/home'
   import Cookies from 'js-cookie'
   import {Message} from "element-ui";
@@ -79,11 +80,12 @@
             cookiePass:"",
             googleSignInParams: {
                 client_id: '539767237567-tkud7vkbq3500ir6nggln6ak7rcj7pdo.apps.googleusercontent.com',
+                // client_id: '532608812963-pr86tgqmsj5ph5rf1tp81ao1ap7rck78.apps.googleusercontent.com',
               },
-            fbSignInParams: {
-                scope: 'email,user_likes',
-                return_scopes: true
-              },
+            // fbSignInParams: {
+            //     scope: 'email,user_likes',
+            //     return_scopes: true
+            //   },
             loginForm: {
               username: this.$store.state.user.username,
               password: this.$store.state.user.password,
@@ -99,80 +101,80 @@
           }
       },
       methods:{
-       signOut(url) {
-          FB.getLoginStatus(function (response){
-            if (response.status === 'connected') {
-               var uid = response.authResponse.userID;
-                var accessToken = response.authResponse.accessToken;
-                FB.logout(function (response) {
-                   console.log('User signed out.');
-                });
-                FB.getAuthResponse()//解决facebook无法注销问题
-            }
-          })
+      //  signOut(url) {
+          // FB.getLoginStatus(function (response){
+          //   if (response.status === 'connected') {
+          //      var uid = response.authResponse.userID;
+          //       var accessToken = response.authResponse.accessToken;
+          //       FB.logout(function (response) {
+          //          console.log('User signed out.');
+          //       });
+          //       FB.getAuthResponse()//解决facebook无法注销问题
+          //   }
+          // })
 
-          var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-              console.log('User signed out.');
-            })
-            auth2.disconnect();//解决谷歌无法切换注销问题
-        },
-        fb_onSignInSuccess (response) {
-          if (response.status === 'connected') {
-              var accessToken = response.authResponse.accessToken; //取得 accessToken
-              FB.api('/me?fields=name,first_name,last_name,email',function(response){
-                  console.log(response)
-                  if(response.email != null){
-                      console.log(response.id)
-                      FB.api(
-                        response.id+'/picture',
-                        'GET',
-                        {"redirect":"false"},
-                        function(pic){
-                          // console.log(pic)
-                            getBase64(pic.data.url)
-                            .then(function(base64){
-                              console.log(base64);
-                              //将base64转换成文件
-                              // this.postImg();//这个方法看更改用户头像那篇
-                            },function(err){
-                              console.log(err);//打印异常信息
-                            });
-                          //传入图片路径，返回base64
-                            function getBase64(img){
-                              function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
-                                var canvas = document.createElement("canvas");
-                                canvas.width = width ? width : img.width;
-                                canvas.height = height ? height : img.height;
-                                var ctx = canvas.getContext("2d");
-                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                                var dataURL = canvas.toDataURL();
-                                return dataURL;
-                              }
-                                var image = new Image();
-                                image.crossOrigin = '';
-                                image.src = img;
-                                var deferred=$.Deferred();
-                                if(img){
-                                  image.onload =function (){
-                                    deferred.resolve(getBase64Image(image));//将base64传给done上传处理
-                                  }
-                                  return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
-                                }
+        //   var auth2 = gapi.auth2.getAuthInstance();
+        //     auth2.signOut().then(function () {
+        //       console.log('User signed out.');
+        //     })
+        //     auth2.disconnect();
+        // },
+        // fb_onSignInSuccess (response) { //facebook登录
+        //   if (response.status === 'connected') {
+        //       var accessToken = response.authResponse.accessToken; //取得 accessToken
+        //       FB.api('/me?fields=name,first_name,last_name,email',function(response){
+        //           console.log(response)
+        //           if(response.email != null){
+        //               console.log(response.id)
+        //               FB.api(
+        //                 response.id+'/picture',
+        //                 'GET',
+        //                 {"redirect":"false"},
+        //                 function(pic){
+        //                   // console.log(pic)
+        //                     getBase64(pic.data.url)
+        //                     .then(function(base64){
+        //                       console.log(base64);
+        //                       //将base64转换成文件
+        //                       // this.postImg();//这个方法看更改用户头像那篇
+        //                     },function(err){
+        //                       console.log(err);//打印异常信息
+        //                     });
+        //                   //传入图片路径，返回base64
+        //                     function getBase64(img){
+        //                       function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+        //                         var canvas = document.createElement("canvas");
+        //                         canvas.width = width ? width : img.width;
+        //                         canvas.height = height ? height : img.height;
+        //                         var ctx = canvas.getContext("2d");
+        //                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        //                         var dataURL = canvas.toDataURL();
+        //                         return dataURL;
+        //                       }
+        //                         var image = new Image();
+        //                         image.crossOrigin = '';
+        //                         image.src = img;
+        //                         var deferred=$.Deferred();
+        //                         if(img){
+        //                           image.onload =function (){
+        //                             deferred.resolve(getBase64Image(image));//将base64传给done上传处理
+        //                           }
+        //                           return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
+        //                         }
 
-                            }
-                        }
-                      )
-                  }
-              })
-          }
-          // console.log(response) //返回第三方的登录信息 tolen等
-        },
-        fb_onSignInError (error) {
-            console.log('OH NOES', error)
-        },
-        onSignInSuccess (googleUser) {
-                const profile = googleUser.getBasicProfile()// 用户登录信息
+        //                     }
+        //                 }
+        //               )
+        //           }
+        //       })
+        //   }
+        //   // console.log(response) //返回第三方的登录信息 tolen等
+        // },
+        // fb_onSignInError (error) {
+        //     console.log('OH NOES', error)
+        // },
+        onSignInSuccess (googleUser) { //谷歌登录
+                const profile = googleUser.getBasicProfile()
                 console.log("ID: " + profile.getId())
                 console.log("Full Name: " + profile.getName())
                 console.log("Given Name: " + profile.getGivenName());
@@ -181,11 +183,18 @@
                 console.log("Email: " + profile.getEmail());
                 var id_token = googleUser.getAuthResponse().id_token;
                 console.log("ID Token: " + id_token);
-                // this.url = "https://oauth2.googleapis.com/tokeninfo?id_token="+null
+                google_login(id_token)
+              //   //将id_token发送给后台进行验证
+              //  var xhr = new XMLHttpRequest();
+              // xhr.open('POST', 'https://activity.blackview.hk/googleVerify');
+              // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              // xhr.onload = function() {
+              //   console.log('Signed in as: ' + xhr.responseText);
+              // };
+              // xhr.send('idtoken=' + JSON.stringify(id_token));
+
         },
-       
         onSignInError (error) {
-          // `error` contains any error occurred.
           console.log('OH NOES', error)
         },
         // async recaptcha() {

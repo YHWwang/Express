@@ -144,15 +144,15 @@
     },
 
     created() {
-
-      const s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.src = 'http://pv.sohu.com/cityjson?ie=utf-8';
-      const s1 = document.createElement('script');
-      s1.type = 'text/javascript';
-      s1.src = 'https://maps.googleapis.com/maps/api/js?&key=AIzaSyCW1JVQytedhRmr9dVk0Alc4ek0a8zcsWk&language=en-US';
-      document.body.appendChild(s);
-      document.body.appendChild(s1);
+      //
+      // const s = document.createElement('script');
+      // s.type = 'text/javascript';
+      // s.src = 'http://pv.sohu.com/cityjson?ie=utf-8';
+      // const s1 = document.createElement('script');
+      // s1.type = 'text/javascript';
+      // s1.src = 'https://maps.googleapis.com/maps/api/js?&key=AIzaSyCW1JVQytedhRmr9dVk0Alc4ek0a8zcsWk&language=en-US';
+      // document.body.appendChild(s);
+      // document.body.appendChild(s1);
     }
   }
 

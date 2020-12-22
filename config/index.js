@@ -10,6 +10,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     // assetsPublicPath: '/mynote/',
+    // assetsPublicPath: '/',
     assetsPublicPath: '/',
     proxyTable: {},
 
@@ -33,6 +34,7 @@ module.exports = {
     cacheBusting: true,
 
     cssSourceMap: true
+    // cssSourceMap: false //11月21日加
   },
 
   build: {

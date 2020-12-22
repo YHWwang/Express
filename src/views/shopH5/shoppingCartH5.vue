@@ -65,7 +65,7 @@
             <span class="code-input">{{$t('views.shop.shoppingCart.tit3')}}   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span @click="discount">  {{$t('views.shop.shoppingCart.Check')}} <i> > </i></span>
             <div v-show="show1" class="discount">
               <div>
-                <input v-model.trim="code" type="text" placeholder="Введите ваш код" ><el-button class="apply" @click="ApplyDiscount">{{$t('views.shop.shoppingCart.Apply')}}</el-button>
+                <input v-model.trim="code" type="text" :placeholder="$t('views.shop.shoppingCart.placeholder')" ><el-button class="apply" @click="ApplyDiscount">{{$t('views.shop.shoppingCart.Apply')}}</el-button>
                 <br><span v-show="errorShow" class="error-text">{{$t('views.shop.shoppingCart.errorShow')}} </span>
               </div>
             </div>

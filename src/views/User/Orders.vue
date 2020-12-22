@@ -44,7 +44,7 @@
           </el-table-column>
         </el-table>
         <p class="total"><span v-show="item.couponPrice !=0"><i>{{$t('views.User.order.p1')}}:</i>{{-item.couponPrice}};</span> <span
-          v-show="item.totalPostage !=0"><i>Postag:</i> USD  {{ item.totalPostage }};</span><span><i>{{$t('views.User.order.p2')}}:</i> USD{{item.payPrice}}</span>
+          v-show="item.payPostage !=0"><i>Freight:</i> USD  {{ item.payPostage }};</span><span><i>{{$t('views.User.order.p2')}}:</i> USD{{item.payPrice}}</span>
         </p>
         <div class="order-btn-box">
           <router-link to="/contact-us"><el-button  class="contact-us">{{$t('views.User.order.router')}}</el-button></router-link>  <el-button v-if="item.payTypeName == 'pending'" class="pay-now" @click="PayMethods(item)">{{$t('views.User.order.Pay')}}</el-button>

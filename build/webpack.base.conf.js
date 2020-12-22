@@ -23,7 +23,13 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   externals: {
-    'google': 'google'
+    // 'google': 'google',
+    'vue':'Vue',
+    'vuex':'Vuex',
+    'vue-router':'VueRouter',
+    'axios':'axios',
+    'element-ui':'ELEMENT'
+    // 'element-ui':'ElementUI'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

@@ -14,6 +14,12 @@ export function login(username, password) {
     }
   })
 }
+export function google_login(id_token) {
+  return request({
+    url: 'https://activity.blackview.hk/googleVerify?idtoken='+id_token,
+    method: 'post',
+  })
+}
 export function register(username, password) {//注册
   return request({
     // url: '/user/register',
