@@ -8,11 +8,13 @@ window.vm = new Vue({
   render: h => h(App)
 })
 window.vm.$t(‘name’)//js中使用
+
 技巧
 document.getElementsByTagName('html')[0].setAttribute('lang',Cookies.get('lang') === 'en'? 'en' : 'zh');//判断当前语言并加入html
 .classNamer:lang(en) {// css判断当前环境是否是’en’
 Css
 }
+
 在路由中定义vue-i8n国际化
 路由中设置：title: 'router.name'
 vue:{{$t(item.title) }}
@@ -28,3 +30,7 @@ Swiper自定义分页器格式
       $('.swiper-pagination-bullet').each(function(index){
           $(this).html(_html+arr[index])
       })
+http 400错误码url格式
+{name:'goatling'} 这种形式根本不是标准JSON字符串
+  '{"name":"goatling"}'  这个才是标准JSON字符串
+  Json.stringify()等，可能与后台接口不一致导致报错
