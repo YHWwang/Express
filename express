@@ -9,7 +9,7 @@ window.vm = new Vue({
 })
 window.vm.$t(‘name’)//js中使用
 
-技巧
+根据不同的国际化语言设置不同的样式
 document.getElementsByTagName('html')[0].setAttribute('lang',Cookies.get('lang') === 'en'? 'en' : 'zh');//判断当前语言并加入html
 .classNamer:lang(en) {// css判断当前环境是否是’en’
 Css
