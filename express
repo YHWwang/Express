@@ -1,1 +1,17 @@
 
+vue如何在js文件中设置i18n国际化
+window.vm = new Vue({
+  el: '#app',
+  router,
+  i18n,
+  store,
+  render: h => h(App)
+})
+window.vm.$t(‘name’)//js中使用
+技巧
+document.getElementsByTagName('html')[0].setAttribute('lang',Cookies.get('lang') === 'en'? 'en' : 'zh');//判断当前语言并加入html
+.classNamer:lang(en) {// css判断当前环境是否是’en’
+Css
+}
+
+
