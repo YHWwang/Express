@@ -4,7 +4,7 @@
       <p class="network-txt">{{$t('views.Support.Network.msg_1')}}</p>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="network-network" label-position="top">
         <el-form-item :label="$t('views.Support.Network.product')" prop="product" class="network-item">
-          <el-select v-model="ruleForm.product" :placeholder="$t('views.Support.Network.placeholder1')" >
+          <el-select v-model="ruleForm.product" :placeholder="$t('views.Support.Network.placeholder1')" class="network-select">
             <el-option v-for="(item,index) in phoneData" :label="item.cellPhone" :value="item.id" :key="index" class="item-ipt"></el-option>
           </el-select>
         </el-form-item>
@@ -61,7 +61,12 @@
           return {
             phoneData:"",//关于手机
             countryData:"",//关于国家
-            querySupport:"",//查询结果
+            querySupport:{
+              band4G:'',
+              cellPhone:'',
+              frequencySupports:'',
+              id:'',
+            },//查询结果
             tableData:"",//表格数据
             show:"display:none",//支持的频段结果
             show4G:"display:none",//支持4G
@@ -86,16 +91,16 @@
           var _this = this
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              var arr = []
-
               this.phoneData.forEach(function (item,index) {
                       if(item.id == _this.ruleForm.product){
                         _this.productName = item.cellPhone
-                        arr = _this.phoneData[index]
+                        _this.querySupport.band4G = item.band4G
+                        _this.querySupport.cellPhone = item.cellPhone
+                        _this.querySupport.frequencySupports = item.frequencySupports
+                        _this.querySupport.id = item.id
                       }
               })
               this.bandsRender(_this.ruleForm.country,_this.ruleForm.product)
-              _this.querySupport = arr
               // this.show4G = "display:block"
               this.show = "display:block"
 
@@ -168,7 +173,6 @@
               this.show4G = "display:none"
               this.un4Gshow = "display:block"
             }
-          // };
         },
         handleCountry(){//国家列表
           var arr  =  supportCountry();
@@ -216,7 +220,7 @@
           this.countryData =country
         }
       },
-      created() {
+      mounted() {
         NetWork().then(res=>{
           var netData  =  res.data
           netData.forEach(function (val,inx) {

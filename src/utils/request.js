@@ -1,8 +1,8 @@
-import axios from 'axios'
+// import axios from 'axios'
 import { getToken } from '@/utils/auth'
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // api 的 base_url
-  // baseURL: 'http://192.168.11.27:8082',//本地环境
+  // baseURL: 'http://192.168.11.23:8020',//本地环境
   // baseURL: 'http://18.158.111.234:8083',//德国线上测试
   baseURL: 'https://www.blackview.hk',//正式测试线上
   // baseURL: 'http://russia.blackview.hk/',//ru 测试

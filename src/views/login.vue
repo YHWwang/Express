@@ -68,7 +68,7 @@
   import { setToken } from '@/utils/auth'
   // import { encrypt } from '@/utils/rsaEncrypt'
   import { login } from '@/api/login' //登录的请求
-    import { google_login } from '@/api/login' //登录的请求
+  import { google_login } from '@/api/login' //登录的请求
 
   // import {GetReCAPTCHA} from '@/api/home'
   import Cookies from 'js-cookie'
@@ -79,13 +79,9 @@
           return {
             cookiePass:"",
             googleSignInParams: {
-                client_id: '539767237567-tkud7vkbq3500ir6nggln6ak7rcj7pdo.apps.googleusercontent.com',
+                client_id: '539767237567-bta88v6ipfosh8r3gcfc0k5bi9pj6i6j.apps.googleusercontent.com',
                 // client_id: '532608812963-pr86tgqmsj5ph5rf1tp81ao1ap7rck78.apps.googleusercontent.com',
               },
-            // fbSignInParams: {
-            //     scope: 'email,user_likes',
-            //     return_scopes: true
-            //   },
             loginForm: {
               username: this.$store.state.user.username,
               password: this.$store.state.user.password,
@@ -101,98 +97,38 @@
           }
       },
       methods:{
-      //  signOut(url) {
-          // FB.getLoginStatus(function (response){
-          //   if (response.status === 'connected') {
-          //      var uid = response.authResponse.userID;
-          //       var accessToken = response.authResponse.accessToken;
-          //       FB.logout(function (response) {
-          //          console.log('User signed out.');
-          //       });
-          //       FB.getAuthResponse()//解决facebook无法注销问题
-          //   }
-          // })
-
-        //   var auth2 = gapi.auth2.getAuthInstance();
-        //     auth2.signOut().then(function () {
-        //       console.log('User signed out.');
-        //     })
-        //     auth2.disconnect();
-        // },
-        // fb_onSignInSuccess (response) { //facebook登录
-        //   if (response.status === 'connected') {
-        //       var accessToken = response.authResponse.accessToken; //取得 accessToken
-        //       FB.api('/me?fields=name,first_name,last_name,email',function(response){
-        //           console.log(response)
-        //           if(response.email != null){
-        //               console.log(response.id)
-        //               FB.api(
-        //                 response.id+'/picture',
-        //                 'GET',
-        //                 {"redirect":"false"},
-        //                 function(pic){
-        //                   // console.log(pic)
-        //                     getBase64(pic.data.url)
-        //                     .then(function(base64){
-        //                       console.log(base64);
-        //                       //将base64转换成文件
-        //                       // this.postImg();//这个方法看更改用户头像那篇
-        //                     },function(err){
-        //                       console.log(err);//打印异常信息
-        //                     });
-        //                   //传入图片路径，返回base64
-        //                     function getBase64(img){
-        //                       function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
-        //                         var canvas = document.createElement("canvas");
-        //                         canvas.width = width ? width : img.width;
-        //                         canvas.height = height ? height : img.height;
-        //                         var ctx = canvas.getContext("2d");
-        //                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        //                         var dataURL = canvas.toDataURL();
-        //                         return dataURL;
-        //                       }
-        //                         var image = new Image();
-        //                         image.crossOrigin = '';
-        //                         image.src = img;
-        //                         var deferred=$.Deferred();
-        //                         if(img){
-        //                           image.onload =function (){
-        //                             deferred.resolve(getBase64Image(image));//将base64传给done上传处理
-        //                           }
-        //                           return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
-        //                         }
-
-        //                     }
-        //                 }
-        //               )
-        //           }
-        //       })
-        //   }
-        //   // console.log(response) //返回第三方的登录信息 tolen等
-        // },
-        // fb_onSignInError (error) {
-        //     console.log('OH NOES', error)
-        // },
         onSignInSuccess (googleUser) { //谷歌登录
-                const profile = googleUser.getBasicProfile()
-                console.log("ID: " + profile.getId())
-                console.log("Full Name: " + profile.getName())
-                console.log("Given Name: " + profile.getGivenName());
-                console.log("Family Name: " + profile.getFamilyName());
-                console.log("Image URL: " + profile.getImageUrl());
-                console.log("Email: " + profile.getEmail());
-                var id_token = googleUser.getAuthResponse().id_token;
-                console.log("ID Token: " + id_token);
-                google_login(id_token)
-              //   //将id_token发送给后台进行验证
-              //  var xhr = new XMLHttpRequest();
-              // xhr.open('POST', 'https://activity.blackview.hk/googleVerify');
-              // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-              // xhr.onload = function() {
-              //   console.log('Signed in as: ' + xhr.responseText);
-              // };
-              // xhr.send('idtoken=' + JSON.stringify(id_token));
-
+            var that = this
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut()
+            auth2.disconnect();//清除登录权限
+            const profile = googleUser.getBasicProfile()
+            // console.log("ID: " + profile.getId())
+            // console.log("Full Name: " + profile.getName())
+            // console.log("Given Name: " + profile.getGivenName());
+            // console.log("Family Name: " + profile.getFamilyName());
+            // console.log("Image URL: " + profile.getImageUrl());
+            // console.log("Email: " + profile.getEmail());
+            var id_token = googleUser.getAuthResponse().id_token;
+            // console.log("ID Token: " + id_token);
+            //将id_token发送给后台进行验证
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://activity.blackview.hk/google/googleVerify');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+              // console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' +id_token);
+            this.$notify({
+              title:'success',
+              type: 'success',
+              message: 'Google login success'
+            });
+            if(xhr.readyState === 1){
+              setTimeout(function(){ 
+                that.$router.push(`/`)
+              }, 1000);
+            }
         },
         onSignInError (error) {
           console.log('OH NOES', error)

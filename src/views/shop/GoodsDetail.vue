@@ -533,11 +533,6 @@
     mounted() {
     },
     created() {
-      if(this.$i18n.locale == 'IT'){
-      Vue.nextTick(function () {
-        $('.part-top-right .tips').css('display','block')
-      })
-      }
       UserInfo().then(res=>{//登陆与否
         this.WriteIsShow = true
       }).catch(error=>{

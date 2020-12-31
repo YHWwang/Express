@@ -197,7 +197,6 @@
     },
     mounted: function () {
       window.addEventListener('scroll', this.handleScroll, true);  // 监听（绑定）滚轮滚动事件
-
     },
     methods:{
       goToCart(){
@@ -206,7 +205,6 @@
       mobileShow(){
         this.show1 = !this.show1
         this.$nextTick(()=>{
-
         })
       },
       search(){
@@ -291,8 +289,6 @@
         this.mobileDisplay =  this.show1?"display:block":"display:none"
       },
       '$route.path':function () {
-
-
         this.skyShow  = this.$route.path == '/' ? false : true
         this.tBanner  = this.$route.path == '/' ? this.tBanner_home : this.tBanner_other
         this.show1 = false

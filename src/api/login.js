@@ -16,8 +16,9 @@ export function login(username, password) {
 }
 export function google_login(id_token) {
   return request({
-    url: 'https://activity.blackview.hk/googleVerify?idtoken='+id_token,
+    url: 'https://activity.blackview.hk/googleVerify',
     method: 'post',
+    data:id_token,
   })
 }
 export function register(username, password) {//注册
