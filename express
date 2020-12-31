@@ -13,5 +13,18 @@ document.getElementsByTagName('html')[0].setAttribute('lang',Cookies.get('lang')
 .classNamer:lang(en) {// css判断当前环境是否是’en’
 Css
 }
+在路由中定义vue-i8n国际化
+路由中设置：title: 'router.name'
+vue:{{$t(item.title) }}
 
+谷歌登录不能切换账号问题
+  var auth2 = gapi.auth2.getAuthInstance(); 
+  auth2.signOut()
+  auth2.disconnect();//清除登录权限
 
+Swiper自定义分页器格式
+ var arr = ['Iceberg Silver','Graphite Black','Mist Grey'] //分页器文字
+      var _html = `<span class="select_box"></span>`
+      $('.swiper-pagination-bullet').each(function(index){
+          $(this).html(_html+arr[index])
+      })
