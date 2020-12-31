@@ -34,3 +34,4 @@ http 400错误码url格式
 {name:'goatling'} 这种形式根本不是标准JSON字符串
   '{"name":"goatling"}'  这个才是标准JSON字符串
   Json.stringify()等，可能与后台接口不一致导致报错
+关于vuex刷新值初始化问题可使用：sessionStorage代替存放
