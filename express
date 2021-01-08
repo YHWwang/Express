@@ -26,7 +26,7 @@ vue:{{$t(item.title) }}
 按照谷歌官网XHR接口回调的数据是字符串(两种字符串与xml)，因用JSON.parse()改成json格式方便操作
  xhr.onreadystatechange=function(data){
               if(xhr.status === 200 && xhr.readyState === 4){
-                  let req = JSON.parse(xhr.responseText).data.token
+                  let req = JSON.parse(xhr.responseText).data.token//xhr.responseText 获取参数
                   setToken(req,'google')
                   that.$store.dispatch('saveToken',req)
                 }
