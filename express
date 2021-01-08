@@ -23,7 +23,14 @@ vue:{{$t(item.title) }}
   var auth2 = gapi.auth2.getAuthInstance(); 
   auth2.signOut()
   auth2.disconnect();//清除登录权限
-
+按照谷歌官网XHR接口回调的数据是字符串(两种字符串与xml)，因用JSON.parse()改成json格式方便操作
+ xhr.onreadystatechange=function(data){
+              if(xhr.status === 200 && xhr.readyState === 4){
+                  let req = JSON.parse(xhr.responseText).data.token
+                  setToken(req,'google')
+                  that.$store.dispatch('saveToken',req)
+                }
+             }
 Swiper自定义分页器格式
  var arr = ['Iceberg Silver','Graphite Black','Mist Grey'] //分页器文字
       var _html = `<span class="select_box"></span>`
