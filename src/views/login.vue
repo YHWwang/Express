@@ -68,8 +68,6 @@
   import { setToken } from '@/utils/auth'
   // import { encrypt } from '@/utils/rsaEncrypt'
   import { login } from '@/api/login' //登录的请求
-  import { google_login } from '@/api/login' //登录的请求
-
   // import {GetReCAPTCHA} from '@/api/home'
   import Cookies from 'js-cookie'
   import {Message} from "element-ui";
@@ -97,38 +95,37 @@
           }
       },
       methods:{
-        onSignInSuccess (googleUser) { //谷歌登录
+        onSignInSuccess (googleUser) {
             var that = this
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut()
             auth2.disconnect();//清除登录权限
             const profile = googleUser.getBasicProfile()
-            // console.log("ID: " + profile.getId())
-            // console.log("Full Name: " + profile.getName())
-            // console.log("Given Name: " + profile.getGivenName());
-            // console.log("Family Name: " + profile.getFamilyName());
-            // console.log("Image URL: " + profile.getImageUrl());
-            // console.log("Email: " + profile.getEmail());
             var id_token = googleUser.getAuthResponse().id_token;
-            // console.log("ID Token: " + id_token);
             //将id_token发送给后台进行验证
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://activity.blackview.hk/google/googleVerify');
+            xhr.open('POST', 'https://russia.blackview.hk/api/user/googleVerify');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
               // console.log('Signed in as: ' + xhr.responseText);
             };
-            xhr.send('idtoken=' +id_token);
-            this.$notify({
-              title:'success',
-              type: 'success',
-              message: 'Google login success'
-            });
-            if(xhr.readyState === 1){
-              setTimeout(function(){ 
-                that.$router.push(`/`)
-              }, 1000);
-            }
+            xhr.send('idtoken=' + id_token);
+            xhr.onreadystatechange=function(data){
+              if(xhr.status === 200 && xhr.readyState === 4){
+                  that.$notify({
+                    title:'success',
+                    type: 'success',
+                    message: 'Google Login successful'
+                  });
+                  let req = JSON.parse(xhr.responseText).data.token
+                  // console.log(req)
+                  setToken(req,'google')
+                  that.$store.dispatch('saveToken',req)
+                  setTimeout(function(){ 
+                      that.$router.push(`/`)
+                    }, 1000);
+                }
+             }
         },
         onSignInError (error) {
           console.log('OH NOES', error)
