@@ -12,6 +12,12 @@ H5 notification浏览器桌面通知
 
 lottie动画设置的俩种方式：
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.4.3/lottie.min.js"></script>
+#lottie{
+    overflow: hidden;
+    transform: translate3d(0,0,0);
+    text-align: center;
+    opacity: 1;
+}
 1：  html,<script type="text/javascript" src="./data.json"></script>
      json: var lottie = {动画json代码}//一定要设置将json赋值变量，否则报错
      js: var anim2 = lottie.loadAnimation({
