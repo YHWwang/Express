@@ -1,3 +1,18 @@
+https://animate.style/ --------
+var height = window.innerHeight
+var scoll_2 = $('.name').offset().top - height/2
+ $(window).scroll(function(){
+        var winp = $(document).scrollTop();
+        if(scoll_2 && winp > scoll_2){
+                $('.sect1 .box2').fadeIn();
+                // scoll_3 = $('.name').offset().top - height/2 //获取下一个动画到顶高度
+                scoll_2=false
+            }
+        }
+animate + scrollTop  让页面动起来
+
+CDN:https://cdnjs.com/  拥有大量前端插件的相关引用文件 
+
 倒计时插件：https://countdownmail.com/拥有各种时区时间的一款倒计时
 
 wave波浪效果(目前发现只能应用到点击事件中)
