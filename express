@@ -1,3 +1,5 @@
+倒计时插件：https://countdownmail.com/拥有各种时区时间的一款倒计时
+
 wave波浪效果(目前发现只能应用到点击事件中)
 http://ch-ny.com/content/themes/bridge-child/js/libs/Waves/docs/
 html: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.css" integrity="sha512-bsNktdxsLu4ooy7axuzyyFz87SWrDBaCmZsk2Dvin1/2noq49vt1jfNWUAfdybRpFCzRjdWygAOEopdbo8cGpA==" crossorigin="anonymous" />
