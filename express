@@ -29,7 +29,7 @@ js:  Waves.displayEffect();
 H5 notification浏览器桌面通知
 详细：https://www.cnblogs.com/zhangycun/p/10410445.html
 
-lottie动画设置的俩种方式：
+lottie动画设置的俩种方式：（好处json文件大小会比gif文件小很多，性能也会更好）
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.4.3/lottie.min.js"></script>
 #lottie{
     overflow: hidden;
