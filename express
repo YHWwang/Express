@@ -1,3 +1,12 @@
+wave波浪效果(目前发现只能应用到点击事件中)
+http://ch-ny.com/content/themes/bridge-child/js/libs/Waves/docs/
+html: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.css" integrity="sha512-bsNktdxsLu4ooy7axuzyyFz87SWrDBaCmZsk2Dvin1/2noq49vt1jfNWUAfdybRpFCzRjdWygAOEopdbo8cGpA==" crossorigin="anonymous" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js" integrity="sha512-MzXgHd+o6pUd/tm8ZgPkxya3QUCiHVMQolnY3IZqhsrOWQaBfax600esAw3XbBucYB15hZLOF0sKMHsTPdjLFg==" crossorigin="anonymous"></script>
+      <span class="img1 waves-effect">
+            <div style="width: 300px;height: 300px; position: relative;"></div>
+      </span>
+js:  Waves.displayEffect();
+
 H5 notification浏览器桌面通知
 详细：https://www.cnblogs.com/zhangycun/p/10410445.html
 
