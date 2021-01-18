@@ -1,3 +1,5 @@
+关于图片压缩建议压缩成webp格式，压缩比例较高，并且相对与其他格式压缩后图片清晰度有明显优势 ------https://zhitu.isux.us/
+
 https://animate.style/ --------
 var height = window.innerHeight
 var scoll_2 = $('.name').offset().top - height/2
