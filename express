@@ -1,4 +1,25 @@
+H5 notification浏览器桌面通知
+详细：https://www.cnblogs.com/zhangycun/p/10410445.html
 
+lottie动画设置的俩种方式：
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.4.3/lottie.min.js"></script>
+1：  html,<script type="text/javascript" src="./data.json"></script>
+     json: var lottie = {动画json代码}
+     js: var anim2 = lottie.loadAnimation({
+        container: document.getElementById("lottie2"), // 容器
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        animationData:lottle1,
+      });
+2：  var anim = lottie.loadAnimation({
+        container: document.getElementById("lottie"), // 容器
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        // animationData:lottle1,
+        path:"https://assets5.lottiefiles.com/datafiles/B1zOc97lUJINcA2/data.json" // 直接设置json链接
+      });
 vue如何在js文件中设置i18n国际化
 window.vm = new Vue({
   el: '#app',
