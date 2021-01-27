@@ -149,7 +149,7 @@
     methods:{
       goodsAdd(index,item){
         if(item.cartNum ==item.stock){
-          alert("Can't be increased any more")
+          alert(this.$t('views.shopH5.message2'))
           return
         }
         if(this.isLogin){
@@ -162,7 +162,7 @@
         }else{
 
           if(  this.goodsList[index].cartNum ==   this.goodsList[index].stock){
-            alert("Can't be increased any more")
+            alert(this.$t('views.shopH5.message2'))
             return
           }
           this.goodsList[index].cartNum+=1;
@@ -175,7 +175,7 @@
       goodsReduce(index,item){
 
         if(this.goodsList[index].cartNum == 1){
-          alert("Can't be increased any more")
+          alert(this.$t('views.shopH5.message2'))
         }else{
           if(this.isLogin){
             item.cartNum -=1

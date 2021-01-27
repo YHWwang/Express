@@ -230,8 +230,7 @@
           </div>
 
           <div class="common-list">
-            <p><strong>DOKE COMMUNICATION (HK) LIMITED<br>
-              RM 1902 EASEY COMM BLDG 253-261 HENNESSY RD WANCHAI HK </strong></p>
+            <p><strong> {{ $t("views.Footer.TermsOfUse.tit_17_p1") }}<br>{{ $t("views.Footer.TermsOfUse.tit_17_p2") }}</strong></p>
           </div>
         </div>
       </div>

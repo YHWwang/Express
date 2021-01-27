@@ -56,10 +56,10 @@
             imgList:'',
             rules:{
               serviceScore:[
-                { required: true, message: 'Star is required', trigger: 'blur' }
+                { required: true, message: this.$t('views.shop.review.rules.serviceScore'), trigger: 'blur' }
               ],
               comment:[
-                { required: true, message: 'Review is required ', trigger: 'blur' }
+                { required: true, message: this.$t('views.shop.review.rules.comment'), trigger: 'blur' }
               ]
             },
           }
@@ -79,7 +79,7 @@
                   if (this.$refs[formName]!==undefined) {
                     this.$refs[formName].resetFields();
                   }
-                  Message({ message: 'Thank you for your review. It has been submitted to the webmaster for approval.', type: 'success' })
+                  Message({ message: this.$t('views.shop.review.message'), type: 'success' })
                   // alert('Thank you for your review. It has been submitted to the webmaster for approval.')
                   this.$emit('CloseDialog')
                 }).catch(error=>{

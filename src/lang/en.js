@@ -376,6 +376,8 @@ export default{
                 tit_15_p2:'All purchases will be processed by our respective entity in the corresponding country as indicated by the country code in the billing statement and are governed by the Local Law.',
                 tit_16:'Section 16 - Contact Information',
                 tit_16_p1:' Questions about the Terms & Conditions should be sent to us at support02@blackview.hk',
+                tit_17_p1:' DOKE COMMUNICATION (HK) LIMITED',
+                tit_17_p2:' RM 1902 EASEY COMM BLDG 253-261 HENNESSY RD WANCHAI HK',           
             },
             Warranty:{
                     title:'Warranty',
@@ -624,6 +626,8 @@ export default{
                 placeholder1:'New Password',
                 placeholder2:'Confirm Password',
                 btn:'Submit',
+                error:'password is required',
+                err:'error!',
             },
             send:{
                 tit:'PLEASE CHECK YOUR INBOX',
@@ -787,6 +791,11 @@ export default{
                 pics:'Add a Photo',
                 Cancel:'Cancel',
                 Submit:'Submit',
+                rules:{
+                    serviceScore:'Star is required',
+                    comment:'Review is required',
+                },
+                message:'Thank you for your review. It has been submitted to the webmaster for approval.'
             },
             Search:'No result',
             shoppingCart:{

@@ -26,7 +26,7 @@
       data(){
         var validatePass = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('password is required'));
+            callback(new Error(this.$t('views.refister.reset.error')));
           } else {
             if (this.ruleForm.checkPass !== '') {
               this.$refs.ruleForm.validateField('checkPass');
@@ -36,9 +36,9 @@
         };
         var validatePass2 = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('password is required'));
+            callback(new Error(this.$t('views.refister.reset.error')));
           } else if (value !== this.ruleForm.pass) {
-            callback(new Error('error!'));
+            callback(new Error(this.$t('views.refister.reset.err')));
           } else {
             callback();
           }
