@@ -1,3 +1,7 @@
+fildder抓取工具如何抓取js,css等其他数据,主要是在‘tools’中配置https与connections的选项，以及导入安全证书
+
+fiddler抓取数据包的时候出现乱码，在‘transformer’中选择'None'
+
 关于图片压缩建议压缩成webp格式，压缩比例较高，并且相对与其他格式压缩后图片清晰度有明显优势 ------https://zhitu.isux.us/
 
 https://animate.style/ --------
@@ -12,7 +16,7 @@ var scoll_2 = $('.name').offset().top - height/2
             }
         }
 animate + scrollTop  让页面动起来
-
+BCompare 文件对比工具
 CDN:https://cdnjs.com/  拥有大量前端插件的相关引用文件 
 
 倒计时插件：https://countdownmail.com/拥有各种时区时间的一款倒计时
