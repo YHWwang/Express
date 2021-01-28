@@ -1,3 +1,5 @@
+vue-piczoom 放大镜设置mouse-cover-canvas布设置top无效--------原因是以#app进行定位，所以应在app.vue中设置top值
+
 fildder抓取工具如何抓取js,css等其他数据,主要是在‘tools’中配置https与connections的选项，以及导入安全证书
 
 fiddler抓取数据包的时候出现乱码，在‘transformer’中选择'None'
