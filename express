@@ -1,7 +1,12 @@
 vuex:1.state://仓库一般存放数据，this.$store.state.name  2. getters://获取值并缓存，也可访问对象的属性，依赖发生改变则重新计算  3.  mutations://同步更改state中的状态，commit('state',value)
 4.  actions:{//提交到mutations，异步操作，store.dispatch('increment') 5.modules模块化组件
 
-
+关于一个域名下存放俩个vue项目
+前台：
+1.在config.js下配置build,    assetsSubDirectory: './static'和 assetsPublicPath: '/路径名'
+2.在router下的index中配置   mode: 'history'和 base:'/路径名/'
+3.在打包的dist中的index.html中增加  <meta base='/路径名/'>
+其他在nginx中配置   https://www.cnblogs.com/dzcici/p/13877338.html
 
 vue-piczoom 放大镜设置mouse-cover-canvas布设置top无效--------原因是以#app进行定位，所以应在app.vue中设置top值（组件包含在一个有固定高宽的容器内width:500px;height:500px）
 
