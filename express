@@ -1,3 +1,6 @@
+webpack:
+deleteOriginalAssets: false //删除原文件
+
 水平垂直居中：父元素设为display:flex。子元素设置margin:auto
 
 localStorage.setItem(key，value)设置本地级存储
