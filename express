@@ -1,9 +1,9 @@
 //减少回流  重绘不一定会回流，但回流一定会重绘
 1.减少don的增删操作
-2.元素的高宽，边框，字体大小这类操作会触发回流，定义在class中并设置class名，执行一次回流
+2.元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
 3.对复制的元素比如动画让器脱离文档流，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。
 4.这些元素会进行回流，offsetTop,offsetLeft...scrollTop滚动事件等，display:none不会触发回流
-
+5.transform,opacity,filters这样css3的属性不会触发回流
 
 防抖/节流的原理----https://segmentfault.com/a/1190000018428170
 防抖：无论你执行多少次，我就执行最后一次，该函数在指定的时间期限内工作一次，重在清零 clearTimeout
