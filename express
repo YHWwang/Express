@@ -1,3 +1,7 @@
+vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=BTqy7c-Vuus' in a frame because it set 'X-Frame-Options' to 'sameorigin'.错误
+这是一种浏览器的安全机制，为了避免劫持的攻击。解决方法:https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/X-Frame-Options
+
+
 //减少回流  重绘不一定会回流，但回流一定会重绘
 1.减少don的增删操作
 2.元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
