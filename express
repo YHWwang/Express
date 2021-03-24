@@ -1,3 +1,27 @@
+    随屏幕大小变换变字体大小
+    function setRem(){
+        p1()
+        p2()
+    }
+    function p2(){
+        /*获取当前页面的宽度*/
+        var width = $('.main').width();
+        /*通过标签名称来获取元素*/
+        var htmlFont=document.getElementsByClassName('p2')[0];
+        // 给获取到的元素的字体大小赋值
+        htmlFont.style.fontSize =width/50+'px'
+    }
+    function p1(){
+        /*获取当前页面的宽度*/
+        var width = $('.main').width();
+        /*通过标签名称来获取元素*/
+        var htmlFont=document.getElementsByClassName('p1')[0];
+        // 给获取到的元素的字体大小赋值
+        htmlFont.style.fontSize =width/20+'px'
+    }
+     setRem();
+     window.onresize=setRem;  //监听屏幕变化
+
 vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=BTqy7c-Vuus' in a frame because it set 'X-Frame-Options' to 'sameorigin'.错误
 这是一种浏览器的安全机制，为了避免劫持的攻击。解决方法:https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/X-Frame-Options
 
