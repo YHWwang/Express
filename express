@@ -1,4 +1,7 @@
-    随屏幕大小变换变字体大小
+   在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
+   解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
+   
+   随屏幕大小变换变字体大小
     function setRem(){
         p1()
         p2()
