@@ -1,5 +1,5 @@
    //append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
-   
+   使用jq的load可以引用html,但是不同目录下调用的图片，css等引用问题就会出现，解决方法使用绝对地址
    
    在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
    解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
