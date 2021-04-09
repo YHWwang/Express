@@ -1,4 +1,6 @@
-   //append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
+  调用第三方js插件时，js文件放在index.html，js代码要放在mounted函数中以便进行数据交互并用this指向全局获取数据
+  
+  append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
   使用load()引用html本地存在一个地址引用的问题,
   解决方法：地址绝对引用。 因为load实际上时一个ajax请求，把页面内容拿过来之后，链接的外部文件，图片链接地址等还是已请求页面为基准，到新界面就会地址出错
    
