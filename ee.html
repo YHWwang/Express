@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=6.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>效果</title>
+    <style lang="scss" scoped>
+
+        /* 文字从不同角度显示或隐藏 */
+        .sect4 .box2 p {
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(135deg, #000 33%, transparent 48%);
+            background-size: 300% 100%;
+            background-position: 100% center;
+            font-size: 50px;
+            transition: all .1s;
+        }
+        .sect4 {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            /* var(--vh, 1vh)：获取的可用高度的1% */
+        }
+
+    </style>
+</head>
+
+<body class="en">
+    <div class="main">
+        <div class="sect4">
+            <div class="box2">
+                <p>Shot on BV5100</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"></script>
+<script>
+    $(function () {
+
+        //获取屏幕的可用高度，为每一个块级设置高度
+        let vh = window.innerHeight * 0.01
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+        window.addEventListener('resize', () => {
+            let vh = window.innerHeight * 0.01
+            console.log(vh);
+            document.documentElement.style.setProperty('--vh', `${vh}px`)
+        })
+
+        //文字从不同角度显示或隐藏
+        var width = 100;
+        var id = setInterval(frame, 20);
+            function frame() {
+                width--;
+                if (width >=0) {
+                    $('.sect4 .box2 p').css('background-position',width+'%')
+                } else {
+                    clearInterval(id);
+                }
+            }
+
+    })
+</script>
