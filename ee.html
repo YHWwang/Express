@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=6.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>效果</title>
-    <style lang="scss" scoped>
-
+    <style>
         /* 文字从不同角度显示或隐藏 */
         .sect4 .box2 p {
             -webkit-background-clip: text;
@@ -19,17 +18,42 @@
             font-size: 50px;
             transition: all .1s;
         }
+
         .sect4 {
             height: 100vh;
             height: calc(var(--vh, 1vh) * 100);
             /* var(--vh, 1vh)：获取的可用高度的1% */
         }
 
+        .video_box {
+            z-index: 1;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            opacity: 1;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #video_1{
+            object-fit: cover;
+        }
+        .op{
+            z-index: -1;
+            opacity: 0;
+            transition: all 1s;
+        }
     </style>
 </head>
 
 <body class="en">
     <div class="main">
+        
+       <div class="video_box">
+        <video id="video_1" muted="" playinline="" width="100%"
+        src="https://statics.oneplus.cn/ov/assets/images/events/2021/03/9pro/cn/kv-9pro_open_pc-dbf8e5.mp4"></video>
+    </video>
+       </div>
         <div class="sect4">
             <div class="box2">
                 <p>Shot on BV5100</p>
@@ -45,8 +69,16 @@
     crossorigin="anonymous"></script>
 <script>
     $(function () {
+        // 开屏动画
+        var video = $('#video_1') // jq获取的dom节点会变成数组
+        video[0].play();
+       setTimeout(()=>{
+        if(video[0].ended){
+            $('.video_box').addClass('op')
+        }
+       },5000)
 
-        //获取屏幕的可用高度，为每一个块级设置高度
+        //获取屏幕的可用高度，可为每一个块级设置高度
         let vh = window.innerHeight * 0.01
         document.documentElement.style.setProperty('--vh', `${vh}px`)
         window.addEventListener('resize', () => {
@@ -58,14 +90,14 @@
         //文字从不同角度显示或隐藏
         var width = 100;
         var id = setInterval(frame, 20);
-            function frame() {
-                width--;
-                if (width >=0) {
-                    $('.sect4 .box2 p').css('background-position',width+'%')
-                } else {
-                    clearInterval(id);
-                }
+        function frame() {
+            width--;
+            if (width >= 0) {
+                $('.sect4 .box2 p').css('background-position', width + '%')
+            } else {
+                clearInterval(id);
             }
+        }
 
     })
 </script>
