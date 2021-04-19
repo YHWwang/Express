@@ -50,7 +50,6 @@ import debounce from '@/utils/auth'
  fun:debounce(function(index,item){
  // -----doing
  },500})
-
 export function debounce(fn,delay){
   var timer = true
   return function() {
