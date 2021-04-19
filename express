@@ -46,6 +46,26 @@ vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=B
 防抖/节流的原理----https://segmentfault.com/a/1190000018428170
 防抖：无论你执行多少次，我就执行最后一次，该函数在指定的时间期限内工作一次，重在清零 clearTimeout
 节流：控制流量，单位时间内事件只能触发一次，该函数在指定的时间期限内不再工作
+import debounce from '@/utils/auth'
+ fun:debounce(function(index,item){
+ // -----doing
+ },500})
+
+export function debounce(fn,delay){
+  var timer = true
+  return function() {
+    if(!timer) {
+      return false
+    }
+    timer = false
+    let args = arguments
+    setTimeout(()=>{
+    fn.apply(this,args)
+    timer = true
+    },delay)
+  }
+}
+
 
 webpack:
 deleteOriginalAssets: false //删除原文件
