@@ -3,7 +3,8 @@
    在控制台firstPaint - performance.timing.navigationStart  输出
 首屏时间：输入url到首屏页面渲染完成的时间。
    在首屏可见模块后增加window.firstScreen = Date.now(); 控制台打印firstScreen- performance.timing.navigationStart
-解决方法：路由懒加载，按需加载ui框架，gzip
+解决方法：路由懒加载，按需加载ui框架，gzip;项目依赖优化（依赖优化详细链接）
+https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs
  
  数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
  判断数据类型的方法：
