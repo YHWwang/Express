@@ -1,3 +1,4 @@
+ 数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
  判断数据类型的方法：
  1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
  5.obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
