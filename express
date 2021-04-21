@@ -1,3 +1,7 @@
+ 判断数据类型的方法：
+ 1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
+ 5.obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
+
 content-visibility:auto//渲染可视化区域，缺点目前兼容性不好，存在元素高度塌陷的问题（contain-intrinsic-size初始高度解决）
 content-visibility: hidden.利用缓存绘制状态的优点，使内容不显示在屏幕上而又不绘制。隐藏的方法display：none;visibility:hidden;content-visibility: hidden
   
