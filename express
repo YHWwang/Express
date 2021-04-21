@@ -1,6 +1,12 @@
+数组交集
+   let a = new Set([1,5,8,2,3,1])
+    let b = new Set([5,4,9,2,3,1])
+    let c = [...a].filter( (n)=>{
+       return b.has(n)
+    } )
+
 NextTick:获取更新之后的dom节点
 不能立即获取更新之后的dom是由于vue异步更新队列，其原理：操作dom后会加入到一个队列中，如果同一个执行多次只会推入一次(去重作用)，执行栈执行完后将任务队列的任务推入
-
 
 白屏时间：输入url到渲染第一个元素/出现第一个元素的时间。
    在页面下的title后加window.pageStartTime = Date.now(); 在css加载完后加 window.firstPaint = Date.now();
