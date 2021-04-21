@@ -1,10 +1,9 @@
 白屏时间：输入url到渲染第一个元素/出现第一个元素的时间。
    在页面下的title后加window.pageStartTime = Date.now(); 在css加载完后加 window.firstPaint = Date.now();
    在控制台firstPaint - performance.timing.navigationStart  输出
-
 首屏时间：输入url到首屏页面渲染完成的时间。
    在首屏可见模块后增加window.firstScreen = Date.now(); 控制台打印firstScreen- performance.timing.navigationStart
-
+解决方法：路由懒加载，按需加载ui框架，gzip
  
  数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
  判断数据类型的方法：
