@@ -100,7 +100,7 @@ export function debounce(fn,delay){
     },delay)
   }
 }
-window.onscroll = throttle(() => { fun() }, 2000)
+window.onscroll = throttle(() => fun(), 2000)//使用匿名函数来作为参数赋值
     function throttle(fun, delay) {
         let self = this, arg = arguments
         return function () {
