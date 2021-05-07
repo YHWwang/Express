@@ -100,8 +100,22 @@ export function debounce(fn,delay){
     },delay)
   }
 }
-
-
+window.onscroll = throttle(() => { fun() }, 2000)
+    function throttle(fun, delay) {
+        let self = this, arg = arguments
+        return function () {
+            if (!timer) {
+                return false
+            }
+            timer = false
+            setTimeout(() => {
+                fun.apply(self, arg)
+                timer = true
+            }, delay)
+            // console.log(timer)
+        }
+    }
+    
 webpack:
 deleteOriginalAssets: false //删除原文件
 
