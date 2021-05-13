@@ -1,3 +1,5 @@
+ click.function(){}jq点击函数this指向的是本身，click( ()=>{})  es6的函数中this指向全局
+ 
  IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
  
  在非匿名自执行函数中，函数变量为只读状态无法修改,所以打印的是函数
