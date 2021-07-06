@@ -89,18 +89,16 @@ import debounce from '@/utils/auth'
  // -----doing
  },500})
 export function debounce(fn,delay){
-  var timer = true
-  return function() {
-    if(!timer) {
-      return false
-    }
-    timer = false
-    let args = arguments
-    setTimeout(()=>{
-    fn.apply(this,args)
-    timer = true
-    },delay)
-  }
+ let timer = null
+     return ()=>{
+         if(timer){
+            clearTimeout(timer)
+         }
+        let arg = arguments
+        timer = setTimeout(()=>{
+             fn.apply(this,arg)
+         },1000)
+     }
 }
 如果要节流或者防抖的函数有参数则要使用匿名函数来作为参数赋值
 window.onscroll = throttle(() => fun(), 2000)
