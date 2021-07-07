@@ -1,3 +1,18 @@
+//所谓深度克隆，就是当对象的某个属性值为object或array
+ function deepClone2(data) {
+  if (!data || !(data instanceof Object) || typeof data === "function") {
+    return data;
+  }
+  var constructor = data.constructor;
+  var result = new constructor();
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      result[key] = deepClone2(data[key]);
+    }
+  }
+  return result;
+}
+
  click.function(){}jq点击函数this指向的是本身，click( ()=>{})  es6的函数中this指向全局(箭头函数没有自己的this对象)
  
  IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
