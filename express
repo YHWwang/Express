@@ -1,3 +1,63 @@
+    //js监听变量的变化
+    var observe1 = (object, onChange) => {//proxy监听值的变化
+        const handler = {
+            get(target, property, receiver) {
+                try {
+                    return new Proxy(target[property], handler);
+                } catch (err) {
+                    return Reflect.get(target, property, receiver);
+                }
+            },
+            set(target, key, value, receiver) {
+                onChange(value);
+                return Reflect.set(target, key, value, receiver);
+            }
+        };
+        return new Proxy(object, handler);
+    };
+    var watchedObj = observe1(obj, (val) => {
+        // console.log(`哈哈哈，监听到值变化为${val}了`);
+    });
+      watchedObj.currentPage = size//size为动态变量
+    
+    $('#summernote').summernote({//富文本编辑选中图片上传图片流，返回图片的url
+        placeholder: '',
+        tabsize: 2,
+        height: 462,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        callbacks: {
+            onImageUpload: function (files) {
+                sendFile( $('#summernote'), files[0]);
+            }
+        }
+    });
+    //ajax上传图片
+    function sendFile($summernote, file) {
+        var formData = new FormData();
+        formData.append("file", file);
+        $.ajax({
+            url: "/uploadFile",//路径
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                $summernote.summernote('insertImage', data.data, function ($image) {
+                    $image.attr('src', data.data);
+                });
+            }
+        });
+    }
+
 //所谓深度克隆，就是当对象的某个属性值为object或array
  function deepClone2(data) {
   if (!data || !(data instanceof Object) || typeof data === "function") {
