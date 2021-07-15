@@ -1,3 +1,59 @@
+    //fileinput插件上传头像  
+    initFileInput("input-id");
+    function initFileInput(ctrlName) {
+        var control = $('#' + ctrlName);
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: "/web/user/login/updateUserPhoto", //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            uploadAsync: false, //默认异步上传，这里如果不是异步上传，多个图片一次性提交到后台，只发一次请求，如果为异步上传，每张图片都会发一次请求，多次请求
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileSize: 10,
+            maxFileCount: 1, //允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            msgFilesTooMany: "The number of files selected for upload ({n}) exceeds the maximum allowed value {m}!",
+            msgSizeTooLarge: 'The maximum size of the pictures allowed to be uploaded is 10kb!',
+            layoutTemplates: {
+                // actionDelete:'', //去除上传预览的缩略图中的删除图标
+                // actionUpload:'',//去除上传预览缩略图中的上传图片；
+                // actionZoom:'',   //去除上传预览缩略图详情的图标
+                // actionDownload:'' //去除上传预览缩略图中的下载图标
+            },
+            uploadExtraData: function () {   //向后台传递的附带参数
+                var data = {
+                    id: "10000",
+                    msg: "这里可以添加参数"
+                }
+                return data;
+            }
+        }).on('filebatchuploadsuccess', function (event, data, previewId, index) {     //上传中
+            // console.log($('.file-error-message ul li').text());
+            if($('.file-error-message ul li').text() != ''){
+              alert('The maximum size of the pictures allowed to be uploaded is 10kb!')
+              $("#updateImageModal").modal('hide');
+              $('div.modal-backdrop').hide();
+              return false
+            }
+            console.log('文件正在上传');
+        }).on("filebatchuploadsuccess", function (event, data, previewId, index) {    //一个文件上传成功
+            var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+            var data = data.response;
+            $("#updateImageModal").modal('hide');
+            $("#usersImage").attr("src", data.data);
+            $('div.modal-backdrop').hide();
+            console.log(response);//打印出返回的json
+            console.log(response.status);//打印出状态
+        }).on('filebatchuploaderror', function (event, data, msg) {  //一个文件上传失败
+            console.log('文件上传失败！' + data.status);
+        })
+    }
+    
     //js监听变量的变化
     var observe1 = (object, onChange) => {//proxy监听值的变化
         const handler = {
@@ -15,7 +71,7 @@
         };
         return new Proxy(object, handler);
     };
-    var watchedObj = observe1(obj, (val) => {
+    var watchedObj = observe1(obj//监听的值必须为对象, (val) => {
         // console.log(`哈哈哈，监听到值变化为${val}了`);
     });
       watchedObj.currentPage = size//size为动态变量
