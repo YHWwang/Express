@@ -1,3 +1,9 @@
+sessionStorage通过以下情况会丢失
+刷新当前页面，或者通过location.href、window.open、或者通过带target="_blank"的a标签打开新标签，之前的sessionStorage还在，
+但是如果你是主动打开一个新窗口或者新标签，对不起，打开F12你会发现，sessionStorage空空如也。
+也就是说，sessionStorage的session仅限当前标签页或者当前标签页打开的新标签页，通过其它方式新开的窗口或标签不认为是同一个session。
+
+
     //fileinput插件上传头像  
     initFileInput("input-id");
     function initFileInput(ctrlName) {
