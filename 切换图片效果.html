@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>OSCAL</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+
+</head>
+
+<body class="en">
+    <style>
+        #pills-profile .airbuds5Pro_spesc,
+        .oscal-specification-table {
+            width: 80%;
+            max-width: 1200px;
+            padding: 100px 0;
+            position: relative;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spesc-img-left {
+            width: 40%;
+            height: 510px;
+        }
+        /* 图片未加载时显示 */
+        .spesc-img-left img.image-active.on {
+            background-image: url('https://www.oscal.hk/img/loading.gif');
+            background-size: 20%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+                /*初始状态 透明度为0*/
+            }
+
+            100% {
+                opacity: 1;
+                /*结尾状态 透明度为1*/
+            }
+        }
+        /* 切换颜色后对应产品图片的切换渐变效果 */
+        .spesc-img-left img.image-active {
+            opacity: 1;
+            display: block;
+            -webkit-animation-name: fadeIn;
+            /*动画名称*/
+            -webkit-animation-duration: 1s;
+            /*动画持续时间*/
+            -webkit-animation-iteration-count: 1;
+            /*动画次数*/
+        }
+
+        .spesc-img-left img {
+            max-width: 400px;
+            width: 100%;
+            opacity: 0;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .spesc-img-right {
+            width: 60%;
+        }
+
+        .spesc-img-right .spesc-img-right-ul {
+            font-size: 0;
+        }
+
+        .spesc-img-right .spesc-img-right-ul .spesc-img-right-ul-li {
+            position: relative;
+            display: inline-block;
+            width: 20%;
+            text-align: center;
+        }
+
+        .spesc-img-right .spesc-img-right-ul .spesc-img-right-ul-li .spescColor {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+        }
+
+        .spesc-img-right .spesc-img-right-ul .spesc-img-right-ul-li .spescColorName {
+            font-size: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+    <div id="AMain" class="main">
+
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="airbuds5Pro_spesc">
+                <div class="spesc-img-left">
+                    <img class="lazyload image-active on"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/c20-20210729101859375.png"
+                        alt="c20">
+                    <img class="lazyload"
+                        data-src="https://s3.eu-west-1.amazonaws.com/promo.blackview.hk/activity/oscal/img/c80.png"
+                        alt="c20">
+                    <img class="lazyload"
+                        data-src="https://s3.eu-west-1.amazonaws.com/promo.blackview.hk/activity/oscal/img/s60.png"
+                        alt="c20">
+                    <img class="lazyload"
+                        data-src="https://s3.eu-west-1.amazonaws.com/promo.blackview.hk/activity/oscal/img/c80.png"
+                        alt="c20">
+                </div>
+                <div class="spesc-img-right">
+                    <ul class="spesc-img-right-ul">
+                        <li class="spesc-img-right-ul-li spesc-active" num='0'>
+                            <div class="spescColor"
+                                style="background: linear-gradient(90deg, #646060 16%, #373737 41%, #565656 73%, #363636 99%);">
+                            </div>
+                            <p class="spescColorName">black</p>
+                        </li>
+                        <li class="spesc-img-right-ul-li" num='1'>
+                            <div class="spescColor"
+                                style="background: linear-gradient(90deg, #5692A9 16%, #3C768C 41%, #5F99AF 73%, #468096 99%);">
+                            </div>
+                            <p class="spescColorName">black</p>
+                        </li>
+                        <li class="spesc-img-right-ul-li" num='2'>
+                            <div class="spescColor"
+                                style="background: linear-gradient(90deg, #66C2A0 16%, #56A787 41%, #77CEAF 73%, #56A787 99%);">
+                            </div>
+                            <p class="spescColorName">black</p>
+                        </li>
+                        <li class="spesc-img-right-ul-li" num='3'>
+                            <div class="spescColor"
+                                style="background: linear-gradient(90deg, #94B2F2 16%, #6F8CDA 41%, #93B0F2 73%, #7493E6 99%);">
+                            </div>
+                            <p class="spescColorName">black</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script async
+    src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
+<script>
+    var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
+    setColor(active)//切换颜色为当前对象添加伪类元素
+    function setColor(color) {
+        color = `<style>
+    .spesc-img-right .spesc-img-right-ul .spesc-active .spescColor::after{
+    position: absolute;
+    content: '';
+    left: 50%;
+    border: 4px solid ${color.slice(35, 42)};
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    }
+    </style>`
+        $('.spesc-img-right .spesc-img-right-ul .spesc-active .spescColor').append(color)
+    }
+
+    $('.spesc-img-right .spesc-img-right-ul .spesc-img-right-ul-li').click(function (e) {
+        $('.spesc-img-right .spesc-img-right-ul .spesc-active .spescColor').empty()//修复切换颜色之后伪类元素为清理的问题
+        $(this).addClass('spesc-active').siblings().removeClass('spesc-active')
+        setColor($(this).find('.spescColor').attr('style'))
+        showImg($(this).attr('num'))
+    })
+    function showImg(index) {
+        $('.spesc-img-left img').eq(index).addClass('image-active').siblings().removeClass('image-active')
+        var ds = $('.spesc-img-left img.image-active')
+        imgLoad(ds, function () {//切换颜色后，右侧切换对应图片
+            ds.removeClass('on')//回调移除旋转图标
+        })
+    }
+    function imgLoad(img, callback) {
+        var timer = setInterval(function () {
+            var flag = true
+            if (img[0].complete) {//判断图片是否加载
+                callback();
+                clearInterval(timer);
+            } else if (flag) {//未加载时出现旋转图标
+                flag = false
+                img.addClass('on')
+            }
+        }, 200);
+    }
+</script>
+
+</html>

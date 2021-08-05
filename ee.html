@@ -24,7 +24,8 @@
             height: calc(var(--vh, 1vh) * 100);
             /* var(--vh, 1vh)：获取的可用高度的1% */
         }
-
+  /* 文字从不同角度显示或隐藏 */
+        /* 开屏视频 */
         .video_box {
             z-index: 1;
             height: 100vh;
@@ -35,25 +36,28 @@
             top: 0;
             left: 0;
         }
-        #video_1{
+        #video_1 {
             object-fit: cover;
         }
-        .op{
+        .op {
             z-index: -1;
             opacity: 0;
             transition: all 1s;
         }
+        /* 开屏视频 */
+
     </style>
 </head>
 
 <body class="en">
     <div class="main">
-        
-       <div class="video_box">
-        <video id="video_1" muted="" playinline="" width="100%"
-        src="https://statics.oneplus.cn/ov/assets/images/events/2021/03/9pro/cn/kv-9pro_open_pc-dbf8e5.mp4"></video>
-    </video>
-       </div>
+
+        <!-- <div class="video_box">
+            <video id="video_1" muted="" playinline="" width="100%"
+                src="https://statics.oneplus.cn/ov/assets/images/events/2021/03/9pro/cn/kv-9pro_open_pc-dbf8e5.mp4"></video>
+            </video>
+        </div> -->
+
         <div class="sect4">
             <div class="box2">
                 <p>Shot on BV5100</p>
@@ -70,13 +74,13 @@
 <script>
     $(function () {
         // 开屏动画
-        var video = $('#video_1') // jq获取的dom节点会变成数组
-        video[0].play();
-       setTimeout(()=>{
-        if(video[0].ended){
-            $('.video_box').addClass('op')
-        }
-       },5000)
+        // var video = $('#video_1') // jq获取的dom节点会变成数组
+        // video[0].play();
+        // setTimeout(() => {
+        //     if (video[0].ended) {
+        //         $('.video_box').addClass('op')
+        //     }
+        // }, 5000)
 
         //获取屏幕的可用高度，可为每一个块级设置高度
         let vh = window.innerHeight * 0.01
