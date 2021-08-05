@@ -103,6 +103,18 @@ sessionStorage通过以下情况会丢失
     });
     //ajax上传图片
     function sendFile($summernote, file) {
+            if((file.size / 1024 / 1024) > 1) {//限制图片文件的大小
+            $('#alertBox').html(`
+            <div class="alert alert-warning  alert-dismissible fade show" role="alert">
+            Picture cannot exceed 1M...
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            `)
+            $('#maskLayer').hide()//自定义遮布层
+            return false;
+        }
         var formData = new FormData();
         formData.append("file", file);
         $.ajax({
