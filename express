@@ -1,3 +1,15 @@
+vue组件自己调用自己
+只需要再vue文件中设置name属性，让后再template中使用name属性值的标签
+export default {
+  name: "TreeTableName",
+  }
+ <TreeTableName
+            v-if="props.row.children"
+            :kindList="props.row.children"
+            :header-cell-style="headClass"
+          ></TreeTableName>
+
+
 
 //swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
