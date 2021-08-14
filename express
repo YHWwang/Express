@@ -1,3 +1,37 @@
+三级或者多级表格组件
+    <TreeTable
+      @give-advice="showAdvice" 
+      :kindList="kindList" // 数据
+      :head="headClass"
+      name="tab1"
+    ></TreeTable>
+组件内
+    <div>
+    <el-table
+      :id="name"
+      class="tabChlid"
+      :data="kindList"
+      style="width: 100%"
+      :header-row-style="head"
+    >
+      <el-table-column type="expand">//多级表格嵌套
+        <template slot-scope="props">
+          <TreeTableName // 子集表格数据 TreeTableName组件自己调用自己，
+            v-if="props.row.children"
+            @give-advice="showAdvice"
+            :kindList="props.row.children"
+            :head="headClass"
+          ></TreeTableName>
+        </template>
+      </el-table-column>
+      <el-table-column label="ID" align="center" prop="id" />
+      ...
+      
+    showAdvice(advice) {
+      //  this.$emit("kindList", advice);  无法向父级数据，可能是层级问题，导致kindList变量在组件未传值到父组件
+      this.$emit("give-advice", advice); // 通过回调函数可行
+    },
+    
 vue组件自己调用自己
 只需要再vue文件中设置name属性，让后再template中使用name属性值的标签
 export default {
@@ -10,7 +44,11 @@ export default {
           ></TreeTableName>
 
 
-
+mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
+1.使用场景可在运用在判断是否登录等重复性很高的功能，或者方法中。
+2.可以局部混入跟全局混入
+3.组件中方法性的优先级最高，其次是混入的方法
+4.如果多个方法冲突，则已函数所在组件优先级高，混入方法优先级低
 //swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
         pagination: {
