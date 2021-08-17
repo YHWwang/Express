@@ -49,6 +49,8 @@ mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
 2.可以局部混入跟全局混入
 3.组件中方法性的优先级最高，其次是混入的方法
 4.如果多个方法冲突，则已函数所在组件优先级高，混入方法优先级低
+
+
 //swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
         pagination: {
@@ -130,6 +132,10 @@ sessionStorage通过以下情况会丢失
     }
     
     //js监听变量的变化
+    
+     var obj = {//对象
+        category: 1,
+    }
     var observe1 = (object, onChange) => {//proxy监听值的变化
         const handler = {
             get(target, property, receiver) {
@@ -149,7 +155,7 @@ sessionStorage通过以下情况会丢失
     var watchedObj = observe1(obj//监听的值必须为对象, (val) => {
         // console.log(`哈哈哈，监听到值变化为${val}了`);
     });
-      watchedObj.currentPage = size//size为动态变量
+      watchedObj.category = size//size为动态变量
     
     $('#summernote').summernote({//富文本编辑选中图片上传图片流，返回图片的url
         placeholder: '',
