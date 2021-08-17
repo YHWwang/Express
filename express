@@ -1,3 +1,7 @@
+兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
+1.中继：通过props,emit方法给父组件，之后再让父组件分发给其它组件
+2.事件总线：通过创建一个新的全局vue对象EventBus,EventBus.$emit和EventBus.$on去执行方法并监听值
+
 三级或者多级表格组件
     <TreeTable
       @give-advice="showAdvice" 
