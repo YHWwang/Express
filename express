@@ -1,3 +1,8 @@
+关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
+ $('.note-editable').on('focusout', function () {//让编辑器一直处于编辑的状态
+    $(this).trigger('focus')
+  });
+
 兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
 1.中继：通过props,emit方法给父组件，之后再让父组件分发给其它组件
 2.事件总线：通过创建一个新的全局vue对象EventBus,EventBus.$emit和EventBus.$on去执行方法并监听方法
