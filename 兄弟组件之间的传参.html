@@ -2,80 +2,81 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <title>兄弟组件之间的传参</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>兄弟组件之间的传参</title>
 </head>
 //中继方法
+
 <body>
-    <div id="app">
-        <tom-vue></tom-vue>
-        <jerry-vue></jerry-vue>
-        <button @click="handle">销毁事件</button>
-    </div>
+  <div id="app">
+    <tom-vue></tom-vue>
+    <jerry-vue></jerry-vue>
+    <button @click="handle">销毁事件</button>
+  </div>
 </body>
 <script>
-    var  hub = new Vue()
-    // 兄弟组件A
-    var tomVue = {
-        data(){
-            return {
-                num:1
-            }
-        },
-        template:'<button @click ="handle">tom点击了{{num}}次</button>',
-        created(){
-            // 监听组件的数据
-            hub.$on('tom-event',(val) => {
-                    this.num += val
-                })
-        },
-        methods:{
-            // 触发兄弟组件的事件和给兄弟组件的值
-            handle () {
-                hub.$emit('jerry-event', 1)
-            }
-        }
+  var hub = new Vue()
+  // 兄弟组件A
+  var tomVue = {
+    data() {
+      return {
+        num: 1
+      }
+    },
+    template: '<button @click ="handle">tom点击了{{num}}次</button>',
+    created() {
+      // 监听组件的数据
+      hub.$on('tom-event', (val) => {
+        this.num += val
+      })
+    },
+    methods: {
+      // 触发兄弟组件的事件和给兄弟组件的值
+      handle() {
+        hub.$emit('jerry-event', 1)
+      }
     }
-    // 兄弟组件B
-    var jerryVue = {
-        data(){
-            return {
-                num:1
-            }
-        },
-        template:'<button @click ="handle">jerry点击了{{num}}次</button>',
-        created(){
-            // 监听组件的数据
-            hub.$on('jerry-event',(val) => {
-                    this.num += val
-                })
-        },
-        methods:{
-            // 触发兄弟组件的事件和给兄弟组件的值
-            handle () {
-                hub.$emit('tom-event', 1)
-            }
-        }
+  }
+  // 兄弟组件B
+  var jerryVue = {
+    data() {
+      return {
+        num: 1
+      }
+    },
+    template: '<button @click ="handle">jerry点击了{{num}}次</button>',
+    created() {
+      // 监听组件的数据
+      hub.$on('jerry-event', (val) => {
+        this.num += val
+      })
+    },
+    methods: {
+      // 触发兄弟组件的事件和给兄弟组件的值
+      handle() {
+        hub.$emit('tom-event', 1)
+      }
     }
-    var vue = new Vue({
-        el: '#app',
-        data() {
-            return {
-            }
-        },
-        components:{
-            tomVue,
-            jerryVue
-        },
-        methods:{
-            handle(){
-                hub.$off('tom-event')
-                hub.$off('jerry-event')
-            }
-        }
-    })
+  }
+  var vue = new Vue({
+    el: '#app',
+    data() {
+      return {
+      }
+    },
+    components: {
+      tomVue,
+      jerryVue
+    },
+    methods: {
+      handle() {
+        hub.$off('tom-event')
+        hub.$off('jerry-event')
+      }
+    }
+  })
 </script>
 
 </html>
@@ -84,13 +85,13 @@
 //事件总线方法
 
 <template>
-    <div>
-      <Brother :messageSon="messageson" @brotherSaid="messageDaughter($event)"></Brother>
-      <Sister :messageDaughter="messagedaughter" @sisterSaid="messageSon($event)"></Sister>
-    </div>
-  </template>
-   
-  <script>
+  <div>
+    <Brother :messageSon="messageson" @brotherSaid="messageDaughter($event)"></Brother>
+    <Sister :messageDaughter="messagedaughter" @sisterSaid="messageSon($event)"></Sister>
+  </div>
+</template>
+
+<script>
   import Brother from "./lan";
   import Sister from "./success";
   export default {
@@ -113,18 +114,18 @@
       },
     },
   };
-  </script>
-  
+</script>
+
 <template>
-    <div>
-      <p class="message-text">我是Brother组件</p>
-      <button @click="msgSister" class="btn">给妹妹发消息</button>
-      　
-      <div v-if="messageSon" class="alert" v-html="messageSon"></div>
-    </div>
-  </template>
-   
-  <script>
+  <div>
+    <p class="message-text">我是Brother组件</p>
+    <button @click="msgSister" class="btn">给妹妹发消息</button>
+    　
+    <div v-if="messageSon" class="alert" v-html="messageSon"></div>
+  </div>
+</template>
+
+<script>
   export default {
     name: "Brother",
     props: ["messageSon"],
@@ -137,17 +138,17 @@
       },
     },
   };
-  </script>
+</script>
 
-  
+
 <template>
-    <div>
-      <p class="message-text">我是Sister组件</p>
-      <button @click="msgBrother" class="btn">给哥哥发消息</button>
-      <div v-if="messageDaughter" class="alert" v-html="messageDaughter"></div>
-    </div>
-  </template>
-  <script>
+  <div>
+    <p class="message-text">我是Sister组件</p>
+    <button @click="msgBrother" class="btn">给哥哥发消息</button>
+    <div v-if="messageDaughter" class="alert" v-html="messageDaughter"></div>
+  </div>
+</template>
+<script>
   export default {
     name: "Sister",
     props: ["messageDaughter"],
@@ -160,7 +161,4 @@
       },
     },
   };
-  </script>
-  
-  
-  
+</script>

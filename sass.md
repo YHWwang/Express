@@ -1,5 +1,4 @@
-# Shipping
-
+# 安装sass
 # webpack.base.conf.js
  {
         test: /\.(scss|sass)$/,
@@ -38,7 +37,13 @@
   "[scss]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+
+    "liveSassCompile.settings.generateMap": false,
     "liveSassCompile.settings.autoprefix": [
+        "> 1%",
+        "last 3 versions"
+    ],
+    "liveSassCompile.settings.formats": [
         {
             "format": "compressed",
             1.嵌套输出 nested，2.展开输出 expanded ，3.紧凑输出 compact，压缩输出 compressed
