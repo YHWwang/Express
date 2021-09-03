@@ -1,13 +1,13 @@
-关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
+# 关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
  $('.note-editable').on('focusout', function () {//让编辑器一直处于编辑的状态
     $(this).trigger('focus')
   });
 
-兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
+# 兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
 1.中继：通过props,emit方法给父组件，之后再让父组件分发给其它组件
 2.事件总线：通过创建一个新的全局vue对象EventBus,EventBus.$emit和EventBus.$on去执行方法并监听方法
 
-三级或者多级表格组件
+# 三级或者多级表格组件
     <TreeTable
       @give-advice="showAdvice" 
       :kindList="kindList" // 数据
@@ -41,7 +41,7 @@
       this.$emit("give-advice", advice); // 通过回调函数可行
     },
     
-vue组件自己调用自己
+# vue组件自己调用自己
 只需要再vue文件中设置name属性，让后再template中使用name属性值的标签
 export default {
   name: "TreeTableName",
@@ -53,14 +53,14 @@ export default {
           ></TreeTableName>
 
 
-mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
+# mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
 1.使用场景可在运用在判断是否登录等重复性很高的功能，或者方法中。
 2.可以局部混入跟全局混入
 3.组件中方法性的优先级最高，其次是混入的方法
 4.如果多个方法冲突，则已函数所在组件优先级高，混入方法优先级低
 
 
-//swiper不在第一屏时初始化问题
+# //swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
         pagination: {
             el: '.swiper-pagination',
@@ -78,13 +78,8 @@ mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
         },
     });
 
-sessionStorage通过以下情况会丢失
-刷新当前页面，或者通过location.href、window.open、或者通过带target="_blank"的a标签打开新标签，之前的sessionStorage还在，
-但是如果你是主动打开一个新窗口或者新标签，对不起，打开F12你会发现，sessionStorage空空如也。
-也就是说，sessionStorage的session仅限当前标签页或者当前标签页打开的新标签页，通过其它方式新开的窗口或标签不认为是同一个session。
 
-
-    //fileinput插件上传头像  
+# //fileinput插件上传头像  
     initFileInput("input-id");
     function initFileInput(ctrlName) {
         var control = $('#' + ctrlName);
@@ -140,7 +135,7 @@ sessionStorage通过以下情况会丢失
         })
     }
     
-    //js监听变量的变化
+# //js监听变量的变化
     
      var obj = {//对象
         category: 1,
@@ -166,7 +161,7 @@ sessionStorage通过以下情况会丢失
     });
       watchedObj.category = size//size为动态变量
     
-    $('#summernote').summernote({//富文本编辑选中图片上传图片流，返回图片的url
+# $('#summernote').summernote({//富文本编辑选中图片上传图片流，返回图片的url
         placeholder: '',
         tabsize: 2,
         height: 462,
@@ -217,26 +212,48 @@ sessionStorage通过以下情况会丢失
         });
     }
 
-//所谓深度克隆，就是当对象的某个属性值为object或array
- function deepClone2(data) {
-  if (!data || !(data instanceof Object) || typeof data === "function") {
-    return data;
-  }
-  var constructor = data.constructor;
-  var result = new constructor();
-  for (var key in data) {
-    if (data.hasOwnProperty(key)) {
-      result[key] = deepClone2(data[key]);
-    }
-  }
-  return result;
-}
+# //所谓深度克隆，就是当对象的某个属性值为object或array
+JSON.parse（JSON.stringify（obj））来完成深拷贝，但是该方法不能解决属性为函数，undefined，循环引用的的情况
+实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
+1.封装深拷贝函数
+function deepClone(obj) {
+    let objClone = Array.isArray(obj) ? [] : {};
+    if(obj && typeof obj === "object") {
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                 // 判断 obj 是否是对象,如果是，递归复制
+                 if(obj[key] && typeof obj[key] === "object") {
+                      objClone[key] = deepClone(obj[key]);
+                 }else{
+                      // 如果不是
+                      objClone[key] = obj[key];
+                 }
+            }
+        }
+    }      
+    return objClone
+} 
+2.借用JSON对象的 parse 和 stringify
+function deepClone(obj){
+    let newObj = JSON.stringify(obj);
+    let objClone = JSON.parse(newObj);
+    return objClone;  
+} 
+3.借用 JQ 的 extend 方法实现深拷贝。
+$.extend([deep], target, ...object);
 
- click.function(){}jq点击函数this指向的是本身，click( ()=>{})  es6的函数中this指向全局(箭头函数没有自己的this对象)
+　　deep 表示深拷贝，Boolean
+
+ 　　target 目标对象
+
+　　 ...object 需要进行合并的对象
  
- IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
+
+# click.function(){}jq点击函数this指向的是本身，click( ()=>{})  es6的函数中this指向全局(箭头函数没有自己的this对象)
  
- 在非匿名自执行函数中，函数变量为只读状态无法修改,所以打印的是函数
+# IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
+ 
+# 在非匿名自执行函数中，函数变量为只读状态无法修改,所以打印的是函数
     var b = 10;
     (function b(){
        b = 20;
@@ -244,26 +261,26 @@ sessionStorage通过以下情况会丢失
     })();
 
 
-数组交集
+# 数组交集
    let a = new Set([1,5,8,2,3,1])
     let b = new Set([5,4,9,2,3,1])
     let c = [...a].filter( (n)=>{
        return b.has(n)
     } )
 
-NextTick:获取更新之后的dom节点
+# NextTick:获取更新之后的dom节点
 不能立即获取更新之后的dom是由于vue异步更新队列，其原理：操作dom后会加入到一个队列中，如果同一个执行多次只会推入一次(去重作用)，执行栈执行完后将任务队列的任务推入
 
-白屏时间：输入url到渲染第一个元素/出现第一个元素的时间。
+# 白屏时间：输入url到渲染第一个元素/出现第一个元素的时间。
    在页面下的title后加window.pageStartTime = Date.now(); 在css加载完后加 window.firstPaint = Date.now();
    在控制台firstPaint - performance.timing.navigationStart  输出
-首屏时间：输入url到首屏页面渲染完成的时间。
+# 首屏时间：输入url到首屏页面渲染完成的时间。
    在首屏可见模块后增加window.firstScreen = Date.now(); 控制台打印firstScreen- performance.timing.navigationStart
-解决方法：路由懒加载，按需加载ui框架，gzip;项目依赖优化（依赖优化详细链接）
+# 解决方法：路由懒加载，按需加载ui框架，gzip;项目依赖优化（依赖优化详细链接）
 https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs
  
- 数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
- 判断数据类型的方法：
+ # 数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
+ # 判断数据类型的方法：
  1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
  5.obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
 
@@ -271,16 +288,16 @@ content-visibility:auto//渲染可视化区域，缺点目前兼容性不好，�
 content-visibility: hidden.利用缓存绘制状态的优点，使内容不显示在屏幕上而又不绘制。隐藏的方法display：none;visibility:hidden;content-visibility: hidden
   
   https://web.dev/measure/  优化googles算法
-  调用第三方js插件时，js文件放在index.html，js代码要放在mounted函数中以便进行数据交互并用this指向全局获取数据
+# 调用第三方js插件时，js文件放在index.html，js代码要放在mounted函数中以便进行数据交互并用this指向全局获取数据
   
   append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
   本地使用load()引用html本地存在一个跨域问题,
   解决方法：vscode使用插件list server在html文件右击选择‘open with list server’即可，或者解决跨域问题
    
-   在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
+#  在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
    解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
    
-   随屏幕大小变换变字体大小(或者使用vw)
+#  随屏幕大小变换变字体大小(或者使用vw)
     function setRem(){
         p1()
         p2()
@@ -304,18 +321,18 @@ content-visibility: hidden.利用缓存绘制状态的优点，使内容不显�
      setRem();
      window.onresize=setRem;  //监听屏幕变化
 
-vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=BTqy7c-Vuus' in a frame because it set 'X-Frame-Options' to 'sameorigin'.错误
+# vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=BTqy7c-Vuus' in a frame because it set 'X-Frame-Options' to 'sameorigin'.错误
 这是一种浏览器的安全机制，为了避免劫持的攻击。解决方法:https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/X-Frame-Options
 
 
-//减少回流  重绘不一定会回流，但回流一定会重绘
+# //减少回流  重绘不一定会回流，但回流一定会重绘
 1.减少don的增删操作
 2.元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
 3.对复制的元素比如动画让器脱离文档流，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。
 4.这些元素会进行回流，offsetTop,offsetLeft...scrollTop滚动事件等，display:none不会触发回流
 5.transform,opacity,filters这样css3的属性不会触发回流
 
-防抖/节流的原理----https://segmentfault.com/a/1190000018428170
+# 防抖/节流的原理----https://segmentfault.com/a/1190000018428170
 防抖：无论你执行多少次，我就执行最后一次，该函数在指定的时间期限内工作一次，重在清零 clearTimeout
 节流：控制流量，单位时间内事件只能触发一次，该函数在指定的时间期限内不再工作
 import debounce from '@/utils/auth'
