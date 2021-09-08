@@ -105,7 +105,6 @@
         }
     </style>
     <div id="AMain" class="main">
-
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             <div class="airbuds5Pro_spesc">
                 <div class="spesc-img-left">
@@ -204,6 +203,44 @@
             }
         }, 200);
     }
+
+    var a = {
+        name: 'wang',
+        book: {
+            title: 'hello world!',
+            price: '100'
+        },
+        a1: [1, 2, 3],
+        a2: undefined,
+        a3: null,
+        a4: 123
+    }
+    function isObject(obj) {
+        return typeof obj === 'object' && obj != null;
+    }
+    function cloneDeep(source) {
+        if (!isObject(source)) return source  //判断对象是否需要深拷贝
+
+        var target = Array.isArray(source) ? [] : {}
+        for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) { // 判断本身是否存在该属性而非继承原型链来的属性
+                if (isObject(source[key])) { // 判断子对象是否是对象或者数组
+                    target[key] = cloneDeep(source[key])
+                } else {
+                    target[key] = source[key]
+                }
+            }
+        }
+        return target
+    }
+    var b = []
+    b = cloneDeep(a)
+    // b = $.extend(true,[],a)
+    // b = JSON.parse(JSON.stringify(a))
+    a.name = 'axaxax'
+    a.book.price = '200'
+    a.a1[2] = 10
+    console.log(a, b)
 </script>
 
 </html>

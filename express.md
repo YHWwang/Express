@@ -248,8 +248,6 @@ $.extend([deep], target, ...object);
 
 　　 ...object 需要进行合并的对象
  
-
-# click.function(){}jq点击函数this指向的是本身，click( ()=>{})  es6的函数中this指向全局(箭头函数没有自己的this对象)
  
 # IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
  
