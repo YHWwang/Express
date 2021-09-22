@@ -74,3 +74,79 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
 
 # 原型 prototype
 
+
+
+# Object.prototype.toString.call() instanceof 以及 Array.isArray() 的区别和优劣
+1.Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
+优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
+缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
+
+2.instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
+优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
+缺点：只能用来判断对象类型，原始类型不可以。并且所有对象类型 instanceof Object 都是 true。
+
+3.Array.isArray():用来判断对象是否为数组
+缺点：只能判别数组
+Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
+
+instanceof 与 isArray
+当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
+
+# for与foreach的性能上的区别
+对十万级别时foreach好，百万级别差不多，千万级别是for好。由于foreach会回调函数，会产生额外的执行栈和上下文。for 循环则是底层写法，没有任何额外的函数调用栈和上下文不会产生额外的消耗。
+
+# 对象的键名的转换。
+1.对象的键名只能是字符串和 Symbol 类型。
+2.其他类型的键名会被转换成字符串类型。
+3.对象转字符串默认会调用 toString 方法。
+// example 1
+var a={}, b='123', c=123;  
+a[b]='b';
+a[c]='c';  
+console.log(a[b]);
+
+---------------------
+// example 2
+var a={}, b=Symbol('123'), c=Symbol('123');  
+a[b]='b';
+a[c]='c';  
+console.log(a[b]);
+
+---------------------
+// example 3
+var a={}, b={key:'123'}, c={key:'456'};  
+a[b]='b';
+a[c]='c';  
+console.log(a[b]);
+
+# input 搜索如何防抖，如何处理中文输入
+ var imeFlag = true // 定义一个是否在输入中文的开关
+    $(".searchInput").on('compositionstart',function (params) {
+        imeFlag = true // 
+    })
+    $(".searchInput").on('compositionend',function (params) {// 只要输入停止就会触发
+        imeFlag = false 
+    })
+    $(".searchInput").on('input', debounce(function (params) {
+        if (!imeFlag) name(this.value) 
+    }, 1000));
+    function name(params) {
+        console.log(params)
+    }
+
+    function debounce(fn, delay) {
+        var timer
+        return function () {
+            var that = this
+            var arg = arguments
+            clearTimeout(timer)
+            timer = setTimeout(function () {
+                fn.apply(that, arg)
+            }, delay)
+        }
+    }
+    
+# var、let 和 const 区别的实现原理是什么
+1.var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
+2.let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
+3.const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性

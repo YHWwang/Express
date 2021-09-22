@@ -1,3 +1,6 @@
+# 关于webkit-line-clamp设置无效的问题
+需要设置word-break: break-all;
+
 # 关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
  $('.note-editable').on('focusout', function () {//让编辑器一直处于编辑的状态
     $(this).trigger('focus')
@@ -251,7 +254,7 @@ $.extend([deep], target, ...object);
  
 # IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
  
-# 在非匿名自执行函数中，函数变量为只读状态无法修改,所以打印的是函数
+# 在非匿名自执行函数中，外部函数变量为只读状态无法修改,所以打印的是函数
     var b = 10;
     (function b(){
        b = 20;
