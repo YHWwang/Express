@@ -15,12 +15,5 @@ this.$router.push(obj) 跳转到指定url路径，并想history栈中添加一�
 this.$router.replace(obj)  跳转到指定url路径，但是history栈中不会有记录
 this.$router.go(n)  向前或者向后跳转n个页面，n可为正整数或负整数
 
-# Promise
-resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
-reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
 
-三个状态
-1、pending[待定]初始状态
-2、fulfilled[实现]操作成功
-3、rejected[被否决]操作失败
 

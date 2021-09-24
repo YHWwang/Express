@@ -76,7 +76,7 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
 
 
 
-# Object.prototype.toString.call() instanceof 以及 Array.isArray() 的区别和优劣
+# Object.prototype.toString.call()、 instanceof 以及 Array.isArray() 的区别和优劣
 1.Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
 优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
 缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
@@ -150,3 +150,26 @@ console.log(a[b]);
 1.var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
 2.let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
 3.const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
+
+# Promise
+resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
+reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
+
+三个状态
+1、pending[待定]初始状态
+2、fulfilled[实现]操作成功
+3、rejected[被否决]操作失败
+promise是微观任务 ，.then、.catch、process.nextTick是异步会放到了微队列中，setTimeout和setInterval宏观任务，先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
+
+promise.all([promise1,promise2]).then(function(res){
+    cossole.log(res)
+    需要特别注意的是，Promise.all获得的成功结果的数组里面的数据顺序和Promise.all接收到的数组顺序是一致的，即p1的结果在前，即便p1的结果获取的比p2要晚。这带来了一个绝大的好处：在前端开发请求数据的过程中，偶尔会遇到发送多个请求并根据请求顺序获取和使用数据的场景，使用Promise.all毫无疑问可以解决这个问题。
+})
+Promise.race的使用
+顾名思义，Promse.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
+
+# async / await 
+async是Generator 函数的语法糖
+async 函数可以保留运行堆栈。
+async会返回一个promise对象
+await前是同步执行，而在其之后的便是异步相当于Promise.then的形式
