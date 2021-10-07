@@ -263,7 +263,9 @@
         console.log('promise2')
     })
     console.log('script end')
+//script start》async1 start>async2 start》promise1》script end>async1 end》promise2》setTimeout
 //script start---async1 start--async2 start -- async1 end -- promise1 -- script end -- promise2 -- setTimeout
+//script start 》 async1 start >promise1>script end》async2 start>async1 end>promise2>setTimeout
 let aa = 0
 let bb = async () => {
     aa = aa + await 10

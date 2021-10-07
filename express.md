@@ -6,64 +6,14 @@
     $(this).trigger('focus')
   });
 
-# 兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
-1.中继：通过props,emit方法给父组件，之后再让父组件分发给其它组件
-2.事件总线：通过创建一个新的全局vue对象EventBus,EventBus.$emit和EventBus.$on去执行方法并监听方法
+# HTML页面生成的渲染过程
+    1. html被解析器解析成DOM树
+    2. css被解析成CSSOM树
+    3. DOM+CSSOM生成render树
+    4. 生成布局flow,即将所有渲染树的所有节点进行平面合成
+    5。将布局绘制到屏幕上
 
-# 三级或者多级表格组件
-    <TreeTable
-      @give-advice="showAdvice" 
-      :kindList="kindList" // 数据
-      :head="headClass"
-      name="tab1"
-    ></TreeTable>
-组件内
-    <div>
-    <el-table
-      :id="name"
-      class="tabChlid"
-      :data="kindList"
-      style="width: 100%"
-      :header-row-style="head"
-    >
-      <el-table-column type="expand">//多级表格嵌套
-        <template slot-scope="props">
-          <TreeTableName // 子集表格数据 TreeTableName组件自己调用自己，
-            v-if="props.row.children"
-            @give-advice="showAdvice"
-            :kindList="props.row.children"
-            :head="headClass"
-          ></TreeTableName>
-        </template>
-      </el-table-column>
-      <el-table-column label="ID" align="center" prop="id" />
-      ...
-      
-    showAdvice(advice) {
-      //  this.$emit("kindList", advice);  无法向父级数据，可能是层级问题，导致kindList变量在组件未传值到父组件
-      this.$emit("give-advice", advice); // 通过回调函数可行
-    },
-    
-# vue组件自己调用自己
-只需要再vue文件中设置name属性，让后再template中使用name属性值的标签
-export default {
-  name: "TreeTableName",
-  }
- <TreeTableName
-            v-if="props.row.children"
-            :kindList="props.row.children"
-            :header-cell-style="headClass"
-          ></TreeTableName>
-
-
-# mixin混入理解：（https://www.jianshu.com/p/4ab8d255d070）
-1.使用场景可在运用在判断是否登录等重复性很高的功能，或者方法中。
-2.可以局部混入跟全局混入
-3.组件中方法性的优先级最高，其次是混入的方法
-4.如果多个方法冲突，则已函数所在组件优先级高，混入方法优先级低
-
-
-# //swiper不在第一屏时初始化问题
+# swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
         pagination: {
             el: '.swiper-pagination',
@@ -215,44 +165,8 @@ export default {
         });
     }
 
-# //所谓深度克隆，就是当对象的某个属性值为object或array
-JSON.parse（JSON.stringify（obj））来完成深拷贝，但是该方法不能解决属性为函数，undefined，循环引用的的情况
-实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
-1.封装深拷贝函数
-function deepClone(obj) {
-    let objClone = Array.isArray(obj) ? [] : {};
-    if(obj && typeof obj === "object") {
-        for(key in obj) {
-            if(obj.hasOwnProperty(key)) {
-                 // 判断 obj 是否是对象,如果是，递归复制
-                 if(obj[key] && typeof obj[key] === "object") {
-                      objClone[key] = deepClone(obj[key]);
-                 }else{
-                      // 如果不是
-                      objClone[key] = obj[key];
-                 }
-            }
-        }
-    }      
-    return objClone
-} 
-2.借用JSON对象的 parse 和 stringify
-function deepClone(obj){
-    let newObj = JSON.stringify(obj);
-    let objClone = JSON.parse(newObj);
-    return objClone;  
-} 
-3.借用 JQ 的 extend 方法实现深拷贝。
-$.extend([deep], target, ...object);
 
-　　deep 表示深拷贝，Boolean
-
- 　　target 目标对象
-
-　　 ...object 需要进行合并的对象
- 
- 
-# IIFE内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
+# IIFE(立即执行函数)内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
  
 # 在非匿名自执行函数中，外部函数变量为只读状态无法修改,所以打印的是函数
     var b = 10;
@@ -268,19 +182,9 @@ $.extend([deep], target, ...object);
     let c = [...a].filter( (n)=>{
        return b.has(n)
     } )
-
-# NextTick:获取更新之后的dom节点
-不能立即获取更新之后的dom是由于vue异步更新队列，其原理：操作dom后会加入到一个队列中，如果同一个执行多次只会推入一次(去重作用)，执行栈执行完后将任务队列的任务推入
-
-# 白屏时间：输入url到渲染第一个元素/出现第一个元素的时间。
-   在页面下的title后加window.pageStartTime = Date.now(); 在css加载完后加 window.firstPaint = Date.now();
-   在控制台firstPaint - performance.timing.navigationStart  输出
-# 首屏时间：输入url到首屏页面渲染完成的时间。
-   在首屏可见模块后增加window.firstScreen = Date.now(); 控制台打印firstScreen- performance.timing.navigationStart
-# 解决方法：路由懒加载，按需加载ui框架，gzip;项目依赖优化（依赖优化详细链接）
-https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs
  
  # 数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
+
  # 判断数据类型的方法：
  1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
  5.obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
@@ -289,41 +193,7 @@ content-visibility:auto//渲染可视化区域，缺点目前兼容性不好，�
 content-visibility: hidden.利用缓存绘制状态的优点，使内容不显示在屏幕上而又不绘制。隐藏的方法display：none;visibility:hidden;content-visibility: hidden
   
   https://web.dev/measure/  优化googles算法
-# 调用第三方js插件时，js文件放在index.html，js代码要放在mounted函数中以便进行数据交互并用this指向全局获取数据
-  
-  append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
-  本地使用load()引用html本地存在一个跨域问题,
-  解决方法：vscode使用插件list server在html文件右击选择‘open with list server’即可，或者解决跨域问题
-   
-#  在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
-   解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
-   
-#  随屏幕大小变换变字体大小(或者使用vw)
-    function setRem(){
-        p1()
-        p2()
-    }
-    function p2(){
-        /*获取当前页面的宽度*/
-        var width = $('.main').width();
-        /*通过标签名称来获取元素*/
-        var htmlFont=document.getElementsByClassName('p2')[0];
-        // 给获取到的元素的字体大小赋值
-        htmlFont.style.fontSize =width/50+'px'
-    }
-    function p1(){
-        /*获取当前页面的宽度*/
-        var width = $('.main').width();
-        /*通过标签名称来获取元素*/
-        var htmlFont=document.getElementsByClassName('p1')[0];
-        // 给获取到的元素的字体大小赋值
-        htmlFont.style.fontSize =width/20+'px'
-    }
-     setRem();
-     window.onresize=setRem;  //监听屏幕变化
 
-# vue插入视频页面报：Refused to display 'https://www.youtube.com/watch?v=BTqy7c-Vuus' in a frame because it set 'X-Frame-Options' to 'sameorigin'.错误
-这是一种浏览器的安全机制，为了避免劫持的攻击。解决方法:https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/X-Frame-Options
 
 
 # //减少回流  重绘不一定会回流，但回流一定会重绘
@@ -375,8 +245,7 @@ var timer = true
         }
     }
     
-webpack:
-deleteOriginalAssets: false //删除原文件
+
 
 水平垂直居中：父元素设为display:flex。子元素设置margin:auto
 
@@ -384,21 +253,6 @@ localStorage.setItem(key，value)设置本地级存储
 localStorage.getItem(key)获取本地级存储
 localStorage.removeItem("key");删除存储
 
-vuex:
-1.state://仓库一般存放数据，this.$store.state.name  
-2. getters://获取值并缓存，也可访问对象的属性，依赖发生改变则重新计算  
-3.  mutations://同步更改state中的状态，commit('state',value)
-4.  actions:{//提交到mutations，异步操作，store.dispatch('increment') 
-5.modules模块化组件
-
-关于一个域名下存放俩个vue项目
-前台：
-1.在config.js下配置build,    assetsSubDirectory: './static'和 assetsPublicPath: '/路径名'
-2.在router下的index中配置   mode: 'history'和 base:'/路径名/'
-3.在打包的dist中的index.html中增加  <meta base='/路径名/'>
-其他在nginx中配置   https://www.cnblogs.com/dzcici/p/13877338.html
-
-vue-piczoom 放大镜设置mouse-cover-canvas布设置top无效--------原因是以#app进行定位，所以应在app.vue中设置top值（组件包含在一个有固定高宽的容器内width:500px;height:500px）
 
 fildder抓取工具如何抓取js,css等其他数据,主要是在‘tools’中配置https与connections的选项，以及导入安全证书
 
@@ -406,18 +260,6 @@ fiddler抓取数据包的时候出现乱码，在‘transformer’中选择'None
 
 关于图片压缩建议压缩成webp格式，压缩比例较高，并且相对与其他格式压缩后图片清晰度有明显优势 ------https://zhitu.isux.us/
 
-https://animate.style/ --------
-var height = window.innerHeight
-var scoll_2 = $('.name').offset().top - height/2
- $(window).scroll(function(){
-        var winp = $(document).scrollTop();
-        if(scoll_2 && winp > scoll_2){
-                $('.sect1 .box2').fadeIn();
-                // scoll_3 = $('.name').offset().top - height/2 //获取下一个动画到顶高度
-                scoll_2=false
-            }
-        }
-animate + scrollTop  让页面动起来
 BCompare 文件对比工具
 CDN:https://cdnjs.com/  拥有大量前端插件的相关引用文件 
 
@@ -460,25 +302,7 @@ lottie动画设置的俩种方式：（好处json文件大小会比gif文件小�
         // animationData:lottle1,
         path:"https://assets5.lottiefiles.com/datafiles/B1zOc97lUJINcA2/data.json" // 直接设置json链接
       });
-vue如何在js文件中设置i18n国际化
-window.vm = new Vue({
-  el: '#app',
-  router,
-  i18n,
-  store,
-  render: h => h(App)
-})
-window.vm.$t(‘name’)//js中使用
 
-根据不同的国际化语言设置不同的样式
-document.getElementsByTagName('html')[0].setAttribute('lang',Cookies.get('lang') === 'en'? 'en' : 'zh');//判断当前语言并加入html
-.classNamer:lang(en) {// css判断当前环境是否是’en’
-Css
-}
-
-在路由中定义vue-i8n国际化
-路由中设置：title: 'router.name'
-vue:{{$t(item.title) }}
 
 谷歌登录不能切换账号问题
   var auth2 = gapi.auth2.getAuthInstance(); 
@@ -498,8 +322,4 @@ Swiper自定义分页器格式
       $('.swiper-pagination-bullet').each(function(index){
           $(this).html(_html+arr[index])
       })
-http 400错误码url格式
-{name:'goatling'} 这种形式根本不是标准JSON字符串
-  '{"name":"goatling"}'  这个才是标准JSON字符串
-  Json.stringify()等，可能与后台接口不一致导致报错
-关于vuex刷新值初始化问题可使用：sessionStorage代替存放
+

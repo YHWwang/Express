@@ -51,7 +51,8 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
     }, autoplay_Delay);
 # 深拷贝方法
 1.JSON.parse(JSON.stringify(a))
-2.迭代递归方法。此方法可判断undefined值
+2.$.extend(true,[],a)
+3.迭代递归方法。此方法可判断undefined值
     function isObject(obj) {
         return typeof obj === 'object' && obj != null;
     }
@@ -70,10 +71,6 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
         }
         return target
     }
-3.$.extend(true,[],a)
-
-# 原型 prototype
-
 
 
 # Object.prototype.toString.call()、 instanceof 以及 Array.isArray() 的区别和优劣
@@ -102,21 +99,21 @@ instanceof 与 isArray
 // example 1
 var a={}, b='123', c=123;  
 a[b]='b';
-a[c]='c';  
+a[c]='c';  //覆盖
 console.log(a[b]);
 
 ---------------------
 // example 2
 var a={}, b=Symbol('123'), c=Symbol('123');  
 a[b]='b';
-a[c]='c';  
+a[c]='c';  //symbol类型的值都不等
 console.log(a[b]);
 
 ---------------------
 // example 3
 var a={}, b={key:'123'}, c={key:'456'};  
 a[b]='b';
-a[c]='c';  
+a[c]='c';  对象.toString()变成[object Object]
 console.log(a[b]);
 
 # input 搜索如何防抖，如何处理中文输入
@@ -166,10 +163,46 @@ promise.all([promise1,promise2]).then(function(res){
     需要特别注意的是，Promise.all获得的成功结果的数组里面的数据顺序和Promise.all接收到的数组顺序是一致的，即p1的结果在前，即便p1的结果获取的比p2要晚。这带来了一个绝大的好处：在前端开发请求数据的过程中，偶尔会遇到发送多个请求并根据请求顺序获取和使用数据的场景，使用Promise.all毫无疑问可以解决这个问题。
 })
 Promise.race的使用
-顾名思义，Promse.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
+顾名思义，Promise.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
 
 # async / await 
 async是Generator 函数的语法糖
 async 函数可以保留运行堆栈。
 async会返回一个promise对象
 await前是同步执行，而在其之后的便是异步相当于Promise.then的形式
+
+# //所谓深度克隆，就是当对象的某个属性值为object或array
+JSON.parse（JSON.stringify（obj））来完成深拷贝，但是该方法不能解决属性为函数，undefined，循环引用的的情况
+实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
+1.封装深拷贝函数
+function deepClone(obj) {
+    let objClone = Array.isArray(obj) ? [] : {};
+    if(obj && typeof obj === "object") {
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                 // 判断 obj 是否是对象,如果是，递归复制
+                 if(obj[key] && typeof obj[key] === "object") {
+                      objClone[key] = deepClone(obj[key]);
+                 }else{
+                      // 如果不是
+                      objClone[key] = obj[key];
+                 }
+            }
+        }
+    }      
+    return objClone
+} 
+2.借用JSON对象的 parse 和 stringify
+function deepClone(obj){
+    let newObj = JSON.stringify(obj);
+    let objClone = JSON.parse(newObj);
+    return objClone;  
+} 
+3.借用 JQ 的 extend 方法实现深拷贝。
+$.extend([deep], target, ...object);
+
+　　deep 表示深拷贝，Boolean
+
+ 　　target 目标对象
+
+　　 ...object 需要进行合并的对象
