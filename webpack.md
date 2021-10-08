@@ -20,11 +20,11 @@ webpack:
 deleteOriginalAssets: false //删除原文件
   productionSourceMap: false // 是否生成map文件
 # loaders的理解
+它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。
 打包css:style-loader,css-loader
 打包图片字体等媒体:url-loader,file-loader
 打包图片文件：image-webpack-loader
 es6转换es5:babel-loader
-仅仅只为打包文件，在打包之前运行
 
 优化方法：
     test:/\.js$/,
@@ -33,11 +33,14 @@ es6转换es5:babel-loader
     exclude:/node_modules/      3.不会去查找的路径
 
 # plugins的理解
+是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听webpack打包过程中的某些节点，执行广泛的任务
+运行在编译周期的过程中，扩展webpack的功能引用第三方插件，不仅只局限在打包，资源的加载上，它的功能要更加丰富
 CommonsChunkPlugin：将chunks相同的模块代码提取成公共js
 HotModuleReplacementPlugin: HMR热更新，不用刷新浏览器而将新的变更的模块替换掉旧的模块
 UglifyjsWebpackPlugin：压缩 JS(webpack4.0以上，node6.9以上)
-CopyWebpackPlugin，将文件或者文件夹拷贝到构建的输出目录
-运行在编译周期的过程中，扩展webpack的功能引用第三方插件，不仅只局限在打包，资源的加载上，它的功能要更加丰富
+webpack-pacallel-uglify-plugin:并行运行UglifyJS插件
+CopyWebpackPlugin: 将文件或者文件夹拷贝到构建的输出目录
+
 
 # 如何利用webpack来优化前端性能？（提高性能和体验）
 1.压缩代码，UglifyJsPlugin压缩js,css-loader和style-loader压缩css,url-loader和file-loader压缩媒体文件，image-webpack-loader压缩图片
@@ -70,10 +73,45 @@ CopyWebpackPlugin，将文件或者文件夹拷贝到构建的输出目录
         }
         ]
       },
-# Gzip压缩，config->index
+# Gzip压缩，config->index(https://www.cnblogs.com/zigood/p/12504401.html)
     build:{
         productionGzip: true,
         productionGzipExtensions: ['js', 'css'],
     }
+
+  if (config.build.productionGzip) {//gzip配置
+    const CompressionWebpackPlugin = require('compression-webpack-plugin')
+    webpackConfig.plugins.push(
+      new CompressionWebpackPlugin({
+        //asset: '[path].gz[query]',
+        filename: '[path].gz[query]',//注意这里改成filename
+        algorithm: 'gzip',
+        test: new RegExp(
+          '\\.(' +
+          config.build.productionGzipExtensions.join('|') +
+          ')$'
+        ),
+        threshold: 10240,
+        deleteOriginalAssets: false,//删除源文件,不建议
+        minRatio: 0.8
+      })
+    )
+  }
 # happypack提升webpack构建速度 --https://blog.csdn.net/zgd826237710/article/details/88172290
 在使用 Webpack 对项目进行构建时，会对大量文件进行解析和处理。当文件数量变多之后，Webpack 构件速度就会变慢。由于运行在 Node.js 之上的 Webpack 是单线程模型的，所以 Webpack 需要处理的任务要一个一个进行操作。而 Happypack 的作用就是将文件解析任务分解成多个子进程并发执行。子进程处理完任务后再将结果发送给主进程。所以可以大大提升 Webpack 的项目构件速度
+
+# webpack-parallel-uglify-plugin 并行运行UglifyJS插件，可有效减少构建时间（安装版本不可过高）
+  new ParallelUglifyPlugin({
+      cacheDir: '.cache/',
+      uglifyJS: {
+        output: {
+          comments: false
+        },
+        warnings: false,解决warnings警告问题
+        compress: {
+          // warnings: false, 默认放这里会警告`warnings` is not a supported option  ，内容不支持“警告”选项
+          drop_debugger: true,
+          drop_console: false
+        }
+      }
+    }),

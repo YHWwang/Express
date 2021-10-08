@@ -1,13 +1,24 @@
 # JS
 
+# js继承方法
+1.原型链继承
+2.构造继承
+3.实例继承
+4.拷贝继承
+5.组合继承
+6.寄生组合继承
+
+# slice和splice的用法
+slice(开始索引,结束索引--不包括)方法从数组中返回选定的元素，作为一个新数组。生成新数组
+splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删除数组元素。修改数组本身
 # 什么是闭包
 简要回答：能够读取其他函数内部变量的函数。
 全面回答：在js中变量的作用域属于函数作用域, 在函数执行完后,作用域就会被清理,内存也会随之被回收,但是由于闭包函数是建立在函数内部的子函数, 由于其可访问上级作用域,即使上级函数执行完, 作用域也不会随之销毁, 这时的子函数(也就是闭包),便拥有了访问上级作用域中变量的权限,即使上级函数执行完后作用域内的值也不会被销毁。
 
 # 闭包的用途
-1.可以读取函数内部的变量
-2.让这些变量的值始终保持在内存中
-3.函数执行形成的私有作用域，保护里面的变量不受外界干扰的机制
+1. 可以读取函数内部的变量
+2. 让这些变量的值始终保持在内存中
+3. 函数执行形成的私有作用域，保护里面的变量不受外界干扰的机制
 
 # 值引用和地址引用
 值引用：Undefined、Null、Boolean、Number 、String和Symbol.可以深拷贝
@@ -24,15 +35,15 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
 伪元素：（::before, ::after）等，双冒号开头，用于将特殊的效果添加到某些选择器，一个选择器中只能出现一次
 
 # sessionStorage通过以下情况会丢失
-刷新当前页面，或者通过location.href、window.open、或者通过带target="_blank"和rel=“opener”的a标签打开新标签，之前的sessionStorage还在，
-但是如果你是主动打开一个新窗口或者新标签，对不起，打开F12你会发现，sessionStorage空空如也。
-也就是说，sessionStorage的session仅限当前标签页或者当前标签页打开的新标签页，通过其它方式新开的窗口或标签不认为是同一个session。
+    刷新当前页面，或者通过location.href、window.open、或者通过带target="_blank"和rel=“opener”的a标签打开新标签，之前的sessionStorage还在，
+    但是如果你是主动打开一个新窗口或者新标签，对不起，打开F12你会发现，sessionStorage空空如也。
+    也就是说，sessionStorage的session仅限当前标签页或者当前标签页打开的新标签页，通过其它方式新开的窗口或标签不认为是同一个session。
 
 # js无缝轮播图
 关键在与首尾一张图片如何轮播第一张图片或者最后一张的问题
-1.轮播之前需要将尾再添加一张图片，与第一张图片一致
-2.设置定时器，将图片依次向左移动一张图片宽度的距离
-3.轮播到最后一张图片时，重置当前切换索引为1，设置一个seTimeout重置父元素的left时间为一秒
+1. 轮播之前需要将尾再添加一张图片，与第一张图片一致
+2. 设置定时器，将图片依次向左移动一张图片宽度的距离
+3. 轮播到最后一张图片时，重置当前切换索引为1，设置一个seTimeout重置父元素的left时间为一秒
 
     time = setInterval(() => {
         curIndex++
@@ -49,29 +60,6 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
         }
         $('.indicator-container .indicator').eq(curIndex).addClass('active').siblings().removeClass('active')
     }, autoplay_Delay);
-# 深拷贝方法
-1.JSON.parse(JSON.stringify(a))
-2.$.extend(true,[],a)
-3.迭代递归方法。此方法可判断undefined值
-    function isObject(obj) {
-        return typeof obj === 'object' && obj != null;
-    }
-    function cloneDeep(source) {
-        if (!isObject(source)) return source  //判断类型是否对象，真则不进行深拷贝，假则进行深拷贝
-
-        var target = Array.isArray(source) ? [] : {}
-        for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) { // 判断本身是否存在该属性而非继承原型链来的属性
-                if (isObject(source[key])) { // 判断子对象是否是对象或者数组
-                    target[key] = cloneDeep(source[key])
-                } else {
-                    target[key] = source[key]
-                }
-            }
-        }
-        return target
-    }
-
 
 # Object.prototype.toString.call()、 instanceof 以及 Array.isArray() 的区别和优劣
 1.Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
@@ -85,6 +73,8 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
 3.Array.isArray():用来判断对象是否为数组
 缺点：只能判别数组
 Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
+
+4.hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
 
 instanceof 与 isArray
 当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
@@ -144,18 +134,18 @@ console.log(a[b]);
     }
     
 # var、let 和 const 区别的实现原理是什么
-1.var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
-2.let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
-3.const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
+1. var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
+2. let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
+3. const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
 
 # Promise
 resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
 reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
 
 三个状态
-1、pending[待定]初始状态
-2、fulfilled[实现]操作成功
-3、rejected[被否决]操作失败
+    1、pending[待定]初始状态
+    2、fulfilled[实现]操作成功
+    3、rejected[被否决]操作失败
 promise是微观任务 ，.then、.catch、process.nextTick是异步会放到了微队列中，setTimeout和setInterval宏观任务，先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
 
 promise.all([promise1,promise2]).then(function(res){
@@ -166,15 +156,15 @@ Promise.race的使用
 顾名思义，Promise.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
 
 # async / await 
-async是Generator 函数的语法糖
-async 函数可以保留运行堆栈。
-async会返回一个promise对象
-await前是同步执行，而在其之后的便是异步相当于Promise.then的形式
+    async是Generator 函数的语法糖
+    async 函数可以保留运行堆栈。
+    async会返回一个promise对象
+    await前是同步执行，而在其之后的便是异步相当于Promise.then的形式
 
 # //所谓深度克隆，就是当对象的某个属性值为object或array
-JSON.parse（JSON.stringify（obj））来完成深拷贝，但是该方法不能解决属性为函数，undefined，循环引用的的情况
+JSON和extend来完成深拷贝不能解决属性为函数，undefined，循环引用的的情况
 实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
-1.封装深拷贝函数
+1. 封装深拷贝函数---解决属性为undefined的情况
 function deepClone(obj) {
     let objClone = Array.isArray(obj) ? [] : {};
     if(obj && typeof obj === "object") {
@@ -192,13 +182,13 @@ function deepClone(obj) {
     }      
     return objClone
 } 
-2.借用JSON对象的 parse 和 stringify
+2. 借用JSON对象的 parse 和 stringify
 function deepClone(obj){
     let newObj = JSON.stringify(obj);
     let objClone = JSON.parse(newObj);
     return objClone;  
 } 
-3.借用 JQ 的 extend 方法实现深拷贝。
+3. 借用 JQ 的 extend 方法实现深拷贝。
 $.extend([deep], target, ...object);
 
 　　deep 表示深拷贝，Boolean
