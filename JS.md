@@ -1,5 +1,8 @@
 # JS
 
+# 原型链
+![Image text](https://raw.githubusercontent.com/YHWwang/Shipping/main/img-folder/%E5%8E%9F%E5%9E%8B%E9%93%BE.png)
+
 # js继承方法
 1.原型链继承
 2.构造继承
