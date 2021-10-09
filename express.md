@@ -1,21 +1,73 @@
+# px、em、rem、vw
+px固定大小
+em根据父元素的字体大小
+rem根据根元素html字体大小
+vw可视窗口的宽度,而百分比和其父元素的宽度有关
+
+# scoped的原理，私有化样式的原理
+vue通过在DOM结构以及css样式上加唯一不重复的标记，以保证唯一，达到样式私有化模块化的目的
+
+# 选择器有哪些
+css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
+css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
+
+# BFC(块级格式化上下文)
+触发条件：
+    body 根元素
+    浮动元素：float 除 none 以外的值
+    绝对定位元素：position (absolute、fixed)
+    display 为 inline-block、table-cells、flex
+    overflow 除了 visible 以外的值 (hidden、auto、scroll)
+原理：具有 BFC 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器所没有的一些特性。
+通俗一点来讲，可以把 BFC 理解为一个封闭的大箱子，箱子内部的元素无论如何翻江倒海，都不会影响到外部。
+1. 同一个BFC下外边距会发生重叠
+2. BFC 可以包含浮动的元素（清除浮动）
+3. BFC 可以阻止元素被浮动元素覆盖
+
+# 伪类和伪元素的区别
+伪类：（:hover, :foucs, :nth-chlid)等，冒号开头，用于向某些选择器添加特殊的效果。一个选择器中出现可以多个
+伪元素：（::before, ::after）等，双冒号开头，用于将特殊的效果添加到某些选择器，一个选择器中只能出现一次
+
+# HTML5
+新标签:header,nav,section,main,aside,footer
+删除标签：frame,big,center,font
+表单新增类型：color,email,number,tel,url,date,month,week,time.
+表单新增属性：pleaceholder占位符，required必填项，Pattern正则表达式，autofocus 获取焦点
+
 # HTTP浏览器输入URL后发生了什么
-1.浏览器（客户端）进行地址解析，补全域名，然后DNS域名解析；
-2.建立TCP连接；通过ip寻址和arp，找到目标（服务器）地址，三次握手建立TCP连接；
-3.发送HTTP请求；等待响应
-4.服务器处理请求；
-5.返回响应结果；
-6.关闭TCP连接；
-7.浏览器解析HTML；
-8.浏览器布局渲染
+1.浏览器（客户端）进行地址解析，补全域名，然后DNS域名解析得到对应的IP地址
+2.根据这个IP，通过ip寻址找到目标（服务器）地址，三次握手建立TCP连接；
+3.建立TCP链接后，发送HTTP请求
+4.服务器响应HTTP请求，浏览器得到 html 代码
+5.浏览器解析 html 代码
+6.浏览器对页面进行渲染，呈现给用户
+7.服务器关闭TCP连接（TCP的四次挥手）
 
 # 关于webkit-line-clamp设置无效的问题
 需要设置word-break: break-all;
 
 # 关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
- $('.note-editable').on('focusout', function () {//让编辑器一直处于编辑的状态
-    $(this).trigger('focus')
-  });
-
+contenteditable属性指定元素内容是否可编辑
+ $('.note-editor').focusin(function () {
+    return false
+  })
+  $('.note-editor').focusout(function () {
+    $('.note-editable').focus()
+  })
+  $('.note-insert .note-btn').eq(1).click(function(){//解决点击链接按钮后无法输入url的问题
+    $('.note-editable').attr('contenteditable', false)
+  })
+  $('#summernoteBox .note-popover .note-btn-group .note-btn').eq(0).click(function(){//解决点击编辑区链接按钮后无法输入url的问题
+    $('.note-editable').attr('contenteditable', false)
+  })
+  $(document).click(function (event) {
+    let dom = $('.note-editor')[0]
+    if (event.target != dom && !$.contains(dom, event.target)) {//点击判断点击区域是否是指定节点
+      $('.note-editable').attr('contenteditable', false)
+    } else {
+      $('.note-editable').attr('contenteditable', true)
+    }
+  })
 # HTML页面生成的渲染过程
     1. html被解析器解析成DOM树
     2. css被解析成CSSOM树

@@ -109,7 +109,7 @@ https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distri
 2. getters://获取值并缓存，也可访问对象的属性，依赖发生改变则重新计算  
 3. mutations://同步更改state中的状态，commit('state',value)
 4. actions:{//提交到mutations，异步操作，store.dispatch('increment') 
-5.modules模块化组件
+5. modules模块化组件
 
 # 关于一个域名下存放俩个vue项目
 前台：

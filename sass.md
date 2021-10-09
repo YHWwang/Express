@@ -1,4 +1,29 @@
 # 安装sass
+
+# sass的功能特性
+1. 变量 
+    $a:1px
+    padding:$a
+2. 混合:Mixins被当作一个公认的选择器，还可以在Mixins中定义变量或者默认参数。
+    @mixin a($a:2px){//默认值为2px
+        padding:$a
+        }
+    .b{
+        @include a(5px)
+    }
+3. 嵌套
+    .a{
+        .b{}
+    }
+4. 运算符
+    border:(@width/2) solid #000
+5. 作用域：Sass中是不存在什么全局变量,一旦修改值都会更改
+    $color:black
+    .a{
+        $color:blue//编译后全部的$color将变成blue
+    }
+6. 导入 @import 'index.css'
+
 # webpack.base.conf.js
  {
         test: /\.(scss|sass)$/,

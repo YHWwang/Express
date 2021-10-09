@@ -76,34 +76,7 @@
     crossorigin="anonymous"></script>
 <script>
     $(function () {
-        function deepClone(obj) {
-            let objClone = Array.isArray(obj) ? [] : {};
-            if (obj && typeof obj === "object") {
-                for (key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        // 判断 obj 是否是对象,如果是，递归复制
-                        if (obj[key] && typeof obj[key] === "object") {
-                            objClone[key] = deepClone(obj[key]);
-                        } else {
-                            // 如果不是
-                            objClone[key] = obj[key];
-                        }
-                    }
-                }
-            }
-            return objClone
-        }
 
-        var arr = {
-            name: '张三',
-            age: 18,
-            book: ['语文', '数学', '英语'],
-            sex: null,
-            height: undefined,
-        }
-        var arrCopy = deepClone(arr)
-        arrCopy.book.push('历史')
-        console.log(arrCopy, arr)
         // 开屏动画
         // var video = $('#video_1') // jq获取的dom节点会变成数组
         // video[0].play();
