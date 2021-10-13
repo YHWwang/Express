@@ -1,3 +1,12 @@
+
+# 如何判断对象为空
+1. 使用jquery自带的$.isEmptyObject()函数
+2. 封装一个函数,一旦该对象的属性是可遍历的即说明该对象存在属性，则返回false，否则该对象为空对象。
+    for(let a in obj){
+        retrun false
+    }
+3. es6的Object.keys(obj).length的方法判断。
+4. 通过JSON自带的.stringify方法将对象转化为字符串来判断
 # px、em、rem、vw
 px固定大小
 em根据父元素的字体大小

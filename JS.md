@@ -1,5 +1,15 @@
 # JS
 
+# 事件委托
+如果给一堆子元素加事件，并且事件触发时执行的代码都差不多时，就可以把事件加在父元素身上!这样可以更节省内存空间
+e.target.nodename.toLowerCase()可用于判断当前标签的名称
+
+# 隐式转换(https://blog.csdn.net/itcast_cn/article/details/82887895)
+1. 转成string类型： +（字符串连接符） 
+2. 转成number类型：++/--(自增自减运算符) + - * / %(算术运算符) > < >= <= == != === !=== (关系运算符)
+3. 转成boolean类型：!（逻辑非运算符）
+空字符串(''),NaN,0，null,undefined这几个外返回的都是true,唯一不同的![] | !{} == fasle //ture
+引用类型比地址，基本类型比值
 # 原型链
 ![Image text](https://raw.githubusercontent.com/YHWwang/Shipping/main/img-folder/1.png)
 
@@ -157,7 +167,8 @@ console.log(a[b]);
 2. let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
 3. const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
 
-# Promise
+# Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大
+ES6规定，Promise对象是一个构造函数，用来生成Promise实例。Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject,这两个参数都是函数。
 resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
 reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
 

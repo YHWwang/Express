@@ -5,11 +5,37 @@
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
+# Vuex
+1. state：存储状态
+2. getter：就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
+4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
+5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割：
 
-# 路由的方法有哪些
+# vue-router
+路由重定向：redirect:'路由地址' 改变路由url或组件。父组件是公共组件的情况下，可重定向到嵌套子组件path，再次添加新组件.如果地址不存在则会执行定义的*路由。重定向传参 path: '/guide/:id', redirect: '/guide/:id/index'
+别名：alias:'name' 只改变url，组件不变
+$router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
+$route当前路由对象，它包括path，params，hash，query，name等参数；
+
+# 路由组件的钩子函数：
+    全局导航钩子：beforeEach、beforeResolve、afterEach
+　　路由独享导航钩子：beforeEnter
+　　组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
+　　参数：to、from、next；正对不同的钩子函数参数有所差异。
+
+# vue-router有几种模式
+1. hash,默认模式，url会有#号,hash模式的特点在于hash出现在url中，但是不会被包括在HTTP请求中，对后端没有影响，不会重新加载页面。
+2. histroy：向history栈中添加一个路由，history中存在记录。利用了HTML5 History Interface中新增的pushState()和replaceState()方法。只是当他们进行修改时，虽然修改了url，但浏览器不会立即向后端发送请求。特别注意，history模式需要后台配置支持。如果后台没有正确配置，访问时会返回404。
+
+# 路由跳转的方法有哪些
 this.$router.push(obj) 跳转到指定url路径，并想history栈中添加一个记录，点击后退会返回到上一个页面
 this.$router.replace(obj)  跳转到指定url路径，但是history栈中不会有记录
 this.$router.go(n)  向前或者向后跳转n个页面，n可为正整数或负整数
+路由跳转时滚动到指定位置：在路由实例中设置方法scrollBehavior(){return {x:0,y:0}}
+# 路由获取参数
+1. query: this.$route.query.id
+2. params: this.$route.params.id
 
 # watch和computed的区别
 watch：

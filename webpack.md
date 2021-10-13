@@ -1,5 +1,40 @@
 # Webpack
 
+ # 公共代码抽离
+     config.optimization = {
+      splitChunks: {
+          cacheGroups: {
+              vendor: {
+                  chunks: 'all',
+                  test: /node_modules/,
+                  name: 'vendor',
+                  minChunks: 1,
+                  maxInitialRequests: 5,
+                  minSize: 0,
+                  priority: 100
+              },
+              common: {
+                  chunks: 'all',
+                  test: /[\\/]src[\\/]js[\\/]/,
+                  name: 'common',
+                  minChunks: 2,
+                  maxInitialRequests: 5,
+                  minSize: 0,
+                  priority: 60
+              },
+              styles: {
+                  name: 'styles',
+                  test: /\.(sa|sc|c)ss$/,
+                  chunks: 'all',
+                  enforce: true
+              },
+              runtimeChunk: {
+                  name: 'manifest'
+              }
+          }
+      }
+  }
+
 # webpack打包vue慢怎么办?
 一、cdn加速
     1.使用webpack-bundle-analyzer对项目进行模块分析，查看哪些模块体积过大，然后针对性优化，比如我项目中引用了常用的UI库element-ui和echarts等按需加载
@@ -11,6 +46,7 @@
     2.exclude：/node_modules/--排除特定条件。一般是提供一个字符串或字符串数组（目录绝对路径或文件绝对路径）
 三、DDLPlugin
     一般代码分为业务代码和第三方库，把复用性较高的第三方模块打包到动态链接库中，在不升级这些库的情况下，动态库不需要重新打包，每次构建只重新打包业务代码。
+四、 happypack
 
 # assets和static的区别
 相同点：都是存放静态资源文件，
@@ -102,7 +138,7 @@ CopyWebpackPlugin: 将文件或者文件夹拷贝到构建的输出目录
 
 # webpack-parallel-uglify-plugin 并行运行UglifyJS插件，可有效减少构建时间（安装版本不可过高）
   new ParallelUglifyPlugin({
-      cacheDir: '.cache/',
+      cacheDir: '.cache/',//缓存文件
       uglifyJS: {
         output: {
           comments: false
@@ -115,3 +151,15 @@ CopyWebpackPlugin: 将文件或者文件夹拷贝到构建的输出目录
         }
       }
     }),
+    // UglifyJsPlugin
+new UglifyJsPlugin({
+        uglifyOptions: {
+            compress: {
+                drop_debugger: true,
+                drop_console: true,  //生产环境自动删除console
+            },
+            warnings: false,
+        },
+        sourceMap: false,
+        parallel: true,（重点）//使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+    })
