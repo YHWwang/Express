@@ -1,3 +1,8 @@
+# vue生命周期8+2+1
+1. created,beforeCreate,mounted,beforeMount,updated,beforeUpdate,destory,beforeDestory
+2. keep-alive中组件有俩个生命周期：activated（组件激活）,deactivated（组件未激活）
+    组件创建和销毁性能上消耗大，激活和未激活则有效的缓存了组件，目的呢就是不让组件重复的渲染
+3. errorCaptured（捕获子孙组件的错误）
 
 # 虚拟DOM节点优异
 理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
@@ -5,18 +10,28 @@
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
+
 # Vuex
-1. state：存储状态
-2. getter：就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
+场景：多个组件共享数据或者是跨组件传递数据时
+1. state：用来存储变量,响应式数据
+2. getters：就像计算属性computed一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
 3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
 4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
-5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割：
+5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.调用方法this.$store.dispatch('app/increment')，获取数据this.$store.state.app.count
+require.context()动态模块热重载
+
+# vuex的State特性
+一、Vuex就是一个仓库，仓库里面放了很多对象。其中state就是数据源存放地，对应于与一般Vue对象里面的data
+二、state里面存放的数据是响应式的，Vue组件从store中读取数据，若是store中的数据发生改变，依赖这个数据的组件也会发生更新
+三、它通过mapState把全局的 state 和 getters 映射到当前组件的 computed 计算属性中
 
 # vue-router
 路由重定向：redirect:'路由地址' 改变路由url或组件。父组件是公共组件的情况下，可重定向到嵌套子组件path，再次添加新组件.如果地址不存在则会执行定义的*路由。重定向传参 path: '/guide/:id', redirect: '/guide/:id/index'
 别名：alias:'name' 只改变url，组件不变
 $router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
 $route当前路由对象，它包括path，params，hash，query，name等参数；
+router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
 # 路由组件的钩子函数：
     全局导航钩子：beforeEach、beforeResolve、afterEach

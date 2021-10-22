@@ -10,8 +10,46 @@ e.target.nodename.toLowerCase()可用于判断当前标签的名称
 3. 转成boolean类型：!（逻辑非运算符）
 空字符串(''),NaN,0，null,undefined这几个外返回的都是true,唯一不同的![] | !{} == fasle //ture
 引用类型比地址，基本类型比值
+
+# 内存泄露: 申请的内存没有及时回收掉
+意外的全局变量: 无法被回收
+定时器: 未被正确关闭，导致所引用的外部变量无法被释放
+事件监听: 没有正确销毁 (低版本浏览器可能出现)
+闭包: 会导致父级中的变量无法被释放
+dom 引用: dom 元素被删除时，内存中的引用未被正确清空
+如何查看:按开发者工具的memory功能来抓取内存快照
+
+# 常见状态码
+1xx: 接受，继续处理
+200: 成功，并返回数据
+201: 已创建
+202: 已接受
+203: 成为，但未授权
+204: 成功，无内容
+205: 成功，重置内容
+206: 成功，部分内容
+301: 永久移动，重定向
+302: 临时移动，可使用原有URI
+304: 资源未修改，可使用缓存
+305: 需代理访问
+400: 请求语法错误
+401: 要求身份认证
+403: 拒绝请求
+404: 资源不存在
+500: 服务器错误
+
+# 原型/构造函数/实例
+const Person = new Object()
+Person:实例        Object构造函数
+const per = Object.prototype
+per:原型
+原型(prototype): 一个简单的对象，用于实现对象的 属性继承。可以简单的理解成对象的爹
+构造函数: new后面的函数。
+实例: 通过构造函数和new创建出来的对象，便是实例。 实例通过__proto__指向原型，通过constructor指向构造函数。
 # 原型链
-![Image text](https://raw.githubusercontent.com/YHWwang/Shipping/main/img-folder/1.png)
+![Image text](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/2/14/168e9d9b940c4c6f~tplv-t2oaga2asx-watermark.awebp)
+# 作用域链
+作用域链可以理解为一组对象列表，包含 父级和自身的变量对象，因此我们便能通过作用域链访问到父级里声明的变量或者函数。
 
 # js继承方法(https://www.cnblogs.com/ranyonsue/p/11201730.html)
 1. 原型链继承
@@ -166,6 +204,102 @@ console.log(a[b]);
 1. var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
 2. let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
 3. const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
+
+# 实现一个Promise
+class MyPromise {
+  constructor (exe) {
+1. 新建4个变量
+    // 最后的值，Promise .then或者.catch接收的值
+    this.value = undefined
+    // 状态：三种状态 pending success failure
+    this.status = 'pending'
+    // 成功的函数队列
+    this.successQueue = []
+    // 失败的函数队列
+    this.failureQueue = []
+2. 设置成功失败状态函数
+    const resolve = () => { // 成功状态函数
+      const doResolve = (value) => {
+        // 将缓存的函数队列挨个执行，并且将状态和值设置好
+3. 判断是否为pending状态并给状态变量赋值，在把队列变量的数据循环cb判断是否为空
+        if (this.status === 'pending') {
+          this.status = 'success'
+          this.value = value
+  
+          while (this.successQueue.length) {
+            const cb = this.successQueue.shift()
+  
+            cb && cb(this.value)
+          }
+        }
+      }
+
+      setTimeout(doResolve, 0)
+    }
+
+    const reject = () => {//失败状态函数
+      // 基本同resolve
+      const doReject = (value) => {
+        if (this.status === 'pending') {
+          this.status = 'failure'
+          this.value = value
+  
+          while (this.failureQueue.length) {
+            const cb = this.failureQueue.shift()
+  
+            cb && cb(this.value)
+          }
+        }
+      }
+
+      setTimeout(doReject, 0)
+    }
+
+    exe(resolve, reject)
+  }
+  
+  then (success = (value) => value, failure = (value) => value) {
+4. then返回的是一个新的Promise
+    return new MyPromise((resolve, reject) => {
+      // 包装回到函数
+5. 定义成功失败函数，判断result类型是否是promise函数
+      const successFn = (value) => {
+        try {
+          const result = success(value)
+          // 如果结果值是一个Promise，那么需要将这个Promise的值继续往下传递，否则直接resolve即可
+          result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
+        } catch (err) {
+          reject(err)
+        }
+      }
+      // 基本筒成功回调函数的封装
+      const failureFn = (value) => {
+        try {
+          const result = failure(value)
+          
+          result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
+        } catch (err) {
+          reject(err)
+        }
+      }
+6. 如果Promise的状态还未结束，则将成功和失败的函数缓存到队列里
+      if (this.status === 'pending') {
+        this.successQueue.push(successFn)
+        this.failureQueue.push(failureFn)
+        // 如果已经成功结束，直接执行成功回调 
+      } else if (this.status === 'success') {
+        success(this.value)
+      } else {
+        // 如果已经失败，直接执行失败回调
+        failure(this.value)
+      }
+    })
+  }
+  // 其他函数就不一一实现了
+  catch () {
+
+  }
+} 
 
 # Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大
 ES6规定，Promise对象是一个构造函数，用来生成Promise实例。Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject,这两个参数都是函数。
