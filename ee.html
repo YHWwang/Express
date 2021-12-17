@@ -49,6 +49,228 @@
         }
 
         /* 开屏视频 */
+    .waveBox {
+        width: 51.82291vw;
+        margin: 0 auto;
+        transform: translateY(20.41666vw);
+        -webkit-transform: translateY(20.41666vw);
+        -moz-transform: translateY(20.41666vw);
+        -ms-transform: translateY(20.41666vw);
+        -o-transform: translateY(20.41666vw);
+    }
+
+    .wave-left {
+        position: relative;
+        width: 54.27083vw;
+        height: 7.29166vw;
+        transform: translate(-21.45833vw, -0.9375vw);
+    }
+
+    .wave-right {
+        position: relative;
+        width: 64.427vw;
+        height: 8.646vw;
+        transform: translate(13.125vw, -5.521vw);
+    }
+
+    .wave-left span,
+    .wave-right span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background: url(./src/img/wave.png) no-repeat;
+        background-position: center center;
+        background-size: cover;
+        transform: scale(0.053) rotateX(0);
+        opacity: 0;
+    }
+
+    .wave-left span:nth-child(1),
+    .wave-right span:nth-child(1) {
+        -webkit-transform: scale(1) rotateX(0);
+        -ms-transform: scale(1) rotateX(0);
+        transform: scale(1) rotateX(0);
+        top: 4.17vw;
+        -webkit-animation: wave 5.6s linear 0s infinite;
+        animation: wave 5.6s linear 0s infinite;
+    }
+
+    .wave-left span:nth-child(2),
+    .wave-right span:nth-child(2) {
+        -webkit-transform: scale(.7) rotateX(0);
+        -ms-transform: scale(.7) rotateX(0);
+        transform: scale(.7) rotateX(0);
+        top: 3.39vw;
+        -webkit-animation: wave 5.6s linear .8s infinite;
+        animation: wave 5.6s linear .8s infinite;
+    }
+
+    .wave-left span:nth-child(3),
+    .wave-right span:nth-child(3) {
+        -webkit-transform: scale(.4) rotateX(0);
+        -ms-transform: scale(.4) rotateX(0);
+        transform: scale(.4) rotateX(0);
+        top: 2.6vw;
+        -webkit-animation: wave 5.6s linear 1.6s infinite;
+        animation: wave 5.6s linear 1.6s infinite;
+    }
+
+    .wave-left span:nth-child(4),
+    .wave-right span:nth-child(4) {
+        -webkit-transform: scale(.2) rotateX(0);
+        -ms-transform: scale(.2) rotateX(0);
+        transform: scale(.2) rotateX(0);
+        top: 1.82vw;
+        -webkit-animation: wave 5.6s linear 2.4s infinite;
+        animation: wave 5.6s linear 2.4s infinite;
+    }
+
+    .wave-left span:nth-child(5),
+    .wave-right span:nth-child(5) {
+        -webkit-transform: scale(.1) rotateX(0);
+        -ms-transform: scale(.1) rotateX(0);
+        transform: scale(.1) rotateX(0);
+        top: 1.04vw;
+        -webkit-animation: wave 5.6s linear 3.2s infinite;
+        animation: wave 5.6s linear 3.2s infinite;
+    }
+
+    .wave-left span:nth-child(6),
+    .wave-right span:nth-child(6) {
+        -webkit-transform: scale(.4) rotateX(0);
+        -ms-transform: scale(.4) rotateX(0);
+        transform: scale(.4) rotateX(0);
+        top: 0.26vw;
+        -webkit-animation: wave 5.6s linear 4s infinite;
+        animation: wave 5.6s linear 4s infinite;
+    }
+
+    .wave-left span:nth-child(7),
+    .wave-right span:nth-child(7) {
+        -webkit-transform: scale(.2) rotateX(0);
+        -ms-transform: scale(.2) rotateX(0);
+        transform: scale(.2) rotateX(0);
+        top: 0;
+        -webkit-animation: wave 5.6s linear 4.8s infinite;
+        animation: wave 5.6s linear 4.8s infinite;
+    }
+
+    @keyframes wave {
+        0% {
+            -webkit-transform: scale(0.053) rotateX(0);
+            transform: scale(0.053) rotateX(0);
+            opacity: 0.25;
+            top: 0;
+        }
+
+        30% {
+            -webkit-transform: scale(0.13) rotateX(0);
+            transform: scale(0.13) rotateX(0);
+            opacity: 0.25;
+            top: 1.56vw;
+        }
+
+        40% {
+            opacity: 0.25;
+            top: 2.38vw;
+        }
+
+        50% {
+            top: 3.17vw;
+            opacity: 0.25;
+        }
+
+        60% {
+            top: 4.17vw;
+            opacity: 0.25;
+        }
+
+        100% {
+            -webkit-transform: scale(1) rotateX(0);
+            transform: scale(1) rotateX(0);
+            opacity: 0.05;
+            top: 4.17vw;
+        }
+    }
+
+    @-webkit-keyframes wave {
+        0% {
+            -webkit-transform: scale(0.053) rotateX(0);
+            transform: scale(0.053) rotateX(0);
+            opacity: 0.25;
+            top: 0;
+        }
+
+        30% {
+            -webkit-transform: scale(0.13) rotateX(0);
+            transform: scale(0.13) rotateX(0);
+            opacity: 0.25;
+            top: 1.56vw;
+        }
+
+        40% {
+            opacity: 0.25;
+            top: 2.38vw;
+        }
+
+        50% {
+            top: 3.17vw;
+            opacity: 0.25;
+        }
+
+        60% {
+            top: 4.17vw;
+            opacity: 0.25;
+        }
+
+        100% {
+            -webkit-transform: scale(1) rotateX(0);
+            transform: scale(1) rotateX(0);
+            opacity: 0.05;
+            top: 4.17vw;
+        }
+    }
+
+    @-moz-keyframes wave {
+        0% {
+            -webkit-transform: scale(0.053) rotateX(0);
+            transform: scale(0.053) rotateX(0);
+            opacity: 0.25;
+            top: 0;
+        }
+
+        30% {
+            -webkit-transform: scale(0.13) rotateX(0);
+            transform: scale(0.13) rotateX(0);
+            opacity: 0.25;
+            top: 1.56vw;
+        }
+
+        40% {
+            opacity: 0.25;
+            top: 2.38vw;
+        }
+
+        50% {
+            top: 3.17vw;
+            opacity: 0.25;
+        }
+
+        60% {
+            top: 4.17vw;
+            opacity: 0.25;
+        }
+
+        100% {
+            -webkit-transform: scale(1) rotateX(0);
+            transform: scale(1) rotateX(0);
+            opacity: 0.05;
+            top: 4.17vw;
+        }
+    }
     </style>
 </head>
 
@@ -60,7 +282,26 @@
                 src="https://statics.oneplus.cn/ov/assets/images/events/2021/03/9pro/cn/kv-9pro_open_pc-dbf8e5.mp4"></video>
             </video>
         </div> -->
-
+        <div class="waveBox">
+            <div class="wave-left">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="wave-right">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         <div class="sect4">
             <div class="box2">
                 <p>Shot on BV5100</p>
@@ -76,6 +317,49 @@
     crossorigin="anonymous"></script>
 <script>
     $(function () {
+        //滚动效果
+        var clientHeight = $(window).height();
+            var box3 = $(".sect3 .box3").css({ height: clientHeight * 3 }).offset().top;//设置盒子的高度并得到距离顶部的值
+            if (scroll < box3 - 50) {//盒子初始化
+                // $(".sect3 .box3 .box").css({ position: 'relative', top: 'inherit', left: 'inherit' });
+            } else if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight * 2) {//盒子开始滚动初始化
+                // $(".sect3 .box3 .box .p").css({ opacity: 0 });
+                // $(".sect3 .box3 .box").css({ position: 'fixed', top: '50px', left: '0%' });
+                if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight) {//当滚动一个屏幕高度时
+                    // 操作透明度、放大缩小、距离等
+                    // var num = (scroll - (box3 - 50)) / clientHeight;
+                    // num < 0 ? num = 0 : '';
+                    // num > 1 ? num = 1 : '';
+                    // var toBig = (1 + 4 * num);
+                    // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(' + toBig + ')' });
+                    // if (num <= 0.6) {
+                    //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 });
+                    // } else if (num > 0.6) {
+                    //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 - 1 * num });
+                    // }
+                } else if (scroll > box3 - 50 + clientHeight && scroll < box3 - 50 + clientHeight * 2) {//当滚动二个屏幕高度时
+                     // 操作透明度、放大缩小、距离等
+                    // var numNew = (scroll - (box3 - 50 + clientHeight)) / clientHeight;
+                    // $(".sect3 .box3 .box .iframe").css({ opacity: 0 });
+                    // numNew < 0 ? numNew = 0 : '';
+                    // numNew > 1 ? numNew = 1 : '';
+                    // if (numNew <= 0.3) {
+                    //     $(".sect3 .box3 .box .bg").css({ opacity: (numNew + 0.7) });
+                    // } else if (numNew > 0.3) {
+                    //     $(".sect3 .box3 .box .p").css({ opacity: (numNew - 0.3), top: (40 - 4 * numNew) + "%" });
+                    // }
+                }
+
+            } else if (scroll > box3 - 50 + clientHeight * 2) {//滚动完初始化
+                // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(5)', opacity: 0 });
+                // $(".sect3 .box3 .box .bg").css({ opacity: 1 });
+                // $(".sect3 .box3 .box .p").css({ opacity: 1, top: "26%" });
+                // $(".sect3 .box3 .box").css({ position: 'relative', top: clientHeight * 2, left: 'inherit' });
+            }
+
+
+
+
 
         // 开屏动画
         // var video = $('#video_1') // jq获取的dom节点会变成数组

@@ -9,7 +9,7 @@ e.target.nodename.toLowerCase()可用于判断当前标签的名称
 2. 转成number类型：++/--(自增自减运算符) + - * / %(算术运算符) > < >= <= == != === !=== (关系运算符)
 3. 转成boolean类型：!（逻辑非运算符）
 空字符串(''),NaN,0，null,undefined这几个外返回的都是true,唯一不同的![] | !{} == fasle //ture
-引用类型比地址，基本类型比值
+引用类型比地址( {} == !{}  "[object Object]" == 0 ---false)，基本类型比值
 
 # 内存泄露: 申请的内存没有及时回收掉
 意外的全局变量: 无法被回收
@@ -83,12 +83,42 @@ per:原型
 6. 寄生组合式继承（防止原型链上属性共享）
 　  重点：它是通过借用构造函数来继承属性，通过原型链形式来继承方法，会解决2次调用父类函数以及复用率的问题。
 
+# typeof('abc')和typeof 'abc'都是string, 那么typeof是操作符还是函数？
+ 在MDN中。是操作符，不是函数。可以添加括号，但是括号的作用是进行分组而非函数的调用。
+
+# this的理解，基本上可以归为四类，
+全局this 是window
+函数this 是调用者
+构造函数的this 是new 之后的新对象
+call 和 apply bind的this第一个参数
+
+# bind apply call的区别
+bind(context,arguments) 返回一个函数
+call(context,arg1,arg2...) 指定作用域 同时执行函数
+apply(context,args) 指定作用域 同时执行函数，后面的参数是数组
+实现bind
+Function.prototype.myBind(context,...args){
+ return function(){
+   return this.apply(context,args)
+ }
+}
+
+# javascript的作用域的理解
+定义变量的使用范围
+全局作用域、函数作用域、局部作用域
+在ES5之前，javascript只有全局作用域和函数作用域
+在ES6时出现的let和const可以定义块级作用域（局部作用域）
+
 # slice和splice的用法
 slice(开始索引,结束索引--不包括)方法从数组中返回选定的元素，作为一个新数组。生成新数组
 splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删除数组元素。修改数组本身
 # 什么是闭包
 简要回答：能够读取其他函数内部变量的函数。
 全面回答：在js中变量的作用域属于函数作用域, 在函数执行完后,作用域就会被清理,内存也会随之被回收,但是由于闭包函数是建立在函数内部的子函数, 由于其可访问上级作用域,即使上级函数执行完, 作用域也不会随之销毁, 这时的子函数(也就是闭包),便拥有了访问上级作用域中变量的权限,即使上级函数执行完后作用域内的值也不会被销毁。
+特性：
+1、闭包可以访问当前函数以外的变量
+2、即使外部函数已经返回，闭包仍能访问外部函数定义的变量
+3、闭包可以更新外部变量的值
 
 # 闭包的用途
 1. 可以读取函数内部的变量
@@ -135,7 +165,7 @@ splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删�
 
 2.instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
 优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
-缺点：只能用来判断对象类型，原始类型不可以。并且所有对象类型 instanceof Object 都是 true。
+缺点：只能用来判断对象类型，原始类型不可以，而typeof只能判断原始类型。并且所有对象类型 instanceof Object 都是 true。
 
 3.Array.isArray():用来判断对象是否为数组
 缺点：只能判别数组
@@ -221,7 +251,7 @@ class MyPromise {
     const resolve = () => { // 成功状态函数
       const doResolve = (value) => {
         // 将缓存的函数队列挨个执行，并且将状态和值设置好
-3. 判断是否为pending状态并给状态变量赋值，在把队列变量的数据循环cb判断是否为空
+3. 判断是否为pending状态并给状态变量赋值，根据队列的长度循环，将移除队列第一个数据，cb是否为空
         if (this.status === 'pending') {
           this.status = 'success'
           this.value = value
@@ -310,7 +340,12 @@ reject作用是，将Promise对象的状态从“未完成”变为“失败”�
     1、pending[待定]初始状态
     2、fulfilled[实现]操作成功
     3、rejected[被否决]操作失败
-promise是微观任务 ，.then、.catch、process.nextTick是异步会放到了微队列中，setTimeout和setInterval宏观任务，先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
+
+promise是微观任务（作业队列） ，.then、.catch、process.nextTick是异步会放到了微队列中
+setTimeout和setInterval宏观任务（任务队列），先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
+
+微观任务是由js引擎发起的任务（promise,process.nextTick等），
+宏观任务是由浏览器/node发起的任务（setTimeOut、setInterval、I/O、UI交互）
 
 promise.all([promise1,promise2]).then(function(res){
     cossole.log(res)
