@@ -1,4 +1,35 @@
 
+
+# stopPropagation()和preventDefault()这两个方法有什么区别
+stopPropagation 是阻止事件冒泡，即冒泡事件到当前元素处就终止了，不会继续向上级元素传递。
+preventDefault 是阻止默认事件，例如：在 a 标签的 click 事件中执行了该方法，则不会进行默认的链接跳转。
+
+#  document.write和innerHTML有什么区别
+1. document.wirte会重绘整个页面
+2. innerHtml是只对受影响的DOM元素进行重绘
+
+# (a==1&&a==2)和（a===1 && a===2）为true
+1. (a==1&&a==2)  
+    const aaaa = {
+      i:1,
+      toString/valueOf:function(){
+          return aaaa.i++
+      }
+    }
+2. （a===1 && a===2） 
+    var value = 1
+    Object.defineProperty(window, 'aaaa', {
+        get(){return this.value++}
+    })
+
+
+# 模块化编程的理解
+解决了代码污染的问题，提高了代码的重复率，让多人合作编程开发
+AMD: require.js 为代表，依赖前置，一律先加载再使用。
+CMD: sea.js 为代表，依赖就近原则。
+UMD: 同时支持 AMD 和 CMD 方法。
+ES6 import/export
+
 # 如何判断对象为空
 1. 使用jquery自带的$.isEmptyObject()函数
 2. 封装一个函数,一旦该对象的属性是可遍历的即说明该对象存在属性，则返回false，否则该对象为空对象。
@@ -71,6 +102,12 @@ tcp三次握手：(三次是最少的安全次数，两次不安全，四次浪�
 
 # 关于webkit-line-clamp设置无效的问题
 需要设置word-break: break-all;
+  display: -webkit-box;
+overflow: hidden;
+word-break: break-all;
+text-overflow: ellipsis;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 4;
 
 # 关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
 contenteditable属性指定元素内容是否可编辑
@@ -94,12 +131,6 @@ contenteditable属性指定元素内容是否可编辑
       $('.note-editable').attr('contenteditable', true)
     }
   })
-# HTML页面生成的渲染过程
-    1. html被解析器解析成DOM树
-    2. css被解析成CSSOM树
-    3. DOM+CSSOM生成render树
-    4. 生成布局flow,即将所有渲染树的所有节点进行平面合成
-    5。将布局绘制到屏幕上
 
 # swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
@@ -271,7 +302,13 @@ contenteditable属性指定元素内容是否可编辑
        return b.has(n)
     } )
  
- # 数据类型：null;undefinded;boolean;string;object;number;symbol;bigint;8种
+ # 数据类型：8种
+ 1. 基本数据类型：null undefinded boolean string number symbol bigint 。都存在栈内存中，固定分配内存大小
+ 2. 引用数据类型：object(对象，数组，函数)。在栈内存中保存了自己地址的索引，实际值存在堆内存中
+
+ # null 和 undefind在内存中的区别
+ 1. 变量赋值null 指针对象和值都清空，对象属性赋值null则在内存中分配了一个新的空间
+ 2. 变量赋值undefind值清空，变量还存在。对象属性赋值undefind,值为空值
 
  # 判断数据类型的方法：
  1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
@@ -283,13 +320,13 @@ content-visibility: hidden.利用缓存绘制状态的优点，使内容不显�
   https://web.dev/measure/  优化googles算法
 
 
-
-# //减少回流  重绘不一定会回流，但回流一定会重绘
+# 页面渲染的过程 //减少回流  重绘不一定会回流(重排)，但回流(重排)一定会重绘
 一、解析HTML，生成DOM树，解析CSS，生成CSSOM树
 二、将DOM树和CSSOM树结合，生成渲染树(Render Tree)
 三、Layout(回流):根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）
 四、Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素
 五、Display:将像素发送给GPU，展示在页面上。
+
 1.减少don的增删操作
 2.元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
 3.对复制的元素比如动画让器脱离文档流，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。

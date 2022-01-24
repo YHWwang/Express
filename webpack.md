@@ -1,5 +1,23 @@
 # Webpack
 
+# webpack 构建过程
+1. 根据配置，识别入口文件；
+2. 逐层识别模块依赖（包括 Commonjs、AMD、或 ES6 的 import 等，都会被识别和分析）；
+3. Webpack 主要工作内容就是分析代码，转换代码，编译代码，最后输出代码；
+4. 输出最后打包后的代码。
+
+# webpack常见的优化手段
+一、 打包速度
+1. Loader 设置include和exclude指定文件搜索范围
+2. cache-loader 缓存loader处理的结果
+3. happypack多线程打包
+4. webpack-pacallel-uglify-plugin并行运行UglifyJS插件
+二、打包体积
+1. image-webpack-loader压缩图片
+2. CDN加速
+3. gzip压缩
+4. 公共代码抽离
+
  # 公共代码抽离
      config.optimization = {
       splitChunks: {

@@ -1,8 +1,91 @@
 # JS
 
+# 上下文和作用域的区别
+作用域：是函数定义的时候就确定好的了，函数当中的变量是和函数所处的作用域有关，函数运行的作用域也是与该函数定义时的作用域有关。
+上下文：主要是关键字this的值，这个是由函数运行时决定的，简单来说就是谁调用此函数，this就指向谁。
+
+# 柯里化Currying
+currying又称部分求值。一个currying的函数首先会接受一些参数，接受了这些参数之后，该函数并不会立即求值，而是继续返回另外一个函数，刚才传入的参数在函数形成的闭包中被保存起来。待到函数真正需要求值的时候，之前传入的所有参数都会被一次性用于求值。
+柯里化的好处在于，调用函数的时候，如果某一个参数在每次调用中都相同，可以避免重复传入这个参数。
+柯里化有3个常见作用：
+1. 参数复用
+2. 动态创建函数
+3. 延迟计算/运行
+function currying(func) {
+        const args = [] // 闭包
+        return function result(...rest) {
+            if (rest.length === 0) {
+                return func(...args)
+            } else {
+                args.push(...rest)
+                return result
+            }
+        }
+    }
+    const add = (...args) => args.reduce((a, b) => a + b)
+
+    const sum = currying(add)
+
+    sum(2,3)(3)
+    console.log(sum())
+
+# 回调地狱
+由于js是单线程的，所以很多地方都要等待，这时就会用到回调函数，而在某些业务中可能存在多层的函数回调函数，回调嵌套的代码难维护，不易排除bug,这种情况我们成为回调地狱。
+处理方法一般使用promise或者async函数，promise.then()函数针对这种多层嵌套的代码方便，可大大降低维护难度，promise.all和race也是常用的方法。手写promsie
+
+
+# 函数声明和函数表达式区别
+1. 函数声明：函数会提升到最上层 function fn(){}
+2. 函数表达式：函数表达式必须赋值完成了才能调用,不会提升 let fn = function(){} 
+
+# 实现多维数组扁平化
+1. const flat1 = (array) => {
+  return array.reduce((result, it) => {
+    return result.concat(Array.isArray(it) ? flat1(it) : it)
+  }, [])
+}
+2. ES6中的arr.flat(infinity)
+
+# JSON.stringify()理解
+1.基本功能是将js对象转换成JSON
+2.用于判断俩个数组或者对象是否相等
+3.基本语法：JSON.stringify(value, [, replacer], [, space])
+value: 必选字段，指输入的对象，比如数组这些。
+replacer，该参数是可选的，它可以有两种类型，第一种是数组，第二种是函数方法。
+space: 该参数的含义是指使用什么来做分隔符的。
+
+# 实现instanceOf
+const myInstanceOf = (obj, func) => {
+  if (obj === null || typeof obj !== 'object') {
+    return false
+  }
+
+  let proto = Object.getPrototypeOf(obj) // ES5中用来获取obj对象的原型对象的标准方法。
+
+  if (proto === func.prototype) {
+    return true
+  } else if (proto === null) {
+    return false
+  } else {
+    return myInstanceOf(proto, func)
+  }
+}
+// 测试
+let Fn = function () { }
+let p1 = new Fn()
+
+console.log(myInstanceOf({}, Object)) // true
+console.log(myInstanceOf(p1, Fn)) // true
+console.log(myInstanceOf({}, Fn)) // false
+console.log(myInstanceOf(null, Fn)) // false
+console.log(myInstanceOf(1, Fn)) // false
+
+
 # 事件委托
-如果给一堆子元素加事件，并且事件触发时执行的代码都差不多时，就可以把事件加在父元素身上!这样可以更节省内存空间
-e.target.nodename.toLowerCase()可用于判断当前标签的名称
+是利用事件冒泡的特性，将本应该绑定在多个元素上的事件绑定在他们的祖先元素上，尤其在动态添加子元素的时候，可以非常方便的提高程序性能，减小内存空间。e.target.nodename.toLowerCase()可用于判断当前标签的名称
+
+# 冒泡事件理解
+事件的流程是：捕获阶段 -> 目标阶段 -> 冒泡阶段，冒泡过程就是：事件源触发事件后，会将事件反馈给他的父元素。一直到document。这个过程中如果父元素也有对应的evet.type的话也会触发。为了防止触发可以通过evet.target来判读或者直接event.stopPropagation()阻止事件冒泡preventDefault()。
 
 # 隐式转换(https://blog.csdn.net/itcast_cn/article/details/82887895)
 1. 转成string类型： +（字符串连接符） 
@@ -10,6 +93,20 @@ e.target.nodename.toLowerCase()可用于判断当前标签的名称
 3. 转成boolean类型：!（逻辑非运算符）
 空字符串(''),NaN,0，null,undefined这几个外返回的都是true,唯一不同的![] | !{} == fasle //ture
 引用类型比地址( {} == !{}  "[object Object]" == 0 ---false)，基本类型比值
+[] === [] //false 和 {} === {}//false
+“==允许在相等比较中进行强制类型转换，而===不允许”。
+
+
+
+
+
+
+
+
+# 匿名函数的优缺点
+调用方式：1自执行；2赋值给一个变量，通过变量调用（需要在函数定义之后调用）
+优点：不用命名函数命，创建闭包减少了全局变量
+缺点：可能造成内存泄漏
 
 # 内存泄露: 申请的内存没有及时回收掉
 意外的全局变量: 无法被回收
@@ -17,7 +114,9 @@ e.target.nodename.toLowerCase()可用于判断当前标签的名称
 事件监听: 没有正确销毁 (低版本浏览器可能出现)
 闭包: 会导致父级中的变量无法被释放
 dom 引用: dom 元素被删除时，内存中的引用未被正确清空
-如何查看:按开发者工具的memory功能来抓取内存快照
+如何查看:
+1.按开发者工具的memory功能来抓取内存快照
+2.node提供process.memoryUsage()
 
 # 常见状态码
 1xx: 接受，继续处理
@@ -112,6 +211,7 @@ Function.prototype.myBind(context,...args){
 # slice和splice的用法
 slice(开始索引,结束索引--不包括)方法从数组中返回选定的元素，作为一个新数组。生成新数组
 splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删除数组元素。修改数组本身
+split(字符串或正则表达式，返回数组的最大长度)用于把一个字符串分割成字符串数组。
 # 什么是闭包
 简要回答：能够读取其他函数内部变量的函数。
 全面回答：在js中变量的作用域属于函数作用域, 在函数执行完后,作用域就会被清理,内存也会随之被回收,但是由于闭包函数是建立在函数内部的子函数, 由于其可访问上级作用域,即使上级函数执行完, 作用域也不会随之销毁, 这时的子函数(也就是闭包),便拥有了访问上级作用域中变量的权限,即使上级函数执行完后作用域内的值也不会被销毁。
@@ -127,7 +227,7 @@ splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删�
 
 # 值引用和地址引用
 值引用：Undefined、Null、Boolean、Number 、String和Symbol.可以深拷贝
-地址引用: Array,Object.环到原始类型方可进行深拷贝
+地址引用: Array,Object.环到原始类型方可进行深拷贝。对象名存在栈内存，值存在堆内存，栈内存会提供一个引用的地址指向堆内存中的值
 
 # setTimeout和setInterval执行后会变成全局
 
@@ -159,19 +259,21 @@ splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删�
     }, autoplay_Delay);
 
 # Object.prototype.toString.call()、 instanceof 以及 Array.isArray() 的区别和优劣
-1.Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
+1. Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
 优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
 缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
 
-2.instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
-优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
-缺点：只能用来判断对象类型，原始类型不可以，而typeof只能判断原始类型。并且所有对象类型 instanceof Object 都是 true。
+2. typeof:只能判断原始类型
 
-3.Array.isArray():用来判断对象是否为数组
+3. instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
+优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
+缺点：只能用来判断对象类型，原始类型不可以，并且所有对象类型 instanceof Object 都是 true。
+
+4. Array.isArray():用来判断对象是否为数组
 缺点：只能判别数组
 Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
 
-4.hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
+5. hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
 
 instanceof 与 isArray
 当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
@@ -331,6 +433,47 @@ class MyPromise {
   }
 } 
 
+
+# 实现promise.all
+Promise.myAll = (promises) => {
+  return new Promise((rs, rj) => {
+    // 计数器
+    let count = 0
+    // 存放结果
+    let result = []
+    const len = promises.length
+    
+    if (len === 0) {
+      return rs([])
+    }
+    
+    promises.forEach((p, i) => {
+      // 注意有的数组项有可能不是Promise，需要手动转化一下
+      Promise.resolve(p).then((res) => {
+        count += 1
+        // 收集每个Promise的返回值 
+        result[ i ] = res
+        // 当所有的Promise都成功了，那么将返回的Promise结果设置为result
+        if (count === len) {
+          rs(result)
+        }
+        // 监听数组项中的Promise catch只要有一个失败，那么我们自己返回的Promise也会失败
+      }).catch(rj)
+    })
+  })
+}
+# 实现promise.race
+Promise.myRace = (promises) => {
+  return new Promise((rs, rj) => {
+    promises.forEach((p) => {
+      // 对p进行一次包装，防止非Promise对象
+      // 并且对齐进行监听，将我们自己返回的Promise的resolve，reject传递给p，
+      // 哪个先改变状态，我们返回的Promise也将会是什么状态
+      Promise.resolve(p).then(rs).catch(rj)
+    })
+  })
+}
+
 # Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大
 ES6规定，Promise对象是一个构造函数，用来生成Promise实例。Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject,这两个参数都是函数。
 resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
@@ -340,12 +483,16 @@ reject作用是，将Promise对象的状态从“未完成”变为“失败”�
     1、pending[待定]初始状态
     2、fulfilled[实现]操作成功
     3、rejected[被否决]操作失败
-
+JS执行顺序
+1. JavaScript是单线程从上往下执行，先进栈的后出栈，栈中函数执行完毕全部弹出才会执行微队列然后宏队列
+# 任务队列-事件循环机制
+1. 任务队列：同步任务会立刻执行，进入到主线程当中，异步任务会被放到任务队列（Event Queue）当中。Event Queue 单词的意思就是任务队列。
+2. 事件循环:等待同步代码执行完毕后，返回来，再将异步中的任务放到主线程中,先执行微观任务，再执行宏观任务,反复这样的循环，这就是事件循环。
 promise是微观任务（作业队列） ，.then、.catch、process.nextTick是异步会放到了微队列中
 setTimeout和setInterval宏观任务（任务队列），先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
 
-微观任务是由js引擎发起的任务（promise,process.nextTick等），
-宏观任务是由浏览器/node发起的任务（setTimeOut、setInterval、I/O、UI交互）
+微观任务Microtask是由js引擎发起的任务（promise,process.nextTick等），
+宏观任务Macrotask是由浏览器/node发起的任务（setTimeOut、setInterval、I/O、UI交互）
 
 promise.all([promise1,promise2]).then(function(res){
     cossole.log(res)

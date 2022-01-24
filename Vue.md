@@ -4,6 +4,8 @@
     组件创建和销毁性能上消耗大，激活和未激活则有效的缓存了组件，目的呢就是不让组件重复的渲染
 3. errorCaptured（捕获子孙组件的错误）
 
+# 更改组件内部的样式 /deep/ (深度选择器)
+
 # 虚拟DOM节点优异
 理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
 
@@ -18,7 +20,7 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式,集中式存
 2. getters：就像计算属性computed一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
 3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
 4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
-5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.调用方法this.$store.dispatch('app/increment')，获取数据this.$store.state.app.count
+5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.调用方法this.$store.dispatch('app/increment')--(这种方法需要把文件里的state等功能变量名都export default 导出)而this.$store.dispatch('increment')--（改方法中state等功能都在一个变量中只需将导出该名），获取数据this.$store.state.app.count
 require.context()动态模块热重载
 
 # vuex的State特性
@@ -32,6 +34,9 @@ require.context()动态模块热重载
 $router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
 $route当前路由对象，它包括path，params，hash，query，name等参数；
 router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
+
+# 开发一个不同用户不同权限显示不同菜单项目，需要实现不同权限添加不同路由(https://segmentfault.com/a/1190000009506097)
+路由分为静态和动态路由，在对后台权限管理时尤为重要，在设置动态路由时我们要设置meta{roles:['admin']}的身份，
 
 # 路由组件的钩子函数：
     全局导航钩子：beforeEach、beforeResolve、afterEach
@@ -144,13 +149,6 @@ https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distri
    
 #  在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
    解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
-
-   vuex:
-1. state://仓库一般存放数据，this.$store.state.name  
-2. getters://获取值并缓存，也可访问对象的属性，依赖发生改变则重新计算  
-3. mutations://同步更改state中的状态，commit('state',value)
-4. actions:{//提交到mutations，异步操作，store.dispatch('increment') 
-5. modules模块化组件
 
 # 关于一个域名下存放俩个vue项目
 前台：

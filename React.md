@@ -1,5 +1,16 @@
 # React
 
+# React和Vue的区别
+都使用VDOM虚拟节点，极大提升性能，组件化应用
+Vue使用的是我们熟悉的模板与特性，双向绑定数据，vue单文件组成是以模板+css+js的模式呈现。
+React的特色在于函数式编程的理念和丰富的技术选型，用js完成全部事情，单向数据流，通过jsx书写.
+
+# state 异步更新，同步执行
+state（）本身不是异步，但他的处理机制给人一种假象是异步的，他的处理是在生命周期变化的时候
+state中有两个参数
+第一个（prestate,preprop）=>{}，传入的是可以是一个对象，也可以是一个函数，函数的参数是state和prop不过都是前一个生命周期的状态，（可以解决一些生命周期导致sata还没变得bug）
+第二个是callback处理异步完成后的东西
+
 # React修改对象的值
 主要借助Object.assign(target,source1,source2)。具有相同变量后者会合并掉前者的变量数据
     const book = {

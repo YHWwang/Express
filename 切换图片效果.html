@@ -159,31 +159,6 @@
 <script async
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
-    <script>
-        console.log(fun)
-    
-        console.log(person)
-    </script>
-    
-    <script>
-        console.log(person)
-    
-        console.log(fun)
-    
-        var person = "Eric";
-    
-        console.log(person)
-    
-        function fun() {
-            console.log(person)
-            var person = "Tom";
-            console.log(person)
-        }
-    
-        fun()
-    
-        console.log(person)
-    </script>
 <script>
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
     setColor(active)//切换颜色为当前对象添加伪类元素
@@ -220,6 +195,7 @@
     function imgLoad(img, callback) {
         var timer = setInterval(function () {
             var flag = true
+            console.log(img[0].complete);
             if (img[0].complete) {//判断图片是否加载
                 callback();
                 clearInterval(timer);
@@ -229,49 +205,10 @@
             }
         }, 200);
     }
-    function User() {}
-    var a = {n: 1};
-var b = a;
-a.x = a = {n: 2};
-console.log(a.x,b.x )
- 	// 这时 a.x 的值是多少
-	// 这时 b.x 的值是多少
 
-    var a = {
-        name: 'wang',
-        book: {
-            title: 'hello world!',
-            price: '100'
-        },
-        a1: [1, 2, 3],
-        a2: undefined,
-        a3: null,
-        a4: 123
-    }
-    function deepClone(obj){
-        let objClone = Array.isArray(obj)?[]:{}
-        if(obj &&  typeof objClone == 'object'){
-            for(let key in obj){
-                if(obj.hasOwnProperty(key)){
-                    if(obj[key] && typeof obj[key] == 'object' ){
-                        objClone[key] = deepClone(obj[key])
-                    }else{
-                        objClone[key] = obj[key]
-                    }
-                }
-            }
-        }
-        return objClone
-    }
-    var b = []
-    b = deepClone(a)
-    // b = $.extend(true,[],a)
-    // b = JSON.parse(JSON.stringify(a))
-    a.name = 'axaxax'
-    a.book.price = '200'
-    a.a1[2] = 10
 
 
 </script>
+
 
 </html>
