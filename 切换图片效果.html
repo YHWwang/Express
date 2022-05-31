@@ -205,7 +205,191 @@
             }
         }, 200);
     }
+    class MyPromise {
+        constructor(exe) {
+            this.status = undefined
+            this.value = undefined
+            this.successQueue = []
+            this.failureQueue = []
 
+            const resolve = value => {
+                if (this.status != 'pending') return
+
+                this.status = 'fulfilled'
+                this.value = value
+
+                let timer = setTimeout(() => {
+                    clearTimeout(timer)
+                    this.successQueue.forEach(item => {
+                        item(this.value)
+                    })
+                }, 0);
+
+            }
+            const reject = value => {
+                if (this.status != 'pending') return
+
+                this.status = 'rejected'
+                this.value = value
+
+                let timer = setTimeout(() => {
+                    this.failureQueue.forEach(item => {
+                        item(this.value)
+                    })
+                }, 0);
+            }
+            try {
+                exe(resolve, reject)
+            } catch (error) {
+                reject(error)
+            }
+        }
+        then(successFn, failureFn) {
+            typeof successFn !== 'function' ? successFn = result => result : null;
+            return new Promise((resolve, reject) => {
+                this.successQueue.push(() => {
+                    try {
+                        let result = successFn(this.value)
+                        result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
+                    } catch (error) {
+                        reject(error)
+                    }
+
+                })
+                typeof failureFn !== 'function' ? failureFn = reason => reject(reason) : null
+                this.failureQueue.push(() => {
+                    try {
+                        let result = failureFn(this.value)
+                        result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
+                    } catch (error) {
+                        reject (error)
+                    }
+                })
+            })
+        }
+        catch(fn){
+            return this.then(null,fn)
+        }
+    }
+    Promise.myAll = (promises) => {
+        return new Promise((resolve, reject) => {
+            let count = 0
+            let result = []
+            let len = promises.length
+            if (len === 0) {
+                return ([])
+            }
+            promises.forEach((p, i) => {
+                count++
+                result[i] = item
+                if (len === count) {
+                    resolve(result)
+                }
+            })
+        })
+    }
+    Promise.myAllSettled = promises => {
+        let len = promises.length
+        let count = 0
+        let result = []
+        return new Promise((resolve, reject) => {
+            promises.forEach((p, i) => {
+                Promise.resolve(p).then(res => {
+                    result[i] = {
+                        status: 'fulfilled',
+                        value: res
+                    }
+                    count++
+                    if (len === count) {
+                        resolve(result)
+                    }
+                }, reason => {
+                    result[i] = {
+                        status: 'rejected',
+                        value: reason
+                    }
+                    count++
+                    if (len === count) {
+                        resolve(result)
+                    }
+                })
+            })
+        })
+    }
+    Promise.myRace = promises => {
+        return new Promise((resolve, reject) => {
+            promises.forEach(p => {
+                Promise.resolve(p).then(resolve).catch(reject)
+            })
+        })
+    }
+    Promise.myAny = promises => {
+        return new Promise((resolve, reject) => {
+            let len = promises.length
+            let count = 0
+            let result = []
+            promises.forEach(item => {
+                Promise.resolve(p).then(res => {
+                    resolve(res)
+                }, err => {
+                    count++
+                    result[count] = err
+                    if (count === len) {
+                        reject(result)
+                    }
+                })
+            })
+        })
+    }
+    Promise.prototype.myFinally = function (callback) {
+        return this.then(result => {
+            callback()
+            return result
+        }, reason => {
+            callback()
+            throw reason
+        })
+    }
+
+    const myInstanceOf = function (obj, func) {
+        if (obj === null || typeof obj !== 'object') {
+            return false
+        }
+
+        let proto = Object.getPrototypeOf(obj)
+        if (proto === null) {
+            return false
+        } else if (func.prototype === proto) {
+            return true
+        } else {
+            return myInstanceOf(proto, func)
+        }
+    }
+    function myflat(arr) {
+        return arr.reduce((res, next) => {
+            return res.concat(Array.isArray(next) ? myflat(next) : next)
+        }, [])
+    }
+    Array.prototype.myReduce = function (fn, val) {
+        let arr = Array.prototype.slice.call(this)
+
+        let res, startIndex
+
+        res = val ? res : arr[0]
+        startIndex = val ? 0 : 1
+
+        for (let index = startIndex; index < arr.length; index++) {
+            res = fn.call(null, res, arr[index])
+        }
+        return res
+    }
+    console.log([1, 2, 3].myReduce((pre, next) => pre + next));
+    function myNew(con, ...args) {
+        let obj = Object.create(null)//创建了一个空对象
+        Object.setPrototypeOf(obj, con.prototype)//空对象指向了构造函数的原型对象
+        let result = con.apply(obj, args)//改变了上下文
+        return result instanceof Object ? result : obj//判断返回值，基本对象则返回new创建的对象，引用对象则采用构造函数返回的对象
+    }
 
 
 </script>

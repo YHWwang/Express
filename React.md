@@ -1,5 +1,10 @@
 # React
 
+# React-Router路由传值的方法
+1. params传值，刷新页面参数不消失，参数会在地址栏显示（配置路由path:'/about/:id'后设置link标签'/about/3'）this.props.params.id
+2. query传参，刷新页面参数消失，参数不会在地址栏显示 to={{pathname:'/about', query:{id:3} 获取this.props.location.query.id
+3. state传参，刷新页面参数不消失,参数不会在地址栏显示to={{pathname:'/about', state:{id:3} 获取this.props.location.state.id 
+
 # React和Vue的区别
 都使用VDOM虚拟节点，极大提升性能，组件化应用
 Vue使用的是我们熟悉的模板与特性，双向绑定数据，vue单文件组成是以模板+css+js的模式呈现。

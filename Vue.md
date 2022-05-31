@@ -1,16 +1,85 @@
-# vue生命周期8+2+1
-1. created,beforeCreate,mounted,beforeMount,updated,beforeUpdate,destory,beforeDestory
-2. keep-alive中组件有俩个生命周期：activated（组件激活）,deactivated（组件未激活）
-    组件创建和销毁性能上消耗大，激活和未激活则有效的缓存了组件，目的呢就是不让组件重复的渲染
-3. errorCaptured（捕获子孙组件的错误）
+# 直连AWS上传APK文件 aws-sdk
+直连aws的s3桶上传文件
+# 解析apk文件 AppInfoParser
+1.解析apk文件拿出文件中的参数
 
-# 更改组件内部的样式 /deep/ (深度选择器)
+# 多个参数（模块，包版本，更新版本，系统依赖版本）自动解析组合成一个包名
+ computed 计算 get函数多个参数组合生成一个（多对一）
+
+# speak-MD5上传大文件
+  1.将大文件切成数据块，并依次同步上传数据块将（文件名，下标等标识消息带过去）
+  2.根据接口返回的参数判断是否已经完成，后台侧存到aws的s3桶中
+  问题1：给后台传送完后并没有传到s3桶中，而只在后台合并文件必须进一步上传，返回的数据并不是真实已经完成了
+  问题2：无法对apk文件进行分片，大图片和其它大文件都成功（具体原因不明）
+  问题3: 传送速度到s3慢
+  解决方法：通过aws-sdk连接aws服务器，真实上传,有上传进度，考虑到安全问题将密钥，地址等信息加密
+
+# vue3.0新特征
+  1. 支持Typescript
+  2. 放弃class采用function-based API 函数式编程
+  3. option API => Composition API（选项式API=>组合式API）
+  4. Tree shaking support：支持按需编译，体积更小
+  5. 重构VDOM
+  6. 新的响应式机制（Object.defineProperty改用ES6的Proxy）
+
+# Vuex实现登录验证
+  1. 输入正确的用户名密码后，返回的token存到localStorage和vuex的state中
+  2. 在之后的axios请求中的请求拦截器axios.interceptors.request.use中带上token,
+  3. 后台在判断请求是否有无token,有则比对成功就返数据，无token或者失效则返回401
+  4. 前端设置axios响应拦截器axios.interceptors.response.use分析状态码，如拿到状态码401就清除token并跳转到登录页
+
+# VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解
+Object.defineProperty缺点：
+  1. 无法监听数组下标的变化，导致直接通过数组的下标给数组设置值，不能实施响应。
+  2. 拦截的是对象的属性，会改变原对象
+  3. 删除或者增加对象属性无法监听到
+  4. 只能劫持对象的属性，因此我们需要对每个对象的每个属性进行遍历。Vue2.X里，是通过递归 + 遍历data对象来实现对数据的监控的，如果属性值也是对象那么需要深度遍历，显然如果能劫持一个完整的对象才是更好的选择。
+其实说Object.defineProperty 本身是可以监控到数组下标的变化的，只是push、pop、shift、unshift、splice、sort、reverse等函数不能实时响应在 Vue 的实现中，从性能 / 体验的性价比考虑，放弃了这个特性。
+   
+Proxy理解：在目标对象之前设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。
+Proxy的优点：
+  1. 可劫持整个对象，并返回新对象
+  2. 多种劫持操作（13种），可监听数组，监听对象属性的新增，删除等
+应用场景：表单校验，数据格式化，增加附加属性（比如身份证号码之后，把出生年月，籍贯，性别都添加进用户信息里面）
+
+# elementUI日期和时间选择器绑定值为对象的显示问题
+如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
+
+# vue生命周期
+  Vue的生命周期可以分为三个大阶段
+  1. 初始化挂载阶段：beforeCreate，created--- beforeMount,mounted
+  2. 数据更新渲染阶段: beforeUpdate,updated
+  3. 销毁阶段: beforeDestroy,destroy
+
+# vue生命周期钩子
+选项式api(13个):
+  1. beforeCreate，created----mounted,beforeMount----updated,beforeUpdate----destory,beforeDestory
+  2. keep-alive中组件有俩个生命周期：activated（组件激活）,deactivated（组件未激活）
+      组件创建和销毁性能上消耗大，激活和未激活则有效的缓存了组件，目的呢就是不让组件重复的渲染
+  3. errorCaptured（捕获子孙组件的错误）
+  4. renderTracked (vue3新加)-- 状态跟踪：只要页面有update的情况，它就会跟踪，然后生成一个event对象
+  5. renderTriggered (vue3新加) -- 状态触发：它不会跟踪每一个值，而是给你变化值的信息，并且新值和旧值都会给你明确的展示出来
+组合式API入口，setup函数注册生命周期钩子(11个):
+  1.  onBeforeMount,onMounted
+  2.  onBeforeUpdate,onUpdated
+  3.  onBeforeUnmount,onUnmounted => 由destroyed，beforeDestroy改名
+  4.  onErrorCaptured
+  5.  onRenderTracked,onRenderTriggered
+  6.  onActivated,onDeactivated
+组合式API的优势：
+  1.组件拥有了更加良好的代码组织结构
+  2.相同的代码逻辑在不同的组件中进行了完整的复用
+
+# setup（props、context(包含attrs、slots、emit)）)函数（setup 中你应该避免使用 this，因为它不会找到组件实例）
+增加了一个setup的生命周期函数，在beforeCreate生命函数之前执行，因此不能使用this获取实例
+1. ref 响应式引用，带有 value property 的对象，不能使用es6解构会消除 prop 的响应性，解构使用toRefs
+2. watch（ref变量, (newValue, oldValue)=>{}） 响应式更改,侦听响应式引用
+3. computed 输出的是一个只读的响应式引用
+4. setup函数只能是同步的不能是异步的（可配合async/await）,props是响应式的
 
 # 虚拟DOM节点优异
 理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
-
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
-
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
 # Vuex
@@ -36,7 +105,8 @@ $route当前路由对象，它包括path，params，hash，query，name等参数
 router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
 # 开发一个不同用户不同权限显示不同菜单项目，需要实现不同权限添加不同路由(https://segmentfault.com/a/1190000009506097)
-路由分为静态和动态路由，在对后台权限管理时尤为重要，在设置动态路由时我们要设置meta{roles:['admin']}的身份，
+路由分为静态和动态路由，在对后台权限管理时尤为重要，俩种方法：一种是前端在设置动态路由时我们要设置meta{roles:['admin']}的身份，第二种是后台管理系统来配置
+1. 在permission.js中设置router.beforeEach()在登录成功后去获取用户的角色信息，根据该角色去获取后台路由数据，将得到的路由数据格式化成组件对象格式，获取到路由信息后通过router.addRoutes(动态路由)动态添加到可访问的路由表中，在通过next({ ...to, replace: true })确保addRoutes已完成
 
 # 路由组件的钩子函数：
     全局导航钩子：beforeEach、beforeResolve、afterEach
@@ -53,6 +123,7 @@ this.$router.push(obj) 跳转到指定url路径，并想history栈中添加一�
 this.$router.replace(obj)  跳转到指定url路径，但是history栈中不会有记录
 this.$router.go(n)  向前或者向后跳转n个页面，n可为正整数或负整数
 路由跳转时滚动到指定位置：在路由实例中设置方法scrollBehavior(){return {x:0,y:0}}
+
 # 路由获取参数
 1. query: this.$route.query.id
 2. params: this.$route.params.id
@@ -73,9 +144,12 @@ computed:
 3. 计算属性是基于它们的依赖进行缓存的，而方法是不会基于它们的依赖进行缓存的。从而使用计算属性要比方法性能更好。
 
 
-# 兄弟组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
+# 组件之间的传值（https://www.cnblogs.com/zhilu/p/13851827.html）
+父子：props,emit
+兄弟：
 1.中继：通过props,emit方法给父组件，之后再让父组件分发给其它组件
 2.事件总线：通过创建一个新的全局vue对象EventBus,EventBus.$emit和EventBus.$on去执行方法并监听方法
+孙子：provide/inject
 
 # 三级或者多级表格组件
     <TreeTable
@@ -152,9 +226,9 @@ https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distri
 
 # 关于一个域名下存放俩个vue项目
 前台：
-1.在config.js下配置build,    assetsSubDirectory: './static'和 assetsPublicPath: '/路径名'
-2.在router下的index中配置   mode: 'history'和 base:'/路径名/'
-3.在打包的dist中的index.html中增加  <meta base='/路径名/'>
+1. 在config.js下配置build,    assetsSubDirectory: './static'和 assetsPublicPath: '/bi'
+2. 在router下的index中配置   mode: 'history', base:'/bi/'
+3. 在打包的dist中的index.html中增加  <meta base='/bi/'>
 其他在nginx中配置   https://www.cnblogs.com/dzcici/p/13877338.html
 
 # vue-piczoom 放大镜设置mouse-cover-canvas布设置top无效

@@ -1,4 +1,24 @@
 
+# git提交
+1 第1步：同步远程仓库代码：git pull
+2 第1步：查看当前状态：git status
+3 第2步：提交代码到本地git缓存区：git add -a
+4 第3步：推送代码到本地git库：git commit -m "提交内容标题"
+5 第5步：提交本地代码到远程仓库：git push
+
+# 前端性能优化你会怎么做?
+列表优化：懒加载、虚拟列表、分页
+重绘回流：合并修改、requestAnimationFrame、will-change
+提交优化：防抖
+网络请求：控制并发量、取消重复请求、合并请求、http缓存
+webpack优化：代码压缩、gzip、CDN、代码分割、合理设置hash、图片转base64
+
+# 解释Array.prototype.slice.apply(arguments)---将arguments 类数组转换为数组
+由于 arguments不是真正的数组，所以没有slice方法，通过apply|call可以调用数组对象的slice方法，从而将arguments 类数组转换为数组
+
+# NaN  表示什么意思，属于什么数据类型
+NaN是number类型，表示不是一个数字
+1/0 输出infinity表示无限大  0/0 输出NaN
 
 # stopPropagation()和preventDefault()这两个方法有什么区别
 stopPropagation 是阻止事件冒泡，即冒泡事件到当前元素处就终止了，不会继续向上级元素传递。
@@ -10,16 +30,16 @@ preventDefault 是阻止默认事件，例如：在 a 标签的 click 事件中�
 
 # (a==1&&a==2)和（a===1 && a===2）为true
 1. (a==1&&a==2)  
-    const aaaa = {
+    const a = {
       i:1,
       toString/valueOf:function(){
-          return aaaa.i++
+          return a.i++
       }
     }
 2. （a===1 && a===2） 
     var value = 1
-    Object.defineProperty(window, 'aaaa', {
-        get(){return this.value++}
+    Object.defineProperty(window, 'a', {
+        get(){return value++}
     })
 
 
@@ -37,7 +57,7 @@ ES6 import/export
         retrun false
     }
 3. es6的Object.keys(obj).length的方法判断。
-4. 通过JSON自带的.stringify方法将对象转化为字符串来判断
+4. 通过JSON自带的JSON.stringify方法将对象转化为字符串来判断
 # px、em、rem、vw
 px固定大小
 em根据父元素的字体大小
@@ -69,8 +89,8 @@ css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元�
     overflow 除了 visible 以外的值 (hidden、auto、scroll)
 原理：具有 BFC 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器所没有的一些特性。
 通俗一点来讲，可以把 BFC 理解为一个封闭的大箱子，箱子内部的元素无论如何翻江倒海，都不会影响到外部。
-1. 同一个BFC下外边距会发生重叠
-2. BFC 可以包含浮动的元素（清除浮动）
+1. 同一个BFC下外边距会发生重叠,不同BFC则边距不会折叠
+2. BFC 清除浮动
 3. BFC 可以阻止元素被浮动元素覆盖
 
 # 伪类和伪元素的区别
@@ -327,11 +347,15 @@ content-visibility: hidden.利用缓存绘制状态的优点，使内容不显�
 四、Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素
 五、Display:将像素发送给GPU，展示在页面上。
 
-1.减少don的增删操作
-2.元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
-3.对复制的元素比如动画让器脱离文档流，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。
-4.这些元素会进行回流，offsetTop,offsetLeft...scrollTop滚动事件等，display:none不会触发回流
-5.transform,opacity,filters这样css3的属性不会触发回流
+重绘：元素呈现新的外观，background-color，border-color,visibility等
+重排：位置、大小（高宽）等信息的改变，
+
+优化：
+1. 减少don的增删操作
+2. 元素的高宽，边框，字体大小，页面第一次加载这类操作会触发回流，定义在class中并设置class名，执行一次回流
+3. 对复杂的元素比如动画让器脱离文档流，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。
+4. 这些元素会进行回流，offsetTop,offsetLeft...scrollTop滚动事件等，display:none不会触发回流
+5. transform,opacity,filters这样css3的属性不会触发回流
 
 # 防抖/节流的原理----https://segmentfault.com/a/1190000018428170
 防抖：无论你执行多少次，我就执行最后一次，该函数在指定的时间期限内工作一次，重在清零 clearTimeout
@@ -371,8 +395,6 @@ var timer = true
     }
     
 
-
-水平垂直居中：父元素设为display:flex。子元素设置margin:auto
 
 localStorage.setItem(key，value)设置本地级存储
 localStorage.getItem(key)获取本地级存储

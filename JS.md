@@ -1,5 +1,65 @@
 # JS
 
+# js中new做了什么事
+1. 创建了一个空对象
+2. 将空对象的原型prototype指向构造函数的原型
+3. 构造函数内部的this指向了new创建的空对象（改变this指向）
+4. 对构造函数有返回值的判断（ 如果构造函数内部的返回值为普通类型和null则将new创建的对象返回出去，而如果构造函数返回的对象为引用类型对象则采用构造函数返回的对象。）
+实现:   function myNew(con, ...args) {
+           let obj = Object.create(null)
+           Object.setPrototypeOf(obj, con.prototype)
+           let result = con.apply(obj, args)
+           return result instanceof Object ? result : obj
+        }
+
+# ['10','10','10','10','10'].map(parseInt);// 输出[10, NaN, 2, 3, 4]
+  ['10', '10', '10', '10', '10'].map(function (item, index) { //map(回调函数，参数1值，参数2索引)
+      return parseInt(item, index) // 参数1字符串，参数2进制数(2-36)0则为10，其它为NaN
+      parseInt('10',0)--1*10+0*10=10
+      parseInt('10',1)--NaN
+      parseInt('10',2)--1*2+0*2=2
+      parseInt('10',3)--1*3+0*3=3
+      parseInt('10',4)--1*4+0*4=4
+  })
+
+# 手写reduce函数
+  Array.prototype.myReduce = function(fn,val){
+      let arr = Array.prototype.slice.call(this)
+      let res,startIndex
+
+      res = val ? val : arr[0]
+      startIndex = val ? 0 : 1 
+
+        for(let i = startIndex;i<arr.length;i++){
+            res = fn.call(null,res,arr[i])
+        }
+        return res
+  }
+
+# indexOf()函数会比较类型和值是否相等
+[1,2,3,4,5].indexOf('3') 返回-1
+[1,2,3,4,5].indexOf(3) 返回2
+
+# this绑定的几种情况
+  1. 默认绑定：函数独立调用，直接使用不带任何修饰的函数引用进行调用。非严格模式下 this 绑定到全局对象（浏览器下是 winodw，node 环境是 global），严格模式下 this 绑定到 undefined （因为严格模式不允许 this 指向全局对象）
+  2. 隐式绑定：函数是否在某个上下文对象中调用，如果是的话 this 绑定的是那个上下文对象。
+  3. 显示绑定：通过 call、apply、bind 我们可以修改函数绑定的 this，使其成为我们指定的对象。通过这些方法的第一个参数我们可以显式地绑定 this。
+  4. new绑定：函数如果作为构造函数使用 new 调用时， this 绑定的是新创建的构造函数的实例。
+  5. 箭头函数：箭头函数没有自己的this，this指向环境上下文
+ this 绑定的优先级：new 绑定 > 显示绑定 > 隐式绑定 > 默认绑定
+ 
+# 关于axios请求拦截的理解
+axios拦截分为请求拦截request和响应拦截response.
+请求拦截：是指在请求发送之前进行一些操作比如每个请求体加上token等，axios.interceptors.request.use(),请求拦截是逆序的
+响应拦截：是指在响应请求之后的操作比如处理服务器返回登录状态失效等, axios.interceptors.response.use()，顺序
+
+# js循环的数据量很大（例如100W+）如何进行性能优化？
+Worker接口可以创建后台任务，由于js是单线程模型，即可以给js运行新增线程。
+用于处理一些耗时、耗费性能的任务（异步的除外）。
+    要解决的问题是：
+    1.解决页面卡死问题。
+    2.发挥多核CPU的优势，提高js性能。
+缺点：兼容性不好，需等主线程任务结束才能进行
 # 上下文和作用域的区别
 作用域：是函数定义的时候就确定好的了，函数当中的变量是和函数所处的作用域有关，函数运行的作用域也是与该函数定义时的作用域有关。
 上下文：主要是关键字this的值，这个是由函数运行时决定的，简单来说就是谁调用此函数，this就指向谁。
@@ -11,7 +71,7 @@ currying又称部分求值。一个currying的函数首先会接受一些参数�
 1. 参数复用
 2. 动态创建函数
 3. 延迟计算/运行
-function currying(func) {
+    function currying(func) {
         const args = [] // 闭包
         return function result(...rest) {
             if (rest.length === 0) {
@@ -44,7 +104,8 @@ function currying(func) {
     return result.concat(Array.isArray(it) ? flat1(it) : it)
   }, [])
 }
-2. ES6中的arr.flat(infinity)
+2. ES6中的arr.flat(Infinity)
+
 
 # JSON.stringify()理解
 1.基本功能是将js对象转换成JSON
@@ -95,27 +156,31 @@ console.log(myInstanceOf(1, Fn)) // false
 引用类型比地址( {} == !{}  "[object Object]" == 0 ---false)，基本类型比值
 [] === [] //false 和 {} === {}//false
 “==允许在相等比较中进行强制类型转换，而===不允许”。
-
-
-
-
-
-
-
+null和undefined几乎一致，两者相等不全等，且不等于其他的：0、""和false；
 
 # 匿名函数的优缺点
 调用方式：1自执行；2赋值给一个变量，通过变量调用（需要在函数定义之后调用）
 优点：不用命名函数命，创建闭包减少了全局变量
 缺点：可能造成内存泄漏
 
-# 内存泄露: 申请的内存没有及时回收掉
-意外的全局变量: 无法被回收
-定时器: 未被正确关闭，导致所引用的外部变量无法被释放
-事件监听: 没有正确销毁 (低版本浏览器可能出现)
-闭包: 会导致父级中的变量无法被释放
-dom 引用: dom 元素被删除时，内存中的引用未被正确清空
-如何查看:
-1.按开发者工具的memory功能来抓取内存快照
+# 内存泄露和内存溢出
+内存泄露: 申请的内存没有及时回收掉
+内存溢出：是申请或使用内存超出可以分配的内存
+  场景：
+    1. 意外的全局变量: 无法被回收
+    2. 被遗忘的计时器: 未被正确关闭，导致所引用的外部变量无法被释放
+    3. 事件监听器被遗忘: 没有正确销毁 (低版本浏览器可能出现)
+    4. 闭包: 会导致父级中的变量无法被释放
+    5. dom 引用: dom 元素被删除时，内存中的引用未被正确清空
+    6. console的滥用
+内存泄漏识别方法:
+1、浏览器方法
+打开开发者工具，选择 Memory
+在右侧的Select profiling type字段里面勾选 timeline
+点击左上角的录制按钮。
+在页面上进行各种操作，模拟用户的使用情况。
+一段时间后，点击左上角的 stop 按钮，面板上就会显示这段时间的内存占用情况。
+2、命令行方法
 2.node提供process.memoryUsage()
 
 # 常见状态码
@@ -152,11 +217,11 @@ per:原型
 
 # js继承方法(https://www.cnblogs.com/ranyonsue/p/11201730.html)
 1. 原型链继承
-    重点：让新实例的原型等于父类的实例（son.prototype = new Person）
-　　特点：1、实例可继承的属性有：实例的构造函数的属性，父类构造函数属性，父类原型的属性。（新实例不会继承父类实例的属性！）
-　　缺点：1、新实例无法向父类构造函数传参。
-　　　　　2、继承单一。
-　　　　　3、所有新实例都会共享父类实例的属性。（原型上的属性是共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改！）
+     解释：继承父类的属性和父类构造函数的属性，不可传参继承单一共享父类属性
+     重点：让新实例的原型等于父类的实例（son.prototype = new Person）
+     特点：继承实例的构造函数和父类的属性和方法
+     缺点：1、新实例无法向父类构造函数传参。
+　　　　　 3、所有新实例都会共享父类实例的属性。
 2. 借用构造函数继承
     重点：用.call()和.apply()将父类构造函数引入子类函数（在子类函数中做了父类函数的自执行（复制））
 　　特点：1、只继承了父类构造函数的属性，没有继承父类原型的属性。
@@ -210,10 +275,11 @@ Function.prototype.myBind(context,...args){
 
 # slice和splice的用法
 slice(开始索引,结束索引--不包括)方法从数组中返回选定的元素，作为一个新数组。生成新数组
-splice(开始索引,0删除|1增加个数,元素1，元素2)方法添加和删除数组元素。修改数组本身
+splice(开始索引,删除或增加的个数,元素1，元素2)方法添加和删除数组元素。修改数组本身
 split(字符串或正则表达式，返回数组的最大长度)用于把一个字符串分割成字符串数组。
+
 # 什么是闭包
-简要回答：能够读取其他函数内部变量的函数。
+简要回答：能够读取其他函数内部变量的函数。一个闭包内对变量的修改，不会影响到另外一个闭包中的变量
 全面回答：在js中变量的作用域属于函数作用域, 在函数执行完后,作用域就会被清理,内存也会随之被回收,但是由于闭包函数是建立在函数内部的子函数, 由于其可访问上级作用域,即使上级函数执行完, 作用域也不会随之销毁, 这时的子函数(也就是闭包),便拥有了访问上级作用域中变量的权限,即使上级函数执行完后作用域内的值也不会被销毁。
 特性：
 1、闭包可以访问当前函数以外的变量
@@ -228,8 +294,6 @@ split(字符串或正则表达式，返回数组的最大长度)用于把一个�
 # 值引用和地址引用
 值引用：Undefined、Null、Boolean、Number 、String和Symbol.可以深拷贝
 地址引用: Array,Object.环到原始类型方可进行深拷贝。对象名存在栈内存，值存在堆内存，栈内存会提供一个引用的地址指向堆内存中的值
-
-# setTimeout和setInterval执行后会变成全局
 
 # sessionStorage通过以下情况会丢失
     刷新当前页面，或者通过location.href、window.open、或者通过带target="_blank"和rel=“opener”的a标签打开新标签，之前的sessionStorage还在，
@@ -259,21 +323,21 @@ split(字符串或正则表达式，返回数组的最大长度)用于把一个�
     }, autoplay_Delay);
 
 # Object.prototype.toString.call()、 instanceof 以及 Array.isArray() 的区别和优劣
-1. Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
-优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
-缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
+   1. Object.prototype.toString.call():每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]的字符串，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文
+   优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
+   缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
 
-2. typeof:只能判断原始类型
+   1. typeof:只能判断原始类型，typeof null === 'object' 因为null是空指针对象
 
-3. instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
-优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
-缺点：只能用来判断对象类型，原始类型不可以，并且所有对象类型 instanceof Object 都是 true。
+   2. instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
+   优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
+   缺点：只能用来判断对象类型，原始类型不可以，并且所有对象类型 instanceof Object 都是 true。
 
-4. Array.isArray():用来判断对象是否为数组
-缺点：只能判别数组
-Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
+   1. Array.isArray():用来判断对象是否为数组
+   缺点：只能判别数组
+   Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
 
-5. hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
+   1. hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
 
 instanceof 与 isArray
 当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
@@ -333,108 +397,92 @@ console.log(a[b]);
     }
     
 # var、let 和 const 区别的实现原理是什么
-1. var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
-2. let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
-3. const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
+   1. var的话会直接在栈内存里预分配内存空间，然后等到实际语句执行的时候，再存储对应的变量，如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针(var和function会变量提升，函数的变量提升等级最高。)
+   2. let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时，做一个检查，如果已经有相同变量名存在就会报错(暂时性死区TDZ,使用let命令声明变量之前，该变量都是不可用的)
+   3. const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是不可修改的，对于基本类型来说你无法修改定义的值，对于引用类型来说你无法修改栈内存里分配的指针，但是你可以修改指针指向的对象里面的属性
 
 # 实现一个Promise
-class MyPromise {
-  constructor (exe) {
-1. 新建4个变量
-    // 最后的值，Promise .then或者.catch接收的值
-    this.value = undefined
-    // 状态：三种状态 pending success failure
-    this.status = 'pending'
-    // 成功的函数队列
-    this.successQueue = []
-    // 失败的函数队列
-    this.failureQueue = []
-2. 设置成功失败状态函数
-    const resolve = () => { // 成功状态函数
-      const doResolve = (value) => {
-        // 将缓存的函数队列挨个执行，并且将状态和值设置好
-3. 判断是否为pending状态并给状态变量赋值，根据队列的长度循环，将移除队列第一个数据，cb是否为空
-        if (this.status === 'pending') {
-          this.status = 'success'
-          this.value = value
-  
-          while (this.successQueue.length) {
-            const cb = this.successQueue.shift()
-  
-            cb && cb(this.value)
-          }
+     class MyPromise {
+            constructor(exe) {
+                this.status = 'pending';
+                this.value = null;
+                this.successQueue = [];
+                this.failureQueue = [];
+
+                let resolve = value => {
+                    if (this.status !== 'pending') return;
+                    // then中的函数总是异步执行的
+                    this.status = 'fulfilled';
+                    this.value = value;
+
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer);
+                        this.successQueue.forEach(item => {
+                            item(this.value);
+                        })
+                    }, 0)
+                }
+                let reject = value => {
+                    if (this.status !== 'pending') return;
+                    // then中的函数总是异步执行的
+                    this.status = 'rejected';
+                    this.value = value;
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer);
+                        this.failureQueue.forEach(item => {
+                            item(this.value);
+                        })
+                    }, 0);
+                }
+                // 执行器立即执行
+                try {
+                    exe(resolve, reject);
+                } catch (err) {
+                    //如果一开始执行器出错就走reject
+                    reject(err);
+                }
+            }
+
+            then(successFn, failureFn) {
+                typeof successFn !== 'function' ? successFn = result => result : null;
+                return new MyPromise((resolve, reject) => {
+                    this.successQueue.push(() => {
+                        try {
+                            let result = successFn(this.value);
+                            result instanceof MyPromise ? result.then(resolve, reject) : resolve(result);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    });
+
+                    typeof failureFn !== 'function' ? failureFn = reason => reject(reason) : null;
+                    this.failureQueue.push(() => {
+                        try {
+                            let result = failureFn(this.value);
+                            result instanceof MyPromise ? result.then(resolve, reject) : resolve(result);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    });
+                })
+            }
+
+            catch(failFn) {
+                return this.then(null, failFn);
+            }
+
         }
-      }
-
-      setTimeout(doResolve, 0)
-    }
-
-    const reject = () => {//失败状态函数
-      // 基本同resolve
-      const doReject = (value) => {
-        if (this.status === 'pending') {
-          this.status = 'failure'
-          this.value = value
-  
-          while (this.failureQueue.length) {
-            const cb = this.failureQueue.shift()
-  
-            cb && cb(this.value)
-          }
-        }
-      }
-
-      setTimeout(doReject, 0)
-    }
-
-    exe(resolve, reject)
-  }
-  
-  then (success = (value) => value, failure = (value) => value) {
-4. then返回的是一个新的Promise
-    return new MyPromise((resolve, reject) => {
-      // 包装回到函数
-5. 定义成功失败函数，判断result类型是否是promise函数
-      const successFn = (value) => {
-        try {
-          const result = success(value)
-          // 如果结果值是一个Promise，那么需要将这个Promise的值继续往下传递，否则直接resolve即可
-          result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
-        } catch (err) {
-          reject(err)
-        }
-      }
-      // 基本筒成功回调函数的封装
-      const failureFn = (value) => {
-        try {
-          const result = failure(value)
-          
-          result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
-        } catch (err) {
-          reject(err)
-        }
-      }
-6. 如果Promise的状态还未结束，则将成功和失败的函数缓存到队列里
-      if (this.status === 'pending') {
-        this.successQueue.push(successFn)
-        this.failureQueue.push(failureFn)
-        // 如果已经成功结束，直接执行成功回调 
-      } else if (this.status === 'success') {
-        success(this.value)
-      } else {
-        // 如果已经失败，直接执行失败回调
-        failure(this.value)
-      }
-    })
-  }
-  // 其他函数就不一一实现了
-  catch () {
-
-  }
-} 
-
-
-# 实现promise.all
+# 实现Promise.finally
+     Promise.prototype.myFinally = function (callBack) {
+         return this.then(data => {
+             callBack()
+             return data
+         }, reason => {
+             callBack()
+             throw reason
+         })
+     }
+# 实现Promise.all
 Promise.myAll = (promises) => {
   return new Promise((rs, rj) => {
     // 计数器
@@ -462,7 +510,37 @@ Promise.myAll = (promises) => {
     })
   })
 }
-# 实现promise.race
+# 实现Promise.allSettled
+        Promise.myAllSettled = (promises) => {
+            return new Promise((resolve, reject) => {
+                let result = []
+                let count = 0
+                let len = promises.length
+
+                promises.forEach((p, i) => {
+                    Promise.resolve(p).then((res) => {
+                        result[i] = {
+                            status: 'fulfilled',
+                            value: res
+                        }
+                        count++
+                        if (count === len) {
+                            resolve(result)
+                        }
+                    }, reason => {
+                        count++
+                        result[i] = {
+                            status: 'rejected',
+                            value: reason
+                        }
+                        if (count === len) {
+                            resolve(result)
+                        }
+                    })
+                })
+            })
+        }
+# 实现Promise.race
 Promise.myRace = (promises) => {
   return new Promise((rs, rj) => {
     promises.forEach((p) => {
@@ -473,6 +551,26 @@ Promise.myRace = (promises) => {
     })
   })
 }
+# 实现Promise.any
+        Promise.myAny = promises => {
+            let result = [],
+                len = promises.length,
+                count = 0
+
+            return new Promise((resolve, reject) => {
+                promises.forEach(p => {
+                    Promise.resolve(p).then(res => {
+                        resolve(res)
+                    }, err => {
+                        result[count] = err
+                        count++
+                        if (len === count) {
+                            reject(result)
+                        }
+                    })
+                })
+            })
+        }
 
 # Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大
 ES6规定，Promise对象是一个构造函数，用来生成Promise实例。Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject,这两个参数都是函数。
@@ -483,62 +581,54 @@ reject作用是，将Promise对象的状态从“未完成”变为“失败”�
     1、pending[待定]初始状态
     2、fulfilled[实现]操作成功
     3、rejected[被否决]操作失败
-JS执行顺序
-1. JavaScript是单线程从上往下执行，先进栈的后出栈，栈中函数执行完毕全部弹出才会执行微队列然后宏队列
+
 # 任务队列-事件循环机制
 1. 任务队列：同步任务会立刻执行，进入到主线程当中，异步任务会被放到任务队列（Event Queue）当中。Event Queue 单词的意思就是任务队列。
-2. 事件循环:等待同步代码执行完毕后，返回来，再将异步中的任务放到主线程中,先执行微观任务，再执行宏观任务,反复这样的循环，这就是事件循环。
+2. 事件循环:等待同步代码执行完毕后，返回来，再将任务队列中的任务依次放到主线程中，反复这样的循环这就是事件循环。
+
+js是单线程，同步任务和异步任务，先执行同步推到主线程中，异步任务推到任务队列中，任务队列里任务可分为微任务和宏任务，宏观任务执行在下次轮询之间，微观任务在本次轮询之后渲染之前，所以微观比宏观快。
 promise是微观任务（作业队列） ，.then、.catch、process.nextTick是异步会放到了微队列中
 setTimeout和setInterval宏观任务（任务队列），先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
 
-微观任务Microtask是由js引擎发起的任务（promise,process.nextTick等），
-宏观任务Macrotask是由浏览器/node发起的任务（setTimeOut、setInterval、I/O、UI交互）
-
-promise.all([promise1,promise2]).then(function(res){
-    cossole.log(res)
-    需要特别注意的是，Promise.all获得的成功结果的数组里面的数据顺序和Promise.all接收到的数组顺序是一致的，即p1的结果在前，即便p1的结果获取的比p2要晚。这带来了一个绝大的好处：在前端开发请求数据的过程中，偶尔会遇到发送多个请求并根据请求顺序获取和使用数据的场景，使用Promise.all毫无疑问可以解决这个问题。
-})
-Promise.race的使用
-顾名思义，Promise.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
-
+微观任务Microtask是由js引擎发起的任务（promise,process.nextTick等）
+宏观任务Macrotask是由浏览器/node发起的任务（script、setTimeOut、setInterval、I/O、UI交互）
 # async / await 
     async是Generator 函数的语法糖
     async 函数可以保留运行堆栈。
     async会返回一个promise对象
-    await前是同步执行，而在其之后的便是异步相当于Promise.then的形式
+    await前是同步执行，而在其函数之后的便是异步相当于Promise.then的形式
 
 # //所谓深度克隆，就是当对象的某个属性值为object或array
 JSON和extend来完成深拷贝不能解决属性为函数，undefined，循环引用的的情况
 实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
-1. 封装深拷贝函数---解决属性为undefined的情况
-function deepClone(obj) {
-    let objClone = Array.isArray(obj) ? [] : {};
-    if(obj && typeof obj === "object") {
-        for(key in obj) {
-            if(obj.hasOwnProperty(key)) {
-                 // 判断 obj 是否是对象,如果是，递归复制
-                 if(obj[key] && typeof obj[key] === "object") {
-                      objClone[key] = deepClone(obj[key]);
-                 }else{
-                      // 如果不是
-                      objClone[key] = obj[key];
-                 }
-            }
-        }
-    }      
-    return objClone
-} 
-2. 借用JSON对象的 parse 和 stringify
-function deepClone(obj){
-    let newObj = JSON.stringify(obj);
-    let objClone = JSON.parse(newObj);
-    return objClone;  
-} 
-3. 借用 JQ 的 extend 方法实现深拷贝。
-$.extend([deep], target, ...object);
-
-　　deep 表示深拷贝，Boolean
-
- 　　target 目标对象
-
-　　 ...object 需要进行合并的对象
+   1. 封装深拷贝函数---解决属性为undefined的情况
+   function deepClone(obj) {
+       let objClone = Array.isArray(obj) ? [] : {};
+       if(obj && typeof obj === "object") {
+           for(key in obj) {
+               if(obj.hasOwnProperty(key)) {
+                    // 判断 obj 是否是对象,如果是，递归复制
+                    if(obj[key] && typeof obj[key] === "object") {
+                         objClone[key] = deepClone(obj[key]);
+                    }else{
+                         // 如果不是
+                         objClone[key] = obj[key];
+                    }
+               }
+           }
+       }      
+       return objClone
+   } 
+   2. 借用JSON对象的 parse 和 stringify
+   function deepClone(obj){
+       let newObj = JSON.stringify(obj);
+       let objClone = JSON.parse(newObj);
+       return objClone;  
+   } 
+   3. 借用 JQ 的 extend 方法实现深拷贝。
+   $.extend([deep], target, ...object);
+   　　deep 表示深拷贝，Boolean
+    　　target 目标对象
+   　　 ...object 需要进行合并的对象
+   4. object.assign 
+      基本数据类型深拷贝，引用数据类型浅拷贝
