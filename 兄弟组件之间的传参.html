@@ -1,164 +1,290 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <title>兄弟组件之间的传参</title>
-</head>
-//中继方法
 
-<body>
-  <div id="app">
-    <tom-vue></tom-vue>
-    <jerry-vue></jerry-vue>
-    <button @click="handle">销毁事件</button>
+<!-- Swiper -->
+<div class="swiper-container banner-main">
+  <div class="swiper-wrapper">
+
+    <div class="swiper-slide banner-item" data-href="https://promo.blackview.hk/bl8800/">
+      <img class="lazyload banner-item-img   banner-pc"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800-pc-20220613015545263.webp" alt="">
+      <img class="lazyload banner-item-img banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800-app-20220613015549522.webp" alt="">
+      <div class="banner-word">
+        <h3 class="h3    banner-opacity-1 delay-1 andriod">
+          <span class="bv8800"><b>BL8800</b></span>
+        </h3>
+        <h4 class="h4     banner-opacity-1 delay-1">
+          Make Blackview the Blackview
+        </h4>
+
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1     banner-opacity-1 delay-2">
+          <p>
+            MediaTek Dimensity 700 | 50MP camera | 8GB+128GB <br class="h5-hidden">
+            Night vision | 8380mAh with 33W fast charge<br class="h5-hidden">
+            Doke OS 3.0 (Based on Android 11)<br class="h5-hidden">
+            IP68 & IP69K & MIL-STD-810H | Glove Mode
+          </p>
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+          <a href="https://s.click.aliexpress.com/e/_ok4tJpd" class="buy-now" target="_blank"
+            rel="external nofollow noopener">Buy now</a>
+        </div>
+        <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">
+          <a href="/products/item/bl5000" class="learn-more" target="_blank" rel="noopener">
+            <span>Learn more</span> > </a>
+        </div>
+
+      </div>
+    </div>
+    <div class="swiper-slide banner-item" data-href="https://www.blackview.hk/products/item/bl5000">
+      <img class="lazyload banner-item-img   banner-pc"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/bl5000_slider-20220108095139131.jpg" alt="">
+      <img class="lazyload banner-item-img banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/bl5000_slider-20220108095139131.jpg" alt="">
+    </div>
+    <div class="swiper-slide banner-item" data-href="https://s.click.aliexpress.com/e/_ok4tJpd">
+      <style>
+        .h3 {
+          /*display: inline-block;*/
+          position: relative;
+        }
+
+        .bv8800 {
+          display: inline-block;
+        }
+
+        .world-premiere {
+          position: absolute;
+          top: 10%;
+          /*top: 50%;*/
+          /*transform: translateY(-50%);*/
+          right: -47%;
+          font-size: 18px;
+          color: red;
+          line-height: 1;
+          font-weight: bold;
+          text-align: left;
+        }
+
+        @media screen and (max-width: 1700px) and (min-width: 1050px) {
+          .world-premiere {
+            right: -65%;
+          }
+        }
+
+        @media screen and (max-width:1050px) and (min-width:200px) {
+          .world-premiere {
+            right: -80%;
+            font-size: 12px;
+          }
+        }
+      </style>
+      <h1><img class="lazyload banner-item-img  banner-pc"
+          data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/bv8800_pc2-20211231071018859.jpg"
+          alt="Blackview Rugged Phones, Your Best Outdoor Smartphones"></h1>
+      <img class="lazyload banner-item-img banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/bv8800_phone2-20211231071042992.jpg"
+        alt="Blackview Fastest Ruggedized Outdoor 4G Smartphones">
+      <div class="banner-word">
+        <h3 class="h3    banner-opacity-1 delay-1 andriod">
+          <span class="bv8800">BV8800</span><span class="world-premiere">World <br> Premiere</span>
+        </h3>
+        <h4 class="h4     banner-opacity-1 delay-1">
+          Make Blackview the Blackview
+        </h4>
+
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1     banner-opacity-1 delay-2">
+          <p class="pc-hidden">
+            90Hz display | MediaTek G96 | 50MP camera <br>
+            20MP Night vision | 8380mAh with 33W fast charge | Doke OS 3.0
+          </p>
+          <p class="h5-hidden">
+            90Hz display | MediaTek G96 | 50MP camera | IP68 & IP69K & MIL-STD-810H <br>
+            20MP Night vision | 8380mAh with 33W fast charge | Android 11Doke OS 3.0
+          </p>
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+          <a href="https://s.click.aliexpress.com/e/_ok4tJpd" class="buy-now" target="_blank"
+            rel="external nofollow noopener">Buy now</a>
+        </div>
+        <!--            <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">-->
+        <!--                <a href="https://www.blackview.hk/products/item/bl5000" class="learn-more" target="_blank" rel="noopener"> <span>Learn more</span> > </a>-->
+        <!--            </div>-->
+
+      </div>
+    </div>
+    <div class="swiper-slide banner-item  right" data-href="https://bit.ly/3pSeeF1">
+      <img class="lazyload banner-item-img   banner-pc"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab11_pc-2021121506495515.jpg" alt="">
+      <img class="lazyload banner-item-img  banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab11_phone-20211215065650281.jpg"
+        alt="Blackview Tablet 11">
+      <style>
+        .h3 {
+          display: inline-block;
+          position: relative;
+        }
+      </style>
+      <div class="banner-word">
+        <h3 class="h3">Tab 11 </h3>
+        <h4 class="h4">
+          Excellent than Excellent in Performance
+        </h4>
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1">
+          <p>
+            Widevine L1 | 10.36" 2K Display | 6580mAh | 8GB + 128GB <br>
+            Unisoc T618 | Teal Green
+          </p>
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link  banner-opacity-1 delay-3">
+          <a href="https://bit.ly/3pSeeF1" class="buy-now" target="_blank" style="margin-top: 5px"
+            rel="external nofollow noopener">Buy Now</a>
+        </div>
+        <div class="banner-word-link banner-link-1  "><a href="https://www.blackview.hk/products/item/tab11"
+            class="learn-more" target="_blank" rel="noopener"> <span>Learn more</span> > </a>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-slide banner-item" data-href="https://promo.blackview.hk/tab6kids/">
+      <img class="lazyload banner-item-img   banner-pc"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/tab6kids_pc-20211208075733296.webp" alt="">
+      <img class="lazyload banner-item-img banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/tab6kids_phone-20211208074923331.webp"
+        alt="">
+
+      <div class="banner-word">
+        <h3 class="h3 andriod">
+          Tab 6 kids
+        </h3>
+        <h4 class="h4 h5-hidden">
+          The Safest Educational <br>
+          Tablet for Kids
+        </h4>
+        <h4 class="h4 pc-hidden">
+          The Safest Educational Tablet for Kids
+        </h4>
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1">
+          <p>
+            Battery 5580 mAh | Safe & Full-featured iKids | Tough EVA Protective Case
+          </p>
+
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link     banner-opacity-1 delay-3"><a
+            href="https://promo.blackview.hk/tab6kids/" class="buy-now" target="_blank" rel="external nofollow">Buy
+            Now</a></div>
+        <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">
+          <a href="https://www.blackview.hk/products/item/tab6-kids" class="learn-more" target="_blank"
+            rel="external nofollow"> <span>Learn more</span> > </a>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-slide banner-item right" data-href="https://promo.blackview.hk/bv6600pro/">
+      <h2><img class="lazyload banner-item-img    banner-opacity-1 delay-1 banner-pc"
+          data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bv6600pro_pc-20210915092816673.webp"
+          alt="Blackview BV6600 Pro"></h2>
+      <h3><img class="lazyload banner-item-img    banner-opacity-1 delay-1 banner-h5"
+          data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bv6600pro_phone-2021091509282527.webp"
+          alt="Global first cheapest FLIR phones"></h3>
+      <div class="banner-word">
+        <h3 class="h3 andriod">
+          BV6600 Pro
+        </h3>
+
+        <h4 class="h4">
+          The most affordable thermal rugged phone
+        </h4>
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1">
+          <p>
+            Thermal by FLIR<sup>®</sup> | 8580mAh battery
+          </p>
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link"><a href="https://promo.blackview.hk/bv6600pro/" class="buy-now"
+            target="_blank" rel="external nofollow noopener">Buy now</a>
+        </div>
+        <div class="banner-word-link banner-link-1">
+          <a href="https://www.blackview.hk/products/item/bv6600pro" class="learn-more" target="_blank" rel="noopener">
+            <span>Learn more</span> > </a>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-slide banner-item" data-href="https://promo.blackview.hk/a55/">
+      <h2><img class="lazyload banner-item-img  banner-pc"
+          data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/a55_pc-20211227084100914.jpg"
+          alt="Regular replace the rugged"></h2>
+      <img class="lazyload banner-item-img    banner-opacity-1 delay-1 banner-h5"
+        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/a55_phone-20211222071102961.jpg"
+        alt="As a non rugged model, Blackview A55 smart phones come with elegant.">
+      <div class="banner-word">
+        <h3 class="h3">
+          A55
+        </h3>
+        <h4 class="h4">
+          Powerful, Fast, Elegant
+        </h4>
+        <div class="margin-empty-line"></div>
+        <div class="banner-word-box1">
+          <p>
+            Quad-core Processor | 6.528" HD+ Display <br>
+            Android 11 Doke OS 2.1 | 4780mAh Battery
+          </p>
+
+        </div>
+        <div class="margin-empty-line-1"></div>
+        <div class="banner-word-link banner-link"><a href="https://promo.blackview.hk/a55/" class="buy-now"
+            target="_blank" rel="external nofollow noopener">Buy now</a></div>
+        <div class="banner-word-link banner-link-1">
+          <a href="https://www.blackview.hk/products/item/a55" class="learn-more" target="_blank" rel="noopener">
+            <span>Learn more</span> > </a>
+        </div>
+      </div>
+    </div>
+
   </div>
-</body>
+  <!-- Add Arrows -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+<script src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/swiper.min-20211225094806518.js"></script>
 <script>
-  var hub = new Vue()
-  // 兄弟组件A
-  var tomVue = {
-    data() {
-      return {
-        num: 1
+  $(function () {
+
+    $(".banner-item").click(function (e) {
+      var href = $(this).attr("data-href")
+      if (e.target.nodeName != 'SPAN' && e.target.nodeName != 'A') {
+        window.open(href)
       }
-    },
-    template: '<button @click ="handle">tom点击了{{num}}次</button>',
-    created() {
-      // 监听组件的数据
-      hub.$on('tom-event', (val) => {
-        this.num += val
-      })
-    },
-    methods: {
-      // 触发兄弟组件的事件和给兄弟组件的值
-      handle() {
-        hub.$emit('jerry-event', 1)
-      }
-    }
-  }
-  // 兄弟组件B
-  var jerryVue = {
-    data() {
-      return {
-        num: 1
-      }
-    },
-    template: '<button @click ="handle">jerry点击了{{num}}次</button>',
-    created() {
-      // 监听组件的数据
-      hub.$on('jerry-event', (val) => {
-        this.num += val
-      })
-    },
-    methods: {
-      // 触发兄弟组件的事件和给兄弟组件的值
-      handle() {
-        hub.$emit('tom-event', 1)
-      }
-    }
-  }
-  var vue = new Vue({
-    el: '#app',
-    data() {
-      return {
-      }
-    },
-    components: {
-      tomVue,
-      jerryVue
-    },
-    methods: {
-      handle() {
-        hub.$off('tom-event')
-        hub.$off('jerry-event')
-      }
-    }
+    })
+
+    var swiper = new Swiper('.swiper-container', {
+      autoplay: {
+        delay: 3000,
+        stopOnLastSlide: false,
+        disableOnInteraction: true,
+      },
+      // spaceBetween:5,
+      centeredSlides: true,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+
   })
-</script>
-
-</html>
-
-
-//事件总线方法
-
-<template>
-  <div>
-    <Brother :messageSon="messageson" @brotherSaid="messageDaughter($event)"></Brother>
-    <Sister :messageDaughter="messagedaughter" @sisterSaid="messageSon($event)"></Sister>
-  </div>
-</template>
-
-<script>
-  import Brother from "./lan";
-  import Sister from "./success";
-  export default {
-    name: "ParentCard",
-    data: () => ({
-      theCardTitle: "父组件",
-      messagedaughter: "",
-      messageson: "",
-    }),
-    components: {
-      Brother,
-      Sister,
-    },
-    methods: {
-      messageDaughter(msg) {
-        this.messagedaughter = msg;
-      },
-      messageSon(msg) {
-        this.messageson = msg;
-      },
-    },
-  };
-</script>
-
-<template>
-  <div>
-    <p class="message-text">我是Brother组件</p>
-    <button @click="msgSister" class="btn">给妹妹发消息</button>
-    　
-    <div v-if="messageSon" class="alert" v-html="messageSon"></div>
-  </div>
-</template>
-
-<script>
-  export default {
-    name: "Brother",
-    props: ["messageSon"],
-    data: () => ({
-      theCardTitle: "子组件1",
-    }),
-    methods: {
-      msgSister() {
-        this.$emit("brotherSaid", "Brother说，该做作业了！");
-      },
-    },
-  };
-</script>
-
-
-<template>
-  <div>
-    <p class="message-text">我是Sister组件</p>
-    <button @click="msgBrother" class="btn">给哥哥发消息</button>
-    <div v-if="messageDaughter" class="alert" v-html="messageDaughter"></div>
-  </div>
-</template>
-<script>
-  export default {
-    name: "Sister",
-    props: ["messageDaughter"],
-    data: () => ({
-      theCardTitle: "子组件2",
-    }),
-    methods: {
-      msgBrother() {
-        this.$emit("sisterSaid", "Sister说，该做作业了！");
-      },
-    },
-  };
 </script>

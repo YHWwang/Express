@@ -1,3 +1,33 @@
+# 实现vue双向绑定
+1. Object.defineProperty
+  let a = {}
+  Object.defineProperty(a,'text',{
+    set:function(val){
+      document.getElementById('inp).value = value
+      document.getElementById('show).innerHTML = value
+    }
+  })
+  document.getElementById('inp).addEventListener('keyup',function(e){
+    a.text = e.target.value
+  })
+2. Proxy
+  let inputProxy = new Proxy(a,{
+    set:function(target,key,value){
+        if (key === 'text' && value) {
+                document.getElementById('show').innerHTML = value
+                return (target[key] = value)
+            }
+    }
+  })
+ document.getElementById('inp).addEventListener('keyup',function(e){
+    inputProxy.text = e.target.value
+  })
+
+# 动态给vue2的data添加一个新的属性时为什么不刷新？怎样解决？
+vue2采用的Object.defineProperty()不会监测对象新属性的新增和删除.
+Vue.set( target, propertyName/index, value )
+Object.assign()
+
 # 直连AWS上传APK文件 aws-sdk
 直连aws的s3桶上传文件
 # 解析apk文件 AppInfoParser
@@ -47,7 +77,7 @@ Proxy的优点：
 
 # vue生命周期
   Vue的生命周期可以分为三个大阶段
-  1. 初始化挂载阶段：beforeCreate，created--- beforeMount,mounted
+  1. 初始化挂载阶段：beforeCreate，created,beforeMount,mounted(第一次页面加载时会触发)
   2. 数据更新渲染阶段: beforeUpdate,updated
   3. 销毁阶段: beforeDestroy,destroy
 

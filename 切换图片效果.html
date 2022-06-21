@@ -105,6 +105,8 @@
         }
     </style>
     <div id="AMain" class="main">
+        <input type="text" id="inp" />
+        <p id="show"></p>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             <div class="airbuds5Pro_spesc">
                 <div class="spesc-img-left">
@@ -160,6 +162,33 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
+    // let add = 0
+    // addFn()   1
+    // addFn()   2
+    // addFn()   3
+    // function addFn()
+    let a = {}
+    // Object.defineProperty(a,'text',{
+    //     set(val){
+    //         document.getElementById('show').innerHTML = val 
+    //         document.getElementById('inp').value = val
+    //     }
+    // })
+
+    let inputProxy = new Proxy(a, {
+        set(target, key, value) {
+            if (key === 'text' && value) {
+                document.getElementById('show').innerHTML = value
+                return (target[key] = value)
+            }
+        }
+    })
+
+    document.getElementById('inp').addEventListener('keyup', function (e) {
+        inputProxy.text = e.target.value
+    })
+
+
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
     setColor(active)//切换颜色为当前对象添加伪类元素
     function setColor(color) {
@@ -192,6 +221,9 @@
             ds.removeClass('on')//回调移除旋转图标
         })
     }
+    路由分为静态路由（登录页404这样就是，也叫公共路由）和动态路由后台根据登录账号的权限提取的路由表消息动态生成的
+    路由配置里设置meta:{roles[]}
+    在promission.js中通过设置beoforeEach在登录成功后获取用户的消息，根据改用户角色去后台申请路由数据，将得到的路由数据格式化成前端组件的数据格式，addRoutes(动态路由)动态的添加到路由表中
     function imgLoad(img, callback) {
         var timer = setInterval(function () {
             var flag = true
@@ -205,102 +237,65 @@
             }
         }, 200);
     }
-    class MyPromise {
+    class myPromise {
         constructor(exe) {
-            this.status = undefined
-            this.value = undefined
-            this.successQueue = []
-            this.failureQueue = []
-
-            const resolve = value => {
-                if (this.status != 'pending') return
-
-                this.status = 'fulfilled'
-                this.value = value
-
-                let timer = setTimeout(() => {
-                    clearTimeout(timer)
-                    this.successQueue.forEach(item => {
-                        item(this.value)
-                    })
-                }, 0);
-
-            }
-            const reject = value => {
-                if (this.status != 'pending') return
-
-                this.status = 'rejected'
-                this.value = value
-
-                let timer = setTimeout(() => {
-                    this.failureQueue.forEach(item => {
-                        item(this.value)
-                    })
-                }, 0);
-            }
-            try {
-                exe(resolve, reject)
-            } catch (error) {
-                reject(error)
-            }
-        }
-        then(successFn, failureFn) {
-            typeof successFn !== 'function' ? successFn = result => result : null;
-            return new Promise((resolve, reject) => {
-                this.successQueue.push(() => {
-                    try {
-                        let result = successFn(this.value)
-                        result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
-                    } catch (error) {
-                        reject(error)
-                    }
-
-                })
-                typeof failureFn !== 'function' ? failureFn = reason => reject(reason) : null
-                this.failureQueue.push(() => {
-                    try {
-                        let result = failureFn(this.value)
-                        result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
-                    } catch (error) {
-                        reject (error)
-                    }
-                })
-            })
-        }
-        catch(fn){
-            return this.then(null,fn)
+          
         }
     }
-    Promise.myAll = (promises) => {
+    Promise.myAll = promises => {
         return new Promise((resolve, reject) => {
-            let count = 0
             let result = []
+            let count = 0
             let len = promises.length
             if (len === 0) {
                 return ([])
             }
-            promises.forEach((p, i) => {
-                count++
-                result[i] = item
-                if (len === count) {
-                    resolve(result)
-                }
+
+            promises.forEach((item, key) => {
+
+                Promise.resolve(item).then(res => {
+                    count++
+                    result[key] = res
+
+                    if (count === len) {
+                        resolve(result)
+                    }
+                })
+
+
             })
         })
     }
-    Promise.myAllSettled = promises => {
-        let len = promises.length
-        let count = 0
-        let result = []
+    Promise.myRace = promises => {
         return new Promise((resolve, reject) => {
+            promises.forEach((item) => {
+                Promise.resolve(item).then(resolve).catch(reject)
+            })
+        })
+    }
+    Promise.prototype.myFinally = function (fn) {
+        return this.then(result => {
+            fn()
+            return result
+        }, reason => {
+            fn()
+            throw reason
+        })
+    }
+    Promise.allSettled = promises => {
+        return new Promise((resovle, reject) => {
+
+            let count = 0
+            let len = promises.length
+            let result = []
             promises.forEach((p, i) => {
-                Promise.resolve(p).then(res => {
+                Promise.resovle(p).then(res => {
                     result[i] = {
                         status: 'fulfilled',
                         value: res
                     }
                     count++
-                    if (len === count) {
+                    if (count === len) {
                         resolve(result)
                     }
                 }, reason => {
@@ -309,88 +304,82 @@
                         value: reason
                     }
                     count++
-                    if (len === count) {
+                    if (count === len) {
                         resolve(result)
                     }
                 })
             })
         })
-    }
-    Promise.myRace = promises => {
-        return new Promise((resolve, reject) => {
-            promises.forEach(p => {
-                Promise.resolve(p).then(resolve).catch(reject)
-            })
-        })
+
     }
     Promise.myAny = promises => {
         return new Promise((resolve, reject) => {
-            let len = promises.length
             let count = 0
+            let len = promises.length
             let result = []
-            promises.forEach(item => {
-                Promise.resolve(p).then(res => {
-                    resolve(res)
-                }, err => {
+            promises.forEach((item) => {
+                Promise.resolve(item).then(res => {
+                    resolve(item)
+                }, reason => {
+                    result[count] = reason
                     count++
-                    result[count] = err
-                    if (count === len) {
+                    if (len === count) {
                         reject(result)
                     }
                 })
             })
         })
     }
-    Promise.prototype.myFinally = function (callback) {
-        return this.then(result => {
-            callback()
-            return result
-        }, reason => {
-            callback()
-            throw reason
-        })
-    }
+    function deepClone(obj) {
+        let CloneObj = Array.isArray(obj) ? [] : {}
 
-    const myInstanceOf = function (obj, func) {
-        if (obj === null || typeof obj !== 'object') {
+        if (obj && typeof obj === 'object') {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    if (obj[key] && typeof obj[key] === 'object') {
+                        CloneObj[key] = deepClone(obj[key])
+                    } else {
+                        CloneObj[key] = obj[key]
+                    }
+                }
+            }
+        }
+        return CloneObj
+    }
+    function myInstanceof(obj, func) {
+        if (obj === null && typeof obj !== 'object') {
             return false
         }
-
         let proto = Object.getPrototypeOf(obj)
-        if (proto === null) {
-            return false
-        } else if (func.prototype === proto) {
+
+        if (proto === func.prototype) {
             return true
+        } else if (proto === null) {
+            return false
         } else {
-            return myInstanceOf(proto, func)
+            return myInstanceof(proto, func)
         }
     }
-    function myflat(arr) {
-        return arr.reduce((res, next) => {
-            return res.concat(Array.isArray(next) ? myflat(next) : next)
+    const myFlat = (arr) => {
+        return arr.reduce((result, next) => {
+            return result.concat(Array.isArray(next) ? myFlat(next) : next)
         }, [])
     }
-    Array.prototype.myReduce = function (fn, val) {
-        let arr = Array.prototype.slice.call(this)
-
-        let res, startIndex
-
-        res = val ? res : arr[0]
-        startIndex = val ? 0 : 1
-
-        for (let index = startIndex; index < arr.length; index++) {
-            res = fn.call(null, res, arr[index])
+    function currying(func) {
+        const args = []
+        return function result(...rest) {
+            if (rest.length === 0) {
+                return func(...args)
+            } else {
+                args.push(...rest)
+                return result
+            }
         }
-        return res
     }
-    console.log([1, 2, 3].myReduce((pre, next) => pre + next));
-    function myNew(con, ...args) {
-        let obj = Object.create(null)//创建了一个空对象
-        Object.setPrototypeOf(obj, con.prototype)//空对象指向了构造函数的原型对象
-        let result = con.apply(obj, args)//改变了上下文
-        return result instanceof Object ? result : obj//判断返回值，基本对象则返回new创建的对象，引用对象则采用构造函数返回的对象
-    }
-
+    const add = (...args) => args.reduce((a, b) => a + b)
+    const sum = currying(add)
+    sum(2)(3)
+    console.log(sum());
 
 </script>
 
