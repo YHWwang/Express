@@ -1,13 +1,82 @@
+# 希尔排序（插入排序基础上缩小增量）
+  let insertArr = [7, 6, 9, 3, 1, 5, 2, 4]
+    let len = insertArr.length//8
+    let gap = Math.floor(insertArr.length / 2)//4
 
-# 浏览器差异
+    for (; gap > 0; gap = Math.floor(gap / 2)) {
+        for (let i = gap; i < len; i++) {  
+            let j = i - gap  // j=0
+            let temp = insertArr[i]//1
+            while (j >=0 && insertArr[j] > temp) {
+                insertArr[j+gap] = insertArr[j]
+                j = j-gap
+            }
+            insertArr[j+gap] = temp
+        }
+    }
+
+
+    console.log(insertArr);
+# 选择排序
+function func(arr){
+for(var i = 0; i < arr.length;i++){
+    var mun = i
+    for(var j = i; j < arr.length; j++){
+        if(arr[j] < arr[mun]){
+            mun = j //找出最小值的下标
+        }
+    }
+    //循环结束后调换位置
+    var temp = arr[mun]
+    arr[mun] = arr[i]
+    arr[i] = temp
+}
+return arr
+}
+# 插入排序
+let arr = [5,3,7,2,6];
+
+function insertSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        //当前要处理的数
+        let temp = arr[i];
+        let j = i - 1;
+        while (j >= 0 && arr[j] > temp) {
+            //如果前一个数大于后一个数,将前一个数往后移一位
+            arr[j + 1] = arr[j]
+            j--
+        }
+        //此时的j是要处理的数排序后应该在的位置
+        arr[j+1] = temp
+    }
+    return arr;
+}
+console.log("插入排序arr", insertSort(arr))
+
+# justify-content: space-between/space-around最后一排的位置问题
+    let goodList_len = $(dom).length % 4(一排的个数)
+    if (goodList_len != 0) {
+        let list = '' //动态添加li
+        for (let index = 0; index < (4 - goodList_len); index++) {
+            list += '<li class="goodList_last_empty"></li>'
+        }
+        $('.goodsList').append(list)
+    }
+
+# elementUI中form表单包含v-if的话可能会导致无法验证通过或者无法清除验证的问题
+解决方法是给form表单加key
+
+# 谷歌和火狐之间浏览器差异
 1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
-2. firefox：font-wigth加粗与font-family粗字体会叠加，
+2. firefox：font-wigth加粗与font-family粗字体会叠加
+3. 火狐和IE可以使用document.documentElement.scrollTop获取滚动条高度，而谷歌只能用document.body.scrollTop。
+4. 火狐中innerText是获取不到文本的。谷歌却可以。
 
 # git提交
 1 第1步：同步远程仓库代码：git pull
-2 第1步：查看当前状态：git status
-3 第2步：提交代码到本地git缓存区：git add -A
-4 第3步：推送代码到本地git库：git commit -m "提交内容标题"
+2 第2步：查看当前状态：git status
+3 第3步：提交代码到本地git缓存区：git add -A
+4 第4步：推送代码到本地git库：git commit -m "提交内容标题"
 5 第5步：提交本地代码到远程仓库：git push
 
 # 前端性能优化你会怎么做?

@@ -146,7 +146,7 @@ console.log(myInstanceOf(1, Fn)) // false
 是利用事件冒泡的特性，将本应该绑定在多个元素上的事件绑定在他们的祖先元素上，尤其在动态添加子元素的时候，可以非常方便的提高程序性能，减小内存空间。e.target.nodename.toLowerCase()可用于判断当前标签的名称
 
 # 冒泡事件理解
-事件的流程是：捕获阶段 -> 目标阶段 -> 冒泡阶段，冒泡过程就是：事件源触发事件后，会将事件反馈给他的父元素。一直到document。这个过程中如果父元素也有对应的evet.type的话也会触发。为了防止触发可以通过evet.target来判读或者直接event.stopPropagation()阻止事件冒泡preventDefault()。
+事件的流程是：捕获阶段 -> 目标阶段 -> 冒泡阶段，冒泡过程就是：事件源触发事件后，会将事件反馈给他的父元素。一直到document。这个过程中如果父元素也有对应的evet.type的话也会触发。为了防止触发可以通过evet.target来判读或者直接event.stopPropagation()阻止事件冒泡preventDefault()阻止默认事件。
 
 # 隐式转换(https://blog.csdn.net/itcast_cn/article/details/82887895)
 1. 转成string类型： +（字符串连接符） 

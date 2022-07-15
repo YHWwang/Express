@@ -1,4 +1,118 @@
-# 实现vue双向绑定
+
+# computed应用
+自动生成：app_1.0.0_ts_0_ds_0
+  computed: {
+    getPackageName: {
+      get: function () {
+        let result = null;
+
+        // 存在模块、包版本值的情况
+        if (this.form.upgradeModule && this.form.upgradeVersion) {
+          this.getPackageStr = "";
+          // 模块
+          this.getPackageStr =
+            this.form.upgradeModule == 1
+              ? "app_"
+              : this.form.upgradeModule == 2
+              ? "da_"
+              : "sy_";
+
+          // 包版本
+          let upgradeVersion = this.form.upgradeVersion;
+          if (upgradeVersion.includes("V")) {
+            upgradeVersion = upgradeVersion.slice(1, upgradeVersion.length - 1);
+          }
+          let arrVer = upgradeVersion.split(".");
+          let str = "";
+          arrVer.forEach((item) => {
+            if (item.length == 1) {
+              str += item + ".";
+            } else {
+              for (let key = 0; key < 3; key++) {
+                if (key == 2) return;
+                if (Number.isInteger(parseInt(item[key]))) {
+                  str += item[key];
+                }
+              }
+              str += ".";
+            }
+          });
+          this.getPackageStr += str + "_ts_";
+
+          // 更新版本
+          if (this.form.upgradeSoftVersion != 0) {
+            this.form.upgradeSoftVersion.split(",").forEach((item) => {
+              let arr = item.split(".");
+              let str = "";
+              for (let index = 0; index < 3; index++) {
+                if (arr[index]) {
+                  if (arr[index].length > 2) {
+                    str += arr[index].slice(0, 2) + ".";
+                  } else {
+                    str += arr[index] + ".";
+                  }
+                }
+              }
+              this.getPackageStr += str.slice(0, str.length - 1) + "n";
+            });
+            this.getPackageStr =
+              this.getPackageStr.slice(0, this.getPackageStr.length - 1) +
+              "_ds_";
+          } else {
+            this.getPackageStr += 0 + "_ds_";
+          }
+
+          // 系统依赖版本
+          if (this.form.upgradeSystemVersion != 0) {
+            this.form.upgradeSystemVersion.split(",").forEach((item) => {
+              let arr = item.split(".");
+              let str = "";
+              for (let index = 0; index < 3; index++) {
+                if (arr[index]) {
+                  if (arr[index].length > 2) {
+                    str += arr[index].slice(0, 2) + ".";
+                  } else {
+                    str += arr[index] + ".";
+                  }
+                }
+              }
+              this.getPackageStr += str.slice(0, str.length - 1) + "n";
+            });
+            this.getPackageStr = this.getPackageStr.slice(
+              0,
+              this.getPackageStr.length - 1
+            );
+          } else {
+            this.getPackageStr += "0";
+          }
+        }
+
+        // 包名存在的情况
+        if (
+          this.form.upgradeProjectName &&
+          this.form.upgradeProjectName.includes(this.getPackageStr)
+        ) {
+          result = this.form.upgradeProjectName;
+          let _ds_Index = this.getPackageStr.slice(
+            this.getPackageStr.indexOf("_ds_") + 4,
+            this.getPackageStr.length
+          );
+          let _xlIndex = this.form.upgradeProjectName.slice(
+            this.form.upgradeProjectName.indexOf("_ds_") + 4,
+            this.form.upgradeProjectName.includes("x_")
+              ? this.form.upgradeProjectName.indexOf("x_")
+              : this.form.upgradeProjectName.length
+          );
+          if (_ds_Index != _xlIndex && !_xlIndex.includes("x")) {
+            this.form.upgradeProjectName = result = this.getPackageStr;
+          }
+        } else {
+          this.form.upgradeProjectName = result = this.getPackageStr;
+        }
+        return result;
+      },
+    },
+  },
 1. Object.defineProperty
   let a = {}
   Object.defineProperty(a,'text',{
@@ -69,7 +183,7 @@ Object.defineProperty缺点：
 Proxy理解：在目标对象之前设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。
 Proxy的优点：
   1. 可劫持整个对象，并返回新对象
-  2. 多种劫持操作（13种），可监听数组，监听对象属性的新增，删除等
+  2. 多种劫持操作（13种:get,set,has,deleteProperty,ownKeys...），可监听数组，监听对象属性的新增，删除等
 应用场景：表单校验，数据格式化，增加附加属性（比如身份证号码之后，把出生年月，籍贯，性别都添加进用户信息里面）
 
 # elementUI日期和时间选择器绑定值为对象的显示问题
@@ -119,7 +233,10 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式,集中式存
 2. getters：就像计算属性computed一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
 3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
 4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
-5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.调用方法this.$store.dispatch('app/increment')--(这种方法需要把文件里的state等功能变量名都export default 导出)而this.$store.dispatch('increment')--（改方法中state等功能都在一个变量中只需将导出该名），获取数据this.$store.state.app.count
+5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.
+调用方法：
+this.$store.dispatch('app/increment')--(这种方法需要把文件里的state等功能变量名都export default 导出)
+this.$store.dispatch('increment')--（改方法中state等功能都在一个变量中只需将导出该名），获取数据this.$store.state.app.count
 require.context()动态模块热重载
 
 # vuex的State特性
