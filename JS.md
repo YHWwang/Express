@@ -1,4 +1,27 @@
-# JS
+# JS深度优先算法、广度优先算法
+    let deepTraversal = node => {//node->对象，判断当前节点是否有children，有则循环chldren合并递归数组
+        let nodes = []
+        if (node !== null) {
+            nodes.push(node.id)
+            if (node.children && node.children.length > 0) {
+                let children = node.children
+                for (let i = 0; i < children.length; i++) {
+                    nodes = nodes.concat(deepTraversal(children[i]))
+                }
+            }
+        }
+        return nodes
+    }
+    
+    let widthTraversal = (tree) => {//tree->数组,队列思想，依次移除首位，判断是否有children,有则将children添加到队列里
+        let node, list = [...tree]
+        let nodes = []
+        while (node = list.shift()) {
+            nodes.push(node.id)
+            node.children && list.push(...node.children)
+        }
+        return nodes
+    }
 
 # js中new做了什么事
 1. 创建了一个空对象
@@ -15,6 +38,7 @@
 # ['10','10','10','10','10'].map(parseInt);// 输出[10, NaN, 2, 3, 4]
   ['10', '10', '10', '10', '10'].map(function (item, index) { //map(回调函数，参数1值，参数2索引)
       return parseInt(item, index) // 参数1字符串，参数2进制数(2-36)0则为10，其它为NaN
+      parseInt(基数，进制)，parseInt('3',2)--NaN基数要在进制内，否则返回NaN
       parseInt('10',0)--1*10+0*10=10
       parseInt('10',1)--NaN
       parseInt('10',2)--1*2+0*2=2
@@ -60,6 +84,7 @@ Worker接口可以创建后台任务，由于js是单线程模型，即可以给
     1.解决页面卡死问题。
     2.发挥多核CPU的优势，提高js性能。
 缺点：兼容性不好，需等主线程任务结束才能进行
+
 # 上下文和作用域的区别
 作用域：是函数定义的时候就确定好的了，函数当中的变量是和函数所处的作用域有关，函数运行的作用域也是与该函数定义时的作用域有关。
 上下文：主要是关键字this的值，这个是由函数运行时决定的，简单来说就是谁调用此函数，this就指向谁。
@@ -158,10 +183,42 @@ console.log(myInstanceOf(1, Fn)) // false
 “==允许在相等比较中进行强制类型转换，而===不允许”。
 null和undefined几乎一致，两者相等不全等，且不等于其他的：0、""和false；
 
+# 垃圾回收（核心思想就是如何判断内存已经不再使用）
+1. 引用计数（现代浏览器不再使用）：就是看一个对象是否有指向它的引用。如果没有其他对象指向它了，说明该对象已经不再需要了。引用计数有一个致命的问题，那就是循环引用，如果两个对象相互引用，尽管他们已不再使用，但是垃圾回收器不会进行回收，最终可能会导致内存泄露。
+2. 标记清除：标记清除算法将“不再使用的对象”定义为“无法到达的对象”。即从根部（在JS中就是全局对象）出发定时扫描内存中的对象，凡是能从根部到达的对象，保留。那些从根部出发无法触及到的对象被标记为不再使用，稍后进行回收。
+
 # 匿名函数的优缺点
 调用方式：1自执行；2赋值给一个变量，通过变量调用（需要在函数定义之后调用）
 优点：不用命名函数命，创建闭包减少了全局变量
 缺点：可能造成内存泄漏
+
+# ES6中新增了两个数据结构 WeakMap、WeakSet，就是为了解决内存泄漏的问题， WeakMap、WeakSet，与map,set的区别
+Set
+成员唯一、无序且不重复
+[value, value]，键值与键名是一致的（或者说只有键值，没有键名）
+可以遍历，方法有：add、delete、has
+WeakSet
+成员都是对象
+成员都是弱引用，可以被垃圾回收机制回收，可以用来保存DOM节点，不容易造成内存泄漏
+不能遍历，方法有add、delete、has
+Map
+本质上是键值对的集合，类似集合,[key, value] 的形式储存
+可以遍历，方法很多可以跟各种数据格式转换
+WeakMap
+只接受对象作为键名（null除外），不接受其他类型的值作为键名
+键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的
+不能遍历，方法有get、set、has、delete
+
+WeakSet 与 Set 的区别：
+WeakSet 只能储存对象引用，不能存放值，而 Set 对象都可以
+WeakSet 对象中储存的对象值都是被弱引用的，即垃圾回收机制不考虑 WeakSet 对该对象的应用，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致，遍历结束之后，有的成员可能取不到了（被垃圾回收了），WeakSet 对象是无法被遍历的（ES6 规定 WeakSet 不可遍历），也没有办法拿到它包含的所有元素
+属性：
+constructor：构造函数，任何一个具有 Iterable 接口的对象，都可以作参数
+
+集合set 与 字典map 的区别：
+共同点：集合、字典 可以储存不重复的值
+不同点：集合 是以 [value, value]的形式储存元素，字典 是以 [key, value] 的形式储存
+
 
 # 内存泄露和内存溢出
 内存泄露: 申请的内存没有及时回收掉
@@ -181,7 +238,7 @@ null和undefined几乎一致，两者相等不全等，且不等于其他的：0
 在页面上进行各种操作，模拟用户的使用情况。
 一段时间后，点击左上角的 stop 按钮，面板上就会显示这段时间的内存占用情况。
 2、命令行方法
-2.node提供process.memoryUsage()
+node提供process.memoryUsage()
 
 # 常见状态码
 1xx: 接受，继续处理
@@ -210,10 +267,22 @@ per:原型
 原型(prototype): 一个简单的对象，用于实现对象的 属性继承。可以简单的理解成对象的爹
 构造函数: new后面的函数。
 实例: 通过构造函数和new创建出来的对象，便是实例。 实例通过__proto__指向原型，通过constructor指向构造函数。
-# 原型链
+__proto__ 属性在 ES6 时才被标准化，以确保 Web 浏览器的兼容性，但是不推荐使用，除了标准化的原因之外还有性能问题。为了更好的支持，推荐使用 Object.getPrototypeOf()。
+
+# 原型链和作用域链的区别?
+1. 原型链：当访问一个对象的属性时， 会在这个对象的属性上去找，如果没有找到就会去这个对象的--proto-- 上去找，即构造函数prototype 上找，如果没有会一直在--proto-- 上找，直到最顶层，不到即为undefined 。这样一层一层地向上，就彷佛一条链子串起来，所以就叫原型链。
 ![Image text](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/2/14/168e9d9b940c4c6f~tplv-t2oaga2asx-watermark.awebp)
-# 作用域链
-作用域链可以理解为一组对象列表，包含 父级和自身的变量对象，因此我们便能通过作用域链访问到父级里声明的变量或者函数。
+2. 作用域链：变量取值会到创建这个变量的函数的作用域中取值，如果找不到，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。
+3. 作用域链是相对于变量而言， 原型是相对于属性而言
+作用域最顶层是window ，原型链最顶层是Object
+作用域链和原型继承查找时的区别：如果去查找一个普通对象的属性，但是在当前对象和其原型中都找不到时，会返回undefined；但查找的属性在作用域链中不存在的话就会抛出ReferenceError。
+
+# 原型链Object和Function关系(https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/2019-07-24-060321-20220722064903218.jpg)
+Object instanceof Function 		// true --- Object.__proto__ === Function.prototype
+Function instanceof Object 		// true --- Function.__proto__.__proto__ === Object.prototype
+Object instanceof Object 		// true --- Object.__proto__.__proto__ === Object.prototype
+Function instanceof Function 	// true --- Function.__proto__ === Function.prototype
+
 
 # js继承方法(https://www.cnblogs.com/ranyonsue/p/11201730.html)
 1. 原型链继承
@@ -342,9 +411,6 @@ split(字符串或正则表达式，返回数组的最大长度)用于把一个�
 instanceof 与 isArray
 当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
 
-# for与foreach的性能上的区别
-对十万级别时foreach好，百万级别差不多，千万级别是for好。由于foreach会回调函数，会产生额外的执行栈和上下文。for 循环则是底层写法，没有任何额外的函数调用栈和上下文不会产生额外的消耗。
-
 # 对象的键名的转换。
 1.对象的键名只能是字符串和 Symbol 类型。
 2.其他类型的键名会被转换成字符串类型。
@@ -366,7 +432,7 @@ console.log(a[b]);
 // example 3
 var a={}, b={key:'123'}, c={key:'456'};  
 a[b]='b';
-a[c]='c';  对象.toString()变成[object Object]
+a[c]='c';  覆盖，对象.toString()变成[object Object]
 console.log(a[b]);
 
 # input 搜索如何防抖，如何处理中文输入
@@ -592,6 +658,7 @@ setTimeout和setInterval宏观任务（任务队列），先执行微观任务�
 
 微观任务Microtask是由js引擎发起的任务（promise,process.nextTick等）
 宏观任务Macrotask是由浏览器/node发起的任务（script、setTimeOut、setInterval、I/O、UI交互）
+
 # async / await 
     async是Generator 函数的语法糖
     async 函数可以保留运行堆栈。

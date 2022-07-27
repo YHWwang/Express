@@ -1,7 +1,23 @@
-# 希尔排序（插入排序基础上缩小增量）
+# 选择排序(找出最小下标)
+function func(arr){
+for(var i = 0; i < arr.length;i++){
+    var min = i
+    for(var j = i; j < arr.length; j++){
+        if(arr[j] < arr[min]){
+            min = j //找出最小值的下标
+        }
+    }
+    //循环结束后调换位置
+    var temp = arr[min]
+    arr[min] = arr[i]
+    arr[i] = temp
+}
+return arr
+}
+# 希尔排序（插入排序基础上缩小增量,gap用for循环插入排序，将‘1’换成gap）
   let insertArr = [7, 6, 9, 3, 1, 5, 2, 4]
     let len = insertArr.length//8
-    let gap = Math.floor(insertArr.length / 2)//4
+    let gap = Math.floor(len / 2)//4
 
     for (; gap > 0; gap = Math.floor(gap / 2)) {
         for (let i = gap; i < len; i++) {  
@@ -17,23 +33,7 @@
 
 
     console.log(insertArr);
-# 选择排序
-function func(arr){
-for(var i = 0; i < arr.length;i++){
-    var mun = i
-    for(var j = i; j < arr.length; j++){
-        if(arr[j] < arr[mun]){
-            mun = j //找出最小值的下标
-        }
-    }
-    //循环结束后调换位置
-    var temp = arr[mun]
-    arr[mun] = arr[i]
-    arr[i] = temp
-}
-return arr
-}
-# 插入排序
+# 插入排序（如果前一个数大于后一个数,将前一个数往后移一位）
 let arr = [5,3,7,2,6];
 
 function insertSort(arr) {
@@ -52,6 +52,19 @@ function insertSort(arr) {
     return arr;
 }
 console.log("插入排序arr", insertSort(arr))
+
+# addFn(1)(2)(3) = 6, addFn(1)(2, 3) , addFn(1, 2, 3)(2, 3)
+    function addFn(...m) {
+        let args = [...m]
+        let temp = function (...n) {
+            args.push(...n)
+            return temp
+        }
+        temp.toString = function () {
+            return args.reduce( (a,b)=> a+b)
+        }
+        return temp
+    }
 
 # justify-content: space-between/space-around最后一排的位置问题
     let goodList_len = $(dom).length % 4(一排的个数)

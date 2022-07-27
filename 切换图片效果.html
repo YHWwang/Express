@@ -107,6 +107,37 @@
     <div id="AMain" class="main">
         <input type="text" id="inp" />
         <p id="show"></p>
+        <div id='deep'>
+            <div class="parent">
+                <div class="child-1">
+                    <div class="child-1-1">
+                        <div class="child-1-1-1">
+                            a
+                        </div>
+                    </div>
+                    <div class="child-1-2">
+                        <div class="child-1-2-1">
+                            b
+                        </div>
+                    </div>
+                    <div class="child-1-3">c</div>
+                </div>
+                <div class="child-2">
+                    <div class="child-2-1">
+                        d
+                    </div>
+                    <div class="child-2-1">
+                        e
+                    </div>
+                </div>
+                <div class="child-3">
+                    <div class="child-3-1">
+                        f
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             <div class="airbuds5Pro_spesc">
                 <div class="spesc-img-left">
@@ -162,62 +193,31 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
+
+    // shellSort(arr)
     // 选择排序
-    // 插入排序
-    // 希尔排序
-    let arr = [7, 6, 9, 3, 1, 5, 2, 4];
+    function selectSort(arr) {
 
-    function insertSort(arr) {
-        let len = arr.length
-        let gap = Math.floor(len / 2)
-        for (; gap > 0; gap = Math.floor(gap / 2)) {
-            for (let i = gap; i < len; i++) {//gap = 2
-                let j = i - gap;//j=0
-                let temp = arr[i];//temp = 1
-               
-                while (j >= 0 && arr[j] > temp) {
-                    //如果前一个数大于后一个数,将前一个数往后移一位
-                    arr[j + gap] = arr[j]
-                    j = j - gap
-                }
-                //此时的j是要处理的数排序后应该在的位置
-                arr[j + gap] = temp
-            }
-         
-
-        }
-        return arr;
     }
-    console.log("插入排序arr", insertSort(arr))
+    // 插入排序
+    // [1, 3, 6, 7, 9, 5, 2, 4]
+    function insetSort(arr) {
+
+    }
+    // 希尔排序
+    function shellSort(arr) {
+    }
 
 
-    // let add = 0
-    // addFn()   1
-    // addFn()   2
-    // addFn()   3
-    // function addFn()
-    let a = {}
-    // Object.defineProperty(a,'text',{
-    //     set(val){
-    //         document.getElementById('show').innerHTML = val 
-    //         document.getElementById('inp').value = val
-    //     }
-    // })
-
-    let inputProxy = new Proxy(a, {
-        set(target, key, value) {
-            if (key === 'text' && value) {
-                document.getElementById('show').innerHTML = value
-                return (target[key] = value)
-            }
-        }
-    })
-
-    document.getElementById('inp').addEventListener('keyup', function (e) {
-        inputProxy.text = e.target.value
-    })
+    // a==1&&a==2,a===1&&a===2
+    // 双向绑定
 
 
+
+    // 路由钩子函数 1.全局导航钩子：beoforeEach,beforeResolve,afterEach,组件内导航钩子：routerEnter,独享钩子：beforeRouteEnter,beforeRouteUpdate,beforeRouteLeave
+    // 生命周期beforeCreate,created,beofreMount,mounted,beforeUpdate,updated,beforeDestory,destory,activated,deactivated,errorCaptured,renderTracked,renderTriggered
+    // serup,onMounted,onBeforeMount,onBeforeUpdate,onBeforeUpdated,onUnMounted,onBeforeUmMount,onActivated,onDeactivated,onErrorCaptured,onRenderTracked,onRenderTriggered
+    // vuex状态管理器，state存放变量响应式数据，action异步函数dispatch,mutations同步函数commit,module模块化,getters计算属性会缓存依赖,
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
     setColor(active)//切换颜色为当前对象添加伪类元素
     function setColor(color) {
@@ -250,17 +250,20 @@
             ds.removeClass('on')//回调移除旋转图标
         })
     }
+
+    // 常见的内存泄漏 1.意外的全局变量，未及时清除定时器或者回调函数，脱离dom引用，闭包
     function myNew(con, ...args) {
         let obj = Object.create(null)
-        Object.setPrototypeOf(obj, con.prototype)
-        let result = con.apply(obj, args)
+        obj.setPrototypeOf(con.prototype)
+        let result = con.apply(obj, ...args)
         return result instanceof 'object' ? result : obj
     }
-    // 是由于vue是使用mvvm模式，也就是我们说的双向绑定，是通过数据劫持，结合发布者订阅模式过过object.defineProperty()来监测，get,set来响应数据,进而触发响应的监听回调事件
+    // 全局导航：beforeEach,beforeResolve,afterEach，组件内导航：beforeEnter，单独路由独享：beforeRouteEnter ,beforeRouteUpdate,beforeRouteLeave，
     // object.defineProperty缺点：
     // proxy:
-    // HTTP浏览器输入URL后发生了什么:1.补全域名通过dns解析出服务器的ip地址  2.得到服务器的ip地址后建立tcp链接（三次握手，客户端发送一个syn包，服务器接收并返回一个ask+syn包，客户端应答ask信息建立连接）    3.客户端发送http请求    4.服务器响应请求并返回请求的html    5.客户端通过请求得到html,浏览器解析html生成Dom,解析css生成cssom，dom树+cssom树生成render树，render树+dom生成绝对定位，Gpu绝对像素点,呈现给用户  6.四次挥手断开连接（tcp是全双工通信）
-    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解
+    // HTTP浏览器输入URL后发生了什么:1.补全域名dns解析出服务器ip,建立tcp链接（三次握手，客户端发送syn包，服务器接收到后返回ack+syn,客户端响应后返回ack包），3.建立联系后客户端发送http请求，服务器响应请求返回对应的数据，4.客户端拿到html数据（解析html生成dom树，解析css生成cssom树，合并得Render树，根据render Tree得到几何信息：重排，根据几何信息和渲染树生成节点的绝对像素点：重绘，将像素发送给GPU渲染呈现页面），4次挥手（tcp是全双工通信协议。。。）
+    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：1.首先object.defineProperty无法监测对象的新增和删除2.会修改原对象3.深度对象监听性能消耗大   ,Proxy 可监测对象的新增和删除，放回新对象，监测方法多13种
+    // 前端性能优化 vue:路由懒加载，按需加载, 2.数据：分页，防抖，节流，3.webpack：压缩css(css-loader),js（uglify）,image(image-webpack-loader)，html等静态资源,happlyPack多线程打包，设置include，exclude,ddl,gizp压缩，cdn加速,公共代码抽离
 
     // Object.defineProperty()
 
@@ -278,38 +281,77 @@
         }, 200);
     }
     class myPromise {
-
     }
     Promise.myAll = promises => {
+
     }
     Promise.myRace = promises => {
-
     }
     Promise.prototype.myFinally = function (fn) {
-
     }
     Promise.allSettled = promises => {
     }
     Promise.myAny = promises => {
     }
     function deepClone(obj) {
-
     }
     function myInstanceof(obj, func) {
-
     }
     const myFlat = (arr) => {
 
     }
     function currying(func) {
+    }
+    addFn(1)(2);  // 3
+    addFn(1)(2)(3) // 6
+    addFn(1)(2)(3)(4) // 10 
+    console.log(addFn(1)(2, 3) + '', addFn(1, 2, 3)(2, 3) + '');
+    function addFn(...m) {
+      
+    }
+    let tree = {
+        id: '1',
+        title: '节点1',
+        children: [
+            {
+                id: '1-1',
+                title: '节点1-1'
+            },
+
+            {
+                id: '2',
+                title: '节点2',
+                children: [
+                    {
+                        id: '2-1',
+                        title: '节点2-1',
+                        children: [
+                            {
+                                id: '2-1-1',
+                                title: '节点2-1-1',
+                            }
+                        ]
+                    },
+                    {
+                        id: '2-2',
+                        title: '节点2-1'
+                    }
+                ]
+            },
+            {
+                id: '1-2',
+                title: '节点1-2'
+            },
+        ]
 
     }
-    const add = (...args) => args.reduce((a, b) => a + b)
-    const sum = currying(add)
-    sum(2)
-    sum(2)(3)
-    console.log(sum());
 
+    let deepTraversal = node => {
+    }
+    let widthTraversal = (tree) => {
+    }
+    // console.log(widthTraversal(tree));
+    // console.log(deepTraversal(tree));
 </script>
 
 
