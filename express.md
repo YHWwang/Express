@@ -1,3 +1,6 @@
+# elementUI日期和时间选择器绑定值为对象的显示问题
+如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
+
 # 选择排序(找出最小下标)
 function func(arr){
 for(var i = 0; i < arr.length;i++){
@@ -52,7 +55,36 @@ function insertSort(arr) {
     return arr;
 }
 console.log("插入排序arr", insertSort(arr))
+# 归并排序
+    let left, right, middle
+    let len = arr.length
+    if (len < 2) {
+        return arr
+    }
+    middle = Math.floor(len / 2)
+    left = arr.slice(0, middle)
+    right = arr.slice(middle)
 
+    return merge(mergeSort(left), mergeSort(right))
+    }
+    function merge(left, right) {
+        let result = []
+        while (left.length && right.length) {
+            if (left[0] >= right[0]) {
+                result.push(right.shift())
+            } else {
+                result.push(left.shift())
+            }
+        }
+        while (left.length) {
+            result.push(left.shift())
+        }
+        while (right.length) {
+            result.push(right.shift())
+        }
+        return result
+    }
+# 快速排序
 # addFn(1)(2)(3) = 6, addFn(1)(2, 3) , addFn(1, 2, 3)(2, 3)
     function addFn(...m) {
         let args = [...m]
@@ -144,27 +176,10 @@ ES6 import/export
     }
 3. es6的Object.keys(obj).length的方法判断。
 4. 通过JSON自带的JSON.stringify方法将对象转化为字符串来判断
-# px、em、rem、vw
-px固定大小
-em根据父元素的字体大小
-rem根据根元素html字体大小
-vw可视窗口的宽度,而百分比和其父元素的宽度有关
 
-# 用css创建一个三角形
-   width: 0;
-    height: 0;
-    margin: 100px auto;
-    border-top: 50px solid transparent;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 50px solid red;
 
 # scoped的原理，私有化样式的原理
 vue通过在DOM结构以及css样式上加唯一不重复的标记，以保证唯一，达到样式私有化模块化的目的
-
-# 选择器有哪些
-css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
-css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
 
 # BFC(块级格式化上下文)
 触发条件：

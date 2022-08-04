@@ -1,4 +1,24 @@
-# 安装sass
+# CSS
+
+# 选择器有哪些
+css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
+css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
+# px、em、rem、vw
+px固定大小
+em根据父元素的字体大小
+rem根据根元素html字体大小
+vw可视窗口的宽度,而百分比和其父元素的宽度有关
+
+# 用css创建一个三角形
+   width: 0;
+    height: 0;
+    margin: 100px auto;
+    border-top: 50px solid transparent;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 50px solid red;
+
+# SASS
 
 # sass的功能特性
 1. 变量 

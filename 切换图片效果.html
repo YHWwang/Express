@@ -12,7 +12,6 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-
 </head>
 
 <body class="en">
@@ -105,8 +104,12 @@
         }
     </style>
     <div id="AMain" class="main">
+        <!-- push,pop,shift,reserver,reduce -->
         <input type="text" id="inp" />
-        <p id="show"></p>
+        <div id="show"
+            style="margin: 10px;border: 1px solid; padding: 5px; width: 20px;height: 20px;box-sizing: border-box;">
+        </div>
+
         <div id='deep'>
             <div class="parent">
                 <div class="child-1">
@@ -193,8 +196,20 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
+    let conArr = [
+        { id: 1, name: '部门1', pid: 0 },
+        { id: 2, name: '部门2', pid: 1 },
+        { id: 3, name: '部门3', pid: 1 },
+        { id: 4, name: '部门4', pid: 3 },
+        { id: 5, name: '部门5', pid: 4 },
+    ]
 
-    // shellSort(arr)
+    function convert(list) {
+
+    }
+    // console.log(convert(conArr));
+    let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0]
+    // console.log(mergeSort(MathArr));
     // 选择排序
     function selectSort(arr) {
 
@@ -204,20 +219,28 @@
     function insetSort(arr) {
 
     }
+    // 归并排序
+    function mergeSort(arr) {//
+    }
     // 希尔排序
-    function shellSort(arr) {
+    function shellSort(arr) {//1
     }
 
-
     // a==1&&a==2,a===1&&a===2
+    // let a = {}
+    let value = 0
+    Object.defineProperty(window,'a', {
+        get: function () {
+            return ++value
+        }
+    })
+    console.log(a === 1 && a === 2);
     // 双向绑定
 
-
-
-    // 路由钩子函数 1.全局导航钩子：beoforeEach,beforeResolve,afterEach,组件内导航钩子：routerEnter,独享钩子：beforeRouteEnter,beforeRouteUpdate,beforeRouteLeave
-    // 生命周期beforeCreate,created,beofreMount,mounted,beforeUpdate,updated,beforeDestory,destory,activated,deactivated,errorCaptured,renderTracked,renderTriggered
-    // serup,onMounted,onBeforeMount,onBeforeUpdate,onBeforeUpdated,onUnMounted,onBeforeUmMount,onActivated,onDeactivated,onErrorCaptured,onRenderTracked,onRenderTriggered
-    // vuex状态管理器，state存放变量响应式数据，action异步函数dispatch,mutations同步函数commit,module模块化,getters计算属性会缓存依赖,
+    // 路由钩子函数
+    // 生命周期vue2
+    // 生命周期vue3
+    // vuex状态管理器
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
     setColor(active)//切换颜色为当前对象添加伪类元素
     function setColor(color) {
@@ -251,19 +274,14 @@
         })
     }
 
-    // 常见的内存泄漏 1.意外的全局变量，未及时清除定时器或者回调函数，脱离dom引用，闭包
+    // 常见的内存泄漏 
     function myNew(con, ...args) {
-        let obj = Object.create(null)
-        obj.setPrototypeOf(con.prototype)
-        let result = con.apply(obj, ...args)
-        return result instanceof 'object' ? result : obj
     }
-    // 全局导航：beforeEach,beforeResolve,afterEach，组件内导航：beforeEnter，单独路由独享：beforeRouteEnter ,beforeRouteUpdate,beforeRouteLeave，
     // object.defineProperty缺点：
     // proxy:
-    // HTTP浏览器输入URL后发生了什么:1.补全域名dns解析出服务器ip,建立tcp链接（三次握手，客户端发送syn包，服务器接收到后返回ack+syn,客户端响应后返回ack包），3.建立联系后客户端发送http请求，服务器响应请求返回对应的数据，4.客户端拿到html数据（解析html生成dom树，解析css生成cssom树，合并得Render树，根据render Tree得到几何信息：重排，根据几何信息和渲染树生成节点的绝对像素点：重绘，将像素发送给GPU渲染呈现页面），4次挥手（tcp是全双工通信协议。。。）
-    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：1.首先object.defineProperty无法监测对象的新增和删除2.会修改原对象3.深度对象监听性能消耗大   ,Proxy 可监测对象的新增和删除，放回新对象，监测方法多13种
-    // 前端性能优化 vue:路由懒加载，按需加载, 2.数据：分页，防抖，节流，3.webpack：压缩css(css-loader),js（uglify）,image(image-webpack-loader)，html等静态资源,happlyPack多线程打包，设置include，exclude,ddl,gizp压缩，cdn加速,公共代码抽离
+    // HTTP浏览器输入URL后发生了什么:
+    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：
+    // 前端性能优化 
 
     // Object.defineProperty()
 
@@ -282,69 +300,58 @@
     }
     class myPromise {
     }
-    Promise.myAll = promises => {
-
-    }
+    Promise.myAll = promises => { }
     Promise.myRace = promises => {
+
     }
     Promise.prototype.myFinally = function (fn) {
     }
-    Promise.allSettled = promises => {
-    }
-    Promise.myAny = promises => {
-    }
+    Promise.allSettled = promises => { }
+    Promise.myAny = promises => { }
     function deepClone(obj) {
     }
     function myInstanceof(obj, func) {
     }
     const myFlat = (arr) => {
-
     }
     function currying(func) {
     }
-    addFn(1)(2);  // 3
-    addFn(1)(2)(3) // 6
-    addFn(1)(2)(3)(4) // 10 
-    console.log(addFn(1)(2, 3) + '', addFn(1, 2, 3)(2, 3) + '');
+
+    // console.log(addFn(1)(2, 3) + '', addFn(1, 2, 3)(2, 3) + '');
     function addFn(...m) {
-      
     }
-    let tree = {
-        id: '1',
-        title: '节点1',
-        children: [
-            {
-                id: '1-1',
-                title: '节点1-1'
-            },
 
-            {
-                id: '2',
-                title: '节点2',
-                children: [
-                    {
-                        id: '2-1',
-                        title: '节点2-1',
-                        children: [
-                            {
-                                id: '2-1-1',
-                                title: '节点2-1-1',
-                            }
-                        ]
-                    },
-                    {
-                        id: '2-2',
-                        title: '节点2-1'
-                    }
-                ]
-            },
-            {
-                id: '1-2',
-                title: '节点1-2'
-            },
-        ]
+    let tree = [
+        {
+            id: '1-1',
+            title: '节点1-1'
+        },
 
-    }
+        {
+            id: '2',
+            title: '节点2',
+            children: [
+                {
+                    id: '2-1',
+                    title: '节点2-1',
+                    children: [
+                        {
+                            id: '2-1-1',
+                            title: '节点2-1-1',
+                        }
+                    ]
+                },
+                {
+                    id: '2-2',
+                    title: '节点2-1'
+                }
+            ]
+        },
+        {
+            id: '1-2',
+            title: '节点1-2'
+        },
+    ]
 
     let deepTraversal = node => {
     }

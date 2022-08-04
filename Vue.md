@@ -1,3 +1,72 @@
+# vue-router------------
+路由重定向：redirect:'路由地址' 改变路由url或组件。父组件是公共组件的情况下，可重定向到嵌套子组件path，再次添加新组件.如果地址不存在则会执行定义的*路由。重定向传参 path: '/guide/:id', redirect: '/guide/:id/index'
+别名：alias:'name' 只改变url，组件不变
+$router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
+$route当前路由对象，它包括path，params，hash，query，name等参数；
+router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
+
+# 路由组件的钩子函数：
+    全局导航钩子：beforeEach、beforeResolve、afterEach
+　　路由独享导航钩子：beforeEnter
+　　组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
+　　参数：to、from、next；正对不同的钩子函数参数有所差异。
+
+# vue-router有几种模式
+1. hash,默认模式，url会有#号,hash模式的特点在于hash出现在url中，但是不会被包括在HTTP请求中，对后端没有影响，不会重新加载页面。
+2. histroy：向history栈中添加一个路由，history中存在记录。利用了HTML5 History Interface中新增的pushState()和replaceState()方法。只是当他们进行修改时，虽然修改了url，但浏览器不会立即向后端发送请求。特别注意，history模式需要后台配置支持。如果后台没有正确配置，访问时会返回404。
+
+# 路由跳转的方法有哪些
+this.$router.push(obj) 跳转到指定url路径，并想history栈中添加一个记录，点击后退会返回到上一个页面
+this.$router.replace(obj)  跳转到指定url路径，但是history栈中不会有记录
+this.$router.go(n)  向前或者向后跳转n个页面，n可为正整数或负整数
+路由跳转时滚动到指定位置：在路由实例中设置方法scrollBehavior(){return {x:0,y:0}}
+
+# 路由获取参数
+1. query: this.$route.query.id
+2. params: this.$route.params.id
+
+# Vuex -----------
+Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
+场景：多个组件共享数据或者是跨组件传递数据时
+1. state：用来存储变量,响应式数据
+2. getters：就像计算属性computed一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
+4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
+5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.
+调用方法：
+this.$store.dispatch('app/increment')--(这种方法需要把文件里的state等功能变量名都export default 导出)
+this.$store.dispatch('increment')--（改方法中state等功能都在一个变量中只需将导出该名），获取数据this.$store.state.app.count
+require.context()动态模块热重载
+
+# vuex的State特性
+一、Vuex就是一个仓库，仓库里面放了很多对象。其中state就是数据源存放地，对应于与一般Vue对象里面的data
+二、state里面存放的数据是响应式的，Vue组件从store中读取数据，若是store中的数据发生改变，依赖这个数据的组件也会发生更新
+三、它通过mapState把全局的 state 和 getters 映射到当前组件的 computed 计算属性中
+
+# Vuex实现登录验证
+  1. 输入正确的用户名密码后，返回的token存到localStorage和vuex的state中
+  2. 在之后的axios请求中的请求拦截器axios.interceptors.request.use中带上token,
+  3. 后台在判断请求是否有无token,有则比对成功就返数据，无token或者失效则返回401
+  4. 前端设置axios响应拦截器axios.interceptors.response.use分析状态码，如拿到状态码401就清除token并跳转到登录页
+
+# VUE ----------------------
+
+# 1. Vue2中是对数组进行监测变化的？
+由于 Object.defineProperty 只对属性 key 进行监听，无法对引用对象进行监听，所以在 Vue2 中创建一个了 Observer 类对整个对象的依赖进行管理，当对响应式对象进行新增或者删除则由响应式对象中的 dep 通知相关依赖进行更新操作。
+Object.defineProperty 也可以实现对数组的监听的，但因为性能的原因 Vue2 放弃了这种方案，改由重写数组原型对象上的 7 个能操作数组内容的变更的方法，从而实现对数组的响应式监听。（push,pop,shift,unshift,sort,reverse,splice）
+
+2. 为什么要通过重写数组原型的7个方法，是Object.defineProperty不能监测数组变化嘛？
+Object.defineProperty()是可以监测数组的变化的，但也监听不了 push、pop、shift 等对数组进行操作的方法.缺点在于性能代码和获得的用户体验收益不成正比,所以只重写以上七种方法,
+原理----
+   1. 就是使用拦截器覆盖 Array.prototype,之后再去使用 Array 原型上的方法的时候，则使用的是拦截器提供的方法，在拦截器内部使用原生 Array 原型上的方法去操作数组。
+   2. 通过拦截器之后，我们就可以追踪到数组的变化了，然后就可以在拦截器里面进行依赖收集和触发依赖了。
+   3. 在数组进行响应式初始化的时候会在 Observer 类里面给这个数组对象的添加一个 __ob__ 的属性，这个属性的值就是 Observer 这个类的实例对象，而这个 Observer 类里面有存在一个收集依赖的属性 dep，所以在对数组里的内容通过那 7 个方法进行操作的时候，会触发数组的拦截器，那么在拦截器里面就可以访问到这个数组的 Observer 类的实例对象，从而可以向这些数组的依赖发送变更通知。
+
+1. Vue3的响应式原理是怎么样的？
+Vue3 是通过 Proxy 对数据实现 getter/setter 代理，从而实现响应式数据，然后在副作用函数中读取响应式数据的时候，就会触发 Proxy 的 getter，在 getter 里面把对当前的副作用函数保存起来，将来对应响应式数据发生更改的话，则把之前保存起来的副作用函数取出来执行。
+2. vue3真的只使用Proxy就可以实现对数组的代理嘛？还需要进行什么设置呐？
+Proxy构造函数的第一个参数是原始数据data；第二个参数是一个叫handler的处理器对象。Handler是一系列的代理方法集合，它的作用是拦截所有发生在data数据上的操作。这里的get()和set()是最常用的两个方法，分别代理访问和赋值两个操作。在Observer里，它们的作用是分别调用dep.depend()和dep.notify()实现订阅和发布。直接反映在Vue里的好处就是：我们不再需要使用Vue.$set()这类响应式操作了。除此之外，handler共有十三种劫持方式，比如deleteProperty就是用于劫持域删除。
+当数组响应式对象使用 includes、indexOf、lastIndexOf 这方法的时候，它们内部的 this 指向的是代理对象，并且在获取数组元素时得到的值要也是代理对象，所以当使用原始值去数组响应式对象中查找的时候，如果不进行特别的处理，是查找不到的，所以我们需要对上述的数组方法进行重写才能解决这个问题。
 
 # Vue.use原理
 安装 Vue.js 插件，Vue.use会自动阻止多次注册相同的插件，届时即使多次调用也只会注册一次该插件
@@ -171,12 +240,6 @@ Object.assign()
   5. 重构VDOM
   6. 新的响应式机制（Object.defineProperty改用ES6的Proxy）
 
-# Vuex实现登录验证
-  1. 输入正确的用户名密码后，返回的token存到localStorage和vuex的state中
-  2. 在之后的axios请求中的请求拦截器axios.interceptors.request.use中带上token,
-  3. 后台在判断请求是否有无token,有则比对成功就返数据，无token或者失效则返回401
-  4. 前端设置axios响应拦截器axios.interceptors.response.use分析状态码，如拿到状态码401就清除token并跳转到登录页
-
 # VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解
 Object.defineProperty缺点：
   1. 无法监听数组下标的变化，导致直接通过数组的下标给数组设置值，不能实施响应。
@@ -190,9 +253,6 @@ Proxy的优点：
   1. 可劫持整个对象，并返回新对象
   2. 多种劫持操作（13种:get,set,has,deleteProperty,ownKeys...），可监听数组，监听对象属性的新增，删除等
 应用场景：表单校验，数据格式化，增加附加属性（比如身份证号码之后，把出生年月，籍贯，性别都添加进用户信息里面）
-
-# elementUI日期和时间选择器绑定值为对象的显示问题
-如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
 
 # vue生命周期
   Vue的生命周期可以分为三个大阶段
@@ -231,30 +291,7 @@ Proxy的优点：
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
-# Vuex
-Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
-场景：多个组件共享数据或者是跨组件传递数据时
-1. state：用来存储变量,响应式数据
-2. getters：就像计算属性computed一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
-3. mutations：同步函数，更改store中的状态的唯一方法是提交store.commit()
-4. actions：异步函数，通过 store.dispatch 方法触发，提交到mutations中,调用异步 API 和分发多重 mutation：
-5. module：Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割.
-调用方法：
-this.$store.dispatch('app/increment')--(这种方法需要把文件里的state等功能变量名都export default 导出)
-this.$store.dispatch('increment')--（改方法中state等功能都在一个变量中只需将导出该名），获取数据this.$store.state.app.count
-require.context()动态模块热重载
 
-# vuex的State特性
-一、Vuex就是一个仓库，仓库里面放了很多对象。其中state就是数据源存放地，对应于与一般Vue对象里面的data
-二、state里面存放的数据是响应式的，Vue组件从store中读取数据，若是store中的数据发生改变，依赖这个数据的组件也会发生更新
-三、它通过mapState把全局的 state 和 getters 映射到当前组件的 computed 计算属性中
-
-# vue-router
-路由重定向：redirect:'路由地址' 改变路由url或组件。父组件是公共组件的情况下，可重定向到嵌套子组件path，再次添加新组件.如果地址不存在则会执行定义的*路由。重定向传参 path: '/guide/:id', redirect: '/guide/:id/index'
-别名：alias:'name' 只改变url，组件不变
-$router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
-$route当前路由对象，它包括path，params，hash，query，name等参数；
-router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
 # vue开发权限管理系统(https://segmentfault.com/a/1190000009506097)
 前端权限控制可以分为四个方面：接口权限、按钮权限、菜单权限、路由权限
@@ -266,25 +303,7 @@ router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规�
   })
 ，获取到路由信息后通过router.addRoutes(动态路由)动态添加到可访问的路由表中，在通过next({ ...to, replace: true })确保addRoutes已完成,便得到可访问的菜单
 
-# 路由组件的钩子函数：
-    全局导航钩子：beforeEach、beforeResolve、afterEach
-　　路由独享导航钩子：beforeEnter
-　　组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
-　　参数：to、from、next；正对不同的钩子函数参数有所差异。
 
-# vue-router有几种模式
-1. hash,默认模式，url会有#号,hash模式的特点在于hash出现在url中，但是不会被包括在HTTP请求中，对后端没有影响，不会重新加载页面。
-2. histroy：向history栈中添加一个路由，history中存在记录。利用了HTML5 History Interface中新增的pushState()和replaceState()方法。只是当他们进行修改时，虽然修改了url，但浏览器不会立即向后端发送请求。特别注意，history模式需要后台配置支持。如果后台没有正确配置，访问时会返回404。
-
-# 路由跳转的方法有哪些
-this.$router.push(obj) 跳转到指定url路径，并想history栈中添加一个记录，点击后退会返回到上一个页面
-this.$router.replace(obj)  跳转到指定url路径，但是history栈中不会有记录
-this.$router.go(n)  向前或者向后跳转n个页面，n可为正整数或负整数
-路由跳转时滚动到指定位置：在路由实例中设置方法scrollBehavior(){return {x:0,y:0}}
-
-# 路由获取参数
-1. query: this.$route.query.id
-2. params: this.$route.params.id
 
 # watch和computed的区别
 watch：
@@ -378,9 +397,6 @@ https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distri
   append|prepend这类函数在li中插入标签时注意要使用eq(index)，不可使用$(node)[index]这种格式，否则将输出字符串而不是html代码
   本地使用load()引用html本地存在一个跨域问题,
   解决方法：vscode使用插件list server在html文件右击选择‘open with list server’即可，或者解决跨域问题
-   
-#  在ssr下当webp图片文件加载不出来时，是图片接口类型变成了text/html
-   解决：webpack.base.conf.js下对图片的限制limit值小了，调大到一定量就可以
 
 # 关于一个域名下存放俩个vue项目
 前台：

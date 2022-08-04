@@ -1,3 +1,53 @@
+# 盒子模型
+1. IE盒子模型，content-box,包含了padding和border，盒子高宽包含边框、内边距
+2. W3C标准盒子模型，border-box，盒子高宽不包含边框、内边距
+
+# export 与 export default区别
+1. 相同点：都是es6导出组件可导出函数变量等
+2. 不同点：1. export一个文件或者模块可出现多次并且{}导出多个，2.export default 一个文件或者模块只出现一次只能导出一个
+
+# 转换成树形结构
+let arr = [
+        { id: 1, name: '部门1', pid: 0 },
+        { id: 2, name: '部门2', pid: 1 },
+        { id: 3, name: '部门3', pid: 1 },
+        { id: 4, name: '部门4', pid: 3 },
+        { id: 5, name: '部门5', pid: 4 },
+    ]
+    function convert(list, pid = 0) {//方法一: 依次递归最后的子节点往当前父节点添加
+        let res = []
+
+        for (const item of list) {
+            if (item.pid === pid) {
+                let child = convert(list, item.id)
+               if(child.length){
+                   item.children = child
+               }
+                res.push(item)
+            }
+        }
+        return res
+    }
+
+    function convert(list) {//方法二：利用对象键值和引用关系执行循环，对map进行添加子元素
+        let res = []
+        let map = list.reduce((res, v) => { return (res[v.id] = v, res) }
+            , {})
+        for (const item of list) {
+            if (item.pid === 0) {
+                res.push(item)
+                continue
+            }
+            if(item.pid in map){
+                let parent = map[item.pid]
+                parent.children = parent.children || []
+                parent.children.push(item)
+            }
+        }
+        return res
+        // console.log(map);
+    }
+
 # JS深度优先算法、广度优先算法
     let deepTraversal = node => {//node->对象，判断当前节点是否有children，有则循环chldren合并递归数组
         let nodes = []
