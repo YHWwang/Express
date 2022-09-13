@@ -49,229 +49,230 @@
         }
 
         /* 开屏视频 */
-    .waveBox {
-        width: 51.82291vw;
-        margin: 0 auto;
-        transform: translateY(20.41666vw);
-        -webkit-transform: translateY(20.41666vw);
-        -moz-transform: translateY(20.41666vw);
-        -ms-transform: translateY(20.41666vw);
-        -o-transform: translateY(20.41666vw);
-    }
+        .waveBox {
+            width: 51.82291vw;
+            margin: 0 auto;
+            transform: translateY(20.41666vw);
+            -webkit-transform: translateY(20.41666vw);
+            -moz-transform: translateY(20.41666vw);
+            -ms-transform: translateY(20.41666vw);
+            -o-transform: translateY(20.41666vw);
+        }
 
-    .wave-left {
-        position: relative;
-        width: 54.27083vw;
-        height: 7.29166vw;
-        transform: translate(-21.45833vw, -0.9375vw);
-    }
+        .wave-left {
+            position: relative;
+            width: 54.27083vw;
+            height: 7.29166vw;
+            transform: translate(-21.45833vw, -0.9375vw);
+        }
 
-    .wave-right {
-        position: relative;
-        width: 64.427vw;
-        height: 8.646vw;
-        transform: translate(13.125vw, -5.521vw);
-    }
+        .wave-right {
+            position: relative;
+            width: 64.427vw;
+            height: 8.646vw;
+            transform: translate(13.125vw, -5.521vw);
+        }
 
-    .wave-left span,
-    .wave-right span {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        background: url(./src/img/wave.png) no-repeat;
-        background-position: center center;
-        background-size: cover;
-        transform: scale(0.053) rotateX(0);
-        opacity: 0;
-    }
-
-    .wave-left span:nth-child(1),
-    .wave-right span:nth-child(1) {
-        -webkit-transform: scale(1) rotateX(0);
-        -ms-transform: scale(1) rotateX(0);
-        transform: scale(1) rotateX(0);
-        top: 4.17vw;
-        -webkit-animation: wave 5.6s linear 0s infinite;
-        animation: wave 5.6s linear 0s infinite;
-    }
-
-    .wave-left span:nth-child(2),
-    .wave-right span:nth-child(2) {
-        -webkit-transform: scale(.7) rotateX(0);
-        -ms-transform: scale(.7) rotateX(0);
-        transform: scale(.7) rotateX(0);
-        top: 3.39vw;
-        -webkit-animation: wave 5.6s linear .8s infinite;
-        animation: wave 5.6s linear .8s infinite;
-    }
-
-    .wave-left span:nth-child(3),
-    .wave-right span:nth-child(3) {
-        -webkit-transform: scale(.4) rotateX(0);
-        -ms-transform: scale(.4) rotateX(0);
-        transform: scale(.4) rotateX(0);
-        top: 2.6vw;
-        -webkit-animation: wave 5.6s linear 1.6s infinite;
-        animation: wave 5.6s linear 1.6s infinite;
-    }
-
-    .wave-left span:nth-child(4),
-    .wave-right span:nth-child(4) {
-        -webkit-transform: scale(.2) rotateX(0);
-        -ms-transform: scale(.2) rotateX(0);
-        transform: scale(.2) rotateX(0);
-        top: 1.82vw;
-        -webkit-animation: wave 5.6s linear 2.4s infinite;
-        animation: wave 5.6s linear 2.4s infinite;
-    }
-
-    .wave-left span:nth-child(5),
-    .wave-right span:nth-child(5) {
-        -webkit-transform: scale(.1) rotateX(0);
-        -ms-transform: scale(.1) rotateX(0);
-        transform: scale(.1) rotateX(0);
-        top: 1.04vw;
-        -webkit-animation: wave 5.6s linear 3.2s infinite;
-        animation: wave 5.6s linear 3.2s infinite;
-    }
-
-    .wave-left span:nth-child(6),
-    .wave-right span:nth-child(6) {
-        -webkit-transform: scale(.4) rotateX(0);
-        -ms-transform: scale(.4) rotateX(0);
-        transform: scale(.4) rotateX(0);
-        top: 0.26vw;
-        -webkit-animation: wave 5.6s linear 4s infinite;
-        animation: wave 5.6s linear 4s infinite;
-    }
-
-    .wave-left span:nth-child(7),
-    .wave-right span:nth-child(7) {
-        -webkit-transform: scale(.2) rotateX(0);
-        -ms-transform: scale(.2) rotateX(0);
-        transform: scale(.2) rotateX(0);
-        top: 0;
-        -webkit-animation: wave 5.6s linear 4.8s infinite;
-        animation: wave 5.6s linear 4.8s infinite;
-    }
-
-    @keyframes wave {
-        0% {
-            -webkit-transform: scale(0.053) rotateX(0);
-            transform: scale(0.053) rotateX(0);
-            opacity: 0.25;
+        .wave-left span,
+        .wave-right span {
+            position: absolute;
             top: 0;
-        }
-
-        30% {
-            -webkit-transform: scale(0.13) rotateX(0);
-            transform: scale(0.13) rotateX(0);
-            opacity: 0.25;
-            top: 1.56vw;
-        }
-
-        40% {
-            opacity: 0.25;
-            top: 2.38vw;
-        }
-
-        50% {
-            top: 3.17vw;
-            opacity: 0.25;
-        }
-
-        60% {
-            top: 4.17vw;
-            opacity: 0.25;
-        }
-
-        100% {
-            -webkit-transform: scale(1) rotateX(0);
-            transform: scale(1) rotateX(0);
-            opacity: 0.05;
-            top: 4.17vw;
-        }
-    }
-
-    @-webkit-keyframes wave {
-        0% {
-            -webkit-transform: scale(0.053) rotateX(0);
+            left: 0;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            background: url(./src/img/wave.png) no-repeat;
+            background-position: center center;
+            background-size: cover;
             transform: scale(0.053) rotateX(0);
-            opacity: 0.25;
-            top: 0;
+            opacity: 0;
         }
 
-        30% {
-            -webkit-transform: scale(0.13) rotateX(0);
-            transform: scale(0.13) rotateX(0);
-            opacity: 0.25;
-            top: 1.56vw;
-        }
-
-        40% {
-            opacity: 0.25;
-            top: 2.38vw;
-        }
-
-        50% {
-            top: 3.17vw;
-            opacity: 0.25;
-        }
-
-        60% {
-            top: 4.17vw;
-            opacity: 0.25;
-        }
-
-        100% {
+        .wave-left span:nth-child(1),
+        .wave-right span:nth-child(1) {
             -webkit-transform: scale(1) rotateX(0);
+            -ms-transform: scale(1) rotateX(0);
             transform: scale(1) rotateX(0);
-            opacity: 0.05;
             top: 4.17vw;
+            -webkit-animation: wave 5.6s linear 0s infinite;
+            animation: wave 5.6s linear 0s infinite;
         }
-    }
 
-    @-moz-keyframes wave {
-        0% {
-            -webkit-transform: scale(0.053) rotateX(0);
-            transform: scale(0.053) rotateX(0);
-            opacity: 0.25;
+        .wave-left span:nth-child(2),
+        .wave-right span:nth-child(2) {
+            -webkit-transform: scale(.7) rotateX(0);
+            -ms-transform: scale(.7) rotateX(0);
+            transform: scale(.7) rotateX(0);
+            top: 3.39vw;
+            -webkit-animation: wave 5.6s linear .8s infinite;
+            animation: wave 5.6s linear .8s infinite;
+        }
+
+        .wave-left span:nth-child(3),
+        .wave-right span:nth-child(3) {
+            -webkit-transform: scale(.4) rotateX(0);
+            -ms-transform: scale(.4) rotateX(0);
+            transform: scale(.4) rotateX(0);
+            top: 2.6vw;
+            -webkit-animation: wave 5.6s linear 1.6s infinite;
+            animation: wave 5.6s linear 1.6s infinite;
+        }
+
+        .wave-left span:nth-child(4),
+        .wave-right span:nth-child(4) {
+            -webkit-transform: scale(.2) rotateX(0);
+            -ms-transform: scale(.2) rotateX(0);
+            transform: scale(.2) rotateX(0);
+            top: 1.82vw;
+            -webkit-animation: wave 5.6s linear 2.4s infinite;
+            animation: wave 5.6s linear 2.4s infinite;
+        }
+
+        .wave-left span:nth-child(5),
+        .wave-right span:nth-child(5) {
+            -webkit-transform: scale(.1) rotateX(0);
+            -ms-transform: scale(.1) rotateX(0);
+            transform: scale(.1) rotateX(0);
+            top: 1.04vw;
+            -webkit-animation: wave 5.6s linear 3.2s infinite;
+            animation: wave 5.6s linear 3.2s infinite;
+        }
+
+        .wave-left span:nth-child(6),
+        .wave-right span:nth-child(6) {
+            -webkit-transform: scale(.4) rotateX(0);
+            -ms-transform: scale(.4) rotateX(0);
+            transform: scale(.4) rotateX(0);
+            top: 0.26vw;
+            -webkit-animation: wave 5.6s linear 4s infinite;
+            animation: wave 5.6s linear 4s infinite;
+        }
+
+        .wave-left span:nth-child(7),
+        .wave-right span:nth-child(7) {
+            -webkit-transform: scale(.2) rotateX(0);
+            -ms-transform: scale(.2) rotateX(0);
+            transform: scale(.2) rotateX(0);
             top: 0;
+            -webkit-animation: wave 5.6s linear 4.8s infinite;
+            animation: wave 5.6s linear 4.8s infinite;
         }
 
-        30% {
-            -webkit-transform: scale(0.13) rotateX(0);
-            transform: scale(0.13) rotateX(0);
-            opacity: 0.25;
-            top: 1.56vw;
+        @keyframes wave {
+            0% {
+                -webkit-transform: scale(0.053) rotateX(0);
+                transform: scale(0.053) rotateX(0);
+                opacity: 0.25;
+                top: 0;
+            }
+
+            30% {
+                -webkit-transform: scale(0.13) rotateX(0);
+                transform: scale(0.13) rotateX(0);
+                opacity: 0.25;
+                top: 1.56vw;
+            }
+
+            40% {
+                opacity: 0.25;
+                top: 2.38vw;
+            }
+
+            50% {
+                top: 3.17vw;
+                opacity: 0.25;
+            }
+
+            60% {
+                top: 4.17vw;
+                opacity: 0.25;
+            }
+
+            100% {
+                -webkit-transform: scale(1) rotateX(0);
+                transform: scale(1) rotateX(0);
+                opacity: 0.05;
+                top: 4.17vw;
+            }
         }
 
-        40% {
-            opacity: 0.25;
-            top: 2.38vw;
+        @-webkit-keyframes wave {
+            0% {
+                -webkit-transform: scale(0.053) rotateX(0);
+                transform: scale(0.053) rotateX(0);
+                opacity: 0.25;
+                top: 0;
+            }
+
+            30% {
+                -webkit-transform: scale(0.13) rotateX(0);
+                transform: scale(0.13) rotateX(0);
+                opacity: 0.25;
+                top: 1.56vw;
+            }
+
+            40% {
+                opacity: 0.25;
+                top: 2.38vw;
+            }
+
+            50% {
+                top: 3.17vw;
+                opacity: 0.25;
+            }
+
+            60% {
+                top: 4.17vw;
+                opacity: 0.25;
+            }
+
+            100% {
+                -webkit-transform: scale(1) rotateX(0);
+                transform: scale(1) rotateX(0);
+                opacity: 0.05;
+                top: 4.17vw;
+            }
         }
 
-        50% {
-            top: 3.17vw;
-            opacity: 0.25;
-        }
+        @-moz-keyframes wave {
+            0% {
+                -webkit-transform: scale(0.053) rotateX(0);
+                transform: scale(0.053) rotateX(0);
+                opacity: 0.25;
+                top: 0;
+            }
 
-        60% {
-            top: 4.17vw;
-            opacity: 0.25;
-        }
+            30% {
+                -webkit-transform: scale(0.13) rotateX(0);
+                transform: scale(0.13) rotateX(0);
+                opacity: 0.25;
+                top: 1.56vw;
+            }
 
-        100% {
-            -webkit-transform: scale(1) rotateX(0);
-            transform: scale(1) rotateX(0);
-            opacity: 0.05;
-            top: 4.17vw;
+            40% {
+                opacity: 0.25;
+                top: 2.38vw;
+            }
+
+            50% {
+                top: 3.17vw;
+                opacity: 0.25;
+            }
+
+            60% {
+                top: 4.17vw;
+                opacity: 0.25;
+            }
+
+            100% {
+                -webkit-transform: scale(1) rotateX(0);
+                transform: scale(1) rotateX(0);
+                opacity: 0.05;
+                top: 4.17vw;
+            }
         }
-    }
     </style>
+    <link rel="stylesheet" href="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/banner-20220623035805433.css">
 </head>
 
 <body class="en">
@@ -282,31 +283,247 @@
                 src="https://statics.oneplus.cn/ov/assets/images/events/2021/03/9pro/cn/kv-9pro_open_pc-dbf8e5.mp4"></video>
             </video>
         </div> -->
-        <div class="waveBox">
-            <div class="wave-left">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+        <!-- class->black-BG：黑色背景 app-white-font：移动端字白色 -->
+        <div class="swiper-container banner-main">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide banner-item"
+                    data-href="https://s.click.aliexpress.com/e/_ooueOEv">
+                    <img class="lazyload banner-item-img banner-pc"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab13-pc-2022080506312931.jpg"
+                        alt="Blackview Tab 13">
+                    <img class="lazyload banner-item-img banner-h5"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab13-app-20220805063133932.jpg"
+                        alt="Blackview Tab 13">
+                    <div class="banner-word">
+                        <h3 class="h3">Tab 13 </h3>
+                        <h4 class="h4">
+                            Instant Productivity, Endless Entertainment
+                        </h4>
+                        <div class="margin-empty-line"></div>
+                        <div class="banner-word-box1">
+                            <p>
+                                MediaTek Helio G85 | 6GB RAM +up to 4GB Expansion <br>
+                                128GB ROM + up to 1TB TF | 7280mAh Battery<br>
+                                SIMO Internet | TÜV Rheinland Low Blue Light Certification<br>
+                                Doke OS_P 3.0, Android 12 | 10.1-inch FHD+ Display<br>
+                            </p>
+                        </div>
+                        <div class="margin-empty-line-1"></div>
+                        <!-- <div class="banner-word-link banner-link  banner-opacity-1 delay-3">
+                            <a href="https://store.blackview.hk/products/blackview-tab-11-10-36-inch-2k-display-8gb-128gb-6580mah-4g-wifi-android-11-tablet" class="buy-now" target="_blank" style="margin-top: 5px"
+                            rel="noopener">Shop Now</a>
+                        </div> -->
+                        <div class="banner-word-link banner-link-1  ">
+                            <a href="https://s.click.aliexpress.com/e/_ooueOEv" class="learn-more" target="_blank"
+                                rel="noopener">
+                                <span>Learn more</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide banner-item" data-href="https://www.blackview.hk/products/item/bl8800/">
+                    <h1><img class="lazyload banner-item-img   banner-pc"
+                            data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800-pc-20220613015545263.webp"
+                            alt="Blackview Rugged Phones, Your Best Option of Tougher Outdoor Smartphone"></h1>
+                    <h2><img class="lazyload banner-item-img banner-h5"
+                            data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800-app-20220613015549522.webp"
+                            alt="Enjoy smart life"></h2>
+                    <div class="banner-word">
+                        <h3 class="h3    banner-opacity-1 delay-1 andriod">
+                            <span class="bv8800">BL8800</span>
+                        </h3>
+                        <h4 class="h4     banner-opacity-1 delay-1">
+                            Make Blackview the Blackview
+                        </h4>
+
+                        <div class="margin-empty-line"></div>
+                        <div class="banner-word-box1     banner-opacity-1 delay-2">
+                            <p>
+                                MediaTek Dimensity 700 | 50MP camera | 8GB+128GB <br>
+                                Night vision | 8380mAh with 33W fast charge<br>
+                                Doke OS 3.0 (Based on Android 11)<br>
+                                IP68 & IP69K & MIL-STD-810H | Glove Mode
+                            </p>
+                        </div>
+                        <div class="margin-empty-line-1"></div>
+                        <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+                            <a href="https://store.blackview.hk/products/bl8800-5g-infrared-camera-smartphone"
+                                class="buy-now" target="_blank" rel="noopener">Shop Now</a>
+                        </div>
+                        <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">
+                            <a href="https://www.blackview.hk/products/item/bl8800" class="learn-more" target="_blank"
+                                rel="noopener">
+                                <span>Learn more</span></a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="swiper-slide banner-item" data-href="https://www.blackview.hk/products/item/bv8800">
+                    <h2><img class="lazyload banner-item-img   banner-pc"
+                            data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bv8800-pc-20220613015524684.webp"
+                            alt="Tough 4G Phones"></h2>
+                    <img class="lazyload banner-item-img banner-h5"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bv8800-app-20220613015530293.webp"
+                        alt="Blackview BV8800, the most powerful and toughest 4G rugged phones">
+                    <div class="banner-word">
+                        <h3 class="h3    banner-opacity-1 delay-1 andriod">
+                            <span class="bv8800">BV8800</span>
+                        </h3>
+                        <h4 class="h4     banner-opacity-1 delay-1">
+                            Make Blackview the Blackview
+                        </h4>
+
+                        <div class="margin-empty-line"></div>
+                        <div class="banner-word-box1     banner-opacity-1 delay-2">
+                            <p>
+
+                                90Hz display | MediaTek G96 | 50MP camera <br>
+                                IP68 &IP69K & MIL-STD-810H | 20MP Night vision<br>
+                                8380mAh with 33W fast charge | Android 11Doke OS 3.0
+
+                            </p>
+                        </div>
+                        <div class="margin-empty-line-1"></div>
+                        <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+                            <a href="https://store.blackview.hk/products/bv8800-night-vision-camera-phone"
+                                class="buy-now" target="_blank" rel="noopener">Shop Now</a>
+                        </div>
+                        <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">
+                            <a href="https://www.blackview.hk/products/item/bv8800" class="learn-more" target="_blank"
+                                rel="noopener">
+                                <span>Learn more</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide banner-item" data-href="https://www.blackview.hk/products/item/bl8800pro/">
+                    <style>
+                        .h3 {
+                            /*display: inline-block;*/
+                            position: relative;
+                        }
+
+                        .bv8800 {
+                            display: inline-block;
+                        }
+                    </style>
+                    <img class="lazyload banner-item-img  banner-pc"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800pro-pc-20220613015534811.webp"
+                        alt="It can have survived where other devices could not.">
+                    <img class="lazyload banner-item-img banner-h5"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/bl8800pro-app-2022061301554060.webp"
+                        alt="With cases or shells that are sturdy enough so you can drop them on hard surfaces without them breaking.">
+                    <div class="banner-word">
+                        <h3 class="h3    banner-opacity-1 delay-1 andriod">
+                            <span class="bv8800">BL8800 Pro</span>
+                        </h3>
+                        <h4 class="h4     banner-opacity-1 delay-1">
+                            Game Changer for Rugged Lifestyle
+                        </h4>
+
+                        <div class="margin-empty-line"></div>
+                        <div class="banner-word-box1     banner-opacity-1 delay-2">
+                            <p>
+                                Thermal by FLIR | MediaTek Dimensity 700 5G <br>
+                                8GB+128GB | 8380mAh with 33W fast charge <br>
+                                Doke OS 3.0 (Android 11) | 50MP camera<br>
+                                IP68 & IP69K & MIL-STD-810H | Glove Mode
+                            </p>
+                        </div>
+                        <div class="margin-empty-line-1"></div>
+                        <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+                            <div class="banner-word-link banner-link     banner-opacity-1 delay-3">
+                                <a href="https://store.blackview.hk/products/bl8800-pro-5g-thermal-imaging-phone"
+                                    class="buy-now" target="_blank" rel="noopener">Shop Now</a>
+                            </div>
+                            <div class="banner-word-link banner-link-1     banner-opacity-1 delay-4">
+                                <a href="https://www.blackview.hk/products/item/bl8800pro" class="learn-more"
+                                    target="_blank" rel="noopener">
+                                    <span>Learn more</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="swiper-slide banner-item app-white-font"
+                    data-href="https://www.blackview.hk/products/item/tab12/">
+                    <img class="lazyload banner-item-img   banner-pc"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab12-pc-20220614080825264.jpg"
+                        alt="">
+                    <img class="lazyload banner-item-img  banner-h5"
+                        data-src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/pic/tab12-app-20220614080832387.jpg"
+                        alt="">
+                    <style>
+                        .h3 {
+                            display: inline-block;
+                            position: relative;
+                        }
+                    </style>
+                    <div class="banner-word">
+                        <h3 class="h3">Tab 12 </h3>
+                        <h4 class="h4">
+                            Edgy Inspiration Juices Life up
+                        </h4>
+                        <div class="margin-empty-line"></div>
+                        <div class="banner-word-box1">
+                            <p>
+                                10.1-inch Display | Doke OS_P 2.0<br>
+                                6580mAh Battery | 13 MP Rear Camera<br>
+                                octa-core UNISOC SC9863A<br>
+                                4GB+64GB & 1TB Micro SD Support<br>
+                            </p>
+                        </div>
+                        <div class="margin-empty-line-1"></div>
+                        <div class="banner-word-link banner-link  banner-opacity-1 delay-3">
+                            <a href="https://store.blackview.hk/products/tab-12-wifi-4g-tablet" class="buy-now"
+                                target="_blank" style="margin-top: 5px" rel="noopener">Shop Now</a>
+                        </div>
+                        <div class="banner-word-link banner-link-1  "><a
+                                href="https://www.blackview.hk/products/item/tab12" class="learn-more" target="_blank"
+                                rel="noopener"> <span>Learn more</span></a>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="wave-right">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
-        <div class="sect4">
-            <div class="box2">
-                <p>Shot on BV5100</p>
-            </div>
-        </div>
+        <script src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/swiper.min-20211225094806518.js"></script>
+        <script>
+            $(function () {
+
+                $(".banner-item").click(function (e) {
+                    var href = $(this).attr("data-href")
+                    if (e.target.nodeName != 'SPAN' && e.target.nodeName != 'A') {
+                        window.open(href)
+                    }
+                })
+
+                var swiper = new Swiper('.swiper-container', {
+                    autoplay: {
+                        delay: 3000,
+                        stopOnLastSlide: false,
+                        disableOnInteraction: true,
+                    },
+                    // spaceBetween:5,
+                    centeredSlides: true,
+                    loop: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                });
+
+            })
+        </script>
 
     </div>
 </body>
@@ -319,43 +536,43 @@
     $(function () {
         //滚动效果
         var clientHeight = $(window).height();
-            var box3 = $(".sect3 .box3").css({ height: clientHeight * 3 }).offset().top;//设置盒子的高度并得到距离顶部的值
-            if (scroll < box3 - 50) {//盒子初始化
-                // $(".sect3 .box3 .box").css({ position: 'relative', top: 'inherit', left: 'inherit' });
-            } else if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight * 2) {//盒子开始滚动初始化
-                // $(".sect3 .box3 .box .p").css({ opacity: 0 });
-                // $(".sect3 .box3 .box").css({ position: 'fixed', top: '50px', left: '0%' });
-                if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight) {//当滚动一个屏幕高度时
-                    // 操作透明度、放大缩小、距离等
-                    // var num = (scroll - (box3 - 50)) / clientHeight;
-                    // num < 0 ? num = 0 : '';
-                    // num > 1 ? num = 1 : '';
-                    // var toBig = (1 + 4 * num);
-                    // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(' + toBig + ')' });
-                    // if (num <= 0.6) {
-                    //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 });
-                    // } else if (num > 0.6) {
-                    //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 - 1 * num });
-                    // }
-                } else if (scroll > box3 - 50 + clientHeight && scroll < box3 - 50 + clientHeight * 2) {//当滚动二个屏幕高度时
-                     // 操作透明度、放大缩小、距离等
-                    // var numNew = (scroll - (box3 - 50 + clientHeight)) / clientHeight;
-                    // $(".sect3 .box3 .box .iframe").css({ opacity: 0 });
-                    // numNew < 0 ? numNew = 0 : '';
-                    // numNew > 1 ? numNew = 1 : '';
-                    // if (numNew <= 0.3) {
-                    //     $(".sect3 .box3 .box .bg").css({ opacity: (numNew + 0.7) });
-                    // } else if (numNew > 0.3) {
-                    //     $(".sect3 .box3 .box .p").css({ opacity: (numNew - 0.3), top: (40 - 4 * numNew) + "%" });
-                    // }
-                }
-
-            } else if (scroll > box3 - 50 + clientHeight * 2) {//滚动完初始化
-                // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(5)', opacity: 0 });
-                // $(".sect3 .box3 .box .bg").css({ opacity: 1 });
-                // $(".sect3 .box3 .box .p").css({ opacity: 1, top: "26%" });
-                // $(".sect3 .box3 .box").css({ position: 'relative', top: clientHeight * 2, left: 'inherit' });
+        var box3 = $(".sect3 .box3").css({ height: clientHeight * 3 }).offset().top;//设置盒子的高度并得到距离顶部的值
+        if (scroll < box3 - 50) {//盒子初始化
+            // $(".sect3 .box3 .box").css({ position: 'relative', top: 'inherit', left: 'inherit' });
+        } else if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight * 2) {//盒子开始滚动初始化
+            // $(".sect3 .box3 .box .p").css({ opacity: 0 });
+            // $(".sect3 .box3 .box").css({ position: 'fixed', top: '50px', left: '0%' });
+            if (scroll > box3 - 50 && scroll < box3 - 50 + clientHeight) {//当滚动一个屏幕高度时
+                // 操作透明度、放大缩小、距离等
+                // var num = (scroll - (box3 - 50)) / clientHeight;
+                // num < 0 ? num = 0 : '';
+                // num > 1 ? num = 1 : '';
+                // var toBig = (1 + 4 * num);
+                // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(' + toBig + ')' });
+                // if (num <= 0.6) {
+                //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 });
+                // } else if (num > 0.6) {
+                //     $(".sect3 .box3 .box .iframe").css({ opacity: 1 - 1 * num });
+                // }
+            } else if (scroll > box3 - 50 + clientHeight && scroll < box3 - 50 + clientHeight * 2) {//当滚动二个屏幕高度时
+                // 操作透明度、放大缩小、距离等
+                // var numNew = (scroll - (box3 - 50 + clientHeight)) / clientHeight;
+                // $(".sect3 .box3 .box .iframe").css({ opacity: 0 });
+                // numNew < 0 ? numNew = 0 : '';
+                // numNew > 1 ? numNew = 1 : '';
+                // if (numNew <= 0.3) {
+                //     $(".sect3 .box3 .box .bg").css({ opacity: (numNew + 0.7) });
+                // } else if (numNew > 0.3) {
+                //     $(".sect3 .box3 .box .p").css({ opacity: (numNew - 0.3), top: (40 - 4 * numNew) + "%" });
+                // }
             }
+
+        } else if (scroll > box3 - 50 + clientHeight * 2) {//滚动完初始化
+            // $(".sect3 .box3 .box .iframe").css({ transform: 'scale(5)', opacity: 0 });
+            // $(".sect3 .box3 .box .bg").css({ opacity: 1 });
+            // $(".sect3 .box3 .box .p").css({ opacity: 1, top: "26%" });
+            // $(".sect3 .box3 .box").css({ position: 'relative', top: clientHeight * 2, left: 'inherit' });
+        }
 
 
 

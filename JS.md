@@ -1,6 +1,6 @@
 # 盒子模型
-1. IE盒子模型，content-box,包含了padding和border，盒子高宽包含边框、内边距
-2. W3C标准盒子模型，border-box，盒子高宽不包含边框、内边距
+1. IE盒子模型，content-box,包含了padding和border，盒子高宽包含边框+内边距+内容
+2. W3C标准盒子模型，border-box，盒子高宽就是盒子的高宽，不包括border,padding
 
 # export 与 export default区别
 1. 相同点：都是es6导出组件可导出函数变量等
@@ -14,7 +14,7 @@ let arr = [
         { id: 4, name: '部门4', pid: 3 },
         { id: 5, name: '部门5', pid: 4 },
     ]
-    function convert(list, pid = 0) {//方法一: 依次递归最后的子节点往当前父节点添加
+    function convert(list, pid = 0) {//方法一: 依次递归id,最后的子节点往当前父节点添加
         let res = []
 
         for (const item of list) {
@@ -87,7 +87,7 @@ let arr = [
 
 # ['10','10','10','10','10'].map(parseInt);// 输出[10, NaN, 2, 3, 4]
   ['10', '10', '10', '10', '10'].map(function (item, index) { //map(回调函数，参数1值，参数2索引)
-      return parseInt(item, index) // 参数1字符串，参数2进制数(2-36)0则为10，其它为NaN
+      return parseInt(item, index) // 参数1字符串，参数2进制数(2-36)0则为10，其它为NaN,默认根据string去判断参数
       parseInt(基数，进制)，parseInt('3',2)--NaN基数要在进制内，否则返回NaN
       parseInt('10',0)--1*10+0*10=10
       parseInt('10',1)--NaN
@@ -164,6 +164,19 @@ currying又称部分求值。一个currying的函数首先会接受一些参数�
     sum(2,3)(3)
     console.log(sum())
 
+# addFn(1)(2)(3) = 6, addFn(1)(2, 3) , addFn(1, 2, 3)(2, 3)
+    function addFn(...m) {
+        let args = [...m]
+        let temp = function (...n) {
+            args.push(...n)
+            return temp
+        }
+        temp.toString = function () {
+            return args.reduce( (a,b)=> a+b)
+        }
+        return temp
+    }
+    
 # 回调地狱
 由于js是单线程的，所以很多地方都要等待，这时就会用到回调函数，而在某些业务中可能存在多层的函数回调函数，回调嵌套的代码难维护，不易排除bug,这种情况我们成为回调地狱。
 处理方法一般使用promise或者async函数，promise.then()函数针对这种多层嵌套的代码方便，可大大降低维护难度，promise.all和race也是常用的方法。手写promsie
@@ -657,7 +670,7 @@ Promise.myAll = (promises) => {
             })
         }
 # 实现Promise.race
-Promise.myRace = (promises) => {
+Promise.myRace = (promises) => {//有一个错误会rejected
   return new Promise((rs, rj) => {
     promises.forEach((p) => {
       // 对p进行一次包装，防止非Promise对象
@@ -668,7 +681,7 @@ Promise.myRace = (promises) => {
   })
 }
 # 实现Promise.any
-        Promise.myAny = promises => {
+        Promise.myAny = promises => {//全部错误会rejected
             let result = [],
                 len = promises.length,
                 count = 0

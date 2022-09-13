@@ -296,7 +296,7 @@ Proxy的优点：
 # vue开发权限管理系统(https://segmentfault.com/a/1190000009506097)
 前端权限控制可以分为四个方面：接口权限、按钮权限、菜单权限、路由权限
 1. 接口权限：接口权限目前一般采用jwt的形式来验证，没有通过的话一般返回401，跳转到登录页面重新进行登录登录完拿到token，将token存起来，通过axios请求拦截器进行拦截，每次请求的时候头部携带token
-2. 按钮权限：Vue.directive自定义指令进行按钮权限的判断，通过后台返回的数据中的permissions数组，判断绑定值是否在接口数据中.不在则移除节点el.parentNode.removeChild(el)，存在return ture
+2. 按钮权限：Vue.directive自定义指令进行按钮权限的判断，通过后台返回的数据中的permissions数组，判断绑定值是否在接口数据中.不在则移除节点el.parentNode.removeChild(el)，存在return true
 3. 路由权限\菜单权限：路由分为静态和动态路由，在对后台权限管理时尤为重要，俩种方法：一种是前端在设置动态路由时我们要设置meta{roles:['admin']}的身份，第二种是后台管理系统来配置,在permission.js中设置router.beforeEach()在登录成功后去获取用户的角色信息，根据该角色去获取后台路由数据，得到的路由信息便是角色可访问的路由,将得到的路由数据格式化成组件对象格式包含懒加载
    (export const loadView = (view) => { // 路由懒加载
     return (resolve) => require([`@/views/${view}`], resolve)
@@ -404,9 +404,6 @@ https://blog.csdn.net/weixin_42604828/article/details/93324751?utm_medium=distri
 2. 在router下的index中配置   mode: 'history', base:'/bi/'
 3. 在打包的dist中的index.html中增加  <meta base='/bi/'>
 其他在nginx中配置   https://www.cnblogs.com/dzcici/p/13877338.html
-
-# vue-piczoom 放大镜设置mouse-cover-canvas布设置top无效
-原因是以#app进行定位，所以应在app.vue中设置top值（组件包含在一个有固定高宽的容器内width:500px;height:500px）
 
 # vue如何在js文件中设置i18n国际化
 window.vm = new Vue({

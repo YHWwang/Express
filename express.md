@@ -1,7 +1,15 @@
+# 块元素和行内元素、行内块元素的区别
+块级元素可设置高宽，独占一行
+行内元素不能设置高宽，高度由内容的高度决定，一行可多个行内元素
+行内块元素可设置高宽，一行可多个行内块元素
+
+# 同源策略
+协议、域名、端口相同才是同源策略
+
 # elementUI日期和时间选择器绑定值为对象的显示问题
 如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
 
-# 选择排序(找出最小下标)
+# 选择排序 (找出最小下标)
 function func(arr){
 for(var i = 0; i < arr.length;i++){
     var min = i
@@ -55,17 +63,18 @@ function insertSort(arr) {
     return arr;
 }
 console.log("插入排序arr", insertSort(arr))
-# 归并排序
-    let left, right, middle
-    let len = arr.length
-    if (len < 2) {
-        return arr
-    }
-    middle = Math.floor(len / 2)
-    left = arr.slice(0, middle)
-    right = arr.slice(middle)
+# 归并排序（拆分成左右，在依次赋值新数组）
+    mergeSort(arr){
+        let left, right, middle
+        let len = arr.length
+        if (len < 2) {
+            return arr
+        }
+        middle = Math.floor(len / 2)
+        left = arr.slice(0, middle)
+        right = arr.slice(middle)
 
-    return merge(mergeSort(left), mergeSort(right))
+        return merge(mergeSort(left), mergeSort(right))
     }
     function merge(left, right) {
         let result = []
@@ -84,19 +93,24 @@ console.log("插入排序arr", insertSort(arr))
         }
         return result
     }
-# 快速排序
-# addFn(1)(2)(3) = 6, addFn(1)(2, 3) , addFn(1, 2, 3)(2, 3)
-    function addFn(...m) {
-        let args = [...m]
-        let temp = function (...n) {
-            args.push(...n)
-            return temp
+# 快速排序 (找到pivot基准值，将数组拆成俩个数组，大于基准值排右，小于在左)
+    function quickSort(arr) {
+        if (arr.length <= 1) { return arr }
+        let pivotIndex = Math.floor(arr.length / 2)
+        let pivot = arr.splice(pivotIndex, 1)[0]
+        let left = []
+        let right = []
+
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] < pivot) {
+                left.push(arr[i])
+            } else {
+                right.push(arr[i])
+            }
         }
-        temp.toString = function () {
-            return args.reduce( (a,b)=> a+b)
-        }
-        return temp
+        return quickSort(left).concat([pivot], quickSort(right))
     }
+
 
 # justify-content: space-between/space-around最后一排的位置问题
     let goodList_len = $(dom).length % 4(一排的个数)
@@ -115,7 +129,7 @@ console.log("插入排序arr", insertSort(arr))
 1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
 2. firefox：font-wigth加粗与font-family粗字体会叠加
 3. 火狐和IE可以使用document.documentElement.scrollTop获取滚动条高度，而谷歌只能用document.body.scrollTop。
-4. 火狐中innerText是获取不到文本的。谷歌却可以。
+4. 火狐(低版本)中innerText是获取不到文本的。谷歌却可以。
 
 # git提交
 1 第1步：同步远程仓库代码：git pull
@@ -123,6 +137,10 @@ console.log("插入排序arr", insertSort(arr))
 3 第3步：提交代码到本地git缓存区：git add -A
 4 第4步：推送代码到本地git库：git commit -m "提交内容标题"
 5 第5步：提交本地代码到远程仓库：git push
+回退：
+git reset --hard HEAD^ ---->回退到上次提交，清除本地提交的代码
+git reset --hard HEAD~` ----->回退到上次提交，不清除本地提交的代码
+git reset --hard origin/master  ----->将本地的状态回退到和远程的一样 
 
 # 前端性能优化你会怎么做?
 列表优化：懒加载、虚拟列表、分页
