@@ -1,5 +1,9 @@
 # CSS
 
+# 盒子模型
+1. IE盒子模型，content-box,包含了padding和border，盒子高宽包含边框+内边距+内容
+2. W3C标准盒子模型，border-box，盒子高宽就是盒子的高宽，不包括border,padding
+
 # 选择器有哪些
 css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
 css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
