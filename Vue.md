@@ -5,6 +5,8 @@ $router路由实例化对象，包括路由的跳转方法（push,replace),钩�
 $route当前路由对象，它包括path，params，hash，query，name等参数；
 router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
+# active-class来着router-link组件
+
 # 路由组件的钩子函数：
     全局导航钩子：beforeEach、beforeResolve、afterEach
 　　路由独享导航钩子：beforeEnter
@@ -195,7 +197,7 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
     },
   },
 
-# 双向绑定
+# 双向绑定底层原理
 第一步：需要observe的数据对象进行递归遍历，包括子属性对象的属性，都加上 setter和getter,给这个对象的某个值赋值，就会触发setter，那么就能监听到了数据变化
 第二步：compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图
 第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，主要做的事情是:
@@ -304,7 +306,10 @@ Proxy的优点：
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
-
+# 虚拟DOM是如何合并patch的
+1.判断老节点是否存在-----不存在->直接创建并插入节点
+2.存在老节点判断是否是同一个节点----不存在->创建真实节点插入并删除老节点
+3.是同一节点进行使用patchVnode详细的对比并更新
 
 # vue开发权限管理系统(https://segmentfault.com/a/1190000009506097)
 前端权限控制可以分为四个方面：接口权限、按钮权限、菜单权限、路由权限

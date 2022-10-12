@@ -1,5 +1,13 @@
 # CSS
 
+# 画一条0.5px的线
+1. 可以通过直接设置宽高border为0.5px(chrome,安卓不支持)
+2. 设置box-shadow的垂直方向的偏移量为0.5px(chrome,安卓支持,其它不支持)
+3. 借助线性渐变linear-gradient
+4. 使用transform: scaleY(0.5)的方法（都支持）
+5. 使用SVG的方法。
+单独用transform: scaleY(0.5);height: 1px;这样肯定是会变虚，加上这个transform-origin: 50% 100%;就不会有虚化
+
 # 盒子模型
 1. IE盒子模型，content-box,包含了padding和border，盒子高宽包含边框+内边距+内容
 2. W3C标准盒子模型，border-box，盒子高宽就是盒子的高宽，不包括border,padding

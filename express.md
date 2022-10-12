@@ -4,7 +4,7 @@
 行内块元素可设置高宽，一行可多个行内块元素
 
 # 同源策略
-协议、域名、端口相同才是同源策略
+协议、域名、端口相同才是同源策略.chrome每个域名最多6个.使用多个域名，可以增加并发数.在HTTP2协议中，可以开启管道化连接，即单条连接的多路复用，每条连接中并发传输多个资源，这里就不需要添加域名来增加并发数了
 
 # elementUI日期和时间选择器绑定值为对象的显示问题
 如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
@@ -130,6 +130,22 @@ console.log("插入排序arr", insertSort(arr))
 2. firefox：font-wigth加粗与font-family粗字体会叠加
 3. 火狐和IE可以使用document.documentElement.scrollTop获取滚动条高度，而谷歌只能用document.body.scrollTop。
 4. 火狐(低版本)中innerText是获取不到文本的。谷歌却可以。
+5. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
+6. firefox浏览器不触发window.addEventListener('load')
+
+# 火狐浏览器hover字体加粗效果,宽度变化的问题
+html-》加上title='文本内容'
+::before{
+    display: block;
+    content: attr(title);
+    font-weight: bold;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+:hover{
+    font-weight: bold;
+}
 
 # git提交
 1 第1步：同步远程仓库代码：git pull
