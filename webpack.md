@@ -1,5 +1,19 @@
 # Webpack
 
+# Webpack核心概念
+入口(entry):指示 webpack 应该使用哪个模块，来作为构建其内部依赖图
+输出(output):告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件
+编译器(loader): 让 webpack 能够去处理其他类型的文件，并将它们转换为有效 模块，以供应用程序使用，以及被添加到依赖图中
+插件(plugin):loader 用于转换某些类型的模块，而插件则可以用于执行范围更广的任务
+模式(mode)
+浏览器兼容性(browser compatibility)
+环境(environment)
+1.Webpack的构建大致就是一个初始化、编译、输出的过程
+2.初始化：启动构建，读取与合并配置参数，加载Plugin，实例化Compiler
+3.编译：从Entry发出，针对每个Module串行调用对应的Loader去翻译文件内容，再找到该Module依赖的Module,递归地进行编译处理
+4.输出：对编译后的Module组合成Chunk,把Chunk转换成文件，输出到文件系统
+
+
 # webpack 构建过程
 1. 根据配置，识别入口文件；
 2. 逐层识别模块依赖（包括 Commonjs、AMD、或 ES6 的 import 等，都会被识别和分析）；
@@ -12,6 +26,7 @@
 2. cache-loader 缓存loader处理的结果
 3. happypack多线程打包
 4. webpack-pacallel-uglify-plugin并行运行UglifyJS插件
+5. DDLPlugin
 二、打包体积
 1. image-webpack-loader压缩图片
 2. CDN加速

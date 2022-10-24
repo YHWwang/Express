@@ -46,7 +46,7 @@ require.context()动态模块热重载
 三、它通过mapState把全局的 state 和 getters 映射到当前组件的 computed 计算属性中
 
 # Vuex实现登录验证
-  1. 输入正确的用户名密码后，返回的token存到localStorage和vuex的state中
+  1. 输入正确的用户名密码后，返回的token存到cookie中
   2. 在之后的axios请求中的请求拦截器axios.interceptors.request.use中带上token,
   3. 后台在判断请求是否有无token,有则比对成功就返数据，无token或者失效则返回401
   4. 前端设置axios响应拦截器axios.interceptors.response.use分析状态码，如拿到状态码401就清除token并跳转到登录页
