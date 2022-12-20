@@ -1,3 +1,9 @@
+# 网页变为黑白配色(重大事件的样式)
+html {
+  filter: grayscale(1);
+}
+
+
 # 块元素和行内元素、行内块元素的区别
 块级元素可设置高宽，独占一行
 行内元素不能设置高宽，高度由内容的高度决定，一行可多个行内元素
@@ -132,6 +138,22 @@ console.log("插入排序arr", insertSort(arr))
 4. 火狐(低版本)中innerText是获取不到文本的。谷歌却可以。
 5. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
 6. firefox浏览器不触发window.addEventListener('load')
+7. 火狐浏览器下e.path获取不到解决方法： 
+   const path = this.composedPath(e);
+   composedPath(e) {
+            if (e.path) {
+                return e.path;
+            }
+            let target = e.target;
+
+            e.path = [];
+            while (target.parentNode !== null) {
+                e.path.push(target);
+                target = target.parentNode;
+            }
+            e.path.push(document, window);
+            return e.path;
+        },
 
 # 火狐浏览器hover字体加粗效果,宽度变化的问题
 html-》加上title='文本内容'

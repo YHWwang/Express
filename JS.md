@@ -1,3 +1,22 @@
+# js引擎有哪些?为什么js可以在浏览器中被执行
+1. IE->渲染引擎->Trident;JS引擎->Chakra
+2. Edge->渲染引擎->EdgeHTML;JS引擎->Chakra
+3. Firefox->渲染引擎->Gecko;JS引擎->SpiderMonkey
+4. Chrome->渲染引擎->Webjit--Blink;JS引擎->V8
+5. Safri->渲染引擎->Webkit;JS引擎->JavascriptCore
+6. Opera->渲染引擎->Presto--Blink;JS引擎->CaraKan
+
+原因：因为浏览器中有JavaScript解析引擎，不同的浏览器使用不同的JavaScript解析引擎
+
+# cookie存在的意义
+为什么会有cookies这种东西存在，这要从http的特性谈起，起初http是一个无状态的协议（当然现在也是无状态的协议），之所以无状态是因为http是基于tcp的上传应用协议，它的一个主要特点就是用完即放，也就是客户端发起请求、服务器相应后tcp连接就断开了，这种模式决定了是http无法保存状态。
+协议本身就是一种约定，为相同的场景约定出来一套规范，为未来可能的场景预测出来一套规范。
+那么有了cookies后http就变得有状态了，可以说cookies是对http的扩展或者增强，比较常用的比如：保存用户的登陆状态
+
+# 什么是尾调用优化和尾递归？
+尾调用：即只保留内层函数的调用记录。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用记录只有一项，这将大大节省内存。这就是"尾调用优化"的意义。ES6的尾调用优化只在严格模式下开启，正常模式是无效的。
+尾递归：函数调用自身，称为递归。如果尾调用自身，就称为尾递归。尾递归的好处可以释放外层函数的调用栈，较少栈层级，节省内存开销，避免内存溢出。
+
 # 分别使用Promise和async改写成每隔1s打印1个数字的形式
     async function print(n) {
         for (var i = 0; i < n; i++) {
@@ -40,6 +59,8 @@ Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(
 浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的Etag值放到request header里的If-None-Match里，服务器只需要比较客户端传来的If-None-Match跟自己服务器上该资源的ETag是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
 如果服务器发现ETag匹配不上，那么直接以常规GET 200回包形式将新的资源（当然也包括了新的ETag）发给客户端。
 如果ETag是一致的，则直接返回304知会客户端直接使用本地缓存即可。
+cache-control,etag,expires,Last-Modified在response
+if-modified-since,if-none-match在request
 
 # async和defer区别
 async:加载和渲染后续文档元素的过程将和 script.js 的加载与执行并行进行（异步）。无序
@@ -273,6 +294,14 @@ console.log(myInstanceOf({}, Fn)) // false
 console.log(myInstanceOf(null, Fn)) // false
 console.log(myInstanceOf(1, Fn)) // false
 
+# Instanceof能否判断基本数据类型？（能）
+其实就是自定义instanceof行为的一种方式，这里将原有的instanceof方法重定义，换成了typeof，因此能够判断基本数据类型。
+class PrimitiveNumber {     
+    static [Symbol.hasInstance](x) {         
+        return typeof x === 'number'         
+    }    
+}     
+console.log(111 instanceof PrimitiveNumber) // true
 
 # 事件委托
 是利用事件冒泡的特性，将本应该绑定在多个元素上的事件绑定在他们的祖先元素上，尤其在动态添加子元素的时候，可以非常方便的提高程序性能，减小内存空间。e.target.nodename.toLowerCase()可用于判断当前标签的名称
@@ -288,6 +317,7 @@ console.log(myInstanceOf(1, Fn)) // false
 引用类型比地址( {} == !{}  "[object Object]" == 0 ---false)，基本类型比值
 [] === [] //false 和 {} === {}//false
 “==允许在相等比较中进行强制类型转换，而===不允许”。
+引用类型转换boolean时为true
 null和undefined几乎一致，两者相等不全等，且不等于其他的：0、""和false；
 
 # 垃圾回收（核心思想就是如何判断内存已经不再使用）

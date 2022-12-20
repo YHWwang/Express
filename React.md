@@ -1,9 +1,96 @@
-# React
+# Readux （严格的单向数据流,只有一个单一的 store）
+1. Actions:store 数据的唯一来源
+let nextTodoId = 0
+export const addTodo = label => {
+  return {
+    type: 'ADD_TODO',
+    value: nextTodoId++,
+    label
+  }
+}
+2. Reducers:指定了应用状态的变化如何响应 actions 并发送到 store 的
+   const todos = (state = [], action) => {
+    switch (action.type) {
+      case 'ADD_TODO':
+        return [
+          ...state,
+          {
+            value: action.value,
+            label: action.label,
+            completed: false
+          }
+        ]
+      case 'TOGGLE_TODO':
+        return state.map(todo =>
+          (todo.value === action.value) 
+            ? {...todo, completed: !todo.completed}
+            : todo
+        )
+      default:
+        return state
+    }
+  }
+  export default todos
+3. Store:连接Actions + Reducers
+    维持应用的 state；
+    提供 getState() 方法获取 state；
+    提供 dispatch(action) 方法更新 state；
+    通过 subscribe(listener) 注册监听器;
+    通过 subscribe(listener) 返回的函数注销监听器。
+
+
+# Readux合并多个reducer 
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter
+})
+
+# React-Router
+
+ReactRouter中提供了以下三大组件：
+1. Router是所有路由组件共用的底层接口组件，它是路由规则制定的最外层的容器。
+2. Route路由规则匹配，并显示当前的规则对应的组件。
+3. Link路由跳转的组件
+
+# React-router-dom---(V6)路由编程式跳转
+import { useNavigate } from 'react-router-dom';
+  const navigate = useNavigate()
+  navigate('/page')
+
+# Ref修改子组件值(useRef)
+父：
+import React, { useRef,MutableRefObject } from 'react'
+const formRef:MutableRefObject<any> = useRef(null)
+const openForm = () => {//子组件的抛出方法
+ formRef.current.openForm()
+};
+子：
+import React, { forwardRef ,useImperativeHandle} from 'react'
+const SonComponent = forwardRef((props, ref) => {
+   useImperativeHandle(ref, () => {
+       return {
+           useImperativeHandle(ref,()=>{
+            return {
+              openForm:()=>{//抛出的方法
+                setIsModalOpen(true);//hook修改值
+              }
+            }
+          })
+       }
+   })
+   return <div>我是子组件</div>
+})
+export default SonComponent;
+
+<FormPages ref={formRef} />
+
 
 # React-Router路由传值的方法
 1. params传值，刷新页面参数不消失，参数会在地址栏显示（配置路由path:'/about/:id'后设置link标签'/about/3'）this.props.params.id
 2. query传参，刷新页面参数消失，参数不会在地址栏显示 to={{pathname:'/about', query:{id:3} 获取this.props.location.query.id
 3. state传参，刷新页面参数不消失,参数不会在地址栏显示to={{pathname:'/about', state:{id:3} 获取this.props.location.state.id 
+
+# React
 
 # React和Vue的区别
 都使用VDOM虚拟节点，极大提升性能，组件化应用
@@ -66,106 +153,55 @@ state中有两个参数
   2. this.fun.bind(this)
   3. es6箭头函数：()=>this.fun()此语法问题在于每次渲染 LoggingButton 时都会创建不同的回调函数。在大多数情况下，这没什么问题，但如果该回调函数作为 prop 传入子组件时，这些组件可能会进行额外的重新渲染。我们通常建议在构造器中绑定或使用 class fields 语法来避免这类性能问题。
 
-# Hook
-函数组件中调用，创建组件的方法有
-1. 函数组件 function(){return()}
-2. es5的createClass()
-3. es6的react.component()
-useState 方法使用hook
-useEffect hook下让函数组件拥有生命周期
-定义值 const [count, setCount] = useState(100);
-  <button onClick={() => setFruit('apple')}>设置改变的值
-        Click me {count} 获取值
-  </button>
+# Hook (React 16.8 新增的特性,它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性)
+1. useState状态钩子
+   const [data, setData] = useState(0)
+2. useContext共享状态钩子
+   const TestContext = React.createContext({})
+   父组件：<TestContext.Provider
+    value:{{
+      username:'xxxxx'
+      messageDetail:'xxxxxx
+    }}
+    >
+      <div>
+        <子组件1 />
+        <子组件2 />
+      </div>
+    </TestContext.Provider>
+  子组件： const {username} = useContext(TestContext)
+3. useEffect 副作用钩子
+    它可以用来更好的处理副作用，如异步请求等；可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。
+   useEffect(() => {
+    api()
+  }, [变量])
 
-# redux
-redux 是 js 应用的可预测状态的容器。 可以理解为全局数据状态管理工具（状态管理机），用来做组件通信等。
+# Hooks解决的问题
+1. 类组件的不足：1.状态逻辑难复用2.趋向复杂难以维护3.this指向问题
+2. Hooks优势: 1.能优化类组件的三大问题
+              2.能在无需修改组件结构的情况下复用状态逻辑（自定义 Hooks ）
+              3.能将组件中相互关联的部分拆分成更小的函数（比如设置订阅或请求数据）
+              4.副作用的关注点分离：副作用指那些没有发生在数据向视图转换过程中的逻辑，如 ajax 请求、访问原生dom 元素、本地持久化缓存、绑定/解绑事件、添加订阅、设置定时器、记录日志等。以往这些副作用都是写在类组件生命周期函数中的。而 useEffect 在全部渲染完毕后才会执行，useLayoutEffect 会在浏览器 layout 之后，painting 之前执行。
 
-
-# react-redux
-
-1. 引用容器组件
-import Nmub from './num' 
-
-2. 容器组件
-import { connect } from "react-redux";
-import { incrementAction, reduceAction } from "@reducers/num"; // 引用reducers
-import tests from '@components/Num' // 引用组件
-const mapStateToProps = state => {
-    return {
-        'Numb': state.Numb
+# useEffect: 在全部渲染完毕后才会执行 (useLayoutEffect 会在 浏览器 layout 之后，painting 之前执行)
+你可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合
+  useEffect(() => {
+    $axios.get('api/getList').then(res => {
+      setData(res.data.data)
     }
-}
-const mkapDispatchToProps = dispatch => {
-    return {
-        increment: () => dispatch(incrementAction),//如果是计算则incrementAction(),
-        decrement: () => dispatch(reduceAction)
-    }
-}
-const Numb = connect(//connect作用：React 组件和 Redux 的 store 连接
-    mapStateToProps,// 输入逻辑
-    mkapDispatchToProps// 输出逻辑
-)(tests)
-export default Numb
+    )
+  }, [])
+ useEffect(() => {
+        console.log("这里传空数组,只在第一次渲染时调用");
+    },[]);
 
-3. reducers
-export const incrementAction = { type: 'INCREMENT', count: 2 }
-export const incrementAction = () => { return { type: 'INCREMENT', id: next++, text: 'next'  }} // 如果需要计算
-export const reduceAction = { type: 'REDUCE', count: 1 }
-const Numb = (state = 0, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + action.count
-        case 'REDUCE':
-            return state - action.count
-        default:
-            return state
-    }
-}
-export default Numb
-reducers.index文件下引用关联state
-const rootReducer = combineReducers({
-  Numb
-  })
-4. 组件
-import React from 'react'
-import PropTypes from 'prop-types' 
-const tests = ({ increment, decrement, Numb }) => (
-  <div>
-    <p onClick={() => increment()}>click to increment num</p>
-    <p onClick={() => decrement()}>click to decrement num</p>
-    <p>{Numb}</p>
-  </div>
-)
-tests.propTypes = { // 验证数据类型
-  Numb: PropTypes.number.isRequired,
-  increment: PropTypes.func.isRequired,
-  decrement: PropTypes.func.isRequired
-}
-export default tests
+    useEffect(() => {
+        console.log("这里不传第二个参数,所有状态改变的时候都调用");
+    });
 
-1.mapStateToProps（state, ownProps）mapStateToProps是一个函数，用于建立组件跟 store 的 state 的映射关系
-2.mapDispatchToProps用于建立组件跟store.dispatch的映射关系,可以是一个object，也可以传入函数
+    useEffect(() => {
+        return ()=>{
+            console.log("这里只在组件卸载的时候调用");
+        }
+    },[]);
 
-// 获取sotre
-import { createStore } from 'redux'
-function todos(state = [], action) {
-  switch (action.type) {
-    case 'TEST':
-      return state.concat([action.text])
-
-    default:
-      return state
-  }
-}
- let store = createStore(todos, ['Use Redux'])//一个参数是获取，第二个是默认值
-    store.dispatch({
-      type: 'TEST',
-      text: 'Read the docs'
-    })
-    console.log(store.getState())
-
-# redux-actions 
-1. createAction(s)
-2. handleAction(s)
-3. combineActions
