@@ -75,6 +75,9 @@ vue的子组件不能直接使用父组件的数据，需要用到prop传递数�
 子组件 beforeDestroy destroyed
 父组件 destroyed
 
+# 1. Vue2和Vue3中VDOM的区别
+ 在vue2中，每次更新真实DOM之前都是对虚拟DOM全量对比  vue3中则是只对比带有标记的，这样大大的减少了非动态内容的对比消耗
+ 
 # 1. Vue2中是对数组进行监测变化的？
 由于 Object.defineProperty 只对属性 key 进行监听，无法对引用对象进行监听，所以在 Vue2 中创建一个了 Observer 类对整个对象的依赖进行管理，当对响应式对象进行新增或者删除则由响应式对象中的 dep 通知相关依赖进行更新操作。
 Object.defineProperty 也可以实现对数组的监听的，但因为性能的原因 Vue2 放弃了这种方案，改由重写数组原型对象上的 7 个能操作数组内容的变更的方法，从而实现对数组的响应式监听。（push,pop,shift,unshift,sort,reverse,splice）

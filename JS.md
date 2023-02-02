@@ -1,3 +1,7 @@
+# toFixed(nums),nums值在0-20之间是四舍五入，其它则不包含'5'
+(30.505).toFixed(2)--30.50
+(10.505).toFixed(2)--10.51
+
 # js引擎有哪些?为什么js可以在浏览器中被执行
 1. IE->渲染引擎->Trident;JS引擎->Chakra
 2. Edge->渲染引擎->EdgeHTML;JS引擎->Chakra

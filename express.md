@@ -1,3 +1,16 @@
+# 埋点问题，如何记录用户在页面的停留时长？如果直接关闭浏览器如何记录时间？
+1. router.beforeEach切换路由来记录开始、结束时间重点在发送记录后重置开始时间。如果异常退出则数据会有问题，
+2. 第二次进入再进入上报，每个一段时间30s更新页面数据信息暂存localStorage,再次进入页面判断值是否存在，存在则上报数据，缺点就是数据有延迟
+
+# 三个类名：a-1，a-2,a-3如何选中这些‘a-’开头的类名
+div[class^='a-']{}
+
+# 如何实现用户下拉选择主题，选择后网站整体换肤
+scss-->设置四种主题的样式
+main.js引入scss文件
+App.vue文件设置默认主题document.getElementById('app').setAttribute('class',主题一className)
+点击切换主题功能是调用函数来设置document.getElementById('app').setAttribute('class',切换主题的className)
+
 # 网页变为黑白配色(重大事件的样式)
 html {
   filter: grayscale(1);
