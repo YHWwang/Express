@@ -1,8 +1,64 @@
+# express合koa的区别(https://www.jianshu.com/p/feff9c4b6327)
+express 是完整和强大的，里面集成了大量的中间件，比如说：路由，静态资源等中间件。对于开发者而言，技术统一，都是使用 express 内部提供的。
+koa 是灵活和自由的，基本上没有集成任何中间件（核心代码只有大致1600行左右），中间件都需要自己去安装。对于开发者而言，选择技术的类型是多样的，丰富的。
+执行顺序:
+   Express 封装、内置了很多中间件，比如 connect和 router，而 KOA 则比较轻量，开发者可以根据自身需求定制框架；
+   Express 是基于 callback 来处理中间件的，而 KOA 则是基于 await/async；
+   在异步执行中间件时，Express 并非严格按照洋葱模型执行中间件，而 KOA 则是严格遵循洋葱模型的。
+   Express 使用 callback捕获异常，对于深层次的异常捕获不了，Koa 使用 try catch，能更好地解决异常捕获。
+
+# node子进程
+node的主线程为单线程，单线程提高了代码的运行速度，但node内部使用多线程完成IO操作，当某些操作阻塞主线程时，则将开启子线程用于处理操作，将最终操作结果返回给主线程即可。
+node中使用child_process创建子线程，通常使用
+1. child_process.exec() 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。
+2. child_process.spawn()使用指定的命令行参数创建新进程。
+3.  child_process.fork()是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork('./son.js') 相当于 spawn('node', ['./son.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+
+# Node中EventEmitter的理解
+事件触发与事件监听功能的封装
+1. 引用模块
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+2. 创建监听器函数
+// 监听器 #1
+var listener1 = function listener1() {
+   console.log('监听器 listener1 执行。');
+}
+// 监听器 #2
+var listener2 = function listener2() {
+  console.log('监听器 listener2 执行。');
+}
+
+3. 绑定监听器( on/addListener方法 )
+// 绑定 connection 事件，处理函数为 listener1 
+eventEmitter.addListener('connection', listener1);
+// 绑定 connection 事件，处理函数为 listener2
+eventEmitter.on('connection', listener2);
+
+4. 计算监听器个数（listenerCount）
+var eventListeners = eventEmitter.listenerCount('connection');
+console.log(eventListeners + " 个监听器监听连接事件。");
+
+5. 触发监听器（emit）
+// 处理 connection 事件 
+eventEmitter.emit('connection');
+
+6. 移除监听器（removeListener）
+// 移除监绑定的 listener1 函数
+eventEmitter.removeListener('connection', listener1);
+console.log("listener1 不再受监听。");
+
+# nodeJS全局变量？全局对象？
+全局变量：__filename、__dirname
+全局对象：global、console、process、Buffer、setTimeout、setInterval、setImmediate
+
 # 说下进程、线程和协程
 1. 进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体。进程是一种抽象的概念，从来没有统一的标准定义。
 2. 线程是程序执行中一个单一的顺序控制流程，是程序执行流的最小单元，是处理器调度和分派的基本单位。一个进程可以有一个或多个线程，各个线程之间共享程序的内存空间(也就是所在进程的内存空间)。一个标准的线程由线程ID、当前指令指针(PC)、寄存器和堆栈组成。而进程由内存空间(代码、数据、进程空间、打开的文件)和一个或多个线程组成。
 3. 协程，英文Coroutines，是一种基于线程之上，但又比线程更加轻量级的存在，这种由程序员自己写程序来管理的轻量级线程叫做『用户空间线程』，具有对内核来说不可见的特性。
-进程和线程的区别与联系
+   
+# 进程和线程的区别与联系
 【区别】：
 调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位；
 并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行；
@@ -18,11 +74,11 @@
 # 怎么看nodejs可支持高并发？
 1. nodejs是单线程架构模型，单线程的优势：在于节省了线程切换的开销以及线程冲突的问题
    劣势：劣势也很明显，现在起步都是 4 核，单线程没法充分利用 cpu 的资源
-        单线程，一旦崩溃，应用就挂掉了，大家调试脚本也知道一旦执行过程报错了，本次调试就直接结束了
-        因为只能利用一个 cpu ，一旦 cpu 被某个计算一直占用， cpu 得不到释放，后续的请求就会一直被挂起，直接无响应了
-    当然这些劣势都已经有成熟的解决方案了，使用 PM2 管理进程，或者上 K8S 也可以
+   单线程，一旦崩溃，应用就挂掉了，大家调试脚本也知道一旦执行过程报错了，本次调试就直接结束了
+   因为只能利用一个 cpu ，一旦 cpu 被某个计算一直占用， cpu 得不到释放，后续的请求就会一直被挂起，直接无响应了
+   当然这些劣势都已经有成熟的解决方案了，使用 PM2 管理进程，或者上 K8S 也可以
 2. 核心在于JS引擎的事件循环机制
-浏览器和 nodejs 的事件循环是稍有区别的，nodejs 是异步非阻塞的，所以能扛住高并发
+浏览器和 nodejs 的事件循环是稍有区别的，nodejs 是异步非阻塞的，之所以单线程能处理高并发的原因，得益于libuv层的事件循环机制和底层线程池实现
 Node 中的 Event Loop 和浏览器中的是完全不相同的东西。Node.js采用V8作为js的解析引擎，而I/O处理方面使用了自己设计的libuv，libuv是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的API，事件循环机制也是它里面的实现
 
 Node.js的运行机制如下:

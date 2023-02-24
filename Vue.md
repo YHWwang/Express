@@ -53,45 +53,60 @@ require.context()动态模块热重载
 
 # VUE ----------------------
 
+# 对Vue理解
+渐进式框架，只需关注视图层，1.易用->提供数据响应式让开发者只需关心业务，灵活->众多库vuex、vue-router、vue-cli等工具，高效->采用diff算法更新虚拟DOM；缺点也很明显就是不支持IE8以下的版本并且对网站的SEO不利，当然也有ssr服务端渲染方式，库nuxt.js来提高SEO
+
+# .sync属性的认识
+一个组件上只能有一个v-model，.sync修饰符可以有多个。
 .sync多个组件属性需要双向绑定时使用,带有.sync修饰符的v-bind不能喝表达式一起使用
 vue的子组件不能直接使用父组件的数据，需要用到prop传递数据。vue通过自定义事件系统来帮助我们修改父组件上的数,子组件通过$emit()方法修改父组件上面的数据。
-:money.sync="total" 等价于 :money="total" v-on:update:money="total=$event"
+:a.sync="num"//它等价于:a="num" @update:a="val=>num=val"
 使用.sync后写法需要注意的是：eventName只能采用update:传递过来的prop属性的方式才行。this.$emit("update:value", e.target.value)
 .sync只是个语法糖
 
 # vue父子组件的渲染顺序
-1、挂载渲染的顺序
-父组件 beforeCreate created beforeMount
-子组件 beforeCreate created beforeMount mounted
-父组件 mounted
+   1. 挂载渲染的顺序
+   父组件 beforeCreate created beforeMount
+   子组件 beforeCreate created beforeMount mounted
+   父组件 mounted
+   2. 更新的顺序
+   父组件 beforeUpdate
+   子组件 beforeUpdate updated
+   父组件 updated
+   3. 销毁的顺序
+   父组件 beforeDestroy
+   子组件 beforeDestroy destroyed
+   父组件 destroyed
 
-2、更新的顺序
-父组件 beforeUpdate
-子组件 beforeUpdate updated
-父组件 updated
+# Vue2和Vue3中虚拟DOM的区别?
+   1. 在vue2中，每次更新真实DOM之前都是对虚拟DOM全量对比 
+   2. vue3中则是只对比带PatchFlag的这些node会被真正的追踪，也就是说在后续更新的过程中，Vue会知道静态节点不用管，只需要追踪带有PatchFlag的节点，这样大大的减少了非动态内容的对比消耗
 
-3、销毁的顺序
-父组件 beforeDestroy
-子组件 beforeDestroy destroyed
-父组件 destroyed
+ # 虚拟DOM节点优异
+理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
+优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
+缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
-# 1. Vue2和Vue3中VDOM的区别
- 在vue2中，每次更新真实DOM之前都是对虚拟DOM全量对比  vue3中则是只对比带有标记的，这样大大的减少了非动态内容的对比消耗
- 
-# 1. Vue2中是对数组进行监测变化的？
+# 虚拟DOM是如何合并patch的  (虚拟节点如何对比的？)
+1.判断老节点是否存在-----不存在->直接创建并插入节点
+2.存在老节点判断是否是同一个节点----不存在->创建真实节点插入并删除老节点
+3.是同一节点进行使用patchVnode详细的对比并更新
+
+# Vue2中是对数组进行监测变化的？
 由于 Object.defineProperty 只对属性 key 进行监听，无法对引用对象进行监听，所以在 Vue2 中创建一个了 Observer 类对整个对象的依赖进行管理，当对响应式对象进行新增或者删除则由响应式对象中的 dep 通知相关依赖进行更新操作。
 Object.defineProperty 也可以实现对数组的监听的，但因为性能的原因 Vue2 放弃了这种方案，改由重写数组原型对象上的 7 个能操作数组内容的变更的方法，从而实现对数组的响应式监听。（push,pop,shift,unshift,sort,reverse,splice）
 
-2. 为什么要通过重写数组原型的7个方法，是Object.defineProperty不能监测数组变化嘛？
+# 为什么要通过重写数组原型的7个方法，是Object.defineProperty不能监测数组变化嘛？
 Object.defineProperty()是可以监测数组的变化的，但也监听不了 push、pop、shift 等对数组进行操作的方法.缺点在于性能代码和获得的用户体验收益不成正比,所以只重写以上七种方法,
 原理----
    1. 就是使用拦截器覆盖 Array.prototype,之后再去使用 Array 原型上的方法的时候，则使用的是拦截器提供的方法，在拦截器内部使用原生 Array 原型上的方法去操作数组。
    2. 通过拦截器之后，我们就可以追踪到数组的变化了，然后就可以在拦截器里面进行依赖收集和触发依赖了。
    3. 在数组进行响应式初始化的时候会在 Observer 类里面给这个数组对象的添加一个 __ob__ 的属性，这个属性的值就是 Observer 这个类的实例对象，而这个 Observer 类里面有存在一个收集依赖的属性 dep，所以在对数组里的内容通过那 7 个方法进行操作的时候，会触发数组的拦截器，那么在拦截器里面就可以访问到这个数组的 Observer 类的实例对象，从而可以向这些数组的依赖发送变更通知。
 
-1. Vue3的响应式原理是怎么样的？
+# Vue3的响应式原理是怎么样的？
 Vue3 是通过 Proxy 对数据实现 getter/setter 代理，从而实现响应式数据，然后在副作用函数中读取响应式数据的时候，就会触发 Proxy 的 getter，在 getter 里面把对当前的副作用函数保存起来，将来对应响应式数据发生更改的话，则把之前保存起来的副作用函数取出来执行。
-2. vue3真的只使用Proxy就可以实现对数组的代理嘛？还需要进行什么设置呐？
+
+# vue3真的只使用Proxy就可以实现对数组的代理嘛？还需要进行什么设置呐？
 Proxy构造函数的第一个参数是原始数据data；第二个参数是一个叫handler的处理器对象。Handler是一系列的代理方法集合，它的作用是拦截所有发生在data数据上的操作。这里的get()和set()是最常用的两个方法，分别代理访问和赋值两个操作。在Observer里，它们的作用是分别调用dep.depend()和dep.notify()实现订阅和发布。直接反映在Vue里的好处就是：我们不再需要使用Vue.$set()这类响应式操作了。除此之外，handler共有十三种劫持方式，比如deleteProperty就是用于劫持域删除。
 当数组响应式对象使用 includes、indexOf、lastIndexOf 这方法的时候，它们内部的 this 指向的是代理对象，并且在获取数组元素时得到的值要也是代理对象，所以当使用原始值去数组响应式对象中查找的时候，如果不进行特别的处理，是查找不到的，所以我们需要对上述的数组方法进行重写才能解决这个问题。
 
@@ -220,9 +235,9 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
 第一步：需要observe的数据对象进行递归遍历，包括子属性对象的属性，都加上 setter和getter,给这个对象的某个值赋值，就会触发setter，那么就能监听到了数据变化
 第二步：compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图
 第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，主要做的事情是:
-1、在自身实例化时往属性订阅器(dep)里面添加自己
-2、自身必须有一个update()方法
-3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。
+  1、在自身实例化时往属性订阅器(dep)里面添加自己
+  2、自身必须有一个update()方法
+  3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。
 第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据model变更的双向绑定效果
 1. Object.defineProperty(监听input将指赋值给对象，触发绑定并赋值给dom)
   let a = {}
@@ -295,14 +310,14 @@ Proxy的优点：
   3. 销毁阶段: beforeDestroy,destroyed
 
 # vue生命周期钩子
-选项式api(13个):
+选项式Options api(13个):
   1. beforeCreate，created----mounted,beforeMount----updated,beforeUpdate----destory,beforeDestory
   2. keep-alive中组件有俩个生命周期：activated（组件激活）,deactivated（组件未激活）
       组件创建和销毁性能上消耗大，激活和未激活则有效的缓存了组件，目的呢就是不让组件重复的渲染
   3. errorCaptured（捕获子孙组件的错误）
   4. renderTracked (vue3新加)-- 状态跟踪：只要页面有update的情况，它就会跟踪，然后生成一个event对象
   5. renderTriggered (vue3新加) -- 状态触发：它不会跟踪每一个值，而是给你变化值的信息，并且新值和旧值都会给你明确的展示出来
-组合式API入口，setup函数注册生命周期钩子(11个):
+组合式Composition API入口，setup函数注册生命周期钩子(11个):
   1.  onBeforeMount,onMounted
   2.  onBeforeUpdate,onUpdated
   3.  onBeforeUnmount,onUnmounted => 由destroyed，beforeDestroy改名
@@ -320,15 +335,9 @@ Proxy的优点：
 3. computed 输出的是一个只读的响应式引用
 4. setup函数只能是同步的不能是异步的（可配合async/await）,props是响应式的
 
-# 虚拟DOM节点优异
-理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
-优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
-缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
-
-# 虚拟DOM是如何合并patch的
-1.判断老节点是否存在-----不存在->直接创建并插入节点
-2.存在老节点判断是否是同一个节点----不存在->创建真实节点插入并删除老节点
-3.是同一节点进行使用patchVnode详细的对比并更新
+# VUE遇到的问题
+1. 表单加key来标识
+2. 数据量大的表格很卡顿，Object.freeze()解决
 
 # vue开发权限管理系统(https://segmentfault.com/a/1190000009506097)
 前端权限控制可以分为四个方面：接口权限、按钮权限、菜单权限、路由权限
@@ -340,7 +349,16 @@ Proxy的优点：
   })
 ，获取到路由信息后通过router.addRoutes(动态路由)动态添加到可访问的路由表中，在通过next({ ...to, replace: true })确保addRoutes已完成,便得到可访问的菜单
 
-
+# watch如何深度监测对象
+  watch: {
+    question: {
+      handler(newQuestion) {
+        // 在组件实例创建时会立即调用
+      },
+      immediate: true,// 强制立即执行回调
+      deep: true //深度监测
+    }
+  }
 
 # watch和computed的区别
 watch：

@@ -542,7 +542,7 @@ split(字符串或正则表达式，返回数组的最大长度)用于把一个�
    优点：对于所有基本的数据类型都能进行判断，即使是 null 和 undefined,且和下面的Array.isArray方法一样都检测出 iframes.
    缺点：不能精准判断自定义对象，对于自定义对象只会返回[object Object]
 
-   1. typeof:只能判断原始类型，typeof null === 'object' 因为null是空指针对象
+   1. typeof:只能判断原始类型，typeof null === 'object' 因为null是空指针对象,可判断函数类型
 
    2. instanceof:内部机制是通过判断对象的原型链中是不是能找到类型的 prototype.
    优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
@@ -723,7 +723,7 @@ Promise.myAll = (promises) => {
   })
 }
 # 实现Promise.allSettled
-        Promise.myAllSettled = (promises) => {
+        Promise.myAllSettled = (promises) => { //无论成功失败都会返回
             return new Promise((resolve, reject) => {
                 let result = []
                 let count = 0
