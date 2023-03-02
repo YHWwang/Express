@@ -96,4 +96,4 @@ Pending callbacks: 执行延迟到下一个循环迭代的 I/O 回调。
 Idle,prepare:  队列的移动，仅系统内部使用
 Poll轮询: 检索新的 I/O 事件;执行与 I/O 相关的回调（几乎所有情况下，除了关闭的回调函数，它们由计时器和 setImmediate() 排定的之外），其余情况 node 将在此处阻塞。
 Check: 执行 setImmediate() 的回调，setImmediate在这里执行
-Close callbacks : 执行close事件的callback，如执行 socket 的 close 事件回调
+Close callbacks: 执行close事件的callback，如执行 socket 的 close 事件回调
