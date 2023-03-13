@@ -165,8 +165,10 @@ console.log("插入排序arr", insertSort(arr))
         $('.goodsList').append(list)
     }
     2.  父元素伪元素：  content: '';
-                       width: 子元素宽度;
-                       border: 1px solid transparent;
+                       flex: auto;
+                    子元素：{
+                        flex: 0 1 20%
+                    }
 
 
 # 谷歌和火狐之间浏览器差异

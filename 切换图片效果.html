@@ -16,11 +16,12 @@
 
 <body class="en">
     <style>
-        div[class^="a-"]{
+        div[class^="a-"] {
             width: 50px;
             height: 50px;
             background-color: red;
         }
+
         #pills-profile .airbuds5Pro_spesc,
         .oscal-specification-table {
             width: 80%;
@@ -110,44 +111,46 @@
     </style>
     <div id="AMain" class="main">
         <!-- 
-            遇到的难点1.上传app包，文件包名自动生成，组件特殊功能开发，
-            浏览器兼容性：1.字体和字号问题，scrollbar问题，hover加粗问题
+            遇到的难点：
+            1.上传apk并解析里面的参数，据参数和定义的规则自动生成包名，
+            2.接口返回数据快慢的覆盖问题，
+            3.addEventListener监听事件造成弹窗内submit事件多次执行回调 
+            4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作
+            5.justify-content: space-between/space-around最后一排的位置问题如何解决?
+            浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
-          通过数据劫持，结合发布者订阅模式，通过object.defineProperty去劫持各个属性的get,set进而触发响应的监听回调事件，说到低就说observer,compile,watcher,observer会遍历对象，给每个属性添加get,set方法，数据变更时触发set进而监听数据，compile编译器，将data中的变量变成页面中的数据，给节点绑定回调函数，watcher,是observer和compile链接的桥梁，1.向_dep_中添加自己，2创建update（）函数，3当数据改变触发dep.notice()发送通知，调用自身的update方法触发compile中的回调，更新视图
-            vue2中的object.defineProperty无法对数组原型上的push,pop，shift等函数的监听，尤雨希再github中是这么回答这个问题的（用户体验和功能效率不成正比）就重写了这几个方法，具体操作是，当我们调用数组原型的这几个方法时，会进入一个拦截器中，拦截器内部再去调用数组原型上的方法，数据改变就可以进行依赖收集和触发触发，再数据初始化时会给对象添加一个__ob__属性，这个是observer类的一个实例，而ob属性下有个dep依赖收集的属性，当我们调用7个方法时，就会触发数组的拦截器，进而向数组的依赖发送变更通知
            2.BFC是啥，触发条件？
-          块级格式化上下文，再bfc内部的话无论如何布局都不会影响外部的布局，absolute,overflow:hidden,flex,
            3.原型链，原型，console.log( function instanceof object , object instanceof function , function instanceof function ,object instance object)打印的值，为什么说明原因
-           
+
            4.常用状态码？浏览器缓存方式有哪些？需要设置哪些参数？同源策略？有10个接口大约每个100ms，chrome需要多少时间加载完（就是同一域名最多加载多少个接口）
-           强缓存和协商缓存，强缓存是设置exprices,cache-control设置有效时间，1.if-Modified-since + last-Modified最后修改时间，if-none-match + etag根据唯一标识来判断是否修改
+
            5. vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
             
-           6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
-           
-           7.js是单还是双进程？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
-           8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
-           9.this绑定的方法？new做了什么事？script标签中defer和async区别？
-        
 
-           10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？justify-content: space-between/space-around最后一排的位置问题如何解决?
+           6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
+           7.js是单还是双进程为什么？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
+
+           8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
+
+           9.this绑定的方法？new做了什么事？script标签中defer和async区别？
+
+           10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？
            11.HTTP浏览器输入URL后发生了什么?页面如何渲染?垃圾回收机制？
+
            12.选择排序，快速排序，希尔排序，归并排序，插入排序
-            function instanceof object
-            object instanceof function
-            function instanceof f
-            o isntacnceof o
 
             this：
 
             盒子模型：
             display:
             块元素（可改变元素的高宽），行内:，行内块：
-            缓存：
-            vue双向原理
         -->
         <input type="text" id="inp" />
-        <div id="show" style="width: 100px;height: 100px;box-sizing: content-box;padding: 50px;"></div>
+        <div id="show"
+            style="box-sizing: content-box;width: 0;height: 0;margin: 100px auto;border-left: 50px solid transparent;border-right: 50px solid transparent;border-top: 50px solid transparent;border-bottom: 50px solid red;">
+            <!-- <div style="width: 50px;height: 50px;background-color: red;margin: 50px;overflow:hidden;"></div>
+            <div style="width: 50px;height: 50px;background-color: yellow;margin: 50px;display: inline-block;"></div> -->
+        </div>
         <div>
             <canvas id="myCanvas" width="500" height="500"></canvas>
             <style>
@@ -246,184 +249,76 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
-    document.querySelectorAll('a-')
-    let str = [1, 2, 3, 4, 3, 2, 1, 5];
-    let checkStr = (str) => {
-        let res = null
-        let max = str[0], min = str[0]
-        str.forEach(item => {
-            if (min > item) {
-                min = item
-            } else if (max < item) {
-                max = item
-            }
-        })
-
-        res = max - min
-        return res 
-    }
-    console.log(checkStr(str));
-    // let conArr = [
-    //     { id: 1, name: '部门1', pid: 0 },
-    //     { id: 2, name: '部门2', pid: 1 },
-    //     { id: 3, name: '部门3', pid: 1 },
-    //     { id: 4, name: '部门4', pid: 3 },
-    //     { id: 5, name: '部门5', pid: 4 },
-    // ]
     let conArr = [
-        { name: '1', type: 0 },
-        { name: '2', type: 0 },
-        { name: '3', type: 2 },
-        { name: '4', type: 2 },
-        { name: '5', type: 3 },
-        { name: '6', type: 3 },
+        { id: 1, name: '部门1', pid: 0 },
+        { id: 2, name: '部门2', pid: 1 },
+        { id: 3, name: '部门3', pid: 1 },
+        { id: 4, name: '部门4', pid: 3 },
+        { id: 5, name: '部门5', pid: 4 },
     ]
+    // let conArr = [
+    //     { name: '1', type: 0 },
+    //     { name: '2', type: 0 },
+    //     { name: '3', type: 2 },
+    //     { name: '4', type: 2 },
+    //     { name: '5', type: 3 },
+    //     { name: '6', type: 3 },
+    // ]
     // [    {type:0,values:[{name:'1',type:0},{name:'2',type:0}]}
     // {type:2,values:[{name:'3',type:2},{name:'4',type:2}]}
     // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]}    ]
-    function convert(lists) {
-        let len = lists.length
-        let result = []
-        let map = lists.reduce((res, v) => {
-            res[v.type] = {
-                type: v.type,
-                values: []
-            }
-            return res
-        }, {})
-        for (const item of lists) {
-            if (item.type in map) {
-                let parent = map[item.type]
-                parent.values.push(item)
-            }
-        }
-        for (const key in map) {
-            result.push(map[key])
-        }
-        return result
+    function convert(list) {
+
     }
     // console.log(convert(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0]
-    console.log(shallSort(MathArr));
+    console.log(quickSort(MathArr));
     // 选择排序
     function selectSort(arr) {
-        let len = arr.length
-        let min = 0
-
-        for (let i = 0; i < len; i++) {
-            min = i
-            for (let j = i + 1; j < len; j++) {
-                if (arr[j] < arr[min]) {
-                    min = j
-                }
-            };
-            [arr[i], arr[min]] = [arr[min], arr[i]];
-        }
-        return arr
     }
     // 插入排序
     function insertSort(arr) {
-        let len = arr.length
-        let j = 0
-        let temp = 0
-
-        for (let i = 1; i < len; i++) {
-            temp = arr[i]
-            j = i - 1
-
-            while (j >= 0 && arr[j] > temp) {
-                arr[j + 1] = arr[j]
-                j--
-            }
-            arr[j + 1] = temp
-        }
-        return arr
     }
     // 归并排序
     function mergeSort(arr) {
-        if (arr.length < 2) {
-            return arr
-        }
-        let len = arr.length
-        let middle = Math.floor(len / 2)
-
-        let left = arr.slice(0, middle)
-        let right = arr.slice(middle)
-
-        return merge(mergeSort(left), mergeSort(right))
     }
     function merge(left, right) {
-        let result = []
-
-        while (left.length && right.length) {
-            if (left[0] > right[0]) {
-                result.push(right.shift())
-            } else {
-                result.push(left.shift())
-            }
-        }
-        while (left.length) {
-            result.push(left.shift())
-        }
-        while (right.length) {
-            result.push(right.shift())
-        }
-        return result
     }
+
     // 快速排序
     function quickSort(arr) {
-        if (arr.length < 2) {
-            return arr
-        }
-
-        let povidIndex = Math.floor(arr.length / 2)
-        let povid = arr.splice(povidIndex, 1)[0]
-        let left = []
-        let right = []
-        arr.forEach(item => {
-            if (item > povid) {
-                right.push(item)
-            } else {
-                left.push(item)
-            }
-        });
-        return quickSort(left).concat([povid], quickSort(right))
     }
-
     // 希尔排序
     function shallSort(arr) {
-        let len = arr.length
-        let j = 0
-        let temp = 0
-        let gap = Math.floor(len / 2)
-
-        for (; gap > 1; gap = Math.floor(gap / 2)) {
-            for (let i = gap; i < len; i++) {
-                temp = arr[i]
-                j = i - gap
-
-                while (j >= 0 && arr[j] > temp) {
-                    arr[j + gap] = arr[j]
-                    j = j - gap
-                }
-                arr[j + gap] = temp
-            }
-        }
-
-        return arr
     }
 
     // a==1&&a==2,a===1&&a===2
     // console.log(a === 1 && a === 2);
-    // 双向绑定
-    // 1.由于vue无法对数组函数（push,shift,pop,reverse,unshift,sort,splice）等方法进行监听，所以创建了一个拦截器，一旦使用了数组原型上的方法便会进入拦截器中，拦截器在去调用数组原型的方法，关于数据依赖则是在数组初始化时给Observer会给数组一个_ob_这么个实例化对象，而ob_下有一个dep属性，这个属性便是依赖属性。
+    // 双向绑定：
+    // 
 
-    // 路由钩子函数 全局导航钩子beforeEach,beforeResolveafterEach,组件内导航钩子：beforeEnter,单独路由独享:beforeRouteEnter,beforeRouteUpdated,beforeRouteLeave
+    // 路由钩子函数:
 
-    // 生命周期vue2 // 4个阶段创建，加载，更新，销毁，beforeCreate,created,beforeMount,mounted,beforeUpdate,updated,beforeDestory,destoryed,activitaion,deactivation,errorCapture,renderTricked,renderTriggered
+    // 生命周期vue2 ：
 
-    // 生命周期vue3 setup,
-    // vuex状态管理器 state存储状态，动态，唯一，getter计算属性会缓存，mutations同步提交，store.commit,actoins异步提交store.dispatch,module模块
+    // 生命周期vue3: 
+    // vuex状态管理器 :
+    // 虚拟dom，用js在真实的dom节点上渲染一层虚拟的节点，并且采用diff算法来高效的对比dom节点和指定dom节点更新
+    // 常见的内存泄漏 意外的全局变量，未清理定时器，dom引用，闭包
+    function myNew(con, ...args) {
+
+    }
+    // object.defineProperty缺点：
+    // proxy:
+    // HTTP浏览器输入URL后发生了什么:
+    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：
+    // 前端性能优化 
+    // html--语义化的标签，
+    // Object.defineProperty()
+
+
+
+
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
     setColor(active)//切换颜色为当前对象添加伪类元素
     function setColor(color) {
@@ -456,17 +351,7 @@
             ds.removeClass('on')//回调移除旋转图标
         })
     }
-    // 虚拟dom，用js在真实的dom节点上渲染一层虚拟的节点，并且采用diff算法来高效的对比dom节点和指定dom节点更新
-    // 常见的内存泄漏 意外的全局变量，未清理定时器，dom引用，闭包
-    function myNew(con, ...args) {
-    }
-    // object.defineProperty缺点：无法监测数组下标不能及时追踪数据的变化，重写数组的7个方法，1.创建一个拦截器，使用数组原型上的的方法时会进入拦截器，拦截器内部调用的是真实的数组原型的方法，2.通过拦截器追踪到数组的变化，然后再拦截器里进行依赖监测和数据收集，3.数组初始化时Observer类会给数组增加一个属性_ob_属性，_ob_属性是Observer的实例话对象，里有一个收集依赖的dep属性，但对那7个方法使用时，触发拦截器，拦截器内部就可以访问Observer类的实例对象，进而可以对这些数组的依赖发送变更通知
-    // proxy:可监测数组的新增和删除，
-    // HTTP浏览器输入URL后发生了什么:1.补全域名后进行dns解析，解析出服务器的ip地址，建立tcp请求（三次握手：客户端发送syn包给服务器，服务器接收返回ask+syn，客户端在回应ask包建立连接），建立连接后服务器返回请求返回访问的html，客户端渲染（解析html生成dom,css解析cssom,dom+cssom生成render树，根据渲染树进行回流重绘，将GPU发送给浏览器展示），断开tcp连接（四次挥手：tcp是全双工通信，客户端说通道一我关闭了服务器接收到也接着关闭。。。）
-    // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：
-    // 前端性能优化 
-    // html--语义化的标签，js：if else if...用switch,if for，减少dom操作，用class替换dom操作，防抖节流，webpack:exclude,include设置文件搜索规则，style-loader,file-loader,image-loader,uglifeJS,cdn,公共代码抽离，多线程打包happypack，cache-loader,gizp,并行处理uglifeJS,
-    // Object.defineProperty()
+
 
     function imgLoad(img, callback) {
         var timer = setInterval(function () {
@@ -482,61 +367,7 @@
         }, 200);
     }
     class myPromise {
-        constructor(exe) {
-            this.status = 'pending'
-            this.value = null
-            this.successQueue = []
-            this.failureQueue = []
 
-            let resolve = value => {
-                if (this.status === 'pending') {
-                    this.value = value
-                    this.status = 'fulfilled'
-
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.successQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-                }
-            }
-            let reject = value => {
-                if (this.status === 'pending') {
-                    this.value = value
-                    this.status = 'rejected'
-
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.failureQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-                }
-            }
-            try {
-                exe(resolve, reject)
-            } catch (error) {
-                throw error
-            }
-        }
-        then(successFn, failureFn) {
-            typeof successFn !== 'function' ? successFn = result => result : null
-            return new MyPromise((resolve, reject) => {
-                this.successQueue.push(() => {
-                    let result = successFn(this.value)
-                    return result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
-                typeof failureFn !== 'function' ? failureFn = reason => reason : null
-                this.failureQueue.push(() => {
-                    let result = failureFn(this.value)
-                    return failureFn instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
-            })
-        }
-        catch(fn) {
-            return this.then(fn, null)
-        }
     }
     Promise.myAll = promises => {
 
@@ -550,12 +381,18 @@
     Promise.allSettled = promises => {
     }
     Promise.myAny = promises => {
-
     }
     function deepClone(obj) {
+
     }
-    // console.log(myInstanceof({}, Array));
+    // console.log(myInstanceof([], Array));
     function myInstanceof(obj, func) {
+
+    }
+    function throttle(fn, args) {
+
+    }
+    function debounce(fn, args) {
 
     }
     const myFlat = (arr) => {
@@ -574,13 +411,12 @@
     // sum(1)(2, 3)
     // sum(4, 5)(6)(7)
     // console.log(sum());
-    // console.log(addFn(1)(2, 3) + '', addFn(1, 2, 3)(7, 3) + '');
+    console.log(addFn(1, 2, 3)(7, 3) + '');
     function addFn(...m) {
 
     }
 
-    let tree =
-    {
+    let tree = {
         id: '1-1',
         title: '节点1-1',
         children: [
@@ -612,15 +448,14 @@
         ]
     }
 
-
     let deepTraversal = node => {
 
+        return result
     }
     let widthTraversal = (tree) => {
 
     }
-    // console.log(deepTraversal(tree));
-    // console.log(deepTraversal(tree));
+    console.log(deepTraversal(tree));
 </script>
 
 
