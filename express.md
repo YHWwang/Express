@@ -41,7 +41,6 @@ html {
   filter: grayscale(1);
 }
 
-
 # 块元素和行内元素、行内块元素的区别
 块级元素可设置高宽，独占一行
 行内元素不能设置高宽，高度由内容的高度决定，一行可多个行内元素
@@ -169,16 +168,11 @@ console.log("插入排序arr", insertSort(arr))
                        width: 子元素宽度;
                        border: 1px solid transparent;
 
-# elementUI中form表单包含v-if的话可能会导致无法验证通过或者无法清除验证的问题
-解决方法是给form表单加key
 
 # 谷歌和火狐之间浏览器差异
 1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
 2. firefox：font-wigth加粗与font-family粗字体会叠加
-3. 火狐和IE可以使用document.documentElement.scrollTop获取滚动条高度，而谷歌只能用document.body.scrollTop。
-4. 火狐(低版本)中innerText是获取不到文本的。谷歌却可以。
 5. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
-6. firefox浏览器不触发window.addEventListener('load')
 7. 火狐浏览器下e.path获取不到解决方法： 
    const path = this.composedPath(e);
    composedPath(e) {
@@ -591,80 +585,9 @@ var timer = true
             // console.log(timer)
         }
     }
-    
-
-
-localStorage.setItem(key，value)设置本地级存储
-localStorage.getItem(key)获取本地级存储
-localStorage.removeItem("key");删除存储
-
-
-fildder抓取工具如何抓取js,css等其他数据,主要是在‘tools’中配置https与connections的选项，以及导入安全证书
-
-fiddler抓取数据包的时候出现乱码，在‘transformer’中选择'None'
-
-关于图片压缩建议压缩成webp格式，压缩比例较高，并且相对与其他格式压缩后图片清晰度有明显优势 ------https://zhitu.isux.us/
 
 BCompare 文件对比工具
 CDN:https://cdnjs.com/  拥有大量前端插件的相关引用文件 
 
-倒计时插件：https://countdownmail.com/拥有各种时区时间的一款倒计时
-
-wave波浪效果(目前发现只能应用到点击事件中)
-http://ch-ny.com/content/themes/bridge-child/js/libs/Waves/docs/
-html: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.css" integrity="sha512-bsNktdxsLu4ooy7axuzyyFz87SWrDBaCmZsk2Dvin1/2noq49vt1jfNWUAfdybRpFCzRjdWygAOEopdbo8cGpA==" crossorigin="anonymous" />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js" integrity="sha512-MzXgHd+o6pUd/tm8ZgPkxya3QUCiHVMQolnY3IZqhsrOWQaBfax600esAw3XbBucYB15hZLOF0sKMHsTPdjLFg==" crossorigin="anonymous"></script>
-      <span class="img1 waves-effect">
-            <div style="width: 300px;height: 300px; position: relative;"></div>
-      </span>
-js:  Waves.displayEffect();
-
 H5 notification浏览器桌面通知
 详细：https://www.cnblogs.com/zhangycun/p/10410445.html
-
-lottie动画设置的俩种方式：（好处json文件大小会比gif文件小很多，性能也会更好）
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.4.3/lottie.min.js"></script>
-#lottie{
-    overflow: hidden;
-    transform: translate3d(0,0,0);
-    text-align: center;
-    opacity: 1;
-}
-1：  html,<script type="text/javascript" src="./data.json"></script>
-     json: var lottie = {动画json代码}//一定要设置将json赋值变量，否则报错
-     js: var anim2 = lottie.loadAnimation({
-        container: document.getElementById("lottie2"), // 容器
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData:lottle1,
-      });
-2：  var anim = lottie.loadAnimation({
-        container: document.getElementById("lottie"), // 容器
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        // animationData:lottle1,
-        path:"https://assets5.lottiefiles.com/datafiles/B1zOc97lUJINcA2/data.json" // 直接设置json链接
-      });
-
-
-谷歌登录不能切换账号问题
-  var auth2 = gapi.auth2.getAuthInstance(); 
-  auth2.signOut()
-  auth2.disconnect();//清除登录权限
-按照谷歌官网XHR接口回调的数据是字符串(两种字符串与xml)，因用JSON.parse()改成json格式方便操作
- xhr.onreadystatechange=function(data){
-              if(xhr.status === 200 && xhr.readyState === 4){
-                  let req = JSON.parse(xhr.responseText).data.token//xhr.responseText 获取参数
-                  setToken(req,'google')
-                  that.$store.dispatch('saveToken',req)
-                }
-             }
-Swiper自定义分页器格式
- var arr = ['Iceberg Silver','Graphite Black','Mist Grey'] //分页器文字
-      var _html = `<span class="select_box"></span>`
-      $('.swiper-pagination-bullet').each(function(index){
-          $(this).html(_html+arr[index])
-      })
-

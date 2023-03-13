@@ -1,3 +1,6 @@
+# dom的删除有哪些方法？
+removeChild、remove、outerHTML
+
 # 栈和堆的区别？为什么会有栈内存和堆内存之分？
 栈：自动分配内存，会自动释放，基本数据类型再栈中
 堆：动态分配内存，大小不定也不会自动释放，引用数据类型再栈中存的是指针，指向堆内存
@@ -12,7 +15,7 @@
 1. IE->渲染引擎->Trident;JS引擎->Chakra
 2. Edge->渲染引擎->EdgeHTML;JS引擎->Chakra
 3. Firefox->渲染引擎->Gecko;JS引擎->SpiderMonkey
-4. Chrome->渲染引擎->Webjit--Blink;JS引擎->V8
+4. Chrome->渲染引擎->Webkit--Blink;JS引擎->V8
 5. Safri->渲染引擎->Webkit;JS引擎->JavascriptCore
 6. Opera->渲染引擎->Presto--Blink;JS引擎->CaraKan
 
@@ -72,7 +75,7 @@ Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(
 cache-control,etag,expires,Last-Modified在response
 if-modified-since,if-none-match在request
 
-# async和defer区别
+# script标签中async和defer区别
 async:加载和渲染后续文档元素的过程将和 script.js 的加载与执行并行进行（异步）。无序
 defer:加载后续文档元素的过程将和 script.js 的加载并行进行（异步），但是 script.js 的执行要在所有元素解析完成之后，DOMContentLoaded 事件触发之前完成,有序
 所以区别主要在于一个执行时间,defer会在文档解析完之后执行,并且多个defer会按照顺序执行,而async则是在js加载好之后就会执行,并且多个async,哪个加载好就执行哪个

@@ -1,5 +1,10 @@
 # CSS
 
+# flex属性理解: 扩展比率 收缩比率 默认基准值
+
+# 混合模式反转颜色--mix-blend-mode属性
+mix-blend-mode: difference;
+
 # 画一条0.5px的线
 1. 可以通过直接设置宽高border为0.5px(chrome,安卓不支持)
 2. 设置box-shadow的垂直方向的偏移量为0.5px(chrome,安卓支持,其它不支持)
@@ -15,6 +20,7 @@
 # 选择器有哪些
 css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
 css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
+
 # px、em、rem、vw
 px固定大小
 em根据父元素的字体大小
