@@ -70,8 +70,8 @@ return arr
 }
 # 希尔排序（插入排序基础上缩小增量,gap用for循环插入排序，将‘1’换成gap）
   let insertArr = [7, 6, 9, 3, 1, 5, 2, 4]
-    let len = insertArr.length//8
-    let gap = Math.floor(len / 2)//4
+    let len = insertArr.length
+    let gap = Math.floor(len / 2)
 
     for (; gap > 0; gap = Math.floor(gap / 2)) {
         for (let i = gap; i < len; i++) {  
@@ -140,7 +140,7 @@ console.log("插入排序arr", insertSort(arr))
     function quickSort(arr) {
         if (arr.length <= 1) { return arr }
         let pivotIndex = Math.floor(arr.length / 2)
-        let pivot = arr.splice(pivotIndex, 1)[0]
+        let pivot = arr.splice(pivotIndex, 1)[0]  //splice会修改原数组，所以不能在前面赋值长度len变量
         let left = []
         let right = []
 
