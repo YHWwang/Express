@@ -119,15 +119,27 @@
             5.justify-content: space-between/space-around最后一排的位置问题如何解决?
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
+            Observer：数组初始化时会添加一个__ob__对象，这个就是observer的实例，Observer会去遍历对象和子对象，添加get,set事件，在数据变更时触发set，通知订阅者dep，dep再去通知watcher
+            complie:解析模板，页面初始化时将变量转化成数据并给节点绑定更新函数，添加监听数据的订阅者
+            watcher:作为observer+compile之间的桥梁，当数据变更，订阅收到的属性变更通知，执行绑定的回调函数，从而更新视图
+            以为object.defineProperty对数组无法监听到pop,push等方法，性能和用户体验不成正比，也就重写了数组方法，新建一个拦截器，当调用数组原型的方法时进入拦截器，拦截器再去调用原型上的方法
+
+
+
+
+
+
            2.BFC是啥，触发条件？
            3.原型链，原型，console.log( function instanceof object , object instanceof function , function instanceof function ,object instance object)打印的值，为什么说明原因
 
            4.常用状态码？浏览器缓存方式有哪些？需要设置哪些参数？同源策略？有10个接口大约每个100ms，chrome需要多少时间加载完（就是同一域名最多加载多少个接口）
-
+            100收到请求，待处理，200成功并返回，301重定向，304走缓存，400语法错误，401身份验证，403资源不可用，404资源未找到，500服务器错误，501尚未实施，502网关错误，503服务错误，504网关超时，505http协议错误
+            exprise,cache-control;
+            last-Modified,if-modified-since;etag+if-none-match
            5. vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
-            
-
+按需加载，更新双向函数，虚拟dom,支持ts,组合式api
            6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
+           map【val,val],set[key,val]都是唯一，
            7.js是单还是双进程为什么？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
 
            8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
@@ -144,6 +156,16 @@
             盒子模型：
             display:
             块元素（可改变元素的高宽），行内:，行内块：
+
+            express和koa的区别:
+            node子进程：
+
+            node如何处理高并发：
+            node事件轮询6个阶段：
+            如何异步处理IO：
+            webpack：项目体积：
+            loader转换器、plugins是扩展器：
+            
         -->
         <input type="text" id="inp" />
         <div id="show"
@@ -272,34 +294,41 @@
     }
     // console.log(convert(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0]
-    console.log(quickSort(MathArr));
+    console.log(shallSort(MathArr));
     // 选择排序
     function selectSort(arr) {
+
     }
     // 插入排序
     function insertSort(arr) {
+
     }
     // 归并排序
     function mergeSort(arr) {
+
+
     }
     function merge(left, right) {
+
     }
 
     // 快速排序
     function quickSort(arr) {
+
     }
     // 希尔排序
     function shallSort(arr) {
+
     }
 
     // a==1&&a==2,a===1&&a===2
+
     // console.log(a === 1 && a === 2);
     // 双向绑定：
-    // 
 
     // 路由钩子函数:
 
-    // 生命周期vue2 ：
+    // 生命周期vue2： 
 
     // 生命周期vue3: 
     // vuex状态管理器 :
@@ -315,8 +344,6 @@
     // 前端性能优化 
     // html--语义化的标签，
     // Object.defineProperty()
-
-
 
 
     var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
@@ -367,32 +394,207 @@
         }, 200);
     }
     class myPromise {
+        constructor(exe) {
+            this.value = null
+            this.status = 'pending'
+            this.successQueue = []
+            this.failureQueue = []
 
+            let resolve = (value) => {
+                if (this.status === 'pending') {
+                    this.value = value;
+                    this.status = 'fulfilled'
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer)
+                        this.successQueue.forEach(item => {
+                            item(this.value)
+                        })
+                    }, 0);
+                }
+            }
+            let reject = (value) => {
+                if (this.status === 'pending') {
+                    this.value = value;
+                    this.status = 'rejected'
+                    this.failureQueue.forEach(item => {
+                        let timer = setTimeout(() => {
+                            item(this.value)
+                            clearTimeout(timer)
+                        }, 0);
+                    })
+                }
+            }
+            try {
+                exe(resolve, reject)
+            } catch (error) {
+                reject(error)
+            }
+        }
+        then(successFn, failureFn) {
+            typeof successFn !== 'function' ? successFn = result => result : null
+            return new Promise((resolve, reject) => {
+
+                this.successQueue.push(() => {
+                    let result = successFn(this.value)
+                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
+                })
+
+                typeof failureFn !== 'function' ? failureFn = result => reject(result) : null
+                this.failureQueue.push(() => {
+                    let result = failureFn(this.value)
+                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
+                })
+            })
+        }
+        catch(fn) {
+            return this.then(null, fn)
+        }
     }
     Promise.myAll = promises => {
+        let len = promises.length
+        let count = 0
+        let result = []
 
+        return new Promise((resolve, reject) => {
+            promises.forEach((p, i) => {
+                Promise.resolve(p).then(res => {
+                    result[i] = res
+                    count++
+
+                    if (count === len) {
+                        resolve(result)
+                    }
+                }).catch(reject)
+            })
+        })
     }
     Promise.myRace = promises => {
-
+        return new Promise((resolve, reject) => {
+            promises.forEach(p => {
+                Promise.resolve(p).then(resolve).catch(reject)
+            })
+        })
     }
     Promise.prototype.myFinally = function (fn) {
-
+        return new Promise((result) => {
+            fn()
+            return result
+        }, reason => {
+            fn()
+            throw reason
+        })
     }
     Promise.allSettled = promises => {
+        let len = promises.length
+        let count = 0
+        let result = []
+
+        return new Promise((resolve, reject) => {
+            promises.forEach((p, i) => {
+                Promise.resolve(p).then(res => {
+                    result[i] = {
+                        value: res,
+                        status: 'fulfilled'
+                    }
+                    count++
+
+                    if (count === len) {
+                        resolve(result)
+                    }
+                }, reason => {
+                    result[i] = {
+                        value: res,
+                        status: 'rejected'
+                    }
+                    count++
+
+                    if (count === len) {
+                        resolve(result)
+                    }
+                })
+            })
+        })
     }
     Promise.myAny = promises => {
+        let len = promises.length
+        let count = 0
+        let result = []
+
+        return new Promise((resolve, reject) => {
+            promises.forEach((p, i) => {
+                Promise.resolve(p).then(res => {
+                    resolve(res)
+                }, reason => {
+                    result[i] = reason
+                    count++
+
+                    if (count === len) {
+                        reject(result)
+                    }
+                })
+            })
+        })
     }
     function deepClone(obj) {
+        let cloneObj = Array.isArray(obj) ? [] : {}
 
+        if (obj && typeof obj === 'object') {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    if (obj[key] && typeof obj[key] === 'object') {
+                        cloneObj[key] = deepClone(obj[key])
+                    } else {
+                        cloneObj[key] = obj[key]
+                    }
+                }
+            }
+        }
+        return cloneObj
     }
-    // console.log(myInstanceof([], Array));
+    console.log(myInstanceof([], String));
     function myInstanceof(obj, func) {
+        if (typeof obj !== 'object' || obj === null) {
+            return false
+        }
 
+        let proto = Object.getPrototypeOf(obj)
+
+        if (proto === func.prototype) {
+            return true
+        } else if (proto === null) {
+            return false
+        } else {
+            return myInstanceof(proto, func)
+        }
     }
     function throttle(fn, args) {
+        let flag = true
+        return function () {
+            if (!flag) {
+                return false
+            }
 
+            flag = false
+            let timer = setTimeout(() => {
+                clearTimeout(tiemr)
+                flag = true
+                fn(...args)
+            }, 1000);
+        }
     }
     function debounce(fn, args) {
+        let timer = false
+
+        return function () {
+            if (timer) {
+                clearTimeout(timer)
+                return false
+            }
+
+            tiemr = setTimeout(() => {
+                fn(...args)
+            }, 1000);
+        }
 
     }
     const myFlat = (arr) => {
@@ -402,20 +604,41 @@
     // console.log(myFlat(arrFlat));
 
     function currying(func) {
-
+        let args = []
+        let rest = function (...m) {
+            if (m.length === 0) {
+                return func(...args)
+            }
+            else {
+                args.push(...m)
+                return rest
+            }
+        }
+        return rest
     }
     let add = (...args) => {
         return args.reduce((a, b) => a + b)
     }
     let sum = currying(add)
-    // sum(1)(2, 3)
-    // sum(4, 5)(6)(7)
+    sum(1)(2, 3)
+    sum(4, 5)(6)(7)
     // console.log(sum());
     console.log(addFn(1, 2, 3)(7, 3) + '');
     function addFn(...m) {
+        let args = [...m]
 
+        let result = function (...n) {
+            args.push(...n)
+            return result
+        }
+        result.toString = function () {
+            return args.reduce((a, b) => {
+                return a + b
+            })
+        }
+        return result
     }
-
+    function sleep() { }
     let tree = {
         id: '1-1',
         title: '节点1-1',
@@ -449,6 +672,12 @@
     }
 
     let deepTraversal = node => {
+        let nodes = [...node]
+        let node = null
+
+        while (node = node.id) {
+            
+        }
 
         return result
     }
