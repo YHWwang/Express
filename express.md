@@ -1,3 +1,13 @@
+# 安卓和ios兼容性问题
+1. iOS 日期的兼容
+   ios 下 new Date('2020-03-11 00:00:00') 不生效，需要对日期进行 date.replace(/-/g, '/') 处理。
+2. Android 下，弹出软键盘将页面底部fixed元素顶起
+   如果将footer元素设置为position:fixed或absolute，因为软键盘会改变页面的高度（将页面顶上来），因此footer元素也跟着移动上来，导致页面变形；
+   一、设置relative或者static不脱离文档流
+   二、如设置absolute，则用js固定父级元素的高度
+3. 在移动端，单击穿透是什么？(之所以移动端不用click是click有300ms的延迟，体验不好)
+   touchstart点击之后会触发一个click点击事件，并通过addEventListener监听touchstart事件去e.preventDefault()阻止默认事件
+
 # addEventListener造成的弹窗内submit事件的回调执行多次的问题？使用函数名来作为参数
  节点.addEventListener('事件', function(){
                 //确定后执行
@@ -48,9 +58,6 @@ html {
 
 # 同源策略
 协议、域名、端口相同才是同源策略.chrome每个域名最多6个.使用多个域名，可以增加并发数.在HTTP2协议中，可以开启管道化连接，即单条连接的多路复用，每条连接中并发传输多个资源，这里就不需要添加域名来增加并发数了
-
-# elementUI日期和时间选择器绑定值为对象的显示问题
-如果绑定值为对象时，则会出现视图未变而值已经变了的情况，解决方法: this.$set(this.form, "date", [ timeStart,timeEnd,]);
 
 # 选择排序 (找出最小下标)
 function func(arr){
