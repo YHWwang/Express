@@ -1,12 +1,121 @@
 # 安卓和ios兼容性问题
 1. iOS 日期的兼容
    ios 下 new Date('2020-03-11 00:00:00') 不生效，需要对日期进行 date.replace(/-/g, '/') 处理。
-2. Android 下，弹出软键盘将页面底部fixed元素顶起
-   如果将footer元素设置为position:fixed或absolute，因为软键盘会改变页面的高度（将页面顶上来），因此footer元素也跟着移动上来，导致页面变形；
-   一、设置relative或者static不脱离文档流
-   二、如设置absolute，则用js固定父级元素的高度
-3. 在移动端，单击穿透是什么？(之所以移动端不用click是click有300ms的延迟，体验不好)
-   touchstart点击之后会触发一个click点击事件，并通过addEventListener监听touchstart事件去e.preventDefault()阻止默认事件
+2. 在移动端，单击穿透是什么？(之所以移动端不用click是click有300ms的延迟，体验不好)
+   touchstart点击之后300会触发click点击事件，可通过addEventListener监听touchstart事件去e.preventDefault()阻止默认事件
+3. :not()在搜狗低版本浏览器不生效,谷歌和firefox生效
+   只能用class去设置css
+4. iOS 上下滑动不流畅
+    overflow-scrolling:touch
+   -webkit-overflow-scrolling: touch; /* 当手指从触摸屏上移开，会保持一段时间的滚动 */ 
+   -webkit-overflow-scrolling: auto; /* 当手指从触摸屏上移开，滚动会立即停止 */
+5. ios软键盘落下切半屏留白问题
+   $("input,select").blur(function(){
+        setTimeout(() => {
+        const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+        window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+        }, 100);
+    })
+6. 软键盘弹起和回落问题
+   android:监听 webview 高度会变化，高度变小获知软键盘弹起，否则软键盘收起（软键盘收起和输入框获没获取焦点不直接关联）。软键盘与窗口处于同一层，所以当软键盘弹起时，当前窗口缩小，那么窗口内容自然要被挤
+   ios:监听输入框的 focus 事件来获知软键盘弹起，监听输入框的 blur 事件获知软键盘收起。软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起
+7. 软键盘遮挡输入框的问题--》弹起软键盘始终让输入框滚动到可视区
+    android: window.addEventListener('resize', () => {
+                setTimeout(() => {
+                    document.activeElement.scrollIntoView(false);
+                    scrollIntoViewIfNeeded(boolean);不属于任何规范，是一种 WebKit 专有的方法。
+                }, 300);
+            });
+    ios: window.addEventListener('focus/blur', () => {
+             setTimeout(() => {
+                 window.scrollTo(0, clientHeight)恢复成原来的视口
+             }, 300);
+         });
+8. iOS 上拉边界下拉出现白色空白 
+   一. 监听事件禁止滑动    
+   document.body.addEventListener('touchmove', function (e) {
+        if (e._isScroller) return;    // 阻止默认事件  
+        e.preventDefault();
+    }, { passive: false });
+    二. 滚动妥协填充空白，装饰成其他功能
+9.  页面放大或缩小不确定性行为
+   <meta name=viewport  content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
+11. 1px边框问题解决方案(设备像素比dpr)https://mp.weixin.qq.com/s?__biz=MzUyMDk4OTU5OA==&mid=2247528392&idx=7&sn=d025e40c3dafa46108118f351ed1758f&chksm=f9e3d139ce94582fa75c29d871a2b2adde65ea2e68c682ff7b1f218417321e783243c7925f5b&scene=27
+    一.伪元素 + CSS3缩放->要先放大 200% 再缩小 0.5
+    width: 200%; 
+    height: 200%; 
+    border: 1px solid gray;
+    transform: scale(0.5); 
+    transform-origin: 0 0;
+        // dpr适配可以这样写
+        @media (-webkit-min-device-pixel-ratio: 2)  {
+            .line::after {
+                ...
+                height: 1px;
+                transform: scale(0.5);
+                transform-origin: 0 0;
+            }
+        }
+    二.动态 Viewport + rem 方式
+    首先根据 dpr 来动态修改 meta 标签中 viewport 中的 initial-scale 的值，以此来动态改变 viewport 的大小；
+    然后页面上统一使用 rem 来布局，viewport 宽度变化会动态影响 html 中的font-size 值，以此来实现适配。
+12.  取消input在ios下，输入的时候英文首字母的默认大写
+    <input autocapitalize="off" autocorrect="off" />
+13. 移动端禁止选中内容
+    -webkit-user-select: none; /* Chrome all / Safari all /
+    -moz-user-select: none; / Firefox all （移动端不需要） /
+    -ms-user-select: none; / IE 10+ */
+14. ios和android下触摸元素时出现半透明灰色遮罩
+    a,button,input,textarea{
+        -webkit-tap-highlight-color: rgba(0,0,0,0）
+        -webkit-user-modify:read-write-plaintext-only;
+    }
+15. IOS 默认输入框内阴影重置
+    -webkit-appearance: none; 
+16. 消除transition闪屏
+     {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+
+# 谷歌和火狐之间浏览器差异
+1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
+2. firefox：font-wigth加粗与font-family粗字体会叠加
+3. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
+4. 火狐浏览器下e.path获取不到解决方法： 
+   const path = this.composedPath(e);
+   composedPath(e) {
+            if (e.path) {
+                return e.path;
+            }
+            let target = e.target;
+
+            e.path = [];
+            while (target.parentNode !== null) {
+                e.path.push(target);
+                target = target.parentNode;
+            }
+            e.path.push(document, window);
+            return e.path;
+        },
+
+# 火狐浏览器hover字体加粗效果,宽度变化的问题
+html-》加上title='文本内容'
+::before{
+    display: block;
+    content: attr(title);
+    font-weight: bold;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+:hover{
+    font-weight: bold;
+}
+
 
 # addEventListener造成的弹窗内submit事件的回调执行多次的问题？使用函数名来作为参数
  节点.addEventListener('事件', function(){
@@ -177,41 +286,6 @@ console.log("插入排序arr", insertSort(arr))
                         flex: 0 1 20%
                     }
 
-
-# 谷歌和火狐之间浏览器差异
-1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
-2. firefox：font-wigth加粗与font-family粗字体会叠加
-5. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
-7. 火狐浏览器下e.path获取不到解决方法： 
-   const path = this.composedPath(e);
-   composedPath(e) {
-            if (e.path) {
-                return e.path;
-            }
-            let target = e.target;
-
-            e.path = [];
-            while (target.parentNode !== null) {
-                e.path.push(target);
-                target = target.parentNode;
-            }
-            e.path.push(document, window);
-            return e.path;
-        },
-
-# 火狐浏览器hover字体加粗效果,宽度变化的问题
-html-》加上title='文本内容'
-::before{
-    display: block;
-    content: attr(title);
-    font-weight: bold;
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-}
-:hover{
-    font-weight: bold;
-}
 
 # git提交
 1 第1步：同步远程仓库代码：git pull
