@@ -294,6 +294,39 @@ Object.assign()
 如果已存在，并且有一部分切片上传失败，则返回给前端已经上传成功的切片name，前端拿到后，根据返回的切片，计算出未上传成功的剩余切片，然后把剩余的切片继续上传，即可实现"断点续传"。
 如果不存在，则开始上传，这里需要注意的是，在并发上传切片时，需要控制并发量，避免一次性上传过多切片，导致崩溃。
 
+# Vue3
+基础类型：ref(初始值)定义
+引用类型：reactive({
+  key:vlaue
+})
+
+const {proxy} = getCurrentInstance()//获取组件实例化对象
+
+组件传值
+父-》子
+<select-user ref="selectRef" :roleId="queryParams.roleId" @ok="handleQuery" />
+父：function handleQuery() {
+      queryParams.pageNum = 1;
+      getList();
+    }
+子：const props = defineProps({
+      roleId: {
+        type: [Number, String]
+      }
+    });
+    const emit = defineEmits(["ok"]); emit("ok");
+
+子-》父
+父：proxy.$refs["selectRef"].show()
+子：function show() {
+      queryParams.roleId = props.roleId;
+      getList();
+      visible.value = true;
+    }
+    defineExpose({
+      show,
+    });
+依赖注入：父与孙provide+inject
 
 # vue3.0新特征
   1. 支持Typescript
