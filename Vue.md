@@ -93,6 +93,25 @@ vue的子组件不能直接使用父组件的数据，需要用到prop传递数�
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
+# diff算法的逻辑
+Tree diff: 
+1. 逐层比较
+2. 如果是compontent，执行compontent diff
+3. 如果是element，执行element diff
+
+component diff:
+1. 先看比较双方类型一不一致，不一致直接替换
+2. 类型相同则更新属性
+3. 深入组件进行递归 tree diff
+
+element diff：
+1. 先看标签名一不一致，不一致直接替换
+2. 标签名一致比较属性
+3. 深入标签进行递归 tree diff
+
+dom diff 有一个显著的缺点：vue 横向比较存在 bug，v-for中key到底有什么作用？
+解决方案：加了 key 没 bug，默认就是 key 就是 index，绝对不可以用 index 当做 key。
+
 # 虚拟DOM是如何合并patch的  (虚拟节点如何对比的？)
 1.判断老节点是否存在-----不存在->直接创建并插入节点
 2.存在老节点判断是否是同一个节点----不存在->创建真实节点插入并删除老节点
@@ -238,7 +257,7 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
   },
 
 # 双向绑定底层原理(https://d2kbvjszk9d5ln.cloudfront.net/yshop/icon/pic/20230313-20230313060925507.jpg)
-第一步：Object.defineProperty监听属性变动，将需要observe的数据对象进行递归遍历，包括子属性对象的属性,都加上setter和getter,同事创建消息订阅器Dep来收集订阅者，数据变动之后就会触发notify,在调用订阅者的update方法
+第一步：Object.defineProperty监听属性变动，将需要observe的数据对象进行递归遍历，包括子属性对象的属性,都加上setter和getter,同时创建消息订阅器Dep来收集订阅者，数据变动之后就会触发notify,在调用订阅者的update方法
 第二步：compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知执行更新函数
 第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，能够订阅并收到每个属性的变动通知，执行指令绑定的相应的回调函数从而更新视图
 1. Object.defineProperty(监听input将指赋值给对象，触发绑定并赋值给dom)
@@ -265,10 +284,12 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
     inputProxy.text = e.target.value
   })
 
-# 动态给vue2的data添加一个新的属性时为什么不刷新？怎样解决？
+# 动态给vue2的data添加一个新的属性时为什么不刷新？怎样解决？Vue.Set和this.$set的区别
 vue2采用的Object.defineProperty()不会监测对象新属性的新增和删除.
 Vue.set( target, propertyName/index, value )
-Object.assign()
+this.$set( target, propertyName/index, value)
+Vue.set将set函数绑定在Vue的构造函数上，需import引用Vue实例
+this.$set将set函数绑定在vue原型上，只能设置实例创建后存在的数据（数据已经在data中）,直接用
 
 # 直连AWS上传APK文件 aws-sdk
 直连aws的s3桶上传文件
@@ -328,6 +349,10 @@ const {proxy} = getCurrentInstance()//获取组件实例化对象
     });
 依赖注入：父与孙provide+inject
 
+# 在Vue2中template标签中必须要有一个根元素，而Vue3中可以写多个，原理区别是什么？
+1. 在Vue2中，模板(template)标签必须有一个根元素，这是因为Vue2中的编译器(compiler)需要将模板编译成一个render函数，而一个函数只能有一个返回值。因此，Vue2需要一个根元素来包含所有的子节点，以便编译器能够将它们编译成一个返回值。
+2. 而在Vue3中，通过使用Fragment(片段)标签或者空标签，可以在template标签中包含多个根元素。这是因为Vue3中使用了新的编译器，它能够将多个根节点编译成一个返回值。这样可以让开发者更方便地组织模板结构，使代码更加简洁和易读。
+
 # vue3.0新特征
   1. 支持Typescript
   2. 放弃class采用function-based API 函数式编程
@@ -344,7 +369,7 @@ Object.defineProperty缺点：
   4. 只能劫持对象的属性，因此我们需要对每个对象的每个属性进行遍历。Vue2.X里，是通过递归 + 遍历data对象来实现对数据的监控的，如果属性值也是对象那么需要深度遍历，显然如果能劫持一个完整的对象才是更好的选择。
 其实说Object.defineProperty 本身是可以监控到数组下标的变化的，只是push、pop、shift、unshift、splice、sort、reverse等函数不能实时响应在 Vue 的实现中，从性能 / 体验的性价比考虑，放弃了这个特性。
    
-Proxy理解：在目标对象之前设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。
+Proxy理解：在目标对象之前设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。通过reflect(放射)对源对象的属性进行操作
 Proxy的优点：
   1. 可劫持整个对象，并返回新对象
   2. 多种劫持操作（13种:get,set,has,deleteProperty,ownKeys...），可监听数组，监听对象属性的新增，删除等

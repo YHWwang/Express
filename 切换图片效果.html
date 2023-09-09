@@ -110,41 +110,29 @@
         }
     </style>
     <div id="AMain" class="main">
+        c d d d d d c a
         <!-- 
             遇到的难点：
             1.上传apk并解析里面的参数，据参数和定义的规则自动生成包名，
             2.接口返回数据快慢的覆盖问题，
             3.addEventListener监听事件造成弹窗内submit事件多次执行回调 
             4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作
-            5.justify-content: space-between/space-around最后一排的位置问题如何解决?
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
-            Observer：数组初始化时会添加一个__ob__对象，这个就是observer的实例，Observer会去遍历对象和子对象，添加get,set事件，在数据变更时触发set，通知订阅者dep，dep再去通知watcher
-            complie:解析模板，页面初始化时将变量转化成数据并给节点绑定更新函数，添加监听数据的订阅者
-            watcher:作为observer+compile之间的桥梁，当数据变更，订阅收到的属性变更通知，执行绑定的回调函数，从而更新视图
-            以为object.defineProperty对数组无法监听到pop,push等方法，性能和用户体验不成正比，也就重写了数组方法，新建一个拦截器，当调用数组原型的方法时进入拦截器，拦截器再去调用原型上的方法
-
-
-
-
-
-
            2.BFC是啥，触发条件？
            3.原型链，原型，console.log( function instanceof object , object instanceof function , function instanceof function ,object instance object)打印的值，为什么说明原因
 
            4.常用状态码？浏览器缓存方式有哪些？需要设置哪些参数？同源策略？有10个接口大约每个100ms，chrome需要多少时间加载完（就是同一域名最多加载多少个接口）
-            100收到请求，待处理，200成功并返回，301重定向，304走缓存，400语法错误，401身份验证，403资源不可用，404资源未找到，500服务器错误，501尚未实施，502网关错误，503服务错误，504网关超时，505http协议错误
-            exprise,cache-control;
-            last-Modified,if-modified-since;etag+if-none-match
+         
            5. vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
-按需加载，更新双向函数，虚拟dom,支持ts,组合式api
+           
            6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
-           map【val,val],set[key,val]都是唯一，
            7.js是单还是双进程为什么？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
 
            8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
 
            9.this绑定的方法？new做了什么事？script标签中defer和async区别？
+            显式绑定，隐式，new,箭头函数，构造函数，
 
            10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？
            11.HTTP浏览器输入URL后发生了什么?页面如何渲染?垃圾回收机制？
@@ -153,16 +141,16 @@
 
             this：
 
-            盒子模型：
+            盒子模型：ie盒子模型content-box，height=content+padding+border,w3c标准盒子模型：border-box,height = content
             display:
             块元素（可改变元素的高宽），行内:，行内块：
 
             express和koa的区别:
             node子进程：
 
-            node如何处理高并发：
-            node事件轮询6个阶段：
-            如何异步处理IO：
+            node如何处理高并发：得益与node的轮询机制和异步io处理
+            node事件轮询6个阶段：timers,pending callback,idle,poll,check，close callback,
+            如何异步处理IO：是使用自己设计的libuv库，js主进程和ui渲染共享一个线程，异步操作都是线程池完成的，而node将所有的阻塞操作都交给内部的线程池去实现，本身只负责不断的往返调度，并不对真正的io操作，从而实现异步非拥塞io
             webpack：项目体积：
             loader转换器、plugins是扩展器：
             
@@ -266,11 +254,12 @@
     <div class="a-2"></div>
     <div class="a-3"></div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/jquery-3.3.1.min-20201130021002922.js"></script>
 <script async
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
+
     let conArr = [
         { id: 1, name: '部门1', pid: 0 },
         { id: 2, name: '部门2', pid: 1 },
@@ -279,69 +268,120 @@
         { id: 5, name: '部门5', pid: 4 },
     ]
     // let conArr = [
-    //     { name: '1', type: 0 },
-    //     { name: '2', type: 0 },
-    //     { name: '3', type: 2 },
-    //     { name: '4', type: 2 },
-    //     { name: '5', type: 3 },
-    //     { name: '6', type: 3 },
+    // { name: '1', type: 0 },
+    // { name: '2', type: 0 },
+    // { name: '3', type: 2 },
+    // { name: '4', type: 2 },
+    // { name: '5', type: 3 },
+    // { name: '6', type: 3 },
     // ]
-    // [    {type:0,values:[{name:'1',type:0},{name:'2',type:0}]}
+    // [ {type:0,values:[{name:'1',type:0},{name:'2',type:0}]}
     // {type:2,values:[{name:'3',type:2},{name:'4',type:2}]}
-    // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]}    ]
+    // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]} ]
     function convert(list) {
-
     }
-    // console.log(convert(conArr));
+    // console.log(quickSort(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0]
-    console.log(shallSort(MathArr));
-    // 选择排序
+    console.log(quickSort(MathArr));
+    // 选择排序--找出最小下标
     function selectSort(arr) {
-
     }
-    // 插入排序
+    // 插入排序--往右移位
     function insertSort(arr) {
-
     }
-    // 归并排序
+    // 归并排序--拆分左右，依次对比第一个值
     function mergeSort(arr) {
+        let len = arr.length
+        if (len < 2) {
+            return arr
+        }
+        let middle = Math.floor(len / 2)
+        let left = arr.slice(0, middle)
+        let right = arr.slice(middle)
 
-
+        return merge(mergeSort(left), mergeSort(right))
     }
     function merge(left, right) {
-
+        let result = []
+        while (left.length > 0 && right.length > 0) {
+            if (left[0] > right[0]) {
+                result.push(right.shift())
+            } else {
+                result.push(left.shift())
+            }
+        }
+        while (left.length > 0) {
+            result.push(left.shift())
+        }
+        while (right.length > 0) {
+            result.push(right.shift())
+        }
+        return result
     }
 
-    // 快速排序
+    // 快速排序--对比基准值pivot
     function quickSort(arr) {
-
+        let len = arr.length
+        if (len < 2) return arr
+        let pivot = arr.splice(Math.floor(len / 2), 1)[0]
+        let left = []
+        let right = []
+        arr.forEach(item => {
+            if (item > pivot) {
+                right.push(item)
+            } else {
+                left.push(item)
+            }
+        });
+        return quickSort(left).concat([pivot], quickSort(right))
     }
-    // 希尔排序
+    // 希尔排序--插入排序的基础上增加gap增量
     function shallSort(arr) {
-
+        let len = arr.length
+        let gap = Math.floor(len / 2)
+        let item = null
+        let j = 0
+        for (; gap > 1; gap = Math.floor(gap / 2)) {
+            for (let i = gap; i < len; i++) {
+                item = arr[i]
+                j = i - gap
+                while (j >= 0 && arr[j] > item) {
+                    arr[j + gap] = arr[j]
+                    j = j - gap
+                }
+                arr[j + gap] = item
+            }
+        }
+        return arr
     }
 
     // a==1&&a==2,a===1&&a===2
+    let val = 0
+    // let a  = {}
+    Object.defineProperty(window, 'a', {
+        get: function () {
+            return ++val
+        }
+    })
+    console.log(a === 1 && a === 2);
 
-    // console.log(a === 1 && a === 2);
-    // 双向绑定：
+    // 双向绑定：observer->创建对象是,observer回去遍历对象,添加实例化对象__ob__,并添加getset方法,创建dep订阅器,,compile->初始化视图,给节点绑定一个update更新函数,更新视图,,watch是桥梁->收集订阅者,监听数据的更改,一但变更通知订阅者,执行更新函数修改视图
 
-    // 路由钩子函数:
+    // 路由钩子函数:全局导航钩子beforeEach,beforeResolve,afterEach,单独路由独享beforeEnter,组件内导航钩子beforeRouteEnter,beforeRouteUpdate,beforeRouteLeave
 
-    // 生命周期vue2： 
+    // 生命周期vue2：crete,created,mount,mounted,update,updated,destory,destoried
 
-    // 生命周期vue3: 
+    // 生命周期vue3:
     // vuex状态管理器 :
     // 虚拟dom，用js在真实的dom节点上渲染一层虚拟的节点，并且采用diff算法来高效的对比dom节点和指定dom节点更新
     // 常见的内存泄漏 意外的全局变量，未清理定时器，dom引用，闭包
     function myNew(con, ...args) {
-
     }
     // object.defineProperty缺点：
     // proxy:
     // HTTP浏览器输入URL后发生了什么:
     // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：
-    // 前端性能优化 
+    // 前端性能优化
     // html--语义化的标签，
     // Object.defineProperty()
 
@@ -350,18 +390,18 @@
     setColor(active)//切换颜色为当前对象添加伪类元素
     function setColor(color) {
         color = `<style>
-    .spesc-img-right .spesc-img-right-ul .spesc-active .spescColor::after{
-    position: absolute;
-    content: '';
-    left: 50%;
-    border: 4px solid ${color.slice(35, 42)};
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    }
-    </style>`
+            .spesc-img-right .spesc-img-right-ul .spesc-active .spescColor::after {
+                position: absolute;
+                content: '';
+                left: 50%;
+                border: 4px solid ${color.slice(35, 42)};
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 65px;
+                height: 65px;
+                border-radius: 50%;
+            }
+        </style>`
         $('.spesc-img-right .spesc-img-right-ul .spesc-active .spescColor').append(color)
     }
 
@@ -395,14 +435,14 @@
     }
     class myPromise {
         constructor(exe) {
-            this.value = null
-            this.status = 'pending'
-            this.successQueue = []
-            this.failureQueue = []
+            this.value = '';
+            this.status = 'pending';
+            this.successQueue = [];
+            this.failureQueue = [];
 
-            let resolve = (value) => {
+            let resolve = function (val) {
                 if (this.status === 'pending') {
-                    this.value = value;
+                    this.value = val
                     this.status = 'fulfilled'
                     let timer = setTimeout(() => {
                         clearTimeout(timer)
@@ -412,232 +452,104 @@
                     }, 0);
                 }
             }
-            let reject = (value) => {
+            let reject = function (val) {
                 if (this.status === 'pending') {
-                    this.value = value;
+                    this.value = val
                     this.status = 'rejected'
-                    this.failureQueue.forEach(item => {
-                        let timer = setTimeout(() => {
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer)
+                        this.failureQueue.forEach(item => {
                             item(this.value)
-                            clearTimeout(timer)
-                        }, 0);
-                    })
+                        })
+                    }, 0);
                 }
             }
-            try {
-                exe(resolve, reject)
-            } catch (error) {
-                reject(error)
-            }
+            exe(resolve, reject)
         }
+
         then(successFn, failureFn) {
-            typeof successFn !== 'function' ? successFn = result => result : null
-            return new Promise((resolve, reject) => {
+            typeof successFn !== 'function' ? successFn = val => val : null
 
-                this.successQueue.push(() => {
-                    let result = successFn(this.value)
-                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
+            return new myPromise((res, rej) => {
+                try {
+                    this.successQueue.push(() => {
+                        let result = successFn(this.value)
+                        result instanceof myPromise ? result.then(res, rej) : res(result)
+                    })
+                } catch (error) {
 
-                typeof failureFn !== 'function' ? failureFn = result => reject(result) : null
-                this.failureQueue.push(() => {
-                    let result = failureFn(this.value)
-                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
+                }
             })
-        }
-        catch(fn) {
-            return this.then(null, fn)
+
         }
     }
     Promise.myAll = promises => {
-        let len = promises.length
-        let count = 0
-        let result = []
-
-        return new Promise((resolve, reject) => {
-            promises.forEach((p, i) => {
-                Promise.resolve(p).then(res => {
-                    result[i] = res
-                    count++
-
-                    if (count === len) {
-                        resolve(result)
-                    }
-                }).catch(reject)
-            })
-        })
     }
     Promise.myRace = promises => {
-        return new Promise((resolve, reject) => {
-            promises.forEach(p => {
-                Promise.resolve(p).then(resolve).catch(reject)
-            })
-        })
+
     }
     Promise.prototype.myFinally = function (fn) {
-        return new Promise((result) => {
-            fn()
-            return result
-        }, reason => {
-            fn()
-            throw reason
-        })
+
     }
     Promise.allSettled = promises => {
-        let len = promises.length
-        let count = 0
-        let result = []
-
-        return new Promise((resolve, reject) => {
-            promises.forEach((p, i) => {
-                Promise.resolve(p).then(res => {
-                    result[i] = {
-                        value: res,
-                        status: 'fulfilled'
-                    }
-                    count++
-
-                    if (count === len) {
-                        resolve(result)
-                    }
-                }, reason => {
-                    result[i] = {
-                        value: res,
-                        status: 'rejected'
-                    }
-                    count++
-
-                    if (count === len) {
-                        resolve(result)
-                    }
-                })
-            })
-        })
     }
     Promise.myAny = promises => {
-        let len = promises.length
-        let count = 0
-        let result = []
 
-        return new Promise((resolve, reject) => {
-            promises.forEach((p, i) => {
-                Promise.resolve(p).then(res => {
-                    resolve(res)
-                }, reason => {
-                    result[i] = reason
-                    count++
-
-                    if (count === len) {
-                        reject(result)
-                    }
-                })
-            })
-        })
     }
     function deepClone(obj) {
-        let cloneObj = Array.isArray(obj) ? [] : {}
 
-        if (obj && typeof obj === 'object') {
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    if (obj[key] && typeof obj[key] === 'object') {
-                        cloneObj[key] = deepClone(obj[key])
-                    } else {
-                        cloneObj[key] = obj[key]
-                    }
-                }
-            }
-        }
-        return cloneObj
     }
-    console.log(myInstanceof([], String));
+    // console.log(myInstanceof([], String));
     function myInstanceof(obj, func) {
-        if (typeof obj !== 'object' || obj === null) {
-            return false
-        }
 
-        let proto = Object.getPrototypeOf(obj)
-
-        if (proto === func.prototype) {
-            return true
-        } else if (proto === null) {
-            return false
-        } else {
-            return myInstanceof(proto, func)
-        }
     }
     function throttle(fn, args) {
-        let flag = true
-        return function () {
-            if (!flag) {
-                return false
-            }
 
-            flag = false
-            let timer = setTimeout(() => {
-                clearTimeout(tiemr)
-                flag = true
-                fn(...args)
-            }, 1000);
-        }
     }
     function debounce(fn, args) {
-        let timer = false
-
-        return function () {
-            if (timer) {
-                clearTimeout(timer)
-                return false
-            }
-
-            tiemr = setTimeout(() => {
-                fn(...args)
-            }, 1000);
-        }
 
     }
     const myFlat = (arr) => {
-
+        return arr.reduce((res, next) => {
+            return res.concat(Array.isArray(next) ? myFlat(next) : next)
+        }, [])
     }
-    let arrFlat = [1, [2, 3, [5, 6]]]
-    // console.log(myFlat(arrFlat));
+    let arrFlat = [[1, 4], [2, 3, [5, 6]]]
+    console.log(myFlat(arrFlat));
 
     function currying(func) {
-        let args = []
-        let rest = function (...m) {
-            if (m.length === 0) {
-                return func(...args)
-            }
-            else {
-                args.push(...m)
+        let result = []
+        return function rest(...m) {
+            if (m.length != 0) {
+                result.push(...m)
                 return rest
+            } else {
+                return func(...result)
             }
         }
-        return rest
     }
     let add = (...args) => {
         return args.reduce((a, b) => a + b)
     }
     let sum = currying(add)
-    sum(1)(2, 3)
-    sum(4, 5)(6)(7)
+    // sum(1)(2, 3)
+    // sum(4, 5)(6)(7)
     // console.log(sum());
     console.log(addFn(1, 2, 3)(7, 3) + '');
     function addFn(...m) {
         let args = [...m]
 
-        let result = function (...n) {
+        function rest(...n) {
             args.push(...n)
-            return result
+            return rest
         }
-        result.toString = function () {
-            return args.reduce((a, b) => {
-                return a + b
-            })
+
+        rest.toString = function (a, b) {
+            return args.reduce((a, b) => a + b)
         }
-        return result
+        return rest
     }
+
     function sleep() { }
     let tree = {
         id: '1-1',
@@ -662,8 +574,7 @@
                         title: '节点2-1'
                     }
                 ]
-            }
-            ,
+            },
             {
                 id: '1-2',
                 title: '节点1-2'
@@ -672,19 +583,32 @@
     }
 
     let deepTraversal = node => {
-        let nodes = [...node]
-        let node = null
-
-        while (node = node.id) {
-            // dasdas
+        let nodes = []
+        if (node != null) {
+            nodes.push(node.id)
+            if (node.children && node.children.length > 0) {
+                for (const child of node.children) {
+                    nodes = nodes.concat(deepTraversal(child))
+                }
+            }
         }
-
-        return result
+        return nodes
     }
     let widthTraversal = (tree) => {
+        let queue = [...tree]
+        let nodes = []
 
+        for (const item of queue) {
+            nodes.push(item.id)
+            if (item.children || item.children > 0) {
+                for (const child of item.children) {
+                    queue.push(child)
+                }
+            }
+        }
+        return nodes
     }
-    // console.log(deepTraversal(tree));
+    console.log(deepTraversal(tree));
 </script>
 
 

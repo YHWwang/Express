@@ -1,3 +1,7 @@
+# 关于@media screen 无法准确识别屏幕宽度的情况
+其中一个常见的原因是移动设备上的浏览器缩放级别不同，导致屏幕宽度的实际像素值与 CSS 像素值不一致。这可能会导致媒体查询无法准确匹配屏幕宽度。
+使用@media screen and (max-device-width: 768px)属性表示设备的物理像素宽度和高度，可以更准确地匹配设备的屏幕大小。
+
 # 安卓和ios兼容性问题
 1. iOS 日期的兼容
    ios 下 new Date('2020-03-11 00:00:00') 不生效，需要对日期进行 date.replace(/-/g, '/') 处理。
@@ -16,9 +20,10 @@
         window.scrollTo(0, Math.max(scrollHeight - 1, 0));
         }, 100);
     })
-6. 软键盘弹起和回落问题
-   android:监听 webview 高度会变化，高度变小获知软键盘弹起，否则软键盘收起（软键盘收起和输入框获没获取焦点不直接关联）。软键盘与窗口处于同一层，所以当软键盘弹起时，当前窗口缩小，那么窗口内容自然要被挤
-   ios:监听输入框的 focus 事件来获知软键盘弹起，监听输入框的 blur 事件获知软键盘收起。软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起
+6. 软键盘弹起和回落留白问题
+   android:scrollIntoView(false);监听 webview 高度会变化，高度变小获知软键盘弹起，否则软键盘收起（软键盘收起和输入框获没获取焦点不直接关联）。软键盘与窗口处于同一层，所以当软键盘弹起时，当前窗口缩小，那么窗口内容自然要被挤
+   ios:window.scrollTo（0，0）监听输入框的 focus 事件来获知软键盘弹起，监听输入框的 blur 事件获知软键盘收起。软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起
+
 7. 软键盘遮挡输入框的问题--》弹起软键盘始终让输入框滚动到可视区
     android: window.addEventListener('resize', () => {
                 setTimeout(() => {
@@ -40,7 +45,7 @@
     二. 滚动妥协填充空白，装饰成其他功能
 9.  页面放大或缩小不确定性行为
    <meta name=viewport  content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
-11. 1px边框问题解决方案(设备像素比dpr)https://mp.weixin.qq.com/s?__biz=MzUyMDk4OTU5OA==&mid=2247528392&idx=7&sn=d025e40c3dafa46108118f351ed1758f&chksm=f9e3d139ce94582fa75c29d871a2b2adde65ea2e68c682ff7b1f218417321e783243c7925f5b&scene=27
+10. 1px边框问题解决方案(设备像素比dpr)https://mp.weixin.qq.com/s?__biz=MzUyMDk4OTU5OA==&mid=2247528392&idx=7&sn=d025e40c3dafa46108118f351ed1758f&chksm=f9e3d139ce94582fa75c29d871a2b2adde65ea2e68c682ff7b1f218417321e783243c7925f5b&scene=27
     一.伪元素 + CSS3缩放->要先放大 200% 再缩小 0.5
     width: 200%; 
     height: 200%; 
@@ -59,20 +64,20 @@
     二.动态 Viewport + rem 方式
     首先根据 dpr 来动态修改 meta 标签中 viewport 中的 initial-scale 的值，以此来动态改变 viewport 的大小；
     然后页面上统一使用 rem 来布局，viewport 宽度变化会动态影响 html 中的font-size 值，以此来实现适配。
-12.  取消input在ios下，输入的时候英文首字母的默认大写
+11.  取消input在ios下，输入的时候英文首字母的默认大写
     <input autocapitalize="off" autocorrect="off" />
-13. 移动端禁止选中内容
+12. 移动端禁止选中内容
     -webkit-user-select: none; /* Chrome all / Safari all /
     -moz-user-select: none; / Firefox all （移动端不需要） /
     -ms-user-select: none; / IE 10+ */
-14. ios和android下触摸元素时出现半透明灰色遮罩
+13. ios和android下触摸元素时出现半透明灰色遮罩
     a,button,input,textarea{
         -webkit-tap-highlight-color: rgba(0,0,0,0）
         -webkit-user-modify:read-write-plaintext-only;
     }
-15. IOS 默认输入框内阴影重置
+14. IOS 默认输入框内阴影重置
     -webkit-appearance: none; 
-16. 消除transition闪屏
+15. 消除transition闪屏
      {
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
@@ -125,19 +130,17 @@ html-》加上title='文本内容'
 问题在于回调函数是一个匿名函数，那么这就导致了每一次注册都是一个不同的事件监听器。
 
 
-# http和https的区别？
+# http和https的区别？（https://cloud.tencent.com/developer/article/1704749）
 http: 协议以明文方式发送内容，不提供任何方式的数据加密。默认80端口
-https: 是一种透过计算机网络进行安全通信的传输协议，由http进行通信但利用SSL/TLS来加密数据包，是提供对网站服务器的身份认证，保护交换数据的隐私与完整性。默认443端口；
-工作流程：   1、TCP 三次同步握手
-            2、客户端验证服务器数字证书
-            3、DH 算法协商对称加密算法的密钥、hash 算法的密钥
-            4、SSL 安全加密隧道协商完成
-            5、网页以加密的方式传输，用协商的对称加密算法和密钥加密，保证数据机密性；用协商的hash算法进行数据完整性保护，保证数据不被篡改。
-用法：   1、客户端持有对称密钥A,服务端持有非对称公钥B、私钥C；
-        2、客户端先做请求，服务端把公钥B返回，
-        3、客户端拿到公钥B（数字证书验证身份可靠),加密公钥A,传给服务器。
-        4、服务器用私钥C解出私钥A；
-        5、最后客户端通过私钥A加密数据包，服务端通过密钥A解出数据，正常通信。
+https: 是一种透过计算机网络进行安全通信的传输协议，由http进行通信但利用SSL/TLS来加密数据包，是提供对网站服务器的身份认证，保护交换数据的隐私与完整性。默认443端口；HTTPS采用对称加密来加密通信内容，所用的密钥称为A。用非对称加密来加密密钥A再发送给对方（有点绕）。只要密钥A不落入他人手中，那传输的数据就不会被别人破译。
+工作流程：  
+        1、客户端请求服务器建立安全连接，附加客户端支持的SSL与TLS版本、支持的加密算法版本、随机数。
+        2、服务器响应请求，附加选择的协议版本、加密算法版本、服务器随机数。 
+        3、客户端持有CA机构的公钥,服务器持有CA机构的私钥和本身服务器的公钥和私钥
+        4、客户端向服务器请求公钥，用于将客户端密钥安全传给服务器
+        5、服务器将CA证书和CA的私钥去加密服务器公钥发给客户端，客户端用CA的公钥验证证书的有效性，并解密得到服务器公钥
+        6、客户端生成一个私钥（一个随机数）给服务器，用于加密、解密客户端与服务器间的传输数据，用服务器公钥加密，服务器用服务器的私钥解密得到客户端的私钥
+        7、客户端和服务器拥有同一个私钥，这样就可以用这把私钥加密、解密所有信息了
 
 # 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？
 可以在axios中response响应拦截，比对我们发送的时间搓参数，进行比较，然后筛选出后输入值返回的数据

@@ -30,13 +30,14 @@
             align-items: center;
             background-color: #ccc;
         } */
-        .test{
+        .test {
             display: flex;
             flex-wrap: wrap;
             width: 100%;
             gap: 10px 4%;
         }
-        .test .b{
+
+        .test .b {
             width: 100%;
             max-width: 22%;
             background-color: #ccc;
@@ -46,48 +47,6 @@
 </head>
 
 <body>
-    Set: 集合[value.vlaue],不重复
-    Map: 字典[key,vlaue],不重复
-    Object:对象仅接受字符串和 Symbol 键
-    filter筛选，筛选出符合条件的数据，every只要有一个不符合就退出，flat扁平化数组
-    es6 promise,async，拓展运算符，解构，
-    promise异步编程的方法，主要解决回调地狱的问题，3个状态，pending,fulfilled,rejected,状态一旦定义边无法修改，resolve成功函数，rejected失败函数，.then,catch,all,race,allSettled,any,finally等方法，微任务
-    let:局部变量，存在tdk暂时型死区，再内存栈中不会预留分配空间
-    var：全局变量，变量提升，会再内存栈中预留空间，如果传的是引用对象则是指向堆内存中的指针
-    const:常量，一旦定义无法再进行赋值，不会预留栈空间，Object.freeze冻结对象
-    栈自动分配内存，会自动释放，堆动态分配内存，大小不定也不会自动释放，基本数据类型再栈中，引用数据类型再栈中存的是指针，指向堆内存
-    子函数内部可以访问外部函数的变量的函数，闭包的形成与垃圾回收机制有关，防抖节流这些高级函数都有用到闭包，柯里化函数这些都有用到；定义函数时它有自己的定义域，执行完边会释放销毁，私有化
-    function myInstanceof(left,right){
-        必须是引用类型
-        if( typeof left != object || left != ''){
-            return false
-        }
-        获取原型链上的属性
-        let proto = Object.getPrototype()
-
-        if(proto===null){
-            ret false
-        }else if(proto === right.prototype){
-            ret true
-        }else{
-            myInstanceof(proto,right)
-        }
-
-    }
-    function myNew(con,...args){
-        let obj = Object.create(null)
-        object.setPrototypeof(obj,con.prototype)
-        let result = con.apply(obj,args)
-        return result instanceof object? result : obj
-    }
-    基本数据类型：null,undefind,string,number,boolean,sybmol,
-    引用数据类型: object,array,function
-    Array.isArray()
-        
-    实例    构造函数   原型
-      实例-》构造construct -》new实例
-      构造函数-》原型 prototype   原型-》构造constructor
-      原型<-实例proto
     <div class="a">
         <div class="b">111</div>
         <div class="b">222</div>
@@ -108,7 +67,57 @@
     </div>
 
     <script>
+        let arr = [
+            { id: 1, name: '部门1', pid: 0 },
+            { id: 2, name: '部门2', pid: 1 },
+            { id: 3, name: '部门3', pid: 1 },
+            { id: 4, name: '部门4', pid: 3 },
+            { id: 5, name: '部门5', pid: 4 },
+        ]
+        console.log(treeList(arr));
+        function treeList(arr) {
+            let result = []
+            let map = arr.map(( v) => {
+                console.log(v.pid);
+            })
+            // console.log(map);
+            // for (const item of arr) {
+            //     if (item.pid == 0) {
+            //         result.push(item)
+            //         continue
+            //     }
+            //     if (item.pid in map) {
+            //         let parent = map[item.pid]
+            //         parent.children = parent.children || []
+            //         parent.children.push(item)
+            //     }
+            // }
+            return result
+        }
 
+
+        // Map是[key,value]，Set是[value,value]的形式，值都是唯一的，Map的key是字符串或者symbol类型
+        // filter筛选，every遍历判断每一个是否符合条件，flat扁平化数组
+        // es6的新特性，async/await  拓展运算符 箭头函数 ?? .? let const 解构 Promise对象
+        // Promsie是异步编程的一种方法，具有3中状态，pending,fulfilled,rejected一旦定义无法更改，all race finally any allSettled等多种方法函数
+        // 按照all([数组])按照顺序去依次请求读取，race谁先返回就用谁
+        // 箭头函数和普通函数的区别：关于this的指向，语法不同，箭头函数是匿名函数无法做为构造函数，无法使用new
+        // new: 1.创建一个空对象，Object.create(null)2.obj.setProperty(fn)3.构造函数的this指向空对象fn.apply(obj)4.根据返回值判断类型如果为对象则返回本身，否在就返回空对象
+        function newFn(fn) {
+            let obj = Object.create(null)
+            Object.setPrototypeOf(obj, fn.prototype)
+            let pro = fn.apply(obj, args)
+            return pro instanceof 'object' ? pro : obj
+        }
+        // let 存在暂时性死区TDZ,var存在变量提升，const只能在创建时进行赋值OBject.freeze冻结它
+        // 堆和栈,栈内存是自动分配内存完事后自动释放.堆不会自动释放,动态分配,大小不定,基本类型存在栈中,引用类型在栈中有个地址,这个地址指向堆内存中,设计称这样就是有效的利用内存,让程序占用的内存最小
+        // 闭包的原理就是能让函数区访问创建时的词法作用域,闭包的特性:入参和返回值是函数
+        // 字符串 数值 boolean null undefind symbol bigInt 引用:function array object 每个函数返回this
+        // 构造函数的prototype属性我们称为原型,形成原型链的是对象的__proto__,
+        // display:flex;justify-item,align-items,felx-directions,felx-warp,
+        // 标准盒子模型content-box,padding+content+border，w3c标准盒子模型border-box,content
+        // 强缓存：expires,catch-control,协商缓存:last-Modified,if-modified-since,etag+if-none-match
+        // foo.constructor 
     </script>
 </body>
 
