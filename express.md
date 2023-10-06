@@ -1,3 +1,61 @@
+# 写一个限制请求数量的函数
+const allRequest = [
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=1",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=2",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=3",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=4",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=5",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=6",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=7",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=8",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=9",
+    "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=10",
+];
+function sendRequest(urls, max, callbackFunc) {
+    let total = urls.length//总数
+    let queue = []//队列
+    let reqMax = max//限制数
+    let current = 0//当前执行数
+    let done = 0//完成数
+    let results = new Array(total).fill(false)//结果
+
+    init()
+
+    async function init() {
+        for (let index = 0; index < urls.length; index++) {
+            request(index,urls[index])//循环请求
+        }
+    }
+    async function request(index,url){
+        if(current >= reqMax){//判断当前请求数是否符合最大请求数
+            await new Promise( resolve =>{queue.push(resolve)})
+        }
+        sendHandler(index,url)
+    }
+    async function sendHandler(index,url){
+        current++
+        try {
+            let result = await fetch(url)
+            results[index] = result//请求结果
+        } catch (error) {
+            results[index] = error
+        } finally{
+            done++
+            current--
+
+            if(queue.length){
+                queue[0]()//执行resolve()
+                queue.shift()//执行完剔除
+            }
+
+            if(done == total){
+                callbackFunc(results)
+            }
+        }
+    }
+}
+sendRequest(allRequest, 2, (result) => { console.log(result); })
+
 # 关于@media screen 无法准确识别屏幕宽度的情况
 其中一个常见的原因是移动设备上的浏览器缩放级别不同，导致屏幕宽度的实际像素值与 CSS 像素值不一致。这可能会导致媒体查询无法准确匹配屏幕宽度。
 使用@media screen and (max-device-width: 768px)属性表示设备的物理像素宽度和高度，可以更准确地匹配设备的屏幕大小。
@@ -170,6 +228,29 @@ html {
 
 # 同源策略
 协议、域名、端口相同才是同源策略.chrome每个域名最多6个.使用多个域名，可以增加并发数.在HTTP2协议中，可以开启管道化连接，即单条连接的多路复用，每条连接中并发传输多个资源，这里就不需要添加域名来增加并发数了
+
+# 找出最大的增量数组 [2, 9, 1, 5, 3, 7, 101, 18] -> [1,5,7,101]
+ function addGap(arr) {
+   let result = []
+   let temp = []
+   let max = 0
+   for (let i = 0; i < arr.length - 1; i++) {
+       max = arr[i]
+       temp = []
+       for (let j = i + 1; j < arr.length - 1; j++) {
+           if (max < arr[j]) {
+               temp.push(max)
+               max = arr[j]
+           }
+       }
+       temp.push(max)
+
+       if (result.length < temp.length) {
+           result = temp
+       }
+   }
+   return result
+}
 
 # 选择排序 (找出最小下标)
 function func(arr){
@@ -407,29 +488,6 @@ text-overflow: ellipsis;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 4;
 
-# 关于summernote中添加表情包emoji按钮，中切换表情类型后插入的位置的错误问题，解决方法：
-contenteditable属性指定元素内容是否可编辑
- $('.note-editor').focusin(function () {
-    return false
-  })
-  $('.note-editor').focusout(function () {
-    $('.note-editable').focus()
-  })
-  $('.note-insert .note-btn').eq(1).click(function(){//解决点击链接按钮后无法输入url的问题
-    $('.note-editable').attr('contenteditable', false)
-  })
-  $('#summernoteBox .note-popover .note-btn-group .note-btn').eq(0).click(function(){//解决点击编辑区链接按钮后无法输入url的问题
-    $('.note-editable').attr('contenteditable', false)
-  })
-  $(document).click(function (event) {
-    let dom = $('.note-editor')[0]
-    if (event.target != dom && !$.contains(dom, event.target)) {//点击判断点击区域是否是指定节点
-      $('.note-editable').attr('contenteditable', false)
-    } else {
-      $('.note-editable').attr('contenteditable', true)
-    }
-  })
-
 # swiper不在第一屏时初始化问题
     new Swiper('.swiper-container', {
         pagination: {
@@ -448,63 +506,6 @@ contenteditable属性指定元素内容是否可编辑
         },
     });
 
-
-# //fileinput插件上传头像  
-    initFileInput("input-id");
-    function initFileInput(ctrlName) {
-        var control = $('#' + ctrlName);
-        control.fileinput({
-            language: 'zh', //设置语言
-            uploadUrl: "/web/user/login/updateUserPhoto", //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            uploadAsync: false, //默认异步上传，这里如果不是异步上传，多个图片一次性提交到后台，只发一次请求，如果为异步上传，每张图片都会发一次请求，多次请求
-            showUpload: true, //是否显示上传按钮
-            showRemove: true, //显示移除按钮
-            showPreview: true, //是否显示预览
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            maxFileSize: 10,
-            maxFileCount: 1, //允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            msgFilesTooMany: "The number of files selected for upload ({n}) exceeds the maximum allowed value {m}!",
-            msgSizeTooLarge: 'The maximum size of the pictures allowed to be uploaded is 10kb!',
-            layoutTemplates: {
-                // actionDelete:'', //去除上传预览的缩略图中的删除图标
-                // actionUpload:'',//去除上传预览缩略图中的上传图片；
-                // actionZoom:'',   //去除上传预览缩略图详情的图标
-                // actionDownload:'' //去除上传预览缩略图中的下载图标
-            },
-            uploadExtraData: function () {   //向后台传递的附带参数
-                var data = {
-                    id: "10000",
-                    msg: "这里可以添加参数"
-                }
-                return data;
-            }
-        }).on('filebatchuploadsuccess', function (event, data, previewId, index) {     //上传中
-            // console.log($('.file-error-message ul li').text());
-            if($('.file-error-message ul li').text() != ''){
-              alert('The maximum size of the pictures allowed to be uploaded is 10kb!')
-              $("#updateImageModal").modal('hide');
-              $('div.modal-backdrop').hide();
-              return false
-            }
-            console.log('文件正在上传');
-        }).on("filebatchuploadsuccess", function (event, data, previewId, index) {    //一个文件上传成功
-            var form = data.form, files = data.files, extra = data.extra,
-                response = data.response, reader = data.reader;
-            var data = data.response;
-            $("#updateImageModal").modal('hide');
-            $("#usersImage").attr("src", data.data);
-            $('div.modal-backdrop').hide();
-            console.log(response);//打印出返回的json
-            console.log(response.status);//打印出状态
-        }).on('filebatchuploaderror', function (event, data, msg) {  //一个文件上传失败
-            console.log('文件上传失败！' + data.status);
-        })
-    }
-    
 # //js监听变量的变化
     
      var obj = {//对象
@@ -530,58 +531,6 @@ contenteditable属性指定元素内容是否可编辑
         // console.log(`哈哈哈，监听到值变化为${val}了`);
     });
       watchedObj.category = size//size为动态变量
-    
-# $('#summernote').summernote({//富文本编辑选中图片上传图片流，返回图片的url
-        placeholder: '',
-        tabsize: 2,
-        height: 462,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-            onImageUpload: function (files) {
-                sendFile( $('#summernote'), files[0]);
-            }
-        }
-    });
-    //ajax上传图片
-    function sendFile($summernote, file) {
-            if((file.size / 1024 / 1024) > 1) {//限制图片文件的大小
-            $('#alertBox').html(`
-            <div class="alert alert-warning  alert-dismissible fade show" role="alert">
-            Picture cannot exceed 1M...
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            `)
-            $('#maskLayer').hide()//自定义遮布层
-            return false;
-        }
-        var formData = new FormData();
-        formData.append("file", file);
-        $.ajax({
-            url: "/uploadFile",//路径
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            success: function (data) {
-             $('#maskLayer').hide()
-                $summernote.summernote('insertImage', data.data, function ($image) {
-                    $image.attr('src', data.data);
-                });
-            }
-        });
-    }
-
 
 # IIFE(立即执行函数)内的var穿透了块作用域，name被提升至if()之前，且此时name为undefined。
  

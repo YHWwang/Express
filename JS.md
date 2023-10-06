@@ -1,3 +1,19 @@
+# Promise和async/await和Generator的区别？
+1. Promise: 是一个构造函数，让回调函数变成了规范的链式写法
+2. Generator：迭代生成器，使用yield表达式是暂停执行标记和next()恢复执行
+3. async/await：返回的是一个Promise对象，异步拥塞式方法，基于Promsie方法，也是gerenator的语法糖
+
+# 观察者模式和发布订阅模式的区别？
+观察者模式:只有俩个关键的角色就是发布者和订阅者，并且是一对多的依赖关系，让多个观察者对象同时监听某一个目标对象，当这个目标对象的状态发生改变时，会通知所有观察者对象，使它们能够自动更新
+      《--观察；通知--》订阅者  
+发布者《--观察；通知--》订阅者
+      《--观察；通知--》订阅者
+发布订阅模式：发布者（或者说是主题）并不直接发送消息给订阅者，而是通过调度中心（或者叫消息代理）来传递消息。 发布者（或者说是主题）并不知道订阅者的存在，而订阅者也不知道发布者的存在。他们彼此唯一的关系就是在调度中心注册成为订阅者或者发布者。实现解耦。
+                         《--订阅事件；通知变化--》订阅者  
+发布者--》事件中心/调度中心《--订阅事件；通知变化--》订阅者
+                         《--订阅事件；通知变化--》订阅者
+
+
 # dom的删除有哪些方法？
 removeChild、remove、outerHTML
 
@@ -504,11 +520,32 @@ bind(context,arguments) 返回一个函数
 call(context,arg1,arg2...) 指定作用域 同时执行函数
 apply(context,args) 指定作用域 同时执行函数，后面的参数是数组
 实现bind
-Function.prototype.myBind(context,...args){
- return function(){
-   return this.apply(context,args)
+Function.prototype.myBind = function (objThis, ...params) {
+    const thisFn = this; // 存储源函数以及上方的params(函数参数)
+    // 对返回的函数 secondParams 二次传参
+    let fToBind = function (...secondParams) {
+        console.log('secondParams',secondParams,...secondParams)
+        const isNew = this instanceof fToBind // this是否是fToBind的实例 也就是返回的fToBind是否通过new调用
+        const context = isNew ? this : Object(objThis) // new调用就绑定到this上,否则就绑定到传入的objThis上
+        return thisFn.call(context, ...params, ...secondParams); // 用call调用源函数绑定this的指向并传递参数,返回执行结果
+    };
+    fToBind.prototype = Object.create(thisFn.prototype); // 复制源函数的prototype给fToBind
+    return fToBind; // 返回拷贝的函数
+};
+实现call 
+Function.prototype.myCall = function (context, ...arg) {
+     const fn = Symbol('临时属性')
+     context[fn] = this
+     context[fn](...arg)
+     delete context[fn]
  }
-}
+实现apply
+Function.prototype.myApply = function (context, arg) {
+     const fn = Symbol('临时属性')
+     context[fn] = this
+     context[fn](...arg)
+     delete context[fn]
+ }
 
 # slice和splice的用法
 slice(开始索引,结束索引--不包括)方法从数组中返回选定的元素，作为一个新数组。生成新数组
@@ -838,7 +875,7 @@ reject作用是，将Promise对象的状态从“未完成”变为“失败”�
 
 js是单线程，同步任务和异步任务，先执行同步推到主线程中，异步任务推到任务队列中，任务队列里任务可分为微任务和宏任务，宏观任务执行在下次轮询之间，微观任务在本次轮询之后渲染之前，所以微观比宏观快。
 promise是微观任务（作业队列） ，.then、.catch、process.nextTick是异步会放到了微队列中
-setTimeout和setInterval宏观任务（任务队列），先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
+script,setTimeout和setInterval宏观任务（任务队列），先执行微观任务，在执行宏观任务；微观任务里，先执行同步再执行异步
 
 微观任务Microtask是由js引擎发起的任务（promise,process.nextTick等）
 宏观任务Macrotask是由浏览器/node发起的任务（script、setTimeOut、setInterval、I/O、UI交互）
