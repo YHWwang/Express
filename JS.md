@@ -65,7 +65,7 @@ removeChild、remove、outerHTML
     print(10)
 
 # window初始化对象的name属性
-console.log(name) // 等于黑猫警长,初始化时为""而不是undefined
+console.log(name) // 初始化时为""而不是undefined
 var name = '黑猫警长' 
 
 # 强缓存和协商缓存-----(浏览器缓存最大的价值是节省了带宽)

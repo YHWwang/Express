@@ -8,10 +8,10 @@ router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规�
 # active-class来着router-link组件
 
 # 路由组件的钩子函数：
-    全局导航钩子：beforeEach、beforeResolve、afterEach
-　　路由独享导航钩子：beforeEnter
-　　组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
-　　参数：to、from、next；正对不同的钩子函数参数有所差异。
+1. 全局导航钩子：beforeEach、beforeResolve、afterEach
+2. 路由独享导航钩子：beforeEnter
+3. 组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
+参数：to、from、next；正对不同的钩子函数参数有所差异。
 
 # vue-router有几种模式
 1. hash,默认模式，url会有#号,hash模式的特点在于hash出现在url中，但是不会被包括在HTTP请求中，对后端没有影响，不会重新加载页面。
@@ -56,7 +56,7 @@ require.context()动态模块热重载
 # vue是怎么解析template的? template会变成什么?
 1. 通过parse用正则等方法去解析template模板中的指令、变量、标签等数据形成AST抽象语法树
 2. 通过optimize优化ast抽象语法树，标记静态节点和静态根节点，patch更新对比的时候跳过这些节点比对和重新渲染
-3. 通过generate将优化好的ast抽象语法树，通过递归的方式，拼接为render字符串，最终转换成渲染函数render
+3. 通过generator将优化好的ast抽象语法树，通过递归的方式，拼接为render字符串，最终转换成渲染函数render
 # vue如何构建AST的流程？
 首先通过浏览器中HTMLParser的大致流程，对AST的构建形成初步的认识：
 1，将一个HTML标签分解为startTag，endTag和文本内容三部分对待；
@@ -104,48 +104,78 @@ vue的子组件不能直接使用父组件的数据，需要用到prop传递数�
    子组件 beforeDestroy destroyed
    父组件 destroyed
 
+# vue中render函数和template的区别
+Vue 模板会被预编译成虚拟 DOM 渲染函数。Vue 也提供了 API 使我们可以不使用模板编译，直接手写渲染函数。在处理高度动态的逻辑时，Render渲染函数相比于模板更加灵活，因为你可以完全地使用 JavaScript 来构造你想要的 vnode。
+那么为什么 Vue 默认推荐使用模板呢？有以下几点原因：
+模板更贴近实际的 HTML。这使得我们能够更方便地重用一些已有的 HTML 代码片段，能够带来更好的可访问性体验、能更方便地使用 CSS 应用样式，并且更容易使设计师理解和修改。
+由于其确定的语法，更容易对模板做静态分析。这使得 Vue 的模板编译器能够应用许多编译时优化来提升虚拟 DOM 的性能表现
+
 # Vue2和Vue3中虚拟DOM的区别?
    1. 在vue2中，每次更新真实DOM之前都是对虚拟DOM全量对比 
    2. vue3中则是只对比带PatchFlag的这些node会被真正的追踪，也就是说在后续更新的过程中，Vue会知道静态节点不用管，只需要追踪带有PatchFlag的节点，这样大大的减少了非动态内容的对比消耗
 
  # 虚拟DOM节点优异
-理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较,将变更放到变更队列中,反应到实际的dom树,减少了dom操作.
+理解：用js模拟一颗dom树,放在浏览器内存中.当你要变更时,虚拟dom使用diff算法进行新旧虚拟dom的比较找出差异,将差异补丁通过patchVnode去反应到实际的dom树,只更新差异的部分减少了dom操作.
 优点：虚拟DOM具有批处理和高效的Diff算法,最终表现在DOM上的修改只是变更的部分，可以保证非常高效的渲染,优化性能.
 缺点：首次渲染大量DOM时，由于多了一层虚拟DOM的计算，会比innerHTML插入慢。
 
 # 虚拟DOM的原理 （diff算法：对比找出需更新的节点，根据patch操作真实节点）
-1. 创建虚拟DOM树
-在应用程序中，将整个页面抽象为一个JavaScript对象，称为虚拟DOM树。这个树结构与实际的DOM结构相对应，但它只是一个JavaScript对象，并不直接操作实际的DOM。
-2. 初始渲染
-首次渲染时，通过读取虚拟DOM树的结构和属性，创建对应的真实DOM节点，并将其插入到文档中。
-3. 更新操作
-当应用程序的状态发生变化时，需要更新界面以反映这些变化。这时，通过比较前后两个状态的虚拟DOM树的差异，找出需要更新的部分。
-4. 生成更新补丁（patch对比）
-通过对比前后两个虚拟DOM树的差异，得到一个描述性的数据结构，称为差异补丁(diff patch)。该补丁记录了需要添加、修改或删除的节点信息。
-5. 应用更新
-将差异补丁应用到实际的DOM上，只更新需要变化的部分，而不是整个页面。这样可以提高性能，减少不必要的DOM操作。
-6. 重复过程
-随着应用程序状态的变化，重复执行上述更新过程，保持虚拟DOM与实际DOM的同步。
+1. 用 JavaScript 对象模拟真实 DOM 树进行抽象创建虚拟DOM树
+2. diff 算法 — 对比两棵虚拟 DOM 树的差异找出需更新的节点，diff 整体策略为：深度优先，同层比较
+3. patch 算法(打补丁) — 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树
 
-# diff算法的逻辑
-Tree diff: 
+# vue diff算法的逻辑
+vue diff 算法是一种通过同层的树节点进行比较的高效算法。diff 整体策略为：深度优先，同层比较
+其有两个特点：
+1. 比较只会在同层级进行, 不会跨层级比较 
+2. 在 diff 比较的过程中，循环从两边向中间比较(vue 的双端比较法)
+
+新旧两个 VNode 节点的左右头尾两侧均有一个变量标识，在遍历过程中这几个变量都会向中间靠拢。当 oldStartIdx <= oldEndIdx 或者 newStartIdx <= newEndIdx 时结束循环。在遍历中，如果存在 key，并且满足 sameVnode，会将该 DOM 节点进行复用(只通过移动节点顺序)，否则则会创建一个新的 DOM 节点。
+oldStartVnode、oldEndVnode 与 newStartVnode、newEndVnode 两两比较共有四种比较方法：
+
+1. oldStartVnode/newStartVnode 比较
+2. oldEndVnode/newEndVnode 比较
+当新旧 VNode 节点的 start 或者 end 满足 sameVnode 时，也就是 sameVnode(oldStartVnode, newStartVnode) 或者 sameVnode(oldEndVnode, newEndVnode) 表示为 true，直接将该 VNode 节点进行 patchVnode 即可（保留）。
+
+3. 当旧子树的开始节点与新子树的结束节点相同时
+当 oldStartVnode 与 newEndVnode 满足 sameVnode，即 sameVnode(oldStartVnode, newEndVnode)。这时候说明 oldStartVnode 已经跑到了 oldEndVnode 后面去了，进行 patchVnode 的同时还需要将真实 DOM 节点移动到 oldEndVnode 的后面。
+
+4. 当旧子树的结束节点与新子树的开始节点相同时
+如果 oldEndVnode 与 newStartVnode 满足 sameVnode，即 sameVnode(oldEndVnode, newStartVnode)。这说明 oldEndVnode 跑到了 oldStartVnode 的前面，进行 patchVnode 的同时真实的 DOM 节点移动到了 oldStartVnode 的前面。
+   
+如果以上情况均不符合，说明开始和结束节点都不相同,进入key 的比较：
+1. oldKeyToIdx：一个哈希表，存放旧节点的 key 与节点的映射关系,只不过这个 key 是 index 序列。1.如果没有 oldKeyToIdx 则会通过 createKeyToOldIdx 会得到一个 oldKeyToIdx，从 oldKeyToIdx 这个哈希表中可以找到与新节点是否有相同 key 的旧节点
+2. idxInOld：拿新节点的 key 去 oldKeyToIdx 找是否有与旧节点相同的节点，即旧节点中是否有与新节点 key 相同的节点，没有就通过 findIdxInOld 遍历旧节点并通过 sameVnode 判断是否有相同节点，有返回索引。遍历结束出现的俩种情况：
+  2-1. idxInOld 不存在，即新节点在旧节点中都没有找到，说明这是一个之前没有的新节点，需要通过 createElm 创建新节点
+  2-2. idxInOld 存在，则进一步通过 sameVnode(vnodeToMove(找到的相同节点key的Vnode), newStartVnode) 判断是否是同一节点，
+    2-2-1：如果是：则将旧节点赋值给 vnodeToMove 变量，并调用 patchVnode 对比和更新节点差异，最后将 vnodeToMove 对应的 DOM 移动到最前面；
+    2-2-2：如果不是，说明节点被修改了，重新创建对应的 DOM 元素，插入到 DOM 树中;
+
+移动新节点索引，继续循环遍历,遍历结束，会出现两种情况:
+1. 旧子节点个数小于新子节点个数，旧节点先遍历完（oldStartIdx > oldEndIdx），循环结束,此时新节点有剩余，把新剩余节点批量插入到旧右边
+2. 旧子节点个数大于新子节点个数，新节点先遍历完（newStartIdx > newEndIdx），循环结束,此时旧节点有剩余，把旧剩余节点批量删除
+
+dom diff 有一个显著的缺点：vue 横向比较存在 bug，v-for中key到底有什么作用？
+解决方案：加了 key 没 bug，默认就是 key 就是 index，绝对不可以用 index 当做 key
+
+# vue和react的diff算法，都是忽略跨级比较，只做同级比较。
+1. vue diff时调动patch函数，参数是vnode和oldVnode，分别代表新旧节点。vue对比节点。当节点元素相同，但是classname不同，认为是不同类型的元素，删除重建，而React认为是同类型节点，只是修改节点属性。vue的列表对比，采用的是两端到中间比对的方式，
+2. 而react采用的是从左到右依次对比的方式。当一个集合只是把最后一个节点移到了第一个，react会把前面的节点依次移动，而vue只会把最后一个节点移到第一个
+
+# React diff算法策略
+树形子节点比较Tree diff: 
 1. 逐层比较
 2. 如果是compontent，执行compontent diff
 3. 如果是element，执行element diff
-
-component diff:
+组件component diff:
 1. 先看比较双方类型一不一致，不一致直接替换
 2. 类型相同则更新属性
 3. 深入组件进行递归 tree diff
-
-element diff：
+元素element diff：
 1. 先看标签名一不一致，不一致直接替换
 2. 标签名一致比较属性
-3. 深入标签进行递归 tree diff
-
-dom diff 有一个显著的缺点：vue 横向比较存在 bug，v-for中key到底有什么作用？
-解决方案：加了 key 没 bug，默认就是 key 就是 index，绝对不可以用 index 当做 key。
-
+3. 深入标签进行递归 tree dif
+  
 # 虚拟DOM是如何合并patch的  (虚拟节点如何对比的？)
 1.判断老节点是否存在-----不存在->直接创建并插入节点
 2.存在老节点判断是否是同一个节点----不存在->创建真实节点插入并删除老节点

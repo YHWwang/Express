@@ -116,44 +116,59 @@
             1.上传apk并解析里面的参数，据参数和定义的规则自动生成包名，
             2.接口返回数据快慢的覆盖问题，
             3.addEventListener监听事件造成弹窗内submit事件多次执行回调 
-            4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作
+            4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作，
+            5.elementui级联选择器选择不按顺序的问题
+            6.在vue中给节点innerHTML插入包含tr、td标签的字符串,显示会丢失部分标签
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
            2.BFC是啥，触发条件？
            3.原型链，原型，console.log( function instanceof object , object instanceof function , function instanceof function ,object instance object)打印的值，为什么说明原因
-
            4.常用状态码？浏览器缓存方式有哪些？需要设置哪些参数？同源策略？有10个接口大约每个100ms，chrome需要多少时间加载完（就是同一域名最多加载多少个接口）
-         
-           5. vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
-           
+           5.vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
            6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
            7.js是单还是双进程为什么？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
-
            8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
-
            9.this绑定的方法？new做了什么事？script标签中defer和async区别？
-            显式绑定，隐式，new,箭头函数，构造函数，
-
            10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？
            11.HTTP浏览器输入URL后发生了什么?页面如何渲染?垃圾回收机制？
-
            12.选择排序，快速排序，希尔排序，归并排序，插入排序
-
-            this：
-
-            盒子模型：ie盒子模型content-box，height=content+padding+border,w3c标准盒子模型：border-box,height = content
+            盒子模型：
             display:
             块元素（可改变元素的高宽），行内:，行内块：
 
             express和koa的区别:
             node子进程：
 
-            node如何处理高并发：得益与node的轮询机制和异步io处理
-            node事件轮询6个阶段：timers,pending callback,idle,poll,check，close callback,
-            如何异步处理IO：是使用自己设计的libuv库，js主进程和ui渲染共享一个线程，异步操作都是线程池完成的，而node将所有的阻塞操作都交给内部的线程池去实现，本身只负责不断的往返调度，并不对真正的io操作，从而实现异步非拥塞io
+            node如何处理高并发：
+            node事件轮询6个阶段：
+            如何异步处理IO：
             webpack：项目体积：
             loader转换器、plugins是扩展器：
-            
+             // Map是，Set是
+        // filter筛选，every遍历判断每一个是否符合条件，flat扁平化数组
+        // es6的新特性
+        // Promsie
+        // 箭头函数和普通函数的区别：
+        // new: 
+        function newFn(fn) {
+        }
+        // let,var，const
+        // 堆和栈,
+        // 闭包的原理：
+        // js事件轮询:
+        // js类型
+        // display:,
+        // 强缓存：,协商缓存:
+        // 虚拟dom：
+        // vuediff算法的原理：
+        // vue双向绑定的原理：
+        // keep-alive：避免组件重复渲染
+
+        // vue如何解析template：
+            ast如何解析指令，变量，标签：
+          
+            如何构建ast流程：
+
         -->
         <input type="text" id="inp" />
         <div id="show"
@@ -259,7 +274,15 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
-
+    let value1 = 1
+    function bar() {
+        let value1 = 2
+        foo()
+    }
+    function foo() {
+        console.log(value1);
+    }
+    bar()
     let conArr = [
         { id: 1, name: '部门1', pid: 0 },
         { id: 2, name: '部门2', pid: 1 },
@@ -280,9 +303,9 @@
     // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]} ]
     function convert(list) {
     }
-    // console.log(quickSort(conArr));
-    let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0]
-    console.log(quickSort(MathArr));
+    // console.log(quickSort(MathArr));
+    let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0, 10]
+    // console.log(shallSort(MathArr));
     // 选择排序--找出最小下标
     function selectSort(arr) {
     }
@@ -291,90 +314,51 @@
     }
     // 归并排序--拆分左右，依次对比第一个值
     function mergeSort(arr) {
-        let len = arr.length
-        if (len < 2) {
-            return arr
-        }
-        let middle = Math.floor(len / 2)
-        let left = arr.slice(0, middle)
-        let right = arr.slice(middle)
-
-        return merge(mergeSort(left), mergeSort(right))
     }
     function merge(left, right) {
-        let result = []
-        while (left.length > 0 && right.length > 0) {
-            if (left[0] > right[0]) {
-                result.push(right.shift())
-            } else {
-                result.push(left.shift())
-            }
-        }
-        while (left.length > 0) {
-            result.push(left.shift())
-        }
-        while (right.length > 0) {
-            result.push(right.shift())
-        }
-        return result
     }
 
     // 快速排序--对比基准值pivot
     function quickSort(arr) {
-        let len = arr.length
-        if (len < 2) return arr
-        let pivot = arr.splice(Math.floor(len / 2), 1)[0]
-        let left = []
-        let right = []
-        arr.forEach(item => {
-            if (item > pivot) {
-                right.push(item)
-            } else {
-                left.push(item)
-            }
-        });
-        return quickSort(left).concat([pivot], quickSort(right))
     }
     // 希尔排序--插入排序的基础上增加gap增量
     function shallSort(arr) {
-        let len = arr.length
-        let gap = Math.floor(len / 2)
-        let item = null
-        let j = 0
-        for (; gap > 1; gap = Math.floor(gap / 2)) {
-            for (let i = gap; i < len; i++) {
-                item = arr[i]
-                j = i - gap
-                while (j >= 0 && arr[j] > item) {
-                    arr[j + gap] = arr[j]
-                    j = j - gap
-                }
-                arr[j + gap] = item
-            }
-        }
-        return arr
     }
 
+    const allRequest = [
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=1",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=2",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=3",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=4",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=5",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=6",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=7",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=8",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=9",
+        "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=10",
+    ];
+  function sendRequest(urls, max, callbackFunc) {  }
+    sendRequest(allRequest, 2, (res) => { console.log(res); })
+    for (var index = 1; index < 5; index++) {
+
+    }
     // a==1&&a==2,a===1&&a===2
     let val = 0
     // let a  = {}
     Object.defineProperty(window, 'a', {
-        get: function () {
-            return ++val
-        }
+
     })
-    console.log(a === 1 && a === 2);
+    // console.log(a === 1 && a === 2);
 
-    // 双向绑定：observer->创建对象是,observer回去遍历对象,添加实例化对象__ob__,并添加getset方法,创建dep订阅器,,compile->初始化视图,给节点绑定一个update更新函数,更新视图,,watch是桥梁->收集订阅者,监听数据的更改,一但变更通知订阅者,执行更新函数修改视图
+    // 双向绑定：
+    // 路由钩子函数:,单独路由独享,组件内导航钩子
 
-    // 路由钩子函数:全局导航钩子beforeEach,beforeResolve,afterEach,单独路由独享beforeEnter,组件内导航钩子beforeRouteEnter,beforeRouteUpdate,beforeRouteLeave
-
-    // 生命周期vue2：crete,created,mount,mounted,update,updated,destory,destoried
+    // 生命周期vue2：
 
     // 生命周期vue3:
     // vuex状态管理器 :
-    // 虚拟dom，用js在真实的dom节点上渲染一层虚拟的节点，并且采用diff算法来高效的对比dom节点和指定dom节点更新
-    // 常见的内存泄漏 意外的全局变量，未清理定时器，dom引用，闭包
+    // 虚拟dom，
+    // 常见的内存泄漏 
     function myNew(con, ...args) {
     }
     // object.defineProperty缺点：
@@ -385,173 +369,84 @@
     // html--语义化的标签，
     // Object.defineProperty()
 
-
-    var active = $('.spesc-img-right .spesc-img-right-ul .spesc-active').find('.spescColor').attr('style')
-    setColor(active)//切换颜色为当前对象添加伪类元素
-    function setColor(color) {
-        color = `<style>
-            .spesc-img-right .spesc-img-right-ul .spesc-active .spescColor::after {
-                position: absolute;
-                content: '';
-                left: 50%;
-                border: 4px solid ${color.slice(35, 42)};
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: 65px;
-                height: 65px;
-                border-radius: 50%;
-            }
-        </style>`
-        $('.spesc-img-right .spesc-img-right-ul .spesc-active .spescColor').append(color)
-    }
-
-    $('.spesc-img-right .spesc-img-right-ul .spesc-img-right-ul-li').click(function (e) {
-        $('.spesc-img-right .spesc-img-right-ul .spesc-active .spescColor').empty()//修复切换颜色之后伪类元素为清理的问题
-        $(this).addClass('spesc-active').siblings().removeClass('spesc-active')
-        setColor($(this).find('.spescColor').attr('style'))
-        showImg($(this).attr('num'))
-    })
-    function showImg(index) {
-        $('.spesc-img-left img').eq(index).addClass('image-active').siblings().removeClass('image-active')
-        var ds = $('.spesc-img-left img.image-active')
-        imgLoad(ds, function () {//切换颜色后，右侧切换对应图片
-            ds.removeClass('on')//回调移除旋转图标
-        })
-    }
-
-
-    function imgLoad(img, callback) {
-        var timer = setInterval(function () {
-            var flag = true
-            console.log(img[0].complete);
-            if (img[0].complete) {//判断图片是否加载
-                callback();
-                clearInterval(timer);
-            } else if (flag) {//未加载时出现旋转图标
-                flag = false
-                img.addClass('on')
-            }
-        }, 200);
-    }
     class myPromise {
-        constructor(exe) {
-            this.value = '';
-            this.status = 'pending';
-            this.successQueue = [];
-            this.failureQueue = [];
-
-            let resolve = function (val) {
-                if (this.status === 'pending') {
-                    this.value = val
-                    this.status = 'fulfilled'
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.successQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-                }
-            }
-            let reject = function (val) {
-                if (this.status === 'pending') {
-                    this.value = val
-                    this.status = 'rejected'
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.failureQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-                }
-            }
-            exe(resolve, reject)
-        }
-
-        then(successFn, failureFn) {
-            typeof successFn !== 'function' ? successFn = val => val : null
-
-            return new myPromise((res, rej) => {
-                try {
-                    this.successQueue.push(() => {
-                        let result = successFn(this.value)
-                        result instanceof myPromise ? result.then(res, rej) : res(result)
-                    })
-                } catch (error) {
-
-                }
-            })
-
-        }
+   
     }
+    // let a1 = new myPromise((res, rej) => {
+    //     console.log(1);
+    //     res(3)
+    // })
+    // a1.then((v) => {
+    //     console.log(v);
+    // }).catch(v => {
+    //     console.log(v);
+    // })
     Promise.myAll = promises => {
     }
     Promise.myRace = promises => {
-
+    
     }
     Promise.prototype.myFinally = function (fn) {
-
+      
     }
     Promise.allSettled = promises => {
-    }
+        }
     Promise.myAny = promises => {
-
-    }
+       }
     function deepClone(obj) {
-
+     
     }
-    // console.log(myInstanceof([], String));
+    let data1 = {
+        a: [1, 2, 3],
+        b: 2,
+        c: {
+            d: 1
+        }
+    }
+    let data2 = deepClone(data1)
+    data2.a = [4, 5]
+    // console.log(data1, data2);
+    // console.log(myInstanceof({}, Object));
     function myInstanceof(obj, func) {
-
+      
     }
     function throttle(fn, args) {
-
+       
     }
     function debounce(fn, args) {
-
+       
     }
+
     const myFlat = (arr) => {
-        return arr.reduce((res, next) => {
-            return res.concat(Array.isArray(next) ? myFlat(next) : next)
-        }, [])
+      
     }
     let arrFlat = [[1, 4], [2, 3, [5, 6]]]
-    console.log(myFlat(arrFlat));
-
+    // console.log(myFlat(arrFlat));
     function currying(func) {
-        let result = []
-        return function rest(...m) {
-            if (m.length != 0) {
-                result.push(...m)
-                return rest
-            } else {
-                return func(...result)
-            }
-        }
+      
     }
-    let add = (...args) => {
+    let add = function (args) {
         return args.reduce((a, b) => a + b)
-    }
+    };
     let sum = currying(add)
-    // sum(1)(2, 3)
-    // sum(4, 5)(6)(7)
+    sum(1)(2, 3)
+    sum(4, 5)(6)(7)
     // console.log(sum());
-    console.log(addFn(1, 2, 3)(7, 3) + '');
+    // console.log(addFn(1, 2, 3)(7, 3) + '');
     function addFn(...m) {
-        let args = [...m]
-
-        function rest(...n) {
-            args.push(...n)
-            return rest
-        }
-
-        rest.toString = function (a, b) {
-            return args.reduce((a, b) => a + b)
-        }
-        return rest
+       
     }
 
-    function sleep() { }
-    let tree = {
+    function sleep(time) {
+       
+    }
+    async function run() {
+        console.log(1);
+        await sleep(5000)
+        console.log(3);
+    }
+    // run()
+    let deepTree = {
         id: '1-1',
         title: '节点1-1',
         children: [
@@ -581,34 +476,46 @@
             }
         ]
     }
+    let widthTree = [
+        {
+            id: '1-1',
+            title: '节点1-1',
+        },
+        {
+            id: '1-2',
+            title: '节点1-2',
+            children: [
+                {
+                    id: '2',
+                    title: '节点2',
+                    children: [
+                        {
+                            id: '2-1',
+                            title: '节点2-1',
+                            children: [
+                                {
+                                    id: '2-1-1',
+                                    title: '节点2-1-1',
+                                }
+                            ]
+                        },
+                        {
+                            id: '2-2',
+                            title: '节点2-1'
+                        }
+                    ]
+                },
+            ]
 
-    let deepTraversal = node => {
-        let nodes = []
-        if (node != null) {
-            nodes.push(node.id)
-            if (node.children && node.children.length > 0) {
-                for (const child of node.children) {
-                    nodes = nodes.concat(deepTraversal(child))
-                }
-            }
         }
-        return nodes
+    ]
+    let deepTraversal = node => {
+       
     }
     let widthTraversal = (tree) => {
-        let queue = [...tree]
-        let nodes = []
 
-        for (const item of queue) {
-            nodes.push(item.id)
-            if (item.children || item.children > 0) {
-                for (const child of item.children) {
-                    queue.push(child)
-                }
-            }
-        }
-        return nodes
     }
-    console.log(deepTraversal(tree));
+    // console.log(widthTraversal(widthTree));
 </script>
 
 
