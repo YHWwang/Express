@@ -323,7 +323,7 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
 # 双向绑定底层原理(https://d2kbvjszk9d5ln.cloudfront.net/yshop/icon/pic/20230313-20230313060925507.jpg)
 第一步：Object.defineProperty监听属性变动，将需要observe的数据对象进行递归遍历，包括子属性对象的属性,都加上setter和getter,同时创建消息订阅器Dep来收集订阅者，数据变动之后调用setter就会触发notify,在调用订阅者的update方法
 第二步：compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知执行更新函数
-第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，能够订阅并收到每个属性getter的变动通知，执行指令绑定的相应的回调函数从而更新视图
+第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，能够订阅并收到每个属性setter的变动通知，执行指令绑定的相应的回调函数从而更新视图
 1. Object.defineProperty(监听input将指赋值给对象，触发绑定并赋值给dom)
   let a = {}
   Object.defineProperty(a,'text',{
