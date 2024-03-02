@@ -1,3 +1,17 @@
+# lodash常用API
+数组：
+1. chunk(array,number)按长度切分数组，返回新数组；
+2. compact(array)去除空值，0，NaN
+3. uniq(arr)数组去重
+4. reject(arr,['id':0])根据条件去除某个元素
+5. difference(arr,valuesArr)过滤出不存在的值
+6. uniq(arr)去重
+7. sortedUniq(arr)排序去重
+对象:
+1. omit(obj,['a','c'])去除某些属性，返回新对象
+2. isEqual(obj,otherObj)深比较判断是否相等
+3. cloneDeep(obj)深拷贝
+
 # Promise和async/await和Generator的区别？
 1. Promise: 是一个构造函数，让回调函数变成了规范的链式写法
 2. Generator：迭代生成器，使用yield表达式是暂停执行标记和next()恢复执行

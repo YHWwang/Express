@@ -110,6 +110,7 @@
         }
     </style>
     <div id="AMain" class="main">
+        <input type="text" class="ipt" maxlength="255" /><span class="search-btn">Search</span>
         c d d d d d c a
         <!-- 
             遇到的难点：
@@ -119,6 +120,7 @@
             4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作，
             5.elementui级联选择器选择不按顺序的问题
             6.在vue中给节点innerHTML插入包含tr、td标签的字符串,显示会丢失部分标签
+            7.element中级联选择器多选时，选中的不按选择顺序排列
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
            2.BFC是啥，触发条件？
@@ -156,19 +158,16 @@
         // 堆和栈,
         // 闭包的原理：
         // js事件轮询:
-        // js类型
-        // display:,
+        // js类型：基本数据类型()引用数据类型()
+        // display:
         // 强缓存：,协商缓存:
         // 虚拟dom：
         // vuediff算法的原理：
         // vue双向绑定的原理：
         // keep-alive：避免组件重复渲染
-
         // vue如何解析template：
             ast如何解析指令，变量，标签：
-          
             如何构建ast流程：
-
         -->
         <input type="text" id="inp" />
         <div id="show"
@@ -282,7 +281,7 @@
     function foo() {
         console.log(value1);
     }
-    bar()
+    // bar()
     let conArr = [
         { id: 1, name: '部门1', pid: 0 },
         { id: 2, name: '部门2', pid: 1 },
@@ -337,7 +336,7 @@
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=9",
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=10",
     ];
-  function sendRequest(urls, max, callbackFunc) {  }
+    function sendRequest(urls, max, callbackFunc) { }
     sendRequest(allRequest, 2, (res) => { console.log(res); })
     for (var index = 1; index < 5; index++) {
 
@@ -351,12 +350,10 @@
     // console.log(a === 1 && a === 2);
 
     // 双向绑定：
-    // 路由钩子函数:,单独路由独享,组件内导航钩子
-
+    // 路由钩子函数:
     // 生命周期vue2：
-
-    // 生命周期vue3:
-    // vuex状态管理器 :
+    // 生命周期vue3: 
+    // vuex状态管理器:
     // 虚拟dom，
     // 常见的内存泄漏 
     function myNew(con, ...args) {
@@ -370,7 +367,7 @@
     // Object.defineProperty()
 
     class myPromise {
-   
+
     }
     // let a1 = new myPromise((res, rej) => {
     //     console.log(1);
@@ -384,17 +381,17 @@
     Promise.myAll = promises => {
     }
     Promise.myRace = promises => {
-    
+
     }
     Promise.prototype.myFinally = function (fn) {
-      
+
     }
     Promise.allSettled = promises => {
-        }
+    }
     Promise.myAny = promises => {
-       }
+    }
     function deepClone(obj) {
-     
+
     }
     let data1 = {
         a: [1, 2, 3],
@@ -404,41 +401,41 @@
         }
     }
     let data2 = deepClone(data1)
-    data2.a = [4, 5]
+    // data2.a = [4, 5]
     // console.log(data1, data2);
     // console.log(myInstanceof({}, Object));
     function myInstanceof(obj, func) {
-      
+
     }
     function throttle(fn, args) {
-       
+
     }
     function debounce(fn, args) {
-       
+
     }
 
     const myFlat = (arr) => {
-      
+
     }
     let arrFlat = [[1, 4], [2, 3, [5, 6]]]
     // console.log(myFlat(arrFlat));
     function currying(func) {
-      
+
     }
     let add = function (args) {
         return args.reduce((a, b) => a + b)
     };
     let sum = currying(add)
-    sum(1)(2, 3)
-    sum(4, 5)(6)(7)
+    // sum(1)(2, 3)
+    // sum(4, 5)(6)(7)
     // console.log(sum());
     // console.log(addFn(1, 2, 3)(7, 3) + '');
     function addFn(...m) {
-       
+
     }
 
     function sleep(time) {
-       
+
     }
     async function run() {
         console.log(1);
@@ -510,12 +507,13 @@
         }
     ]
     let deepTraversal = node => {
-       
+
     }
     let widthTraversal = (tree) => {
 
     }
     // console.log(widthTraversal(widthTree));
+
 </script>
 
 

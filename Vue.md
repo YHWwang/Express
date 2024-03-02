@@ -413,6 +413,9 @@ const {proxy} = getCurrentInstance()//获取组件实例化对象
     });
 依赖注入：父与孙provide+inject
 
+# Vue3中使用v-if，v-else导致的渲染报错问题记录（Unhandled error during execution of scheduler flush. This is likely a Vue internals bug.）
+解决方法：获取列表时无论用什么方法去赋值或者渲染后赋值都不行，代码注释排查后发现是v-if导致的，将v-if改成v-show可以。
+
 # 在Vue2中template标签中必须要有一个根元素，而Vue3中可以写多个，原理区别是什么？
 1. 在Vue2中，模板(template)标签必须有一个根元素，这是因为Vue2中的编译器(compiler)需要将模板编译成一个render函数，而一个函数只能有一个返回值。因此，Vue2需要一个根元素来包含所有的子节点，以便编译器能够将它们编译成一个返回值。
 2. 而在Vue3中，通过使用Fragment(片段)标签或者空标签，可以在template标签中包含多个根元素。这是因为Vue3中使用了新的编译器，它能够将多个根节点编译成一个返回值。这样可以让开发者更方便地组织模板结构，使代码更加简洁和易读。
