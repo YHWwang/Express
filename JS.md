@@ -1,16 +1,38 @@
+# try catch能捕获到setTimeout函数内的异常嘛？
+不能，setTimeout是异步函数，而try catch其实是同步顺序执行的代码，等setTimeout里面的事件进入事件队列的时候，主线程已经离开了try catch,所以try catch是无法捕获异步函数的错误的。
+
+# 为什么输出(b1,b2,b3,a1,b4,a2,b5,b6)?
+function runCode() {
+Promise.resolve()
+.then(res => Promise.resolve())
+.then(res => console.log('a1'))
+.then(res => console.log('a2'))
+
+Promise.resolve()
+.then(res => console.log('b1'))
+.then(res => console.log('b2'))
+.then(res => console.log('b3'))
+.then(res => console.log('b4'))
+.then(res => console.log('b5'))
+.then(res => console.log('b6'))
+}
+runCode()
+1. res => Promise.resolve() 相当于 .then().then() ;我们可以理解为，resolve或者return遇到一个Promise对象时，得到这个Promise的值之后，会把这个值用微任务包装起来，在return值向外传递(因为后边没有.then()了，所以是向父级的外层传递)时，会产生第二个微任务。
+
 # lodash常用API
 数组：
 1. chunk(array,number)按长度切分数组，返回新数组；
 2. compact(array)去除空值，0，NaN
-3. uniq(arr)数组去重
-4. reject(arr,['id':0])根据条件去除某个元素
-5. difference(arr,valuesArr)过滤出不存在的值
-6. uniq(arr)去重
-7. sortedUniq(arr)排序去重
+3. reject(arr,['id':0])根据条件去除某个元素
+4. difference(arr,valuesArr)过滤出不存在的值
+5. uniq(arr)去重
+6. sortedUniq(arr)排序去重
+7. pull(arr,数值)删除该数值，修改原数组
 对象:
 1. omit(obj,['a','c'])去除某些属性，返回新对象
 2. isEqual(obj,otherObj)深比较判断是否相等
 3. cloneDeep(obj)深拷贝
+4. pick(obj,[key])创建一个从 object 中选中的属性的对象。
 
 # Promise和async/await和Generator的区别？
 1. Promise: 是一个构造函数，让回调函数变成了规范的链式写法
@@ -34,7 +56,6 @@ removeChild、remove、outerHTML
 # 栈和堆的区别？为什么会有栈内存和堆内存之分？
 栈：自动分配内存，会自动释放，基本数据类型再栈中
 堆：动态分配内存，大小不定也不会自动释放，引用数据类型再栈中存的是指针，指向堆内存
-
 为了使程序运行时占用的内存最小。
 
 # toFixed(nums),nums值在0-20之间是四舍五入，其它则不包含'5'
@@ -429,7 +450,7 @@ constructor：构造函数，任何一个具有 Iterable 接口的对象，都�
     4. 闭包: 会导致父级中的变量无法被释放
     5. dom 引用: dom 元素被删除时，内存中的引用未被正确清空
     6. console的滥用
-内存泄漏识别方法:
+# 内存泄漏识别方法:
 1、浏览器方法
 打开开发者工具，选择 Memory
 在右侧的Select profiling type字段里面勾选 timeline
@@ -468,9 +489,9 @@ const Person = new Object()
 Person:实例        Object构造函数
 const per = Object.prototype
 per:原型
-原型(prototype): 一个简单的对象，用于实现对象的 属性继承。可以简单的理解成对象的爹
-构造函数: new后面的函数。
-实例: 通过构造函数和new创建出来的对象，便是实例。 实例通过__proto__指向原型，通过constructor指向构造函数。
+原型(prototype): 一个简单的对象，用于实现对象的 属性继承。可以简单的理解成对象的爹，通过constructor指向构造函数。
+构造函数: new后面的函数。构造函数的prototype指向原型
+实例: 通过构造函数和new创建出来的对象，便是实例。 实例通过__proto__指向原型
 __proto__ 属性在 ES6 时才被标准化，以确保 Web 浏览器的兼容性，但是不推荐使用，除了标准化的原因之外还有性能问题。为了更好的支持，推荐使用 Object.getPrototypeOf()。
 
 # 原型链和作用域链的区别?

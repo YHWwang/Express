@@ -110,7 +110,6 @@
         }
     </style>
     <div id="AMain" class="main">
-        <iframe src="https://mozilla.github.io/pdf.js/legacy/web/viewer.html?file=C:\Users\Administrator\Desktop\详情页\tab18\img\0a7b499fce02f77667a5ff7457ecfcc5.png" frameborder="0"></iframe>
         <input type="text" class="ipt" maxlength="255" /><span class="search-btn">Search</span>
         c d d d d d c a
         <!-- 
@@ -119,9 +118,8 @@
             2.接口返回数据快慢的覆盖问题，
             3.addEventListener监听事件造成弹窗内submit事件多次执行回调 
             4.input如何处理中文输入--监听compositoinstart,compositionend监听中文输入状态，然后再监听input 回调防抖函数中根据状态再做操作，
-            5.elementui级联选择器选择不按顺序的问题
+            5.element中级联选择器多选时，选中的不按选择顺序排列
             6.在vue中给节点innerHTML插入包含tr、td标签的字符串,显示会丢失部分标签
-            7.element中级联选择器多选时，选中的不按选择顺序排列
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
            2.BFC是啥，触发条件？
@@ -143,7 +141,7 @@
             node子进程：
 
             node如何处理高并发：
-            node事件轮询6个阶段：1.timers:执行定时器的回调事件 2.pending callbacks：执行延迟下一个循环io回调 3.prepare,idle内部使用 4.poll检索新的io事件 5.check执行setImmediate回调 5. close callbacks关闭事件的回调
+            node事件轮询6个阶段：
             如何异步处理IO：
             webpack：项目体积：
             loader转换器、plugins是扩展器：
@@ -158,35 +156,17 @@
         // let,var，const
         // 堆和栈,
         // 闭包的原理：
-            函数体内部的子函数拥有访问外部变量的权限，这个函数我们称为闭包函数，入参可以是函数，返回可以是函数，私有化变量
         // js事件轮询:
-        // js类型：基本数据类型(string,number,boolean,null,undefind,bigInt,symbol)引用数据类型(obejct,array,function)
-        // display:bolck,inline-block,table,table-inline,flex,none,,
-        // 强缓存：规定一个时间，在这个时间只能不会去拿新的数据，通过设置expires或者cache-control,协商缓存:根据时间戳last-modified,if-modifiled-since，根据文件戳eTag+if-none-match
-        // 虚拟dom：用js模拟真实dom生成的一个虚拟dom对象，采用高效的diff算法去找出差异补丁，然后将差异补丁使用patchVnode去更新dom
-        // vuediff算法的原理：同层比较，深度优先，1.首先diff算法会在新老dom前后增加一个标识，俩俩对比就会有四种情况，旧前新后，旧后新前，旧前新前，旧后新后；3和4直接patchvnode进行更新，1在旧后插入真实dom,2在旧前插真实dom,
-            除以上情况之外进行key值得比较：1.oldKeyToIdx：这个是一个哈希表,如果没有则会使用object.createKeyToOldIdx创建一个，2.keyInOld:用于循环往下遍历哈希表中的key与真实dom的key是否有相同的，
-            循环完后使用saveVnode判断是否存在key有俩种情况：1.没有相同的，则直接新创建dom；2.存在有相同的：则将sameVnode是否是同一节点：1.不相同直接在就创建dom，2相同则旧节点将赋值给vnodeToMove，调用patchVndoe去对比更新差异，将vnodeTomove移动到真实dom前
-            移动新索引，继续遍历后2种情况：1.旧子节点树大于新子节点树，将旧多余的删除；2旧子节点树小于新子节点树，将多余的新子节点添加到旧后；
-
-        // vue双向绑定的原理：通过数据劫持结合发布者订阅模式和object.defineProperty去劫持各个属性的set，数据变更则发布订阅者，进而触发响应的监听回调事件更新真实dom,
-            1.observer:初始化对象会给对象添加一个下划线dep的属性这个是实例化对象，同时会创建订阅器dep，数据变更变化就会发布nogtigy通知，
-            2.compiler:将data函数中的变量转化成页面中的数据信息，并给节点绑定更新函数
-            3.watcher:俩者中间的桥梁，数据变更触发了订阅者，执行节点绑定的upload回调函数，进而更新真实dom
+        // js类型：基本数据类型()引用数据类型()
+        // display:
+        // 强缓存：,协商缓存:
+        // 虚拟dom：
+        // vuediff算法的原理：
+        // vue双向绑定的原理：
         // keep-alive：避免组件重复渲染
         // vue如何解析template：
-                1.通过parse用正则表达式去解析template中的指令，标签，变量生成ast抽象语法树
-                2.使用optimize去优化ast抽象语法树,标记静态节点和静态根节点，patch更新会跳过这些节点对比和重写渲染
-                3.使用generator去将优化后的ast，递归循环遍历成字符串，然后返回转换成渲染函数render
             ast如何解析指令，变量，标签：
-                parseHTML用来解析ast,有startTag,endTag,comment,chars四种方法
-                comment:会从页面中的第一个<开始寻找，1浏览器的兼容性标签，2注释 3DOCTYPE 
-                startTag:用正则表达式去匹配标签的名称，while循环遍历解析出属性，并入栈
-                chars:静态文本，动态文本内容{{msg}},parseText解析对应token
-                endTag:正则表达式匹配结束标签，以上执行一个都会使用advace去截取掉解析完成了的，出栈，最后就说ast语法树
             如何构建ast流程：
-                1parseHTML会将tamplate分成startTag,endTag,文本
-                2.遇到开始标签入栈，结束标签出栈，上一级都会作为父节点，自闭和标签特殊处理，
         -->
         <input type="text" id="inp" />
         <div id="show"
@@ -292,26 +272,6 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
-    var name = '123'
-    var obj = {
-        name:'456',
-        print:function(){
-            function a1(){
-                console.log(this.name);
-            }
-            a1()
-        }
-    }
-    obj.print()
-    let value1 = 1
-    function bar() {
-        let value1 = 2
-        foo()
-    }
-    function foo() {
-        console.log(value1);
-    }
-    // bar()
     let conArr = [
         { id: 1, name: '部门1', pid: 0 },
         { id: 2, name: '部门2', pid: 1 },
@@ -332,25 +292,25 @@
     // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]} ]
     function convert(list) {
     }
-    // console.log(quickSort(MathArr));
+    // console.log(convert(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0, 10]
-    // console.log(shallSort(MathArr));
-    // 选择排序--找出最小下标
+    // console.log(quickSort(MathArr));
+    // 选择排序--
     function selectSort(arr) {
     }
-    // 插入排序--往右移位
+    // 插入排序--
     function insertSort(arr) {
     }
-    // 归并排序--拆分左右，依次对比第一个值
+    // 归并排序--
     function mergeSort(arr) {
     }
     function merge(left, right) {
     }
 
-    // 快速排序--对比基准值pivot
+    // 快速排序--
     function quickSort(arr) {
     }
-    // 希尔排序--插入排序的基础上增加gap增量
+    // 希尔排序--
     function shallSort(arr) {
     }
 
@@ -366,35 +326,40 @@
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=9",
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=10",
     ];
-    function sendRequest(urls, max, callbackFunc) { }
-    sendRequest(allRequest, 2, (res) => { console.log(res); })
-    for (var index = 1; index < 5; index++) {
+    function sendRequest(urls, max, callbackFunc) {
 
     }
+    sendRequest(allRequest, 2, (res) => { console.log(res); })
+
     // a==1&&a==2,a===1&&a===2
     let val = 0
-    // let a  = {}
+    // let a = {
+    //     val: 1
+    // }
+    // a.toString = function () {
+    //     return this.val++
+    // }
     Object.defineProperty(window, 'a', {
-
+        get: function () {
+            return ++val
+        }
     })
     // console.log(a === 1 && a === 2);
 
     // 双向绑定：
-    // 路由钩子函数:全局导航钩子beforeEach,beforeResolve,afterEach，路由独享导航钩子beforeEnter，组件内导航钩子beforeRouteEnter,beforeRouteUpdated,beforeRouteLeave
-
+    // 路由钩子函数:
     // 生命周期vue2：
-
     // 生命周期vue3: 
-    // vuex状态管理器 :state,getter,mutations,actions,module
+    // vuex状态管理器:单向数据流，state,getter,mumation,action,module,
     // 虚拟dom，
-    // 常见的内存泄漏 
+    // 常见的内存泄漏
     function myNew(con, ...args) {
     }
-    // object.defineProperty缺点：
+    // object.defineProperty缺点：无法监听数组原型中（push,pop等）方法的新增和删除
     // proxy:
     // HTTP浏览器输入URL后发生了什么:
     // VUE3.0抛弃Object.defineProperty改用ES6的Proxy的理解：
-    // 前端性能优化
+    // 前端性能优化 1.分页，防抖，取消重复请求，switch代替多个ifelseif,懒加载，http缓存，gzip，
     // html--语义化的标签，
     // Object.defineProperty()
 
@@ -403,12 +368,12 @@
     }
     // let a1 = new myPromise((res, rej) => {
     //     console.log(1);
-    //     res(3)
+    //     res(2)
     // })
     // a1.then((v) => {
-    //     console.log(v);
+    //     console.log(3);
     // }).catch(v => {
-    //     console.log(v);
+    //     console.log(4);
     // })
     Promise.myAll = promises => {
     }

@@ -1,3 +1,9 @@
+# 解决echarts图表切换tabs改变屏幕大小后会缩成一团的问题
+ chartIntance.resize({
+    <!-- 重新计算时给个实时宽度 -->
+    width: document.querySelector(".app-container").offsetWidth * 0.6,
+});
+
 # elementui遇到的bug
 1. 同时上传多个文件时，成功回调on-success只会执行一次，if (fileList.every((item) => item.status == "success"))使用every函数去判断列表数据是否都已成功
 2. form表单下如果只有一个input时回车键会刷新页面， form加上@submit.native.prevent去阻止默认行为
@@ -213,7 +219,9 @@ https: 是一种透过计算机网络进行安全通信的传输协议，由http
         7、客户端和服务器拥有同一个私钥，这样就可以用这把私钥加密、解密所有信息了
 
 # 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？
-可以在axios中response响应拦截，比对我们发送的时间搓参数，进行比较，然后筛选出后输入值返回的数据
+1. 可以在axios中response请求拦截(地址，数据，时间)并存在session中，然后获取session中的数据，比对我们发送的参数（本地数据 === 接口数据 && 接口时间 - 本地时间 < 间隔时间 && 本地地址 === 请求地址），真则reject,否则设置session数据，此时会被响应拦截器error拦截到提示输出;
+2. 使用axios提供的AbortController()取消请求方法，https://blog.csdn.net/misschengispink/article/details/135248863
+
 
 # 埋点问题，如何记录用户在页面的停留时长？如果直接关闭浏览器如何记录时间？
 1. router.beforeEach切换路由来记录开始、结束时间重点在发送记录后重置开始时间。如果异常退出则数据会有问题，

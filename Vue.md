@@ -5,7 +5,7 @@ $router路由实例化对象，包括路由的跳转方法（push,replace),钩�
 $route当前路由对象，它包括path，params，hash，query，name等参数；
 router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
-# active-class来着router-link组件
+# active-class来自router-link组件
 
 # 路由组件的钩子函数：
 1. 全局导航钩子：beforeEach、beforeResolve、afterEach
@@ -193,11 +193,24 @@ Object.defineProperty()是可以监测数组的变化的，但也监听不了 pu
    3. 在数组进行响应式初始化的时候会在 Observer 类里面给这个数组对象的添加一个 __ob__ 的属性，这个属性的值就是 Observer 这个类的实例对象，而这个 Observer 类里面有存在一个收集依赖的属性 dep，所以在对数组里的内容通过那 7 个方法进行操作的时候，会触发数组的拦截器，那么在拦截器里面就可以访问到这个数组的 Observer 类的实例对象，从而可以向这些数组的依赖发送变更通知。
 
 # Vue3的响应式原理是怎么样的？
-Vue3 是通过 Proxy 对数据实现 getter/setter 代理，从而实现响应式数据，然后在副作用函数中读取响应式数据的时候，就会触发 Proxy 的 getter，在 getter 里面把对当前的副作用函数保存起来，将来对应响应式数据发生更改的话，则把之前保存起来的副作用函数取出来执行。
+1. 对于基础数据类型只能通过ref来实现其响应式，核心还是将其包装成一个RefImpl对象，并在内部通过自定义的get value() 与 set value(newVal)实现依赖收集与依赖更新。
+2. 对于对象类型，ref与reactive都可以将其转化为响应式数据，但其在ref内部，最终还是会调用reactive函数实现转化。
+reactive函数，刚开始对target进行响应式只读判断，如果为true，则直接返回target，否则返回createReactiveObject，reactive实现的核心方法是createReactiveObject()的五个参数：
+    target： 传入的原始目标对象
+    isReadonly: 是否是只读的标识
+    baseHandlers: 为普通对象创建proxy时的第二个参数handler，重点解析get中的track()进行依赖收集和set中的trigger()进行依赖更新
+    collectionHandlers: 为collection类型（Set,Map,WeakMap,WeakSet）对象创建proxy时的第二个参数handler
+    proxyMap: WeakMap类型的map，主要用于存储 target与他的proxy之间的对应关系
+主要通过创建了Proxy实例对象来对代理数据实现响应式，通过Reflect实现对数据源的获取与修改。
 
 # vue3真的只使用Proxy就可以实现对数组的代理嘛？还需要进行什么设置呐？
 Proxy构造函数的第一个参数是原始数据data；第二个参数是一个叫handler的处理器对象。Handler是一系列的代理方法集合，它的作用是拦截所有发生在data数据上的操作。这里的get()和set()是最常用的两个方法，分别代理访问和赋值两个操作。在Observer里，它们的作用是分别调用dep.depend()和dep.notify()实现订阅和发布。直接反映在Vue里的好处就是：我们不再需要使用Vue.$set()这类响应式操作了。除此之外，handler共有十三种劫持方式，比如deleteProperty就是用于劫持域删除。
 当数组响应式对象使用 includes、indexOf、lastIndexOf 这方法的时候，它们内部的 this 指向的是代理对象，并且在获取数组元素时得到的值要也是代理对象，所以当使用原始值去数组响应式对象中查找的时候，如果不进行特别的处理，是查找不到的，所以我们需要对上述的数组方法进行重写才能解决这个问题。
+
+# 什么是Vite
+基于esbuild与Rollup，依靠浏览器自身ESM编译功能， 实现极致开发体验的新一代构建工具！
+1. Webpack通过先将整个应用打包，再将打包后代码提供给dev server，开发者才能开始开发。
+2. Vite直接将源码交给浏览器，实现dev server秒开，浏览器显示页面需要相关模块时，再向dev server发起请求，服务器简单处理后，将该模块返回给浏览器，实现真正意义的按需加载。
 
 # Vue.use原理
 安装 Vue.js 插件，Vue.use会自动阻止多次注册相同的插件，届时即使多次调用也只会注册一次该插件
@@ -321,7 +334,7 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
   },
 
 # 双向绑定底层原理(https://d2kbvjszk9d5ln.cloudfront.net/yshop/icon/pic/20230313-20230313060925507.jpg)
-第一步：Object.defineProperty监听属性变动，将需要observe的数据对象进行递归遍历，包括子属性对象的属性,都加上setter和getter,同时创建消息订阅器Dep来收集订阅者，数据变动之后调用setter就会触发notify,在调用订阅者的update方法
+第一步：Observe的数据对象进行递归遍历包括子属性对象的属性,都加上setter和getter，使用Object.defineProperty监听属性变动,同时创建消息订阅器Dep来收集订阅者，数据变动之后调用setter就会触发notify,在调用订阅者的update方法
 第二步：compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知执行更新函数
 第三步：Watcher订阅者是Observer和Compile之间通信的桥梁，能够订阅并收到每个属性setter的变动通知，执行指令绑定的相应的回调函数从而更新视图
 1. Object.defineProperty(监听input将指赋值给对象，触发绑定并赋值给dom)
@@ -335,7 +348,7 @@ Proxy构造函数的第一个参数是原始数据data；第二个参数是一�
   document.getElementById('inp).addEventListener('keyup',function(e){
     a.text = e.target.value
   })
-2. Proxy(监听input将对象赋值给inputProxy，)
+1. Proxy(监听input将对象赋值给inputProxy，)
   let inputProxy = new Proxy(a,{
     set:function(target,key,value){
         if (key === 'text' && value) {

@@ -46,7 +46,6 @@ const todoApp = combineReducers({
 })
 
 # React-Router
-
 ReactRouter中提供了以下三大组件：
 1. Router是所有路由组件共用的底层接口组件，它是路由规则制定的最外层的容器。
 2. Route路由规则匹配，并显示当前的规则对应的组件。
