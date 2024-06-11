@@ -133,7 +133,6 @@
            10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？
            11.HTTP浏览器输入URL后发生了什么?页面如何渲染?垃圾回收机制？
            12.选择排序，快速排序，希尔排序，归并排序，插入排序
-            盒子模型：
             display:
             块元素（可改变元素的高宽），行内:，行内块：
 
@@ -147,7 +146,7 @@
             loader转换器、plugins是扩展器：
              // Map是，Set是
         // filter筛选，every遍历判断每一个是否符合条件，flat扁平化数组
-        // es6的新特性
+        // es6的新特性 
         // Promsie
         // 箭头函数和普通函数的区别：
         // new: 
@@ -272,6 +271,29 @@
     src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
 
 <script>
+    // let obj = {
+    //     a: 1,
+    //     b: 2,
+    //     [Symbol.iterator]() {
+    //         let index = 0
+    //         let key = Object.keys(this)
+    //         return {
+    //             next() {
+    //                 if (index < key.length) {
+    //                     return {
+    //                         done: false,
+    //                         value: obj[key[index++]]
+    //                     }
+    //                 }
+    //                 return {
+    //                     done: true, value: undefined
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // var [a, b] = obj
+    // console.log(a,b);
     let conArr = [
         { id: 1, name: '部门1', pid: 0 },
         { id: 2, name: '部门2', pid: 1 },
@@ -291,27 +313,34 @@
     // {type:2,values:[{name:'3',type:2},{name:'4',type:2}]}
     // {type:3,values:[{name:'5',type:3},{name:'6',type:3}]} ]
     function convert(list) {
+
     }
     // console.log(convert(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0, 10]
-    // console.log(quickSort(MathArr));
+    // console.log(shallSort(MathArr));
     // 选择排序--
     function selectSort(arr) {
+
     }
     // 插入排序--
     function insertSort(arr) {
+
     }
     // 归并排序--
     function mergeSort(arr) {
+
     }
     function merge(left, right) {
+
     }
 
     // 快速排序--
     function quickSort(arr) {
+
     }
     // 希尔排序--
     function shallSort(arr) {
+
     }
 
     const allRequest = [
@@ -339,11 +368,11 @@
     // a.toString = function () {
     //     return this.val++
     // }
-    Object.defineProperty(window, 'a', {
-        get: function () {
-            return ++val
-        }
-    })
+    // Object.defineProperty(window, 'a', {
+    //     get: function () {
+    //         return ++val
+    //     }
+    // })
     // console.log(a === 1 && a === 2);
 
     // 双向绑定：
@@ -354,6 +383,7 @@
     // 虚拟dom，
     // 常见的内存泄漏
     function myNew(con, ...args) {
+
     }
     // object.defineProperty缺点：无法监听数组原型中（push,pop等）方法的新增和删除
     // proxy:
@@ -368,7 +398,7 @@
     }
     // let a1 = new myPromise((res, rej) => {
     //     console.log(1);
-    //     res(2)
+    //     rej(2)
     // })
     // a1.then((v) => {
     //     console.log(3);
@@ -376,6 +406,7 @@
     //     console.log(4);
     // })
     Promise.myAll = promises => {
+
     }
     Promise.myRace = promises => {
 
@@ -384,20 +415,22 @@
 
     }
     Promise.allSettled = promises => {
+
     }
     Promise.myAny = promises => {
+
     }
     function deepClone(obj) {
 
     }
-    let data1 = {
-        a: [1, 2, 3],
-        b: 2,
-        c: {
-            d: 1
-        }
-    }
-    let data2 = deepClone(data1)
+    // let data1 = {
+    //     a: [1, 2, 3],
+    //     b: null,
+    //     c: {
+    //         d: 1
+    //     }
+    // }
+    // let data2 = deepClone(data1)
     // data2.a = [4, 5]
     // console.log(data1, data2);
     // console.log(myInstanceof({}, Object));
@@ -414,12 +447,12 @@
     const myFlat = (arr) => {
 
     }
-    let arrFlat = [[1, 4], [2, 3, [5, 6]]]
+    // let arrFlat = [[1, 4], [2, 3, [5, 6]]]
     // console.log(myFlat(arrFlat));
     function currying(func) {
 
     }
-    let add = function (args) {
+    let add = function (...args) {
         return args.reduce((a, b) => a + b)
     };
     let sum = currying(add)
@@ -436,7 +469,7 @@
     }
     async function run() {
         console.log(1);
-        await sleep(5000)
+        await sleep(5000).then(res => console.log(res))
         console.log(3);
     }
     // run()

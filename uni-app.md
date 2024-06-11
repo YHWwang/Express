@@ -7,7 +7,7 @@
 
 # 下拉刷新方法
 1. pages.json配置"enablePullDownRefresh": true
-2. 自定义下拉刷新(https://uniapp.dcloud.net.cn/component/scroll-view.html)
+2. 自定义下拉刷新scroll-view(https://uniapp.dcloud.net.cn/component/scroll-view.html)
 注意，在webview渲染时，自定义下拉刷新的性能不及pages.json中配置的原生下拉刷新。
 
 # uni-app页面生命周期
@@ -48,7 +48,7 @@
 2. 浏览器需要设置代理来解决跨域问题==》类似于vue==〉proxy : server;在根目录新建vue.config.js ===》只在浏览器端生效;条件编译使用场景：处理跨域问题的时候，浏览器端不走请求的基础url，小程序运行，所以给这里加入条件编译判断
 
 # 小程序分包
-注意：在做项目的时候，就已经知道要分饱的 ==》 千万别觉得马上要上线了，再去分包
+注意：在做项目的时候，就已经知道要分包的 ==》 千万别觉得马上要上线了，再去分包
 分包不是上线才做的，是在开发的过程中，就知道会有这个问题，所以前置性就要做
 1. 在manifest.json的视图源码中加入
     "optimization":{"subPackages":true}

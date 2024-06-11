@@ -7,7 +7,7 @@
 # elementui遇到的bug
 1. 同时上传多个文件时，成功回调on-success只会执行一次，if (fileList.every((item) => item.status == "success"))使用every函数去判断列表数据是否都已成功
 2. form表单下如果只有一个input时回车键会刷新页面， form加上@submit.native.prevent去阻止默认行为
-3. 级联选择器多选时数据不按选择的顺序进行排序，用el-select放置浮动在级联选择器上，同步处理俩边的值
+3. 级联选择器多选时数据不按选择的顺序进行排序，用el-select放置浮动在级联选择器上，同步处理俩边的值（elemnetui-plus版本中已解决）
 
 # 微前端概念（single-spa,qiankun）
 微前端提供了一种技术：可以将多个独立的Web应用聚合到一起，提供统一的访问入口。一个微前端应用给用户的感观就是一个完整的应用，但是在技术角度上是由一个个独立的应用组合通过某种方式组合而成的。
@@ -578,14 +578,14 @@ text-overflow: ellipsis;
  2. 变量赋值undefind值清空，变量还存在。对象属性赋值undefind,值为空值
 
  # 判断数据类型的方法：
- 1.typeof(obj)  2.obj.constructor == Object  3.Object.getPrototypeOf(obj)  4.Object.prototype.toString.call(obj) 
- 5.obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
+ 1. typeof(obj)  
+ 2. obj.constructor == Object  
+ 3. Object.getPrototypeOf(obj)  
+ 4. Object.prototype.toString.call(obj) 
+ 5. obj instanceOf Object(此种方法不能对一般定义的string,number;除非 var str = new String('con')
 
 content-visibility:auto//渲染可视化区域，缺点目前兼容性不好，存在元素高度塌陷的问题（contain-intrinsic-size初始高度解决）
 content-visibility: hidden.利用缓存绘制状态的优点，使内容不显示在屏幕上而又不绘制。隐藏的方法display：none;visibility:hidden;content-visibility: hidden
-  
-  https://web.dev/measure/  优化googles算法
-
 
 # 页面渲染的过程 //减少回流  重绘不一定会回流(重排)，但回流(重排)一定会重绘
 一、解析HTML，生成DOM树，解析CSS，生成CSSOM树
