@@ -9,14 +9,16 @@
 1. pages.json配置"enablePullDownRefresh": true
 2. 自定义下拉刷新scroll-view(https://uniapp.dcloud.net.cn/component/scroll-view.html)
 注意，在webview渲染时，自定义下拉刷新的性能不及pages.json中配置的原生下拉刷新。
+3. onPullDownRefresh() 页面中使用
 
 # uni-app页面生命周期
-1. onLoad,
-2. onReady
-3. onShow
-4. onHide
-5. onUnload
-6. onResize
+1. onInit--监听页面初始化
+2. onLoad--监听页面加载
+3. onShow--监听页面显示
+4. onReady--监听页面初次渲染完成
+5. onHide--监听页面隐藏
+6. onUnload--监听页面卸载
+7. onResize--监听窗口尺寸变化
    
 # uniapp如何实现跨端适配
 使用条件编译模式，它可以实现js逻辑代码，template和css样式在某个环境中生效，在其他环境不生效
@@ -43,6 +45,7 @@
 
 需要注意的是，如果上一个页面是通过 `redirectTo` 或 `switchTab` 方法跳转过来的，
 并不会保留在页面栈中，所以无法通过 `navigateBack` 返回到上一个页面。
+
 # 小程序如何解决跨域问题
 1. 小程序没有跨域问题但需要“不校验url”,还需去网页后台配置“request合法域名”就可以了，并且必须是https开头
 2. 浏览器需要设置代理来解决跨域问题==》类似于vue==〉proxy : server;在根目录新建vue.config.js ===》只在浏览器端生效;条件编译使用场景：处理跨域问题的时候，浏览器端不走请求的基础url，小程序运行，所以给这里加入条件编译判断
@@ -68,6 +71,37 @@
 
 # 在非有dom的生命周期中拿到dom怎么办？
 异步方法（promise,$nextTick）去获取dom
+
+# 微信小程序如何获取DOM
+uni
+  .createSelectorQuery()
+  .selectViewport()
+  .scrollOffset((res) => {
+    console.log("竖直滚动位置" + res.scrollTop);
+  })
+  .exec();
+
+let view = uni.createSelectorQuery().in(this).select(".test");
+
+view
+  .fields(
+    {
+      size: true,
+      scrollOffset: true,
+    },
+    (data) => {
+      console.log("得到节点信息" + JSON.stringify(data));
+      console.log("节点的宽为" + data.width);
+    }
+  )
+  .exec();
+
+view
+  .boundingClientRect((data) => {
+    console.log("得到布局位置信息" + JSON.stringify(data));
+    console.log("节点离页面顶部的距离为" + data.top);
+  })
+  .exec();
 
 # 关于适配问题
 1. 移动动H5页面：使用 rem

@@ -98,7 +98,7 @@ sendRequest(allRequest, 2, (result) => { console.log(result); })
     })
 6. 软键盘弹起和回落留白问题
    android:scrollIntoView(false);监听 webview 高度会变化，高度变小获知软键盘弹起，否则软键盘收起（软键盘收起和输入框获没获取焦点不直接关联）。软键盘与窗口处于同一层，所以当软键盘弹起时，当前窗口缩小，那么窗口内容自然要被挤
-   ios:window.scrollTo（0，0）监听输入框的 focus 事件来获知软键盘弹起，监听输入框的 blur 事件获知软键盘收起。软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起
+   ios:window.scrollTo（0，0）监听输入框的 focus 事件来获知软键盘弹起的scrollTop值，监听输入框的 blur 事件获知软键盘收起设置scrollTo(0,blur函数中记录的scrollTop值)。软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起
 
 7. 软键盘遮挡输入框的问题--》弹起软键盘始终让输入框滚动到可视区
     android: window.addEventListener('resize', () => {
@@ -160,6 +160,7 @@ sendRequest(allRequest, 2, (result) => { console.log(result); })
         -ms-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
+16. 监听页面到底部进行刷新：scrollTop(滚动条距离顶部的高度)+clientHeight(可视化区域的高度)==scrollHeight(页面总高度)在安卓端scrollTop会出现小数,用parseInt()取整
 
 
 # 谷歌和火狐之间浏览器差异
@@ -218,9 +219,11 @@ https: 是一种透过计算机网络进行安全通信的传输协议，由http
         6、客户端生成一个私钥（一个随机数）给服务器，用于加密、解密客户端与服务器间的传输数据，用服务器公钥加密，服务器用服务器的私钥解密得到客户端的私钥
         7、客户端和服务器拥有同一个私钥，这样就可以用这把私钥加密、解密所有信息了
 
-# 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？
-1. 可以在axios中response请求拦截(地址，数据，时间)并存在session中，然后获取session中的数据，比对我们发送的参数（本地数据 === 接口数据 && 接口时间 - 本地时间 < 间隔时间 && 本地地址 === 请求地址），真则reject,否则设置session数据，此时会被响应拦截器error拦截到提示输出;
-2. 使用axios提供的AbortController()取消请求方法，https://blog.csdn.net/misschengispink/article/details/135248863
+# 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？（）
+1. 在订阅器中on监听添加/挂起已存在的接口，emit去执行返回结果，请求拦截器去判断存储的请求是否存在并return Promise.reject()来中断这次请求，否则会正常发送给服务器，响应拦截器将拿到的结果发布给其他相同的接口，成功则去移除存储和相同接口返回结果和事件中的key,失败则判断type类型（limiteResSuccess、limiteResError、失败）移除存储和相同接口返回结果和事件中的key最后return Promise.reject(error); [对于相同的请求我们先给它挂起，等到最先发出去的请求拿到结果回来之后，把成功或失败的结果共享给后面到来的相同请求。](https://juejin.cn/post/7341840038964363283?searchId=20240617134920AD6E3AC12A4659EC055C)
+   缺点：同参数是可以，如何是参数不同的同一个搜索，第二次搜索还是有概率比第一次快，而第一次还没返回，从而导致覆盖第二次的结果
+2. 解决方法再给按钮加loading状态
+
 
 
 # 埋点问题，如何记录用户在页面的停留时长？如果直接关闭浏览器如何记录时间？
