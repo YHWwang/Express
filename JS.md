@@ -1,3 +1,10 @@
+# 什么是ajax?
+1. AJAX = 异步 JavaScript 和 XML。
+2. AJAX 是一种用于创建快速动态网页的技术。
+3. 通过在后台与服务器进行少量数据交换，可以使网页实现异步更新。
+4. 可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+Ajax的原理简单来说通过XmlHttpRequest对象来向服务器发送异步请求，从服务器获得数据，然后用JavaScript来操作DOM而更新页面。
+
 # try catch能捕获到setTimeout函数内的异常嘛？
 不能，setTimeout是异步函数，而try catch其实是同步顺序执行的代码，等setTimeout里面的事件进入事件队列的时候，主线程已经离开了try catch,所以try catch是无法捕获异步函数的错误的。
 
