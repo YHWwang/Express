@@ -1,3 +1,137 @@
+# elementui中Table表格数据过多导致的DOM渲染问题（只改变tr里的值）
+<template>
+  <div id="app">
+    <h6>不管怎么滚动，dom都只渲染21条tr</h6>
+    <el-table
+      :data="filteredData"
+      style="width: 100%; border: 2px solid red"
+      v-loadmore="handelLoadmore"
+      :data-size="tableData.length"
+      height="300"
+    >
+      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="sex" label="年龄"></el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [],
+      currentStartIndex: 0,
+      currentEndIndex: 20
+    };
+  },
+  directives: {
+    loadmore: {
+      // componentUpdated updated
+      componentUpdated: function (el, binding, vnode, oldVnode) {
+        // 设置默认溢出显示数量
+        var spillDataNum = 20;
+        // 设置隐藏函数
+        var timeout = false;
+        let setRowDisableNone = function (topNum, showRowNum, binding) {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+          timeout = setTimeout(() => {
+            binding.value.call(
+              null,
+              topNum,
+              topNum + showRowNum + spillDataNum
+            );
+          });
+        };
+        setTimeout(() => {
+          const dataSize = vnode.data.attrs["data-size"];
+          const oldDataSize = oldVnode.data.attrs["data-size"];
+          if (dataSize === oldDataSize) return;
+          const selectWrap = el.querySelector(".el-table__body-wrapper");
+          const selectTbody = selectWrap.querySelector("table tbody");
+          const selectRow = selectWrap.querySelector("table tr");
+          if (!selectRow) {
+            return;
+          }
+          const rowHeight = selectRow.clientHeight;
+          let showRowNum = Math.round(selectWrap.clientHeight / rowHeight);
+
+          const createElementTR = document.createElement("tr");
+          let createElementTRHeight =
+            (dataSize - showRowNum - spillDataNum) * rowHeight;
+          createElementTR.setAttribute(
+            "style",
+            `height: ${createElementTRHeight}px;`
+          );
+          selectTbody.append(createElementTR);
+
+          // 监听滚动后事件
+          selectWrap.addEventListener("scroll", function () {
+            let topPx = this.scrollTop - spillDataNum * rowHeight;
+            let topNum = Math.round(topPx / rowHeight);
+            let minTopNum = dataSize - spillDataNum - showRowNum;
+            if (topNum > minTopNum) {
+              topNum = minTopNum;
+            }
+            if (topNum < 0) {
+              topNum = 0;
+              topPx = 0;
+            }
+            selectTbody.setAttribute(
+              "style",
+              `transform: translateY(${topPx}px)`
+            );
+            createElementTR.setAttribute(
+              "style",
+              `height: ${
+                createElementTRHeight - topPx > 0
+                  ? createElementTRHeight - topPx
+                  : 0
+              }px;`
+            );
+            setRowDisableNone(topNum, showRowNum, binding);
+          });
+        });
+      }
+    }
+  },
+  computed: {
+    filteredData() {
+      let list = this.tableData.filter((item, index) => {
+        if (index < this.currentStartIndex) {
+          return false;
+        } else if (index > this.currentEndIndex) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      return list;
+    }
+  },
+  methods: {
+    handelLoadmore(currentStartIndex, currentEndIndex) {
+      this.currentStartIndex = currentStartIndex;
+      this.currentEndIndex = currentEndIndex;
+    },
+    getTableData() {
+        //表格接口数据
+      this.tableData = ...
+    }
+  },
+  created() {
+    this.getTableData();
+  }
+};
+</script>
+
+# 如果你现在在自己的开发分支 开发一半 线上有个紧急的bug 需要紧急修改并上线。你怎么办？
+1. 创建dev分支,切换到dev分支，提交本地代码到这个临时dev分支上
+2. 切换到主分支并回溯到线上的版本,创建bug分支并切换到bug分支上
+3. 解决线上版本后提交bug分支，切换主分支，合并bug分支代码。
+4. push提交主分支,切换dev分支，pull拉取主分支
+
 # 解决echarts图表切换tabs改变屏幕大小后会缩成一团的问题
  chartIntance.resize({
     <!-- 重新计算时给个实时宽度 -->
@@ -160,11 +294,12 @@ sendRequest(allRequest, 2, (result) => { console.log(result); })
         -ms-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
-16. 监听页面到底部进行刷新：scrollTop(滚动条距离顶部的高度)+clientHeight(可视化区域的高度)==scrollHeight(页面总高度)在安卓端scrollTop会出现小数,用parseInt()取整
+16. 监听页面滑动到底部进行刷新：
+    scrollTop(滚动条距离顶部的高度)+clientHeight(可视化区域的高度)==scrollHeight(页面总高度)在安卓端scrollTop会出现小数,用parseInt()取整
 
 
 # 谷歌和火狐之间浏览器差异
-1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px
+1. chrome:font-wigth加粗与font-family粗字体不会重叠，最小font-size:12px（目前版本已不在有）
 2. firefox：font-wigth加粗与font-family粗字体会叠加
 3. firefox隐藏滚动条样式scrollbar-width: none;而::-moz-scrollbar{ display: none; }无效。谷歌::-webkit-scrollbar{display: none; }有效
 4. 火狐浏览器下e.path获取不到解决方法： 
@@ -200,11 +335,12 @@ html-》加上title='文本内容'
 
 
 # addEventListener造成的弹窗内submit事件的回调执行多次的问题？使用函数名来作为参数
- 节点.addEventListener('事件', function(){
+ 1. 节点.addEventListener('事件', function Fun(){
                 //确定后执行
             })
 首先要明确一点，在元素上重复注册相同的事件监听器，多余的监听器会被移除，只保留一个
 问题在于回调函数是一个匿名函数，那么这就导致了每一次注册都是一个不同的事件监听器。
+2. 节点.onscroll = 函数名
 
 
 # http和https的区别？（https://cloud.tencent.com/developer/article/1704749）
@@ -220,9 +356,11 @@ https: 是一种透过计算机网络进行安全通信的传输协议，由http
         7、客户端和服务器拥有同一个私钥，这样就可以用这把私钥加密、解密所有信息了
 
 # 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？（）
-1. 在订阅器中on监听添加/挂起已存在的接口，emit去执行返回结果，请求拦截器去判断存储的请求是否存在并return Promise.reject()来中断这次请求，否则会正常发送给服务器，响应拦截器将拿到的结果发布给其他相同的接口，成功则去移除存储和相同接口返回结果和事件中的key,失败则判断type类型（limiteResSuccess、limiteResError、失败）移除存储和相同接口返回结果和事件中的key最后return Promise.reject(error); [对于相同的请求我们先给它挂起，等到最先发出去的请求拿到结果回来之后，把成功或失败的结果共享给后面到来的相同请求。](https://juejin.cn/post/7341840038964363283?searchId=20240617134920AD6E3AC12A4659EC055C)
+1. 在订阅器中on监听添加/挂起已存在的接口，emit去执行返回结果，
+2. 请求拦截器去判断存储的请求是否存在并return Promise.reject()来中断这次请求，否则会正常发送给服务器，
+3. 响应拦截器将拿到的结果发布给其他相同的接口，成功则去移除存储和相同接口返回结果和事件中的key,失败则判断type类型（limiteResSuccess、limiteResError、失败）移除存储和相同接口返回结果和事件中的key最后return Promise.reject(error); [对于相同的请求我们先给它挂起，等到最先发出去的请求拿到结果回来之后，把成功或失败的结果共享给后面到来的相同请求。](https://juejin.cn/post/7341840038964363283?searchId=20240617134920AD6E3AC12A4659EC055C)
    缺点：同参数是可以，如何是参数不同的同一个搜索，第二次搜索还是有概率比第一次快，而第一次还没返回，从而导致覆盖第二次的结果
-2. 解决方法再给按钮加loading状态
+4. 解决方法再给按钮加loading状态
 
 
 

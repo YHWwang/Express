@@ -145,7 +145,7 @@ oldStartVnode、oldEndVnode 与 newStartVnode、newEndVnode 两两比较共有�
    
 如果以上情况均不符合，说明开始和结束节点都不相同,进入key 的比较：
 1. oldKeyToIdx：一个哈希表，存放旧节点的 key 与节点的映射关系,只不过这个 key 是 index 序列。1.如果没有 oldKeyToIdx 则会通过 createKeyToOldIdx 会得到一个 oldKeyToIdx，从 oldKeyToIdx 这个哈希表中可以找到与新节点是否有相同 key 的旧节点
-2. idxInOld：拿新节点的 key 去 oldKeyToIdx 找是否有与旧节点相同的节点，即旧节点中是否有与新节点 key 相同的节点，没有就通过 findIdxInOld 遍历旧节点并通过 sameVnode 判断是否有相同节点，有返回索引。遍历结束出现的俩种情况：
+idxInOld：拿新节点的 key 去 oldKeyToIdx 找是否有与旧节点相同的节点，即旧节点中是否有与新节点 key 相同的节点，没有就通过 findIdxInOld 遍历旧节点并通过 sameVnode 判断是否有相同节点，有返回索引。遍历结束出现的俩种情况：
   2-1. idxInOld 不存在，即新节点在旧节点中都没有找到，说明这是一个之前没有的新节点，需要通过 createElm 创建新节点
   2-2. idxInOld 存在，则进一步通过 sameVnode(vnodeToMove(找到的相同节点key的Vnode), newStartVnode) 判断是否是同一节点，
     2-2-1：如果是：则将旧节点赋值给 vnodeToMove 变量，并调用 patchVnode 对比和更新节点差异，最后将 vnodeToMove 对应的 DOM 移动到最前面；
@@ -480,7 +480,7 @@ Proxy的优点：
   1.组件拥有了更加良好的代码组织结构
   2.相同的代码逻辑在不同的组件中进行了完整的复用
 
-# setup（props、context(包含attrs、slots、emit)）)函数（setup 中你应该避免使用 this，因为它不会找到组件实例）
+# setup（props、context(包含attrs、slots、emit)）函数（setup 中你应该避免使用 this，因为它不会找到组件实例）
 增加了一个setup的生命周期函数，在beforeCreate生命函数之前执行，因此不能使用this获取实例
 1. ref 响应式引用，带有 value property 的对象，不能使用es6解构会消除 prop 的响应性，解构使用toRefs
 2. watch（ref变量, (newValue, oldValue)=>{}） 响应式更改,侦听响应式引用

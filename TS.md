@@ -12,14 +12,23 @@ let arr3:[string,number] = ['123',123]
     enum Color {Red, Green, Blue};
     let c: Color = Color.Blue;
 
-# 类型断言
-好比其它语言里的类型转换，但是不进行特殊的数据检查和解构
+# 类型断言（手动指定一个值的类型）
+类型断言允许程序员手动指定一个值的类型。这在需要明确告诉编译器某个值的类型时非常有用。
     var str = '1213' 
     var str2:number = (str as string).length or (<string>someValue).length;
 
-# 联合类型
+# 联合类型（|）
  var val:string|number 
  
+# 交叉类型（&）
+interface A {
+  a(): void;
+}
+interface B {
+  b(): void;
+}
+type C = A & B; // 表示同时具备 A 和 B 的特性
+
 # interface接口是一系列抽象方法的声明，是一些方法特征的集合
     interface IPerson  { 
         firstName:string,
@@ -65,3 +74,16 @@ let arr3:[string,number] = ['123',123]
     interface MyWindow {
         title: string
     }
+
+# 什么是命名空间（Namespace）和模块（Module） 
+模块: 使用模块时，我们可以使用 export 和 import 关键字来定义和引入模块中的函数或变量。
+命名空间：而在命名空间中，我们使用 namespace 来创建命名空间，并且需要在使用之前使用  <reference path="file.ts" /> 来引入命名空间。
+
+# 类型守卫是什么？
+类型守卫是一种用于在运行时检查类型的技术，它允许开发人员在特定的作用域内缩小变量的范围，以确保正确推断类型。
+function isString(test: any): test is string {
+  return typeof test === "string";
+}
+if (isString(input)) {
+  // input 在此代码块中被收窄为 string 类型
+}
