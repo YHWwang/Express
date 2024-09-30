@@ -8,10 +8,10 @@
 模式(mode)
 浏览器兼容性(browser compatibility)
 环境(environment)
-1.Webpack的构建大致就是一个初始化、编译、输出的过程
-2.初始化：启动构建，读取与合并配置参数，加载Plugin，实例化Compiler
-3.编译：从Entry发出，针对每个Module串行调用对应的Loader去翻译文件内容，再找到该Module依赖的Module,递归地进行编译处理
-4.输出：对编译后的Module组合成Chunk,把Chunk转换成文件，输出到文件系统
+Webpack的构建大致就是一个初始化、编译、输出的过程
+1. 初始化：启动构建，读取与合并配置参数，加载Plugin，实例化Compiler
+2. 编译：从Entry发出，针对每个Module串行调用对应的Loader去翻译文件内容，再找到该Module依赖的Module,递归地进行编译处理
+3. 输出：对编译后的Module组合成Chunk,把Chunk转换成文件，输出到文件系统
 
 
 # webpack 构建过程

@@ -665,11 +665,10 @@ split(字符串或正则表达式，返回数组的最大长度)用于把一个�
    优点：弥补Object.prototype.toString.call()不能判断自定义实例化对象的缺点。
    缺点：只能用来判断对象类型，原始类型不可以，并且所有对象类型 instanceof Object 都是 true。
 
-   1. Array.isArray():用来判断对象是否为数组
+   3. Array.isArray():用来判断对象是否为数组
    缺点：只能判别数组
    Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。
-
-   1. hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
+hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键不涉及原型链）。
 
 instanceof 与 isArray
 当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes
