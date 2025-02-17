@@ -1,3 +1,27 @@
+# Astro(https://astro.build/)
+关于 Astro 的介绍，官方文档（https://docs.astro.build/zh-cn/concepts/why-astro）给出了很明确的定位：“最适合构建像博客、营销网站、电子商务网站这样的以内容驱动的网站的 Web 框架”
+我们可以白票的第三方服务有：
+1）GitHub Pages
+2）Netlify
+3）Cloudflare
+4）Vercel
+
+# 给定一个数组，给定长度k，给定目标值target，判断数组中存在多少个长度为k的子数组的和为target
+let res = []
+fun([1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 10, 0, [])
+function fun(nums, k, target, m, path) {
+    if (k == 0 && target == 0) {
+        res.push(path)
+    }
+    if (k < 0 || target < 0) return
+    for (let i = m; i < nums.length; i++) {
+        let tmp = [...path]
+        tmp.push(nums[i])
+        fun(nums, k - 1, target - nums[i], i + 1, tmp)
+    }
+}
+console.log(res.length);
+
 # Proxy 能够监听到对象中的对象的引用吗？
 深度监听or懒监听
 const handler = {
@@ -43,10 +67,15 @@ const proxy = new Proxy(obj, handler)
 Object.create:继承不了构造函数的属性和方法。
 new操作符创建的实例，既可以继承原型的属性和方法，又可以继承构造函数的属性和方法(如果new后的函数没有this值会报错)
 
+# 虚拟滚动需要处理的问题
+1. 计算大容器的高度
+2. 滚动高度对应的数据
+3. 处理容器偏移量高度
+
 # 如何判断元素是否在可视区域内？
 0 <= 元素距离顶部的高度 - 滚动的高度 <= 可视高度
 
-# elementui中Table表格数据过多导致vue2的DOM渲染问题（只改变tr里的值:处理容器偏移量高度和滚动高度对应的数据，大容器的高度）
+# elementui中Table表格数据过多导致vue2的DOM渲染问题
 <template>
   <div id="app">
     <h6>不管怎么滚动，dom都只渲染21条tr</h6>
@@ -412,11 +441,12 @@ https: 是一种透过计算机网络进行安全通信的传输协议，由http
         6、客户端生成一个私钥（一个随机数）给服务器，用于加密、解密客户端与服务器间的传输数据，用服务器公钥加密，服务器用服务器的私钥解密得到客户端的私钥
         7、客户端和服务器拥有同一个私钥，这样就可以用这把私钥加密、解密所有信息了
 
-# 输入框输入，请求后台接口，第一个接口返回的信息可能比较慢，到第二次调用后信息已经返回了，前一条数据才出来，如何避免页面被第一个接口返回的信息覆盖？（）
-1. 在订阅器中on监听添加/挂起已存在的接口，emit去执行返回结果，
+# 全局限制接口请求（去重）
+1. 在发布订阅器中on监听添加/挂起已存在的接口，emit去执行遍历返回结果，
 2. 请求拦截器去判断存储的请求是否存在并return Promise.reject()来中断这次请求，否则会正常发送给服务器，
-3. 响应拦截器将拿到的结果发布给其他相同的接口，成功则去移除存储和相同接口返回结果和事件中的key,失败则判断type类型（limiteResSuccess、limiteResError、失败）移除存储和相同接口返回结果和事件中的key最后return Promise.reject(error); [对于相同的请求我们先给它挂起，等到最先发出去的请求拿到结果回来之后，把成功或失败的结果共享给后面到来的相同请求。](https://juejin.cn/post/7341840038964363283?searchId=20240617134920AD6E3AC12A4659EC055C)
-   缺点：同参数是可以，如何是参数不同的同一个搜索，第二次搜索还是有概率比第一次快，而第一次还没返回，从而导致覆盖第二次的结果；解决方法再给按钮加loading状态
+3. 响应拦截器将拿到的结果发布给其他相同的接口，成功则去移除存储和相同接口返回结果和事件中的key,失败则判断type类型（limiteResSuccess、limiteResError、失败）移除存储和相同接口返回结果和事件中的key最后return Promise.reject(error); 
+[对于相同的请求我们先给它挂起，等到最先发出去的请求拿到结果回来之后，把成功或失败的结果共享给后面到来的相同请求。](https://juejin.cn/post/7341840038964363283?searchId=20240617134920AD6E3AC12A4659EC055C)
+缺点：同参数是可以，如何是参数不同的同一个搜索，第二次搜索还是有概率比第一次快，而第一次还没返回，从而导致覆盖第二次的结果；解决方法再给按钮加loading状态
 
 # 埋点问题，如何记录用户在页面的停留时长？如果直接关闭浏览器如何记录时间？
 1. router.beforeEach切换路由来记录开始、结束时间重点在发送记录后重置开始时间。如果异常退出则数据会有问题，

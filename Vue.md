@@ -1,7 +1,7 @@
 # vue-router------------
 路由重定向：redirect:'路由地址' 改变路由url或组件。父组件是公共组件的情况下，可重定向到嵌套子组件path，再次添加新组件.如果地址不存在则会执行定义的*路由。重定向传参 path: '/guide/:id', redirect: '/guide/:id/index'
 别名：alias:'name' 只改变url，组件不变
-$router路由实例化对象，包括路由的跳转方法（push,replace),钩子函数等
+$router路由实例化对象，包括路由的跳转方法(push,replace),钩子函数等
 $route当前路由对象，它包括path，params，hash，query，name等参数；
 router.addRoutes(accessRoutes)添加一条新路由规则。如果该路由规则有 name，并且已经存在一个与之相同的名字，则会覆盖它。
 
@@ -413,9 +413,8 @@ const {proxy} = getCurrentInstance()//获取组件实例化对象
 组件传值
 父-》子 defineProps  子-》父回调函数defineEmits
 <select-user ref="selectRef" :roleId="queryParams.roleId" @ok="handleQuery" />
-父：function handleQuery() {
-      queryParams.pageNum = 1;
-      getList();
+父：function handleQuery(val) {
+      ...use val
     }
 子：const props = defineProps({
       roleId: {
@@ -496,10 +495,6 @@ Proxy的优点：
 2. watch（ref变量, (newValue, oldValue)=>{}） 响应式更改,侦听响应式引用
 3. computed 输出的是一个只读的响应式引用
 4. setup函数只能是同步的不能是异步的（可配合async/await）,props是响应式的
-
-# VUE遇到的问题
-1. 表单加key来标识
-2. 数据量大的表格很卡顿，Object.freeze()解决
 
 # vue开发权限管理系统(https://segmentfault.com/a/1190000009506097)
 前端权限控制可以分为四个方面：接口权限、按钮权限、菜单权限、路由权限
