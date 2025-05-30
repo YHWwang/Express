@@ -73,12 +73,6 @@ parse的核心实现是调用了parseHTML函数，且传入了start,end,chars,co
 4. options.end中解析完文本后，html就只剩下</div>了，此时while循环会走parseEndTag方法，该方法主要的目的就是通过当前结束标签去找起始标签。匹配完成后将起始标签弹出栈
 其主要思想就是遍历html的字符，然后进行匹配，将所有匹配到的开始标签压入栈中。当匹配到结束标签时，从栈中找到最近的相匹配的标签，将其弹出栈，然后形成一个完整的ast节点。当遍历完成时，所有的节点就会形成一棵语法树（ast）。
 
-# 关于ref只能获取到最后一个节点的问题
-1. ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。
-2. 如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
-
-就是引用指向了DOM元素，此时第二给相同的ref，相当于就改变了已有的注册信息，就被后面的覆盖了
-
 # 对Vue理解
 渐进式框架，只需关注视图层，1.易用->提供数据响应式让开发者只需关心业务，灵活->众多库vuex、vue-router、vue-cli等工具，高效->采用diff算法更新虚拟DOM；缺点也很明显就是不支持IE8以下的版本并且对网站的SEO不利，当然也有ssr服务端渲染方式，库nuxt.js来提高SEO
 
@@ -215,8 +209,19 @@ Vite由两个主要部分组成：
 1. dev server：利用浏览器的ESM能力来提供源文件，具有丰富的内置功能并具有高效的HMR
 2. 生产构建：生产环境利用Rollup来构建代码，提供指令用来优化构建过程
 
+# 为什么说vite不需要配置css预处理器
+Vite不需要配置CSS预处理器的主要原因是因为Vite通过插件系统支持各种CSS预处理器，并且这些插件已经内置或可以通过npm安装。此外，Vite默认支持PostCSS、Sass、Less和Stylus等预处理器，并且会自动将.css文件模块化处理
+
 # 什么是除屑优化（Tree-Shaking）
 除屑优化，也即“保留有用代码”，是 Rollup 的一个处理过程，用于消除在给定项目中实际上未使用的代码。它是一种冗余代码消除的形式，但与输出大小相关的其他方法相比，可以更加高效。该算法首先标记所有相关语句，然后“摇晃语法树（让枯叶掉落下来）”，删除所有冗余代码。它的思想与“标记-清除垃圾收集算法”类似。尽管此算法与 ES 模块本身并不相关，但这个思想使其更加高效，因为它们允许 Rollup 将所有模块作为一个具有共享绑定的大型抽象语法树进行处理。
+
+ESM静态分析（export+import） + Tree-Shaking,摇树分两步走，
+  Step 1：标记出模块导出值哪些没有被用过
+    其中，标记过程又可以分为三个步骤：
+    Make 阶段，收集导出变量并记录到模块依赖图ModuleGraph 变量中。
+    Seal 阶段，遍历ModuleGraph 标记模块导出变量有没有被使用
+    生成产物时，若变量没有被其他模块使用时则删除对应的导出语句
+  Step 2：使用Terser删除掉没有被用到的导出语句
 
 # vite和webpack的区别
 1. Webpack通过先将整个应用打包，再将打包后代码提供给dev server，开发者才能开始开发，文件修改会对相关的依赖重新打包。（从入口文件进入逐层识别模块依赖，然后分析转换编译输出代码，最后打包）
@@ -408,6 +413,7 @@ this.$set将set函数绑定在vue原型上，只能设置实例创建后存在�
   key:vlaue
 })
 markRaw(将一个对象标记为不可以被转化为代理对象。返回该对象本身。const obj = markRaw({ name: name.value });)
+shallowReactive(和 reactive() 不同，这里没有深层级的转换：一个浅层响应式对象里只有根级别的属性是响应式的。属性的值会被原样存储和暴露，这也意味着值为 ref 的属性不会被自动解包了。)
 const {proxy} = getCurrentInstance()//获取组件实例化对象
 
 组件传值
@@ -436,7 +442,8 @@ const {proxy} = getCurrentInstance()//获取组件实例化对象
 依赖注入：父与孙provide+inject
 
 # Vue3中使用v-if，v-else导致的渲染报错问题记录（Unhandled error during execution of scheduler flush. This is likely a Vue internals bug.）
-解决方法：获取列表时无论用什么方法去赋值或者渲染后赋值都不行，代码注释排查后发现是v-if导致的，将v-if改成v-show可以。
+发现v-if嵌套v-if渲染有可能出现这个问题；
+解决方法：最外层用是v-if，里面用v-show
 
 # 在Vue2中template标签中必须要有一个根元素，而Vue3中可以写多个，原理区别是什么？
 1. 在Vue2中，模板(template)标签必须有一个根元素，这是因为Vue2中的编译器(compiler)需要将模板编译成一个render函数，而一个函数只能有一个返回值。因此，Vue2需要一个根元素来包含所有的子节点，以便编译器能够将它们编译成一个返回值。
@@ -466,7 +473,7 @@ Proxy的优点：
 
 # vue生命周期
   Vue的生命周期可以分为三个大阶段
-  1. 初始化挂载阶段：beforeCreate，created,beforeMount,mounted(第一次页面加载时会触发)
+  1. 初始化挂载阶段：beforeCreate，created,beforeMount,mounted(第一次页面加载时会触发,mounted挂载之后可获取dom)
   2. 数据更新渲染阶段: beforeUpdate,updated
   3. 销毁阶段: beforeDestroy,destroyed
 

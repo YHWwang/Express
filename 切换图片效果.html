@@ -128,29 +128,18 @@
             8.切换tab标签页echarts缩成一团
             浏览器兼容性：
            1.什么是双向绑定，双向绑定底层原理（就是observer,compile,watch关系），vue2对数组进行双向绑定为何要重写？‘vue2不能监测数组的变化’这句话是否有错，为什么？
-           vue2：通过数据劫持结合发布者订阅模式，使用object.definePrototype去动态的监听get,set的同时创建订阅器dep，数据变更发布订阅者，进而触发响应的监听回调事件，vue3:是用ref和reactive去绑定数据，ref是基本数据refImpl，reactive是对象，ref内部是使用reactive去处理的，reactive函数，函数则是通过（target目标,readOnly是否只读，baseHandlers提供handler第二个参数这里面的track和tigger就是依赖收集和修改,collectionHandler这里是set,map,weakset,weakmap的,proxyMap处理proxy和traget的对应关系）用proxy来对数据的响应式代理，refImpl对数据的依赖收集和更新
+           observer,complier,watch
+           ref reactive targer,onlyread,baseHandler - track get,triggler-set,collectionHandlers set map,weakset,weakmap,proxyMap 映射关系，proxy实现响应式，Reflect依赖收集更新
            2.BFC是啥，触发条件？
-
            3.原型链，原型，console.log( function instanceof object , object instanceof function , function instanceof function ,object instance object)打印的值，为什么说明原因
-
            4.常用状态码？浏览器缓存方式有哪些？需要设置哪些参数？同源策略？有10个接口大约每个100ms，chrome需要多少时间加载完（就是同一域名最多加载多少个接口）
-           100收到请求处理中，200成功，300重定向，301永久重定向，302临时重定向，304走缓存，400语法错误，401身份权限问题，403资源不可用，404资源未找到，500服务器错误501尚未实施502网关错误，503服务错误，504网关超时，505http协议错误
            5.vue2子组件中‘.sync’和v-model区别,vue3和vue2双向绑定有啥不同，vue3有什么和vue2不同的地方。虚拟DOM节点优异?虚拟dom是如何合并patch的(合并流程)
-                组合式API,支持ts,按需加载，新vdom，函数式编程，给新老dom节点首位两端加上标识位，俩两SameVnode对比，有4种情况，旧头新头，旧尾新尾这俩种情况直接patchVnode更新，旧头==新尾则真实dom移动到了旧后，旧尾==新头，则真实dong移动到了旧前，对比完之后进行key值得比较，
-                拿key去oldKeyToIdx去旧节点寻找是否存在索引关系，遍历旧节点通过sameVnode判断是否存在相同节点，不存在则新建dom,存在则判断是不是同一节点，不是则新建，是同一节点得话则进行patchVnode更新差异，移动新节点索引，继续循环，会出现俩种情况
-                一种是旧子节点数大于新子节点数：旧去除多余节点数
-                旧子节点数小于新子节点数：将新的加入到旧右
            6.map和set的区别，filter,every,flat作用，promise是什么，.all和.allsettle区别，.race和.any区别，能否手写promise
            7.js是单还是双进程为什么？进程在内存如何运行（就是哪些任务推到主进程，哪些任务到任务队列）；什么是任务队列，什么是微任务和宏任务，上面的俩个任务的执行顺序，哪些是微任务哪些是宏任务？
            8.高阶函数知道哪些（防抖，节流，柯里化，扁平化数组，树型，深度优先，广度优先，深拷贝能否手写）
            9.this绑定的方法？new做了什么事？script标签中defer和async区别？
-            let obj = Object.create(null)
-            Object.setPrototype(obj,con.prototype)
-            let res = con.apply(obj,args)
-            return res instanceof object ? res:obj
            10.画0.5px的线？画三角形？盒模型？css选择器？伪类和伪元素区别？
            11.HTTP浏览器输入URL后发生了什么?页面如何渲染?垃圾回收机制？
-            1.补全域名，通过DNS解析出服务器ip地址，通过ip请求建立tcp连接，建立成功后发送http请求，服务器接收后发送html,客户端接收html进行渲染呈现，然后断开tcp连接
            12.选择排序，快速排序，希尔排序，归并排序，插入排序
             display:
             块元素（可改变元素的高宽），行内:，行内块：
@@ -158,11 +147,10 @@
             express和koa的区别:
             node子进程：
 
-            node如何处理高并发：node是异步非拥塞单进程语言，1.单进程，少了线程切换的消耗和冲突的风险，缺点也很明显就是无法充分理由多核，pm2,2.事件轮询和libUVn对异步IO的处理，，timer,pending callback,idle,perpare,poll,cehck,close callback
-            1.
+            node如何处理高并发：
             node事件轮询6个阶段：
             如何异步处理IO：
-            webpack构建过程：根据入口文件逐层抓取依赖文件，然后分析编译转换输出，最后打包，loadering转换文件,plugin全局配置
+            webpack构建过程：
             项目体积：
             loader转换器、plugins是扩展器：
             Map是，Set是
@@ -175,23 +163,17 @@
             }
             let,var，const
             堆和栈,
-            闭包的原理：能够访问定义时的词法作用域
+            闭包的原理：
             js事件轮询:
-            js类型：基本数据类型(unll,undefind,boolean,string,number,bigInt,symbol)引用数据类型(object,function,array)
+            js类型：
             display:
-            强缓存：expires,cache-control,协商缓存:etag+if-none-match     last-modified+if-modified-since
-            虚拟dom：用js模拟一个树形结构的虚拟dom节点，
-            vuediff算法的原理：1.新老dom节点俩段加上标识位，进行对比，旧头等于新尾则真实dom移动到旧前，旧尾等于新头则真实dom移动到旧后，如果都没有则进行key值的比较，首先有个名叫oldKeyToIdx的索引表里面是真实dom的映射关系，如果key寻未到，则新建dom，有找到，则判断是否是同一节点saveVnode,不是的话新建，是则patchvnode更新，遍历完有俩种情况，旧子节点数大于新子节点数去除多余的节点，新子节点数大于旧子节点数旧添加多余的，
-            vue双向绑定的原理：baseHandlers, track,tigger,collectionHandlers,proxyMap,存放targer和proxy的索引，通过proxy对数据进行响应式绑定，reflect对数据源的修改与更新
+            强缓存：
+            虚拟dom：
+            vuediff算法的原理：
+            vue双向绑定的原理：
             keep-alive：避免组件重复渲染
-            vue如何解析template：1.parse解析tem中的标签，指令，变量生成ast抽象语法树 2.用optimize优化抽象语法树，3.用generator去递归拼接字符串，然后生成rander函数
+            vue如何解析template：
             如何构建ast流程：
-                parsehtml去解析，（start,char,end,commed）
-                1.注释commed,去找到第一个'<'，用正则表达式去匹配有几种情况：h5的文件标识，meta,注释，用advance()解析去除后进行开始标签的匹配
-                2.开始标签也是正则表达式去匹配，并且遇到开始标签会入栈,之后循环解析属性，
-                3.然后解析变量，动态和金泰，动态则根据token去找对应的变量
-                4.正则匹配结束标签出栈。
-     
         1.不管是前端还是后端，我们程序员我觉得应该是具备一种发现工作上有什么大量重复性工作，就要将功能或者程序简单化来做事，还有就是有对代码的优雅或者完美的追求，我和同事经常开玩笑，说不把这个弄完我睡觉都睡不着，复杂的事情简单化，简单的事情优雅化，目的就是方便我们自己或者同事已达到更高效的工作方式，高效才是我们程序员要一直追寻的目标方向，但是呐身体才是
         -->
         <input type="text" id="inp" />
@@ -300,38 +282,122 @@
     <div class="a-3"></div>
 </body>
 <script src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/jquery-3.3.1.min-20201130021002922.js"></script>
-<script async
-    src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js"></script>
+<script async src="https://d2kbvjszk9d5ln.cloudfront.net/yshop/upload/other/lazysizes.min-20201204070627489.js">
+</script>
 
 <script>
-        // let obj = {
+ 
+   //收集n个能被k整除数据之和
+    function solution(n, k) {
+
+        let array = []
+        for (let index = 1; array.length < n; index++) {
+            if (index % k === 0) {
+                array.push(index)
+            }
+        }
+
+        return array.reduce((a, b) => a + b)
+    }
+
+    function main() {
+        console.log(solution(3, 1) === 6);
+        console.log(solution(2, 2) === 6);
+        console.log(solution(4, 3) === 30);
+    }
+
+    // main();
+
+    //给定一个数组，给定长度k，给定目标值target，判断数组中存在多少个长度为k的子数组的和为target
+    let res = []
+    fun([1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 10, 0, [])
+
+    function fun(nums, k, target, m, path) {
+        if (k == 0 && target == 0) {
+            res.push(path)
+        }
+        if (k < 0 || target < 0) return
+        for (let i = m; i < nums.length; i++) {
+            let temp = [...path]
+            temp.push(nums[i])
+            fun(nums, k - 1, target - nums[i], i + 1, temp)
+        }
+
+    }
+    // console.log(res);
+    // let obj = {
     //     a: 1,
     //     b: {
-    //         c: 2
+    //         c: {
+    //             d:2
+    //         }
     //     }
     // }
     // const handler = {
-    //    
+    //     get(target, prop, receiver) {
+    //         const val = Reflect.get(target, prop, receiver)
+    //         if (typeof val === 'object' && val != null) {
+    //             return new Proxy(val, handler)
+    //         }
+    //         return val
+    //     },
+    //     set(target, prop, value) {
+    //         target[prop] = value
+    //         return true
+    //     }
     // }
-    // const proxy = new Proxy(obj, handler)
-    // proxy.a = 10; 
-    // proxy.b.c = 20; 
+    // const proxy = obj
+    // proxy.a = 10;
+    // proxy.b.c.d = 30;
     // console.log(obj);
     //  0<=元素距离顶部的高度-盒子内滚动高度 <=可视化屏幕大小
     // let obj = {
     //     a: 1,
     //     b: 2,
     //     [Symbol.iterator]: function (val) {
+    //         let keys = Object.keys(this)
+    //         let index = 0
+    //         return {
+    //             next() {
+    //                 if (index <= keys.length) {
+    //                     return {
+    //                         done: false,
+    //                         value: obj[keys[index++]]
+    //                     }
+    //                 } else {
+    //                     return { done: true }
+    //                 }
+    //             }
+    //         }
     //     }
     // }
     // var [a, b] = obj
     // console.log(a, b);
-    let conArr = [
-        { id: 1, name: '部门1', pid: 0 },
-        { id: 2, name: '部门2', pid: 1 },
-        { id: 3, name: '部门3', pid: 1 },
-        { id: 4, name: '部门4', pid: 3 },
-        { id: 5, name: '部门5', pid: 4 },
+    let conArr = [{
+            id: 1,
+            name: '部门1',
+            pid: 0
+        },
+        {
+            id: 2,
+            name: '部门2',
+            pid: 1
+        },
+        {
+            id: 3,
+            name: '部门3',
+            pid: 1
+        },
+        {
+            id: 4,
+            name: '部门4',
+            pid: 3
+        },
+        {
+            id: 5,
+            name: '部门5',
+            pid: 4
+        },
     ]
     // let conArr = [
     // { name: '1', type: 0 },
@@ -350,49 +416,51 @@
             p[v.id] = v
             return p
         }, {})
-        let dom = undefined
-        for (const item of list) {
-            if (item.pid == 0) {
-                result.push(item)
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].pid === 0) {
+                result.push(list[i])
                 continue
             }
-            if (map[item.pid]) {
-                let parent = map[item.pid]
-                parent.children = parent.children ?? []
-                parent.children.push(item)
+
+            if (map[list[i].pid]) {
+                let parent = map[list[i].pid]
+                if (!parent.children) {
+                    parent.children = []
+                }
+                parent.children.push(list[i])
             }
         }
         return result
     }
     // console.log(convert(conArr));
     let MathArr = [3, 1, 6, 7, 9, 5, 2, 4, 8, 0, 10]
-    // console.log(shallSort(MathArr));
+    console.log(shellSort(MathArr));
     // 选择排序--选择最小下标
     function selectSort(arr) {
         let min = 0
-        let j = 0
-        let temp = undefined
+
         for (let i = 0; i < arr.length; i++) {
             min = i
             for (let j = i + 1; j < arr.length; j++) {
-                if (arr[min] > arr[j]) {
+                if (arr[j] < arr[min]) {
                     min = j
                 }
             }
-            [arr[min], arr[i]] = [arr[i], arr[min]]
+            [arr[i], arr[min]] = [arr[min], arr[i]]
         }
         return arr
     }
     // 插入排序--大往右移位
     function insertSort(arr) {
         let temp = undefined
-        let i, j = undefined
-        for (i = 1; i < arr.length; i++) {
-            temp = arr[i]
+        let j = 0
+        for (let i = 1; i < arr.length; i++) {
             j = i - 1
-            while (j >= 0 && arr[j] > temp) {
+            temp = arr[i]
+            while (arr[j] > temp && j >= 0) {
                 arr[j + 1] = arr[j]
-                --j
+                j--
             }
             arr[j + 1] = temp
         }
@@ -403,12 +471,13 @@
         if (arr.length < 2) {
             return arr
         }
-        let middle = Math.floor(arr.length / 2)
-        let left = arr.slice(0, middle)
-        let right = arr.slice(middle)
+        let mid = Math.floor(arr.length / 2)
+        let left = arr.slice(0, mid)
+        let right = arr.slice(mid)
 
         return merge(mergeSort(left), mergeSort(right))
     }
+
     function merge(left, right) {
         let result = []
 
@@ -433,29 +502,30 @@
         if (arr.length < 2) {
             return arr
         }
-        let pivot = arr.splice(Math.floor(arr.length / 2), 1)[0]
+        let mid = Math.floor(arr.length / 2)
+        let pivot = arr.splice(mid, 1)
         let left = []
         let right = []
 
-        arr.forEach(p => {
-            if (p > pivot) {
-                right.push(p)
+        arr.forEach(item => {
+            if (item > pivot) {
+                right.push(item)
             } else {
-                left.push(p)
+                left.push(item)
             }
-        });
-
-        return quickSort(left).concat([pivot], quickSort(right))
+        })
+        return quickSort(left).concat(pivot, quickSort(right))
     }
     // 希尔排序--在插入的基础上增加最小增量gap
     function shellSort(arr) {
         let temp = undefined
-        let i, j = undefined
         let gap = Math.floor(arr.length / 2)
+        let j = 0
+
         for (; gap > 0; gap = Math.floor(gap / 2)) {
-            for (i = gap; i < arr.length; i++) {
-                temp = arr[i]
+            for (let i = gap; i < arr.length; i++) {
                 j = i - gap
+                temp = arr[i]
                 while (j >= 0 && arr[j] > temp) {
                     arr[j + gap] = arr[j]
                     j = j - gap
@@ -463,6 +533,7 @@
                 arr[j + gap] = temp
             }
         }
+
         return arr
     }
 
@@ -478,30 +549,28 @@
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=9",
         "https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?index=10",
     ];
+
     function sendRequest(urls, max, callbackFunc) {
         let total = urls.length
-        let result = []
-        let queue = []
         let current = 0
         let done = 0
-
-        init()
-
-        function init() {
-            urls.forEach((url, key) => {
-                send(url, key)
-            })
+        let queue = []
+        let result = []
+        for (let i = 0; i < urls.length; i++) {
+            send(urls[i], i)
         }
+
         async function send(url, key) {
             if (current >= max) {
-                await new Promise((resolve) => queue.push(resolve))
+                await new Promise((resolve, reject) => {
+                    return queue.push(resolve)
+                })
             }
             request(url, key)
         }
-
         async function request(url, key) {
-            current++
             try {
+                current++
                 let res = await fetch(url)
                 result[key] = res
             } catch (error) {
@@ -510,16 +579,19 @@
                 current--
                 done++
 
-                if (done === total) {
+                if (done == total) {
                     callbackFunc(result)
                 }
+
                 if (queue.length) {
                     queue.shift()()
                 }
             }
         }
     }
-    // sendRequest(allRequest, 2, (res) => { console.log(res); })
+    sendRequest(allRequest, 2, (res) => {
+        console.log(res);
+    })
 
     // a==1&&a==2,a===1&&a===2
     let val = 0
@@ -536,10 +608,10 @@
     // })
     // console.log(a === 1 && a === 2);
 
-    // 路由钩子函数:全局导航：beforeEach beforeResolve afterEach , 单独路由独享:beforeEnter,组件内导航钩子：beforeRouteEnter beforeRouteUpdate beforeRouteLeave
-    // 生命周期vue2：
-    // 生命周期vue3: 
-    // vuex状态管理器:
+    // 路由钩子函数:全局导航：beforeEach beforeResolve afterEach , 单独路由独享:beforeEnter,组件内导航钩子：beforeRouteEnter beforeRouteUpdate beforeRouteLeave 
+    // 生命周期vue2：beforeCreate ,created,beforemount mounted,beforeUpdate updated,beforedestroy destroyed
+    // 生命周期vue3: 8+activitied,decativity,
+    // vuex状态管理器:state actions getter mutations module
     // 虚拟dom，
     // 常见的内存泄漏
     function myNew(con, ...args) {
@@ -554,109 +626,32 @@
     // Object.defineProperty()
     // 如果你现在在自己的开发分支 开发一半 线上有个紧急的bug 需要紧急修改并上线。你怎么办
     class myPromise {
-        constructor(exe) {
-            this.value = undefined
-            this.status = 'pending'
-            this.successQueue = []
-            this.failureQueue = []
 
-            const resolve = (val) => {
-                if (this.status === 'pending') {
-                    this.status = 'fulfilled'
-                    this.value = val
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.successQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-
-                }
-            }
-            const reject = (val) => {
-                if (this.status === 'pending') {
-                    this.status = 'rejected'
-                    this.value = val
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        this.failureQueue.forEach(item => {
-                            item(this.value)
-                        })
-                    }, 0);
-
-                }
-            }
-
-            try {
-                exe(resolve, reject)
-            } catch (error) {
-                reject(error)
-            }
-        }
-        then(successFn, failFn) {
-            typeof successFn !== "function" ? successFn = res => res : null
-            return new myPromise((resolve, reject) => {
-                this.successQueue.push(() => {
-                    let result = successFn(this.value)
-                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
-
-                typeof failFn !== "function" ? failFn = res => reject(res) : null
-                this.failureQueue.push(() => {
-                    let result = failFn(this.value)
-                    result instanceof myPromise ? result.then(resolve, reject) : resolve(result)
-                })
-            })
-        }
-        catch(fn) {
-            return this.then(null, fn)
-        }
     }
-    let a1 = new myPromise((res, rej) => {
-        console.log(1);
-        rej(2)
-    })
-    a1.then((v) => {
-        console.log(3);
-    }).catch(v => {
-        console.log(4);
-    })
-    Promise.myAll = promises => {//全部成功才成功
-        return new Promise((resolve, reject) => {
-            let result = []
-            let current = 0
-            let len = promises.length
-            if (len == 0) {
-                resolve([])
-            }
-            promises.forEach((p, v) => {
-                Promise.resolve(p).then(res => {
-                    result[key] = res
-                    current++
-
-                    if (current == len) {
-                        resolve(result)
-                    }
-                })
-            })
-        })
+    // let a1 = new myPromise((res, rej) => {
+    //     console.log(1);
+    //     rej(2)
+    // })
+    // a1.then((v) => {
+    //     console.log(3);
+    // }).catch(v => {
+    //     console.log(4);
+    // })
+    Promise.myAll = promises => { //全部成功才成功
     }
-    Promise.myRace = promises => {//那个快返回那个，后面的失败也不管
-        return new Promise((resolve, reject) => {
-            promises.forEach(p => {
-                Promise.resolve(p).then(resolve).catch(reject)
-            })
-        })
+    Promise.myRace = promises => { //那个快返回那个，后面的失败也不管
+
     }
     Promise.prototype.myFinally = function (fn) {
 
     }
-    Promise.allSettled = promises => {//成功和失败都有返回结果状态
+    Promise.allSettled = promises => { //成功和失败都有返回结果状态
 
     }
-    Promise.myAny = promises => {//全部失败才失败，否则返回
+    Promise.myAny = promises => { //全部失败才失败，否则返回
 
     }
+
     function deepClone(obj) {
 
     }
@@ -674,9 +669,11 @@
     function myInstanceof(obj, func) {
 
     }
+
     function throttle(fn, args) {
 
     }
+
     function debounce(fn, args) {
 
     }
@@ -736,20 +733,16 @@
     let deepTree = {
         id: '1-1',
         title: '节点1-1',
-        children: [
-            {
+        children: [{
                 id: '2',
                 title: '节点2',
-                children: [
-                    {
+                children: [{
                         id: '2-1',
                         title: '节点2-1',
-                        children: [
-                            {
-                                id: '2-1-1',
-                                title: '节点2-1-1',
-                            }
-                        ]
+                        children: [{
+                            id: '2-1-1',
+                            title: '节点2-1-1',
+                        }]
                     },
                     {
                         id: '2-2',
@@ -763,47 +756,56 @@
             }
         ]
     }
-    let widthTree = [
-        {
+    let widthTree = [{
             id: '1-1',
             title: '节点1-1',
         },
         {
             id: '1-2',
             title: '节点1-2',
-            children: [
-                {
-                    id: '2',
-                    title: '节点2',
-                    children: [
-                        {
-                            id: '2-1',
-                            title: '节点2-1',
-                            children: [
-                                {
-                                    id: '2-1-1',
-                                    title: '节点2-1-1',
-                                }
-                            ]
-                        },
-                        {
-                            id: '2-2',
-                            title: '节点2-1'
-                        }
-                    ]
-                },
-            ]
+            children: [{
+                id: '2',
+                title: '节点2',
+                children: [{
+                        id: '2-1',
+                        title: '节点2-1',
+                        children: [{
+                            id: '2-1-1',
+                            title: '节点2-1-1',
+                        }]
+                    },
+                    {
+                        id: '2-2',
+                        title: '节点2-1'
+                    }
+                ]
+            }, ]
 
         }
     ]
     let deepTraversal = node => {
+        let result = []
 
+        result.push(node.id)
+        if (node.children) {
+            for (let i = 0; i < node.children.length; i++) {
+                result = result.concat(deepTraversal(node.children[i]))
+            }
+        }
+        return result
     }
     let widthTraversal = (tree) => {
+        let node = null
+        let list = [...tree]
+        let nodes = []
 
+        while(node = list.shift()){
+            nodes.push(node.id)
+            node.children&&list.push(...node.children)
+        }
+        return nodes
     }
-    // console.log(widthTraversal(widthTree));
-
+    console.log(widthTraversal(widthTree));
 </script>
 
 

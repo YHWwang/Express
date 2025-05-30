@@ -626,6 +626,7 @@ console.log("插入排序arr", insertSort(arr))
 git reset --hard HEAD^ ---->回退到上次提交，清除本地提交的代码
 git reset --hard HEAD~` ----->回退到上次提交，不清除本地提交的代码
 git reset --hard origin/master  ----->将本地的状态回退到和远程的一样 
+git rebase 整合不同分支的变更
 
 # 前端性能优化你会怎么做?
 列表优化：懒加载、虚拟列表、分页

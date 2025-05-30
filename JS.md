@@ -213,7 +213,7 @@ let arr = [
 1. 创建了一个空对象
 2. 将空对象的原型prototype指向构造函数的原型
 3. 构造函数内部的this指向了new创建的空对象（改变this指向）
-4. 对构造函数有返回值的判断（ 如果构造函数内部的返回值为普通类型和null则将new创建的对象返回出去，而如果构造函数返回的对象为引用类型对象则采用构造函数返回的对象。）
+4. 对构造函数有返回值的判断，函数无return时返回空对象（ 如果构造函数内部的返回值为普通类型和null则将new创建的对象返回出去，而如果构造函数返回的对象为引用类型对象则采用构造函数返回的对象。）
 实现:   function myNew(con, ...args) {
            let obj = Object.create(null)
            Object.setPrototypeOf(obj, con.prototype)
