@@ -83,6 +83,11 @@ removeChild、remove、outerHTML
 为什么会有cookies这种东西存在，这要从http的特性谈起，起初http是一个无状态的协议（当然现在也是无状态的协议），之所以无状态是因为http是基于tcp的上传应用协议，它的一个主要特点就是用完即放，也就是客户端发起请求、服务器相应后tcp连接就断开了，这种模式决定了是http无法保存状态。
 协议本身就是一种约定，为相同的场景约定出来一套规范，为未来可能的场景预测出来一套规范。
 那么有了cookies后http就变得有状态了，可以说cookies是对http的扩展或者增强，比较常用的比如：保存用户的登陆状态
+cookie如何防范XSS攻击？ cookie配置document.cookie = "user=John; HttpOnly; Secure; SameSite=Strict";
+1.httponly ---这意味着通过HTTP（S）协议传递的Cookie无法被JavaScript访问
+2.secure ---这表示Cookie仅应在安全的HTTPS连接上传输
+3.SameSite ---SameSite=Strict表示Cookie仅会随同同站点的请求一起发送
+4.内容安全策略（CSP）
 
 # 什么是尾调用优化和尾递归？
 尾调用：即只保留内层函数的调用记录。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用记录只有一项，这将大大节省内存。这就是"尾调用优化"的意义。ES6的尾调用优化只在严格模式下开启，正常模式是无效的。

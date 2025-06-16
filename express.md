@@ -431,7 +431,7 @@ html-》加上title='文本内容'
 
 # http和https的区别？（https://cloud.tencent.com/developer/article/1704749）
 http: 协议以明文方式发送内容，不提供任何方式的数据加密。默认80端口
-https: 是一种透过计算机网络进行安全通信的传输协议，由http进行通信但利用SSL/TLS来加密数据包，是提供对网站服务器的身份认证，保护交换数据的隐私与完整性。默认443端口；HTTPS采用对称加密来加密通信内容，所用的密钥称为A。用非对称加密来加密密钥A再发送给对方（有点绕）。只要密钥A不落入他人手中，那传输的数据就不会被别人破译。
+https: 是一种通过计算机网络进行安全通信的传输协议，由http进行通信但利用SSL/TLS来加密数据包，是提供对网站服务器的身份认证，保护交换数据的隐私与完整性。默认443端口；HTTPS采用对称加密来加密通信内容，所用的密钥称为A。用非对称加密来加密密钥A再发送给对方（有点绕）。只要密钥A不落入他人手中，那传输的数据就不会被别人破译。
 工作流程：  
         1、客户端请求服务器建立安全连接，附加客户端支持的SSL与TLS版本、支持的加密算法版本、随机数。
         2、服务器响应请求，附加选择的协议版本、加密算法版本、服务器随机数。 
@@ -456,10 +456,51 @@ https: 是一种透过计算机网络进行安全通信的传输协议，由http
 div[class^='a-']{}
 
 # 如何实现用户下拉选择主题，选择后网站整体换肤
-scss-->设置四种主题的样式
-main.js引入scss文件
-App.vue文件设置默认主题document.getElementById('app').setAttribute('class',主题一className)
-点击切换主题功能是调用函数来设置document.getElementById('app').setAttribute('class',切换主题的className)
+1. sass换肤 兼容ie
+   // _themes.scss主题文件
+   $themes: (
+        light: (
+            primary-color: #3498db,
+            bg-color: #f5f5f5,
+            text-color: #333
+        ),
+        dark: (
+            primary-color: #2c3e50,
+            bg-color: #34495e,
+            text-color: #ecf0f1
+        )
+    );
+    // _mixins.scss通过Mixin应用主题
+     @mixin theme($property, $key) {
+        @each $theme-name, $theme-map in $themes {
+            .theme-#{$theme-name} & {
+            #{$property}: map-get($theme-map, $key);
+            }
+        }
+     }
+     // styles.scss在组件中使用
+     @import 'themes', 'mixins';
+      body {
+        @include theme(background-color, bg-color);
+        @include theme(color, text-color);
+      }
+      .button {
+        @include theme(background-color, primary-color);
+      }
+     // 动态切换主题
+    document.body.className = 'theme-dark';
+2. 普通方放，不兼容ie
+    .black-theme {
+            --bg: #171616;
+            --fontColor: #d2d2d3;
+    }
+    div[class^="a-"] {
+        width: 50px;
+        height: 50px;
+        background-color: var(--bg,red);
+    }
+    // 切换黑夜模式
+    document.body.className = 'black-theme';
 
 # 网页变为黑白配色(重大事件的样式)
 html {
@@ -633,7 +674,7 @@ git rebase 整合不同分支的变更
 重绘回流：合并修改、requestAnimationFrame、will-change
 提交优化：防抖
 网络请求：控制并发量、取消重复请求、合并请求、http缓存
-webpack优化：代码压缩、gzip、CDN、代码分割、合理设置hash、图片转base64
+webpack优化：代码压缩、gzip、CDN、代码分割、合理设置hash、公共代码抽离
 
 # 解释Array.prototype.slice.apply(arguments)---将arguments 类数组转换为数组
 由于 arguments不是真正的数组，所以没有slice方法，通过apply|call可以调用数组对象的slice方法，从而将arguments 类数组转换为数组
