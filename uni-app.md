@@ -11,7 +11,7 @@
 注意，在webview渲染时，自定义下拉刷新的性能不及pages.json中配置的原生下拉刷新。
 3. onPullDownRefresh() 页面中使用
 
-# uni-app页面生命周期
+# uni-app页面生命周期(小程序2-5项)
 1. onInit--监听页面初始化
 2. onLoad--监听页面加载
 3. onShow--监听页面显示

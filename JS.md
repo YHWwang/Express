@@ -937,6 +937,10 @@ JSON和extend来完成深拷贝不能解决属性为函数，undefined，循环�
 实现深拷贝的方法：https://www.cnblogs.com/gaosirs/p/10565420.html
    1. 封装深拷贝函数---解决属性为undefined的情况
    function deepClone(obj) {
+    <!-- 解决new data()深拷贝时值为{} -->
+        if (source instanceof Date) {
+            return new Date(source.getTime())
+        }
        let objClone = Array.isArray(obj) ? [] : {};
        if(obj && typeof obj === "object") {
            for(key in obj) {

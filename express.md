@@ -1,3 +1,19 @@
+# 性能检测工具
+1. DevTools
+2. Lighthouse
+3. web-vitals
+
+# 介绍navigator.sendBeacon方法
+主要用于在页面卸载（如关闭、刷新或跳转）时异步发送少量数据到服务器，且不会阻塞页面卸载流程‌
+‌核心特性‌
+异步非阻塞：数据发送与页面卸载并行执行，不影响用户体验‌34
+高可靠性：浏览器会优先处理sendBeacon请求，确保在页面关闭前尝试发送‌25
+数据限制：通常支持小于64KB的数据传输‌36
+跨域支持：需服务器配置CORS‌
+
+# 判断用户设备
+natvigator.userAgent
+
 # Astro(https://astro.build/)
 关于 Astro 的介绍，官方文档（https://docs.astro.build/zh-cn/concepts/why-astro）给出了很明确的定位：“最适合构建像博客、营销网站、电子商务网站这样的以内容驱动的网站的 Web 框架”
 我们可以白票的第三方服务有：
@@ -670,6 +686,7 @@ git reset --hard origin/master  ----->将本地的状态回退到和远程的一
 git rebase 整合不同分支的变更
 
 # 前端性能优化你会怎么做?
+事件委托
 列表优化：懒加载、虚拟列表、分页
 重绘回流：合并修改、requestAnimationFrame、will-change
 提交优化：防抖

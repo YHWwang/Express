@@ -18,8 +18,14 @@ mix-blend-mode: difference;
 2. W3C标准盒子模型，border-box，盒子高宽就是盒子的高宽，不包括border,padding
 
 # 选择器有哪些
-css选择器：id，class，标签，通用，属性，伪类，伪元素，子类
-css权重：!import > 内联样式> id > class > 标签|伪类|属性 > 伪元类 > 通配符 > 继承
+css选择器：id，class，元素，通配符，属性，后代，伪类，伪元素
+css权重：
+        1.!import
+        2. 内联样式
+        3. id
+        4. class|伪类|属性
+        5. 元素|伪元类
+        6. 通配符|继承
 
 # px、em、rem、vw
 px固定大小

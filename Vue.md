@@ -52,6 +52,10 @@ require.context()动态模块热重载
   4. 前端设置axios响应拦截器axios.interceptors.response.use分析状态码，如拿到状态码401就清除token并跳转到登录页
 
 # VUE ----------------------
+# keep-alive组件有哪些属性
+1. include
+2. exclude
+3. max
 
 # vue是怎么解析template的? template会变成什么?
 1. 通过parse用正则等方法去解析template模板中的指令、变量、标签等数据形成AST抽象语法树
@@ -77,7 +81,7 @@ parse的核心实现是调用了parseHTML函数，且传入了start,end,chars,co
 渐进式框架，只需关注视图层，1.易用->提供数据响应式让开发者只需关心业务，灵活->众多库vuex、vue-router、vue-cli等工具，高效->采用diff算法更新虚拟DOM；缺点也很明显就是不支持IE8以下的版本并且对网站的SEO不利，当然也有ssr服务端渲染方式，库nuxt.js来提高SEO
 
 # .sync属性的认识
-一个组件上只能有一个v-model，.sync修饰符可以有多个。
+.sync修饰符可以有多个。
 .sync多个组件属性需要双向绑定时使用,带有.sync修饰符的v-bind不能和表达式一起使用
 vue的子组件不能直接使用父组件的数据，需要用到prop传递数据。vue通过自定义事件系统来帮助我们修改父组件上的数,子组件通过$emit()方法修改父组件上面的数据。
 :a.sync="num"//它等价于:a="num" @update:a="val=>num=val"
