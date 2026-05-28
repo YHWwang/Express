@@ -1,3 +1,8 @@
+# axios中断请求
+1. CancelToken: 带上参数cancelToken: source.token
+2. abortController: 带上参数signal: controller.signal
+区别：cancelToken是老的方法，存在内存泄漏隐患切片长时间没有中断，CancelToken 是 Axios 特有的，而 AbortController 是 Web API 的一部分，可以在所有支持 Fetch API 的环境中使用。
+
 # 性能检测工具
 1. DevTools
 2. Lighthouse
